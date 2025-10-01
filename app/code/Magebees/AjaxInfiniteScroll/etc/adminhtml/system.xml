@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magebees" translate="label" sortOrder="100">
+            <label>Magebees</label>
+        </tab>
+        <section id="ajaxinfinitescroll" translate="label" type="text" sortOrder="50" showInDefault="1" 
+				 showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Ajax Infinite Scroll</label>
+            <tab>magebees</tab>
+            <resource>Magebees_AjaxInfiniteScroll::ajaxinfinitescroll_config</resource>
+
+            <group id="setting" translate="label" type="text" sortOrder="1" showInDefault="1" 
+				   showInWebsite="1" showInStore="1">
+				<label>Settings</label>
+
+				<field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enabled</label> 
+					<comment>Select Yes for enable ajax infinite scroll in frontend.</comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>
+				 <field id="product_container" translate="label comment" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Products Group Selector</label> 					
+					<comment>Set products container group</comment> 
+				 </field>
+				
+				<field id="loading_type" translate="label comment" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Loading Type</label>	
+					<comment>Select Loading type for load page content</comment>	
+					<source_model>Magebees\AjaxInfiniteScroll\Model\Config\LoadingType</source_model> 
+				 </field>
+				 <field id="label_prev_button" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Label for the previous button</label> 
+					<depends>
+						<field id="loading_type">1</field>
+					</depends>
+					<comment>Set label for Load Previous button</comment> 
+				 </field>
+				 <field id="label_next_button" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Label for the next button</label> 
+					<depends>
+						<field id="loading_type">1</field>
+					</depends>
+					<comment>Set label for Load Next button</comment> 
+				 </field>
+				 <field id="button_style" translate="label comment" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Button Style</label> 
+					<depends>
+						<field id="loading_type">1</field>
+					</depends>
+					<comment>Set Button Style for Load Next/Previous button</comment> 
+				 </field>
+				 <field id="text_no_more" translate="label comment" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>No More Content Text</label> 				
+					<comment>Set text for no more page content to load</comment> 
+				 </field>
+				 <field id="threshold" translate="label comment" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Threshold</label> 
+					<depends>
+						<field id="loading_type">0</field>
+					</depends>
+					<comment>Set Threshold for Loading page content</comment> 
+				 </field>
+				<field id="show_page_no" translate="label" sortOrder="9" type="select" showInDefault="1" 			showInWebsite="1" showInStore="1">
+			  <label>Show Page Number</label>
+			  <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+			</field>
+		<field id="enabled_top" translate="label" sortOrder="10" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+          <label>Show Top Button</label>
+          <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+		<field id="top_icon" translate="label comment" sortOrder="11" type="image" showInDefault="1" showInWebsite="1" showInStore="1">
+          <label>Top Icon</label>
+          <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+          <upload_dir config="system/filesystem/media" scope_info="1">magebees/ajaxinfinitescroll</upload_dir>
+          <base_url type="media" scope_info="1">magebees/ajaxinfinitescroll</base_url>
+        </field>
+		<field id="loading_img" translate="label comment" sortOrder="12" type="image" showInDefault="1" showInWebsite="1" showInStore="1">
+          <label>Loading Image</label>
+          <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+          <upload_dir config="system/filesystem/media" scope_info="1">magebees/ajaxinfinitescroll</upload_dir>
+          <base_url type="media" scope_info="1">magebees/ajaxinfinitescroll</base_url>
+        </field>
+			</group>	
+        </section>
+    </system>
+</config>

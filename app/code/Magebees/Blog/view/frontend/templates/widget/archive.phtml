@@ -1,0 +1,27 @@
+<?php if( $this->configuration->isEnableBlogModule()):
+
+$archivePostsCollection = $block->getArchivePosts();
+if(count($archivePostsCollection)>0): 
+ksort($archivePostsCollection);
+$archivePostsCollection = array_reverse($archivePostsCollection);
+?>
+<div class="mb-block widget block mb-block-archive" data-bind="scope: 'blog-archive'">
+	<div class="block-title">
+    	<strong><?php echo $block->escapeHtml($block->getTitle());?></strong>
+	</div>
+	<div class="archive-list">
+		<ul>
+			<?php foreach ($archivePostsCollection as $_archive): ?>
+			<?php foreach ($_archive as $ar_key => $_ar_value):?>	
+			<li class="archive-item-link">
+				<a class="post-item-link"	href="<?php echo $block->escapeHtml($_ar_value['url']); ?>" title="<?php echo $block->escapeHtml($_ar_value['title']); ?>">
+					<?php echo $block->escapeHtml($_ar_value['title']); ?>
+				</a>
+			</li>
+			<?php endforeach; ?>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+</div>
+<?php endif;?>
+<?php endif;?>

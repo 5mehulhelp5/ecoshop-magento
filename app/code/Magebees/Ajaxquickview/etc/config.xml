@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<ajaxquickview>
+			<setting>
+				<enable>1</enable>	
+				<auto>1</auto>						
+			</setting>
+			<popupsetting>
+				<button_text>Quick View</button_text>
+				<button_text_color>#FFFFFF</button_text_color>
+				<button_color>#FF570F</button_color>
+				<show_wishlist>1</show_wishlist>
+				<show_compare>1</show_compare>
+				<show_product_tab>1</show_product_tab>
+				<show_related>1</show_related>
+				<show_upsell>1</show_upsell>
+				<show_cross_sell>1</show_cross_sell>
+				<enable_go_to_product>1</enable_go_to_product>
+			</popupsetting>			
+		</ajaxquickview>
+    </default>
+</config>

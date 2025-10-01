@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+		<resources>
+			<resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Magebees_Pagebanner::configuration_settings" title="Page Banners Settings" sortOrder="20000" />
+                        </resource>
+                    </resource>
+                </resource>
+                <resource id="Magento_Backend::content">
+					<resource id="Magebees_Pagebanner::Heading" title="MageBees Page Banner" sortOrder="50"></resource>
+                   <resource id="Magebees_Pagebanner::pagebanner_content" title="Page Banners" sortOrder="50"></resource>
+                </resource>
+            </resource>
+	   </resources>
+    </acl>
+</config>
+

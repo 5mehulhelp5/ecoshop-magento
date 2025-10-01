@@ -1,0 +1,150 @@
+<?php use Magento\Framework\App\Action\Action; ?>
+<?php
+	$viewMode = 'grid';
+	$image = 'category_page_grid';
+	$showDescription = false;
+	$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+	/**
+	 * Position for actions regarding image size changing in vde if needed
+	 */
+	$pos = $block->getPositioned();
+	$position = '';
+	if ($pos != null) {
+		$position = ' style="left:' . $block->getVar("{$image}:width") . 'px;'
+				. 'top:' . $block->getVar("{$image}:height") . 'px;"';
+	}
+	$random_number = $this->random_number;
+	$slider_id = 'productListing-'.$random_number;
+	$slider = $this->slider_options['enable_slider']?$this->slider_options['enable_slider']:0;
+	$slider_class = $slider?"swiper":" ";
+	$slider_wrapper_class = $slider?"swiper-wrapper":" ";
+	$pagination = array_key_exists('pagination', $this->slider_options) ? ($this->slider_options['pagination']=='1' ? true:false) : false;
+	$pagination_class = $this->pagination_class;
+	$item_class =   $slider?"item product product-item swiper-slide":"item product product-item";
+	$items_per_row_class =   $slider?" ":"product-item-".$this->slider_options['items_per_row'];
+	$scrollbar = array_key_exists('scrollbar', $this->slider_options) ? ($this->slider_options['scrollbar']=='1' ? true:false) : false;
+	$navarrow = array_key_exists('nav_arr', $this->slider_options) ? ($this->slider_options['nav_arr']=='1' ? true:false) : false;
+	
+	$_productCollection = $block->getProductCollection();
+	$_helper = $this->helper('Magento\Catalog\Helper\Output');
+?>
+<div id="<?php echo $slider_id; ?>" class="<?php echo 'list'.$this->_listing_id ?> products wrapper <?php echo $viewMode; ?> products-<?php echo $viewMode; ?> <?php echo $slider_class ?> <?php echo $pagination_class ?>">
+	<?php $iterator = 1; ?>
+	
+	<div class="auto_load_featured products list items product-items <?php echo $slider_wrapper_class;?> <?php echo $items_per_row_class ?>">
+		<?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
+		<?php foreach ($_productCollection as $_product): ?>
+			<?php echo($iterator++ == 1) ? '<div class="'.$item_class.'">' : '</div><div class="'.$item_class.'">' ?>
+			<div class="product-item-info" data-container="product-grid">
+				<?php // Product Image   ?>
+				<a href="<?php echo $_product->getProductUrl() ?>" class="product photo product-item-photo" tabindex="-1">
+					<span style="width:240px;" class="product-image-container">
+						<span style="padding-bottom: 137%;" class="product-image-wrapper">
+							<?php
+							$imageUrl = $this->helper('Magento\Catalog\Helper\Image')
+									->init($_product, $image)
+									->keepAspectRatio(TRUE)
+									->keepFrame(FALSE)
+									->resize(270, 371)
+									->getUrl();
+							?>
+							<img class="product-image-photo" src="<?php echo $imageUrl; ?>" />
+						</span>
+					</span>
+				</a>
+
+				<div class="product details product-item-details">
+					<div style="padding: 0 2px;"><?php echo $block->getProductDetailsHtml($_product); ?></div>
+					<?php
+					$_productNameStripped = $block->stripTags($_product->getName(), null, true);
+					?>
+					<strong class="product name product-item-name">
+						<a class="product-item-link"
+						   href="<?php echo $_product->getProductUrl() ?>">
+							   <?php echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
+						</a>
+					</strong>
+					<?php echo $block->getReviewsSummaryHtml($_product, $templateType); ?>
+					<?php if($this->display_settings['display_price']): ?>
+						<?php echo $block->getProductPrice($_product) ?>
+					<?php endif; ?>	
+					<div class="product-item-inner">
+						<div class="product actions product-item-actions"<?php echo ($pos && strpos($pos, $viewMode . '-actions')) ? $position : ''; ?>>
+							<?php if($this->display_settings['display_addtocart']): ?>
+							<div class="actions-primary"<?php echo ($pos && strpos($pos, $viewMode . '-primary')) ? $position : ''; ?>>
+								<?php if ($_product->isSaleable()): ?>
+									<?php $postParams = $block->getAddToCartPostParams($_product); ?>
+									<form data-role="tocart-form" action="<?php echo $postParams['action']; ?>" method="post">
+										<input type="hidden" name="product" value="<?php echo $postParams['data']['product']; ?>">
+										<input type="hidden" name="<?php echo Action::PARAM_NAME_URL_ENCODED; ?>" value="<?php echo $postParams['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
+										<?php echo $block->getBlockHtml('formkey') ?>
+										<button type="submit"
+												title="<?php echo $block->escapeHtml(__('Add to Cart')); ?>"
+												class="action tocart primary">
+											<span><?php echo __('Add to Cart') ?></span>
+										</button>
+									</form>
+								<?php else: ?>
+									<?php if ($_product->getIsSalable()): ?>
+										<div class="stock available"><span><?php echo __('In stock') ?></span></div>
+									<?php else: ?>
+										<div class="stock unavailable"><span><?php echo __('Out of stock') ?></span></div>
+									<?php endif; ?>
+								<?php endif; ?>
+							</div>
+							<?php endif; ?>
+							<div data-role="add-to-links" class="actions-secondary"<?php echo ($pos && strpos($pos, $viewMode . '-secondary')) ? $position : ''; ?>>
+								<?php if($this->display_settings['display_addtocompare']): ?>
+									<?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()): ?>
+										<a href="#"
+										   class="action towishlist"
+										   title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+										   aria-label="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+										   data-post='<?php echo $block->getAddToWishlistParams($_product); ?>'
+										   data-action="add-to-wishlist"
+										   role="button">
+											<span><?php echo __('Add to Wish List') ?></span>
+										</a>
+									<?php endif; ?>
+								<?php endif; ?>
+								<?php if($this->display_settings['display_addtowishlist']): ?>
+								<?php
+								$compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare');
+								?>
+								<a href="#"
+								   class="action tocompare"
+								   title="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"
+								   aria-label="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"
+								   data-post='<?php echo $compareHelper->getPostDataParams($_product); ?>'
+								   role="button">
+									<span><?php echo __('Add to Compare') ?></span>
+								</a>
+								<?php endif; ?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php echo($iterator == count($_productCollection) + 1) ? '</div>' : '' ?>
+		<?php endforeach; ?>
+	</div>
+	<?php if($slider): ?>		
+	
+		<?php if($pagination): ?>
+		<!-- Add Pagination -->
+		<div id="<?php echo "swiper-pagination-".$random_number;?>" class="swiper-pagination"></div>
+		<?php endif; ?>
+		<!-- Add Scrollbar -->
+		<?php if($scrollbar): ?>
+		<div id="<?php echo "swiper-scrollbar-".$random_number;?>" class="swiper-scrollbar"></div>	
+		<?php endif; ?>
+		<!--End div swiper-->
+		<?php if($navarrow): ?>
+			<!-- Add Arrows -->
+			<div id="<?php echo "swiper-button-next-".$random_number;?>" class="swiper-button-next"></div>
+			<div id="<?php echo "swiper-button-prev-".$random_number;?>"class="swiper-button-prev"></div>
+		<?php endif; ?>
+		
+	<?php endif; ?>
+</div>
+	

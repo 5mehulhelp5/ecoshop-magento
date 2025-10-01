@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © PART <info@part-online.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>		
+		<referenceBlock name='catalogsearch.leftnav'>
+			<action method='setTemplate' ifconfig="layerednavigation/setting/enable">
+				<argument name='template' xsi:type='string'>Magebees_Layerednavigation::layer/view.phtml</argument>
+			</action>
+		</referenceBlock>
+	
+         <referenceContainer name="content">
+            <block class="Magebees\Layerednavigation\Block\TopNavigation" name="catalog.leftnav1" before="-" template="Magebees_Layerednavigation::layer/view_top_search.phtml" ifconfig="layerednavigation/setting/enable">
+                <block class="Magento\LayeredNavigation\Block\Navigation\State" name="catalog.navigation.state1" as="state" />
+                <block class="Magento\LayeredNavigation\Block\Navigation\FilterRenderer" name="catalog.navigation.renderer1" as="renderer" template="Magento_LayeredNavigation::layer/filter.phtml">
+                    <arguments>
+                        <argument name="product_layer_view_model" xsi:type="object">Magento\LayeredNavigation\ViewModel\Layer\Filter</argument>
+                    </arguments>
+                </block>
+            </block> 
+        </referenceContainer>
+    </body>
+</page>

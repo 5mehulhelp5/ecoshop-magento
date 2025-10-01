@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Magebees_Blog::heading" title="MageBees Blog" module="Magebees_Blog" parent="Magento_Backend::content" sortOrder="10"  resource="Magebees_Blog::heading"/>
+        <add id="Magebees_Blog::post" title="Posts" module="Magebees_Blog" parent="Magebees_Blog::heading" sortOrder="10" action="blog/post" resource="Magebees_Blog::post"/>
+        <add id="Magebees_Blog::category" title="Categories" module="Magebees_Blog" parent="Magebees_Blog::heading" sortOrder="20" action="blog/category" resource="Magebees_Blog::category"/>
+		
+		<add id="Magebees_Blog::urlrewrite" title="URL Rewrite" module="Magebees_Blog" parent="Magebees_Blog::heading" sortOrder="40" action="blog/urlrewrite/index" resource="Magebees_Blog::urlrewrite"/>
+		
+		<add id="Magebees_Blog::tag" title="Tags" module="Magebees_Blog" parent="Magebees_Blog::heading" sortOrder="25" action="blog/tag" resource="Magebees_Blog::tag"/>
+        <add id="Magebees_Blog::comment" title="Comments" module="Magebees_Blog" parent="Magebees_Blog::heading" sortOrder="30" action="blog/comment" resource="Magebees_Blog::comment"/>
+		<add id="Magebees_Blog::import" title="Import" module="Magebees_Blog" parent="Magebees_Blog::heading" sortOrder="30" action="blog/import/new" resource="Magebees_Blog::import"/>
+		
+		
+		
+        <add id="Magebees_Blog::config_blog" title="Configuration" module="Magebees_Blog" parent="Magebees_Blog::heading" sortOrder="50" action="adminhtml/system_config/edit/section/blog" resource="Magebees_Blog::blogsetting"/>
+    </menu>
+</config>

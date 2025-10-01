@@ -1,0 +1,202 @@
+<?xml version="1.0" ?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:helloworld:Magento_Widget:etc/widget.xsd">
+	<widget class="Magebees\Blog\Block\Widget\RecentPosts" id="magebees_blog_recentposts">
+		<label>Magebees::Blog Recent Posts For Sidebar</label>
+		<description>Magebees Blog Recent Posts For Sidebar</description>
+		<parameters>
+			<parameter name="postcount" sort_order="10" visible="true" required="true" xsi:type="text">
+				<label>No of Post</label>
+			</parameter>
+			<parameter name="title" sort_order="20" visible="true" required="true" xsi:type="text">
+				<label>Title</label>
+			</parameter>
+		</parameters>
+	</widget>
+	<widget class="Magebees\Blog\Block\Widget\BlogCategories" id="magebees_blog_categories">
+		<label>Magebees::Blog Categories</label>
+		<description>Magebees Blog Categories</description>
+		<parameters>
+			<parameter name="wd_cat_title" sort_order="20" visible="true" required="true" xsi:type="text">
+				<label>Title</label>
+			</parameter>
+		</parameters>
+	</widget>
+	<widget class="Magebees\Blog\Block\Widget\BlogArchives" id="magebees_blog_archives">
+		<label>Magebees::Blog Archives</label>
+		<description>Magebees Blog Archives</description>
+		<parameters>
+			<parameter name="title" sort_order="20" visible="true" required="true" xsi:type="text">
+				<label>Title</label>
+			</parameter>
+		</parameters>
+	</widget>
+	<widget class="Magebees\Blog\Block\Widget\BlogTags" id="magebees_blog_tags">
+		<label>Magebees::Blog Tags</label>
+		<description>Magebees Blog Tags</description>
+		<parameters>
+			<parameter name="title" sort_order="20" visible="true" required="true" xsi:type="text">
+				<label>Title</label>
+			</parameter>			
+		</parameters>
+	</widget>
+	 <widget id="magebees_blog_latestpost" class="Magebees\Blog\Block\Widget\LatestPosts" is_email_compatible="true"
+            placeholder_image="Magebees_Blog::images/LatestPostswidget.png" ttl="86400">
+        <label translate="true">Magebees::Blog Latest Posts </label>
+        <description translate="true">List of Latest Posts</description>
+		<parameters>
+      
+		<parameter name="wd_show_heading" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="5">
+                <label translate="true">Display heading</label>
+				<description translate="true">Select Yes for display page heading.</description>
+        </parameter>
+		<parameter name="wd_heading" xsi:type="text" visible="true" required="true" sort_order="6">
+                <label translate="true">Heading</label>
+				<description translate="true">Here we can set heading.</description>
+				<depends>
+                    <parameter name="wd_show_heading" value="1" />
+                </depends>
+				<value>Latest Posts</value>
+        </parameter>
+		<parameter name="wd_show_description" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="7">
+                <label translate="true">Display description</label>
+				<description translate="true">Select Yes for display page description.</description>
+        </parameter>
+		<parameter name="wd_description" xsi:type="text" visible="true" required="true" sort_order="8">
+                <label translate="true">Description</label>
+				<description translate="true">Here we can set description.</description>
+				<depends>
+                    <parameter name="wd_show_description" value="1" />
+                </depends>
+				<value>Latest Posts</value>
+        </parameter>
+		
+		
+			<parameter name="wd_post_show_feature_image" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="9">
+                <label translate="true">Show Post Featured Image</label>
+				<description translate="true">You can display post feature image.</description>
+        </parameter>
+			<parameter name="feature_image_height" xsi:type="text" visible="true" required="true" sort_order="10">
+                <label translate="true">Featured Image Height</label>
+				<description translate="true">Here we can set image height in px.</description>
+				<depends>
+                    <parameter name="wd_post_show_feature_image" value="1" />
+                </depends>
+				<value>200</value>
+        </parameter>
+			<parameter name="feature_image_width" xsi:type="text" visible="true" required="true" sort_order="11">
+                <label translate="true">Featured Image Width</label>
+				<description translate="true">Here we can set image width in px.</description>
+				<depends>
+                    <parameter name="wd_post_show_feature_image" value="1" />
+                </depends>
+				<value>200</value>
+        </parameter>
+			<parameter name="resize_type" xsi:type="select" visible="true" required="true"  source_model="Magebees\Blog\Model\Config\Source\ImageResizetype" sort_order="12">
+                <label translate="true">Featured Image Resize Type</label>
+				<description translate="true">Here we can set Image Resize Type.</description>
+				<depends>
+                    <parameter name="wd_post_show_feature_image" value="1" />
+                </depends>
+				
+        </parameter>
+		<parameter name="wd_post_type" xsi:type="select" visible="true"
+                       source_model="Magebees\Blog\Model\Config\Source\Posttype" sort_order="13">
+                <label translate="true">Select Post Type</label>
+				<description translate="true">You can display all products or display by categories.</description>
+        </parameter>
+		
+			
+			
+			
+		<parameter name="wd_post_ids" xsi:type="text" visible="true" sort_order="14">
+                <label translate="true">Post Ids</label>
+				<description translate="true">Set Post Ids For list of posts using comma sperated</description>
+			<depends>
+                    <parameter name="wd_post_type" value="custom" />
+                </depends>
+        </parameter>
+		<parameter name="wd_post_limit" xsi:type="text" visible="true" sort_order="15">
+                <label translate="true">Post Limit</label>
+				<description translate="true">Set Post Limits.</description>
+		</parameter>
+				
+		<parameter name="wd_sort_by" xsi:type="select" visible="true"
+                       source_model="Magebees\Blog\Model\Config\Source\SortBy" sort_order="29">
+                <label translate="true">Sort By</label>
+				<description translate="true">Set attribute that is initially used to sort the post list.</description>
+        </parameter>
+		
+		<parameter name="wd_category" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="30">
+                <label translate="true">Display Post Category Information</label>
+				<description translate="true"><![CDATA[Select Yes for display Post Category on frontend.]]></description>           
+        </parameter>
+			<parameter name="wd_comment_count" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="31">
+                <label translate="true">Display Post Comment Information</label>
+				<description translate="true"><![CDATA[Select Yes for display Post Comment Information on frontend.]]></description>           
+        </parameter>
+			<parameter name="wd_tags" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="32">
+                <label translate="true">Display Post Tags Information</label>
+				<description translate="true"><![CDATA[Select Yes for display Post Tags Information on frontend.]]></description>           
+        </parameter>
+			<parameter name="wd_author" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="33">
+                <label translate="true">Display Post Author Information</label>
+				<description translate="true"><![CDATA[Select Yes for display Post Author Information on frontend.]]></description>           
+        </parameter>
+			<parameter name="wd_add_this" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="34">
+                <label translate="true">Display Social Sharing Icon</label>
+				<description translate="true"><![CDATA[Select Yes for display Social Sharing Icon on frontend.]]></description>           
+        </parameter>
+		
+		<parameter name="wd_post_content" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="35">
+                <label translate="true">Display Post Content</label>
+				<description translate="true">Select Yes for display post content.</description>
+        </parameter>
+		<parameter name="wd_post_content_length" xsi:type="text" visible="true" required="true" sort_order="36">
+                <label translate="true">Content Length</label>
+				<description translate="true">Here we can set Content length.</description>
+				<depends>
+                    <parameter name="wd_post_content" value="1" />
+                </depends>
+				<value>200</value>
+        </parameter>
+			<parameter name="wd_post_readmore" xsi:type="select" visible="true" required="true" source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="37">
+                <label translate="true">Show Read More Link</label>
+				<description translate="true">Here we can set Read More Link.</description>
+				
+        </parameter>
+			
+		<parameter name="wd_post_show_view_all" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="38">
+                <label translate="true">Show View All Button</label>
+				<description translate="true">Select Yes for display View All Button.</description>
+        </parameter>
+			<parameter name="wd_post_show_view_all_url" xsi:type="text" visible="true" required="true" sort_order="40">
+                <label translate="true">View All Relative URL</label>
+				<description translate="true">Here we can set View All Relative URL.</description>
+				<depends>
+                    <parameter name="wd_post_show_view_all" value="1" />
+                </depends>
+		</parameter>
+	</parameters>
+        <containers>
+            <container name="sidebar.main">
+                <template name="default" value="list_default" />
+            </container>
+            <container name="content">
+                <template name="grid" value="default" />            
+            </container>
+            <container name="sidebar.additional">
+                <template name="default" value="list_default" />
+            </container>
+        </containers>
+    </widget>
+</widgets>

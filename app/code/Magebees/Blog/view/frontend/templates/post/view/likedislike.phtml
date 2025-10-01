@@ -1,0 +1,62 @@
+<?php 
+    if($block->getPost()->getPostId()):
+    $postId = $block->getPost()->getPostId();
+?>
+<div class="mgblog-post-vote">
+    <span class="amblog-vote"><?php echo __('Did you like this post?');?>  </span>
+    <div class="mgblog-options">
+        <div class="mgblog-plus">
+            <span class="mgblog-icon postvotes" id="likes">Like</span>
+            <span class="mgblog-like-count"><?php echo $block->getLikesCount($postId);?></span>
+        </div>
+        <div class="mgblog-minus">
+            <span class="mgblog-icon postvotes" id="dislikes">DisLike</span>
+            <span class="mgblog-dislike-count"><?php echo $block->getDisLikesCount($postId);?></span>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    require(["jquery"],function(jQuery) {
+        jQuery(document).ready(function() {
+			var user_action = null;
+			var customurl = "<?php echo $this->getLikeUrl()?>";
+			jQuery(".postvotes").click(function(){
+				var id = jQuery(this).attr('id');
+				if(id=='likes')
+				{
+					user_action = 'plus';
+				}else if(id=='dislikes'){
+				user_action = 'minus';
+				}
+  				
+				jQuery.ajax({
+                url: customurl,
+                type: 'POST',
+                dataType: 'json',
+				showLoader: true,
+                data: {
+                    post_id: "<?php echo $postId?>",
+                    action: user_action,
+                },
+            complete: function(response) {  
+				var like_count = response.responseJSON.like_count;
+                var dis_like_count = response.responseJSON.dis_like_count;
+				jQuery('.mgblog-like-count').html(like_count);
+				jQuery('.mgblog-dislike-count').html(dis_like_count);
+				
+				
+                },
+                error: function (xhr, status, errorThrown) {
+                    console.log('Error happens. Try again.');
+                }
+            });
+			}); 
+        });
+    });
+</script>
+<?php
+endif;
+
+?>
+

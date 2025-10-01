@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<testimonial>			
+			<setting>			
+				<enable>1</enable>					
+				<enable_toplink>1</enable_toplink>
+				<toplink_title>Customer Testimonial</toplink_title>						
+			</setting>		
+			<frontend_settings>		
+				<title_list_testimonial>Customer Testimonial</title_list_testimonial>	
+				<title_form_testimonial>Write Your Own Testimonial</title_form_testimonial>	
+				<title_slider>Testimonial</title_slider>		
+				<per_page_value>5,10,15,20</per_page_value>		
+				<profile_img_width>100</profile_img_width>		
+				<profile_img_height>100</profile_img_height>		
+				<autoplay_slider>1</autoplay_slider>		
+				<slider_pagination>1</slider_pagination>		
+				<nav_arrow>1</nav_arrow>		
+				<url_key>testimonial</url_key>		
+				<allow_submit>1</allow_submit>		
+				<enable_captcha>1</enable_captcha>	
+				<slider_mode>0</slider_mode>		
+				<slider_delay>5000</slider_delay>	
+				<content_length>100</content_length>	
+				<display_email>1</display_email>	
+				<display_address>1</display_address>
+				<display_datetime>1</display_datetime>
+				<display_company>1</display_company>
+				<display_website>1</display_website>
+				<display_profile_img>1</display_profile_img>		
+				<display_rating>1</display_rating>	
+				<display_video>1</display_video>
+				<autoplay_video>0</autoplay_video>
+				<submission_msg>Thank you For Submit Testimonial</submission_msg>
+				<approve_testimonial>0</approve_testimonial>
+			</frontend_settings>		
+			<admin_email_settings>			
+				<enable_mail_post>1</enable_mail_post>
+				<post_template>testimonial_admin_email_settings_post_template</post_template>
+				<send_to>default</send_to>			
+				<admin_email_subject>New Testimonial</admin_email_subject>					
+			</admin_email_settings>				
+			<client_email_settings>			
+				<enable_mail_approve>1</enable_mail_approve>				
+				<approve_template>testimonial_client_email_settings_approve_template</approve_template>						
+				<client_email_subject>Approved Testimonial</client_email_subject>	
+			</client_email_settings>			
+		</testimonial>
+    </default>
+</config>

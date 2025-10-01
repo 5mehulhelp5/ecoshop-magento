@@ -1,0 +1,41 @@
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+	  $storeId = $poco_helper->getStoreId();
+	$animation = $poco_helper->getThemeLayout('animation',$storeId)? true:false; 
+	$animation_class = $animation?"wow animate__fadeIn":" ";
+	$footerConfig =$poco_helper->getConfigGroup('footer',$storeId);
+	$cartStyle = $poco_helper->getConfigValue('general','style','shoppingcart',$storeId);
+	$custom_footer_style = array_key_exists('custom_footer_style', $footerConfig) ? $footerConfig['custom_footer_style'] : null;
+	$custom_footer_style_class = array();
+	$custom_footer_style_class['custom-footer-1'] = 'cstm_ftr_1';
+	$custom_footer_style_class['custom-footer-2'] = 'cstm_ftr_2';
+	$custom_footer_style_class['custom-footer-3'] = 'cstm_ftr_3';
+	$custom_footer_style_class['custom-footer-4'] = 'cstm_ftr_4';
+	$custom_footer_style_class['custom-footer-5'] = 'cstm_ftr_5';
+	$custom_footer_style_class['custom-footer-6'] = 'cstm_ftr_6';
+	$custom_footer_style_class['custom-footer-7'] = 'cstm_ftr_7';
+	$custom_footer_style_class['custom-footer-8'] = 'cstm_ftr_8';
+	$custom_footer_style_class['custom-footer-9'] = 'cstm_ftr_9';
+	$custom_footer_style_class['custom-footer-10'] = 'cstm_ftr_10';
+	$custom_footer_style_class['custom-footer-11'] = 'cstm_ftr_11';
+	$custom_footer_style_class['custom-footer-12'] = 'cstm_ftr_12';
+	$custom_footer_style_class['custom-footer-13'] = 'cstm_ftr_13';
+	$custom_footer_style_class['custom-footer-14'] = 'cstm_ftr_14';
+	$custom_footer_style_class['custom-footer-15'] = 'cstm_ftr_15';
+	$custom_footer_style_class['custom-footer-16'] = 'cstm_ftr_16';
+	$custom_footer_style_class['custom-footer-17'] = 'cstm_ftr_17';
+	$custom_footer_style_class['custom-footer-18'] = 'cstm_ftr_18';
+	?>
+	
+	<?php if($custom_footer_style):?>
+	<div class="custm_ftr <?php if($cartStyle==2):echo ' flyout_on '; endif; ?><?php echo $animation_class; ?> <?php if(isset($custom_footer_style_class[$custom_footer_style])): echo $custom_footer_style_class[$custom_footer_style]; endif;?>" <?php if($animation): ?>data-wow-delay="0.1s" <?php endif;?>>
+	<?php 
+	$footer_html = $poco_helper->getBlockContentByIdentifier($custom_footer_style);
+	if($footer_html):
+	echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($custom_footer_style)->toHtml();
+	endif; ?>
+	</div>
+	<?php 	endif; 	?>
+	
+	
+			
+			

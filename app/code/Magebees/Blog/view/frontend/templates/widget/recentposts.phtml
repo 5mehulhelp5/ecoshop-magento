@@ -1,0 +1,24 @@
+<?php 
+if( $this->configuration->isEnableBlogModule()):
+if($block->getPostcount()>0):
+$recent_count = $block->getPostcount();
+$recentPostsCollection = $block->getRecentPosts($recent_count);
+?>
+<div class="mb-block widget block mb-recent-post-list">
+	<div class="block-title">
+	    <strong><?php echo $block->escapeHtml(__($block->getTitle())); ?></strong>
+	</div>
+	<ul>
+		<?php foreach ($recentPostsCollection as $_post): ?>
+			<?php 	
+				$_postUrl =  $block->getPosturl($_post);
+				$_postName = $block->escapeHtml($_post->getTitle(), null, true);
+			?>
+			<li class="recent-post-list-title" id="post-<?php echo $_post->getId() ?>">
+				<a class="post-item-link"	href="<?php echo $_postUrl ?>"><?php echo $_postName; ?></a>
+			</li>
+		<?php endforeach; ?>
+	</ul>
+</div>
+<?php endif; ?>
+<?php endif; ?>

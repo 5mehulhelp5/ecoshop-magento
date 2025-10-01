@@ -1,0 +1,39 @@
+<?php
+	$listing_id = $this->getData('wd_list');
+	$wd_spacing = $this->getData('wd_spacing');
+	$wd_bottom_spacing = $this->getData('wd_bottom_spacing');
+	$wd_load_ajax = $this->getData('wd_load_ajax');
+	$bg_image = $this->getData('wd_bgimage');
+	$bg_color = $this->getData('wd_bgcolor');
+	$view_more_position = $this->getData('wd_view_more_position');
+	
+	$page_param = 'list'.$listing_id;
+	$param = $this->getRequest()->getParam($page_param);
+	if($param){
+		$url = $block->getUrl('prodlist/index/ajaxload').'?'.$page_param.'='.$param;
+	}else{
+		$url = $block->getUrl('prodlist/index/ajaxload');
+	}
+	$res_div = '#productListingMain'.$listing_id;
+	$loading_div = '#loadingImage'.$listing_id;
+	$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+	$loaderUrl = $poco_helper->getLoadingIcon();  
+
+$proListingWidgetData = $this->getData(); 
+if(count($proListingWidgetData)>0):	
+$proListingWidget = array();
+$ajaxLoadingData = array();
+$ajaxLoadingData['url'] = $url;
+$ajaxLoadingData['listing_id'] = $listing_id;
+$ajaxLoadingData['res_div'] = $res_div;
+$ajaxLoadingData['loading_div'] = $loading_div;
+$ajaxLoadingData['loaderUrl'] = $loaderUrl;
+$ajaxLoadingData['wd_load_ajax'] = $wd_load_ajax;
+$ajaxLoadingData['wd_view_more_position'] = 	$view_more_position;
+
+$proListingWidget['ajaxloading'] = (array_merge($proListingWidgetData,$ajaxLoadingData));
+?>
+<div id="productListingMain<?php echo $listing_id; ?>" class="ajx_loader" data-mage-init='<?php echo $poco_helper->getJsonEncode($proListingWidget);?>'>
+<div id="loadingImage<?php echo $listing_id; ?>"></div>
+</div>
+<?php endif;?>

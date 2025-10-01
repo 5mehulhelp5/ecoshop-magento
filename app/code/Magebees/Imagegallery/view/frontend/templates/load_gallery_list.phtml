@@ -1,0 +1,82 @@
+<?php 
+	$randon_number = rand();	
+	$res_div = '#galleryThumbanail'.$randon_number;
+	$url = $block->getUrl('imagegallery/index/ajaxload');
+	$galleryThumbanailWidgetData = $block->getData(); 
+	$template = $galleryThumbanailWidgetData['template'];
+	$wd_load_ajax = $galleryThumbanailWidgetData['wd_load_ajax'];
+	
+	$wd_bgcolor = array_key_exists("wd_bgcolor",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_bgcolor'] ) : false;
+	$wd_bgimage = array_key_exists("wd_bgimage",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_bgimage'] ) : false;
+	$wd_spacing = array_key_exists("wd_spacing",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_spacing'] ) : false;
+	$wd_bottom_spacing = array_key_exists("wd_bottom_spacing",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_bottom_spacing'] ) : false;
+	$wd_show_heading = array_key_exists("wd_show_heading",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_show_heading'] ) : false;
+	$wd_heading = array_key_exists("wd_heading",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_heading'] ) : false;
+	$wd_show_description = array_key_exists("wd_show_description",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_show_description'] ) : false;
+	$no_of_image = array_key_exists("no_of_image",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['no_of_image'] ) : false;
+	$wd_slider = array_key_exists("wd_slider",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_slider'] ) : false;
+	$wd_items_per_slide = array_key_exists("wd_items_per_slide",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_items_per_slide'] ) : false;
+	$wd_autoscroll = array_key_exists("wd_autoscroll",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_autoscroll'] ) : false;
+	$wd_slide_auto_height = array_key_exists("wd_slide_auto_height",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_slide_auto_height'] ) : false;
+	$wd_navarrow = array_key_exists("wd_navarrow",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_navarrow'] ) : false;
+	$wd_pagination = array_key_exists("wd_pagination",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_pagination'] ) : false;
+	$wd_pagination_type = array_key_exists("wd_pagination_type",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_pagination_type'] ) : false;
+	$wd_infinite_loop = array_key_exists("wd_infinite_loop",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_infinite_loop'] ) : false;
+	
+	$wd_scrollbar = array_key_exists("wd_scrollbar",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_scrollbar'] ) : false;
+	$wd_grap_cursor = array_key_exists("wd_grap_cursor",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_grap_cursor'] ) : false;
+	$wd_description = array_key_exists("wd_description",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_description'] ) : false;
+	$wd_items_per_row = array_key_exists("wd_items_per_row",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_items_per_row'] ) : false;
+	$wd_auto_play_delaytime = array_key_exists("wd_auto_play_delaytime",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_auto_play_delaytime'] ) : false;
+	$wd_autoplayoff = array_key_exists("wd_autoplayoff",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['wd_autoplayoff'] ) : false;
+	$store_id = array_key_exists("store_id",$galleryThumbanailWidgetData) ? ($galleryThumbanailWidgetData['store_id'] ) : false;
+	
+	?>
+<div id="galleryThumbanail<?php echo $randon_number; ?>" class="ajx_loader"></div>
+<script type="text/javascript">
+    require(['jquery'], function($){
+        $(document).ready(function() {
+			setTimeout(function(){
+				$.ajax({
+                    context: '<?= $res_div ?>',
+                    url: '<?= $url ?>',
+                    type: "POST",
+                    data: {
+					'wd_spacing':'<?= $wd_spacing ?>',
+					'wd_bottom_spacing':'<?= $wd_bottom_spacing ?>',
+					'wd_bgcolor':'<?= $wd_bgcolor ?>',
+					'wd_bgimage':'<?= $wd_bgimage ?>',
+					'wd_show_heading':'<?= $wd_show_heading ?>',
+					'wd_heading':'<?= $wd_heading ?>',
+					'wd_show_description':'<?= $wd_show_description ?>',
+					'wd_description':'<?= $wd_description ?>',
+					'no_of_image':'<?= $no_of_image ?>',
+					'wd_slider':'<?= $wd_slider ?>',
+					'wd_items_per_slide':'<?= $wd_items_per_slide ?>',
+					'wd_items_per_row':'<?= $wd_items_per_row ?>',
+					'wd_autoscroll':'<?= $wd_autoscroll ?>',		
+					'wd_auto_play_delaytime':'<?= $wd_auto_play_delaytime ?>',
+					'wd_autoplayoff':'<?= $wd_autoplayoff ?>',
+					'wd_slide_auto_height':'<?= $wd_slide_auto_height ?>',
+					'wd_navarrow':'<?= $wd_navarrow ?>',	
+					'wd_pagination':'<?= $wd_pagination ?>',		
+					'wd_pagination_type':'<?= $wd_pagination_type ?>',		
+					'wd_infinite_loop':'<?= $wd_infinite_loop ?>',
+					'wd_scrollbar':'<?= $wd_scrollbar ?>',
+					'wd_grap_cursor':'<?= $wd_grap_cursor ?>',
+					'template':'<?= $template ?>',
+					'store_id':'<?= $store_id ?>',
+					},
+                }).done(function (data) {
+					
+					if($('<?= $res_div ?>').hasClass('ajx_loader'))
+					{
+						 $('<?= $res_div ?>').removeClass('ajx_loader');
+					}
+                    $('<?= $res_div ?>').html(data.result);
+					 
+                });
+            },2000);
+        });
+    });
+</script>

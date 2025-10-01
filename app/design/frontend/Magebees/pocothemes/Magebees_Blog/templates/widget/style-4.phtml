@@ -1,0 +1,394 @@
+<?php 
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$configuration = $this->helper('Magebees\Blog\Helper\Configuration');
+$blogHelper = $this->helper('Magebees\Blog\Helper\Data');
+$blogurl = $objectManager->create('\Magebees\Blog\Model\Url');
+$_blogBlock = $objectManager->get('\Magebees\Blog\Block\AbstractPostList');
+
+if( $configuration->isEnableBlogModule()): ?>
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); ?>
+<?php $show_blog_tag = true;
+	$show_blog_social_share = true;
+	$show_blog_comment = true;
+	$show_blog_author = true;
+ ?>
+	<?php  
+		$post_type = $block->getWdPostType();
+		$postCollection = $_blogBlock->getPostCollection();
+		$postCollectionLimit = $block->getWdPostLimit();
+		if($post_type=='featured') {
+			$postCollection->addFieldToFilter('is_featured', array('eq'=> 1));
+		}elseif($post_type=='latest'){
+			$postCollection->addFieldToFilter('is_recent_posts_skip', array('eq' => 1));
+			//$postCollection->setOrder('creation_time','ASC');
+		}elseif($post_type=='custom'){
+			$post_ids = $block->getWdPostIds();
+			if($post_ids){
+				$postCollection->addFieldToFilter('post_id', array('in'=> $post_ids));
+			}
+		}elseif($post_type=='product-related-post'){
+			if($this->_registry('current_product')){
+				$product = $this->_registry('current_product');//get current product
+				$product_Id = $product->getId();
+				$postCollection->addFieldToFilter('products_id', array('finset'=> $product_Id));
+			}
+		}
+		$sort_order = $block->getWdSortBy();
+		if(($sort_order==1)&&($post_type!='latest')){
+			$postCollection->setOrder('position', 'desc');
+		}elseif(($sort_order==2)&&($post_type!='latest')){
+			$postCollection->setOrder('title', 'desc');
+		}elseif(($sort_order==3)&&($post_type!='latest')){
+			$postCollection->getSelect()->orderRand();
+		}elseif($post_type=='latest'){
+			$postCollection->setOrder('creation_time', 'desc');
+		}else{
+			$postCollection->setOrder('creation_time', 'desc');
+		}
+		
+		if($postCollectionLimit){
+			$postCollection->setPageSize($postCollectionLimit);		
+		}
+		
+		$postCollection->load();
+		$bg_color = $this->getWdBgcolor();
+		if($this->getWdBgimage()){
+	    	$bg_image_url = $poco_helper->getMediaUrl().$this->getWdBgimage();
+	    	$bg_image = 'background-image: url('.$bg_image_url.'); background-repeat: no-repeat; background-position: center center; cover; background-size: cover;';
+		}else{
+			$bg_image = '';
+		}
+$itemsCount = $postCollection->getSize();
+$spacing_class = '';
+$spacing_class .= $this->getWdSpacing()?'sections-spacing ':'';
+$spacing_class .= $this->getWdBottomSpacing()?'section-bottom-spacing':'';
+$rtl = $poco_helper->getThemeLayout('rtl',$poco_helper->getStoreId())? true:false; 
+$slider = $block->getWdSlider()?$block->getWdSlider():0;
+$items_per_slide = $block->getWdItemsPerSlide()?$block->getWdItemsPerSlide():4;
+$autoscroll = $block->getWdAutoscroll()=='1' ? true:false;
+$auto_play_dealytime = $block->getWdAutoPlayDelaytime() ? $block->getWdAutoPlayDelaytime():3000;
+$autoplayoff = $block->getWdAutoPlayoff()=='1' ? true:false;
+$auto_height = $block->getWdSlideAutoHeight()=='1' ? true:false;
+$navarrow = $block->getWdNavarrow()=='1' ? true:false;
+$pagination = $block->getWdPagination()=='1' ? true:false;
+$paginationtype = $block->getWdPaginationType();
+$infinite_loop = $block->getWdInfiniteLoop()=='1' ? true:false;
+$scrollbar = $block->getWdScrollbar()=='1' ? true:false;
+$grap_cursor = $block->getWdGrapCursor()=='1' ? true:false;
+$items_per_row = $block->getWdItemsPerRow() ? $block->getWdItemsPerRow():'4';
+$animation = $poco_helper->getThemeLayout('animation',$poco_helper->getStoreId())? true:false; 
+$animation_class = $animation?"wow animate__fadeIn":" ";
+$slider_class = $slider?"swiper swiper-container":" ";
+$item_class =   $slider?"item swiper-slide":"item";
+$random_number = rand();
+$slider_id = $block->getWdSlider()?"magebees-blog-slider-".$random_number:$random_number;
+			
+$shop_now = $this->getData('wd_shopnow')?$this->getData('wd_shopnow'):0;
+$shop_now_txt = $this->getData('wd_shopnow_text')?$this->getData('wd_shopnow_text'):'Shop Now';
+
+$customLinkEnabled = $this->getData('wd_custom_link');
+$customTitle = $this->getData('wd_custom_title');
+$customLinkTitle = $this->getData('wd_custom_link_title');
+$customLinkUrl = $this->getData('wd_custom_link_url');
+	
+if($slider):
+$swiper_data_init = array();
+			$swiper_data_init['slider_id'] = $slider_id;
+			$swiper_data_init['autoHeight'] = $auto_height;
+			$swiper_data_init['slidesPerView'] = 1;
+			$swiper_data_init['spaceBetween'] = 10;
+			$swiper_data_init['speed'] = 600;
+			$swiper_data_init['a11y'] = false;
+			$swiper_data_init['lazy']['loadPrevNext'] = true;
+			$swiper_data_init['lazy']['loadPrevNextAmount'] = $itemsCount;
+			$swiper_data_init['loop'] = $infinite_loop;
+			$swiper_data_init['grabCursor'] = $grap_cursor;
+		if($block->getWdAutoscroll()):
+			$swiper_data_init['autoplay']['delay'] = $auto_play_dealytime;
+			$swiper_data_init['autoplay']['disableOnInteraction'] = false;
+			$swiper_data_init['autoplay']['pauseOnMouseEnter'] = $autoplayoff;
+		endif;
+		if($block->getWdScrollbar()):
+		$swiper_data_init['scrollbar']['el'] = "#swiper-scrollbar-".$random_number;
+		$swiper_data_init['scrollbar']['hide'] = false;
+		endif;
+		if($paginationtype=='default'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		elseif($paginationtype=='dynamic'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		elseif($paginationtype=='progress'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		elseif($paginationtype=='fraction'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		elseif($paginationtype=='custom'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		endif;
+		if($navarrow):
+		$swiper_data_init['navigation']['nextEl'] = "#swiper-button-next-".$random_number;
+		$swiper_data_init['navigation']['prevEl'] = "#swiper-button-prev-".$random_number;
+		endif;	
+		$swiper_data_init['breakpoints']['0']['slidesPerView'] = 1;
+		$swiper_data_init['breakpoints']['0']['spaceBetween'] = 20;
+		$swiper_data_init['breakpoints']['480']['slidesPerView'] = 2;
+		$swiper_data_init['breakpoints']['480']['spaceBetween'] = 20;
+		$swiper_data_init['breakpoints']['639']['slidesPerView'] = 2;
+		$swiper_data_init['breakpoints']['639']['spaceBetween'] = 30;
+		$swiper_data_init['breakpoints']['768']['slidesPerView'] = 3;
+		$swiper_data_init['breakpoints']['768']['spaceBetween'] = 30;
+		$swiper_data_init['breakpoints']['1200']['slidesPerView'] = $items_per_slide;
+		$swiper_data_init['breakpoints']['1200']['spaceBetween'] = 30;
+		endif;
+?>
+
+<?php if(($bg_image)||($bg_color)): ?>
+<style type="text/css">
+	<?php echo '#home-blog-post-'.$random_number. " { ".$bg_image."; background-color: ".$bg_color."; } " ?>
+	
+</style>
+<?php endif; ?>
+<div id="<?php echo 'home-blog-post-'.$random_number;?>" class="mb-post-grid-block home-blog-post home-blog-post-style-4 <?php echo $spacing_class ?>">
+	<div class="container">
+	<?php if($postCollection->getSize()>0): ?>
+		<?php if($animation): ?><div class="<?php echo $animation_class ?>" data-wow-delay="0.3s"><?php endif;?>
+			<?php if($block->getWdShowHeading()):?>
+				<div class="section-title">
+					<h2 class="title"><?php echo __(html_entity_decode($block->escapeHtml($block->getWdHeading()))); ?> </h2>
+					<?php if($block->getWdShowDescription()):?>
+						<div class="sort-details">
+							<p class="sort-detail">
+							<?php echo __(html_entity_decode($block->escapeHtml($block->getWdDescription()))); ?> 
+							</p>
+						</div>
+					<?php endif;?>
+				</div>
+			<?php endif; ?>
+			<?php if($customLinkEnabled): ?>
+					<div class="section-title">
+							<h2 class="title"><?php echo __($customTitle); ?></h2>
+							<a href="<?php echo $poco_helper->getUrlByKey($customLinkUrl);?>" title="<?php echo $customLinkTitle;?>"><?php echo $customLinkTitle;?></a>
+					</div>
+			<?php endif;?>
+		<?php if($animation): ?></div><?php endif;?>
+		<?php if($slider): ?>
+			<div class="position-relative">
+			<div id="<?php echo $slider_id; ?>" data-swiper='<?php echo json_encode($swiper_data_init);?>' class="<?php echo $slider_class; ?> <?php if($paginationtype): ?>show-pagination<?php endif;?> <?php if($scrollbar): ?>show-scrollbar<?php endif;?>">
+			<div class="swiper-wrapper <?php if($grap_cursor): ?>grab-cursor<?php endif;?>" <?php if($rtl): ?> dir="rtl" <?php endif;?>>
+			<?php else: ?>
+			<ul class="flx_pst post-listing-<?php echo $items_per_row; ?>">
+		<?php endif;?>
+		
+		<?php 
+			$width = $block->getFeatureImageWidth()?$block->getFeatureImageWidth():'250';
+			$height = $block->getFeatureImageHeight()?$block->getFeatureImageHeight():'250';
+			$resize_type = $block->getResizeType();
+			if(!$resize_type):
+				$resize_type = 'resizeonly';
+			endif;
+		?>
+		<?php foreach($postCollection as $_post): ?>
+			<?php 
+				$_postUrl = $blogurl->getBlogPosturl($_post, 'post');
+				$_postName = $block->escapeHtml($_post->getTitle(), null, true);
+
+				$featuredImageUrl = null;
+				if($_post->getFeaturedImg()):
+					$image_name = $_post->getFeaturedImg();
+					$featuredImageUrl = $_blogBlock->getFeaturedImageResize($image_name,$width,$height,$resize_type);
+				endif;
+			?>
+			<?php if($slider): ?>
+			<div class="<?php echo $item_class; ?> <?php echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.5s" <?php endif;?>>
+			<?php else: ?>
+			<li class="<?php echo $item_class; ?> <?php echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.5s" <?php endif;?>>
+			<?php endif;?>
+				<div class="post_in">
+				<?php if($block->getWdPostShowFeatureImage()): ?>
+					<div class="post-image">
+						<a href="<?php echo $block->escapeHtml($_postUrl);?>" title="<?php echo $block->escapeHtml($_post->getTitle(), null, true);?>"> 
+							<img <?php if($slider): ?> class="swiper-lazy" <?php endif; ?> loading="lazy" src="<?php echo $block->escapeHtml($featuredImageUrl);?>" alt="<?php echo $block->escapeHtml($_post->getTitle(), null, true);?>" title="<?php echo $block->escapeHtml($_post->getTitle(), null, true);?>" width="<?php echo $width; ?>" height="<?php echo $height; ?>"/>
+							<?php if($slider): ?>
+								<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+							<?php endif; ?>
+						</a> 
+						<?php if($block->getWdPostReadmore()): ?>
+						<div class="rd_mr">
+							<a href="<?php echo $block->escapeHtml($_postUrl);?>" title="<?php echo $block->escapeHtml($_postName) ?>" class="mb-post-readmore btn-small action secondary d-flex jcb" rel="nofollow">
+								<span><?php echo __('Read more') ?></span>
+								<span class="icon"><svg xmlns="https://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
+							</a>
+						</div>
+						<?php endif;?>
+					</div> 
+			  	<?php endif; ?>
+				
+				<div class="detail">
+					<div class="d_fl f_wr">
+						<div class="pst_ttl"><a href="<?php echo $block->escapeHtml($_postUrl) ?>" title="<?php echo $block->escapeHtml($_postName) ?>"><?php echo $block->escapeHtml($_postName) ?></a></div>
+						<div class="pst_meta">
+							<div class="d_fl alc jcb">
+								<?php if ($_categoriesCount = $_blogBlock->getCategoriesCount($_post)) { ?>
+									<?php if($block->getWdCategory()): ?>
+										<div class="meta-item mb-post-categories">
+											<span class="label"><?php echo __('Categories:') ?></span>
+											<?php $cat_count = 0; 
+												$post_cat_ids = $postCategoryIds = $_post->getCategoryIds();
+													foreach($_blogBlock->getBlockCategories($post_cat_ids) as $ct) { $cat_count++; ?>
+												<?php if($cat_count > 1){ ?>	
+												<a class="hide-cat-more" title="<?php echo $block->escapeHtml($ct['title']) ?>" href="<?php echo $ct['url']; ?>"><?php echo $block->escapeHtml($ct['title']) ?><?php if ($cat_count != $_categoriesCount) { ?>, <?php } ?></a>
+											<?php }else{ ?>
+											<a class="show-cat" title="<?php echo $block->escapeHtml($ct['title']) ?>" href="<?php echo $ct['url']; ?>">
+												<?php echo $block->escapeHtml($ct['title']) ?>
+												<?php if ($cat_count != $_categoriesCount) { ?>, <?php } ?>
+											</a>
+									<?php } ?>
+								<?php } ?>
+									<?php if($_categoriesCount > 1):?><span class="show-more-cat showmorecat" rel="nofollow"><?php echo __(' More'); ?></span><?php endif;?>
+								</div>
+								<?php endif;?>
+								<?php } ?>
+
+								<?php if(($block->getWdAuthor())&&($show_blog_author)):
+									if ($_authorId = $_post->getAuthorId()) { 
+										$authorInfo = $_blogBlock->getPostAuthorInfo($_authorId);?>
+										<div class="post-user meta-item post-detail">
+												<?php if($_blogBlock->EnableAuthorLink()):?>
+													<?php echo __('BY:') ?>  <a title="<?php echo $block->escapeHtml($authorInfo['name']) ?>" href="<?php echo $authorInfo['url']; ?>">
+												<?php endif; ?>
+												<?php echo $block->escapeHtml($authorInfo['name']) ?>
+												<?php if($_blogBlock->EnableAuthorLink()):?>
+												</a>
+												<?php endif; ?>
+											</div>
+										<?php } ?>
+								<?php endif; ?>
+							</div>
+
+							<div class="d_fl alc jcb">
+								<div class="post-date post-detail meta-item">
+									<?php //echo $block->getCreationDate($_post);?>
+									<?php //echo $block->getCreationDate($_post);
+									$CreationTime = date_create($_post->getCreationTime());
+									$formattedCreationTime = date_format($CreationTime,"M d, Y");
+									?>
+									<span><?php echo $formattedCreationTime; ?></span>
+								</div>
+								<?php 
+								if(($block->getWdTags())&&($show_blog_tag)):
+								$_posttags = $_blogBlock->getPostTags($_post);
+								if ($_posttags->getSize()>0) { $_tagsTotalCount = $_posttags->getSize(); ?>
+								<div class="meta-item mb-post-tags">
+									<span class="label"><?php echo __('Tags:') ?></span>
+									<?php $tag_count = 0; foreach($_posttags as $tag) { $tag_count++; ?>
+										<?php if($tag_count > 1){ ?>	
+										<a class="hide-tag-more" title="<?php echo $block->escapeHtml($tag->getTitle()) ?>" href="<?php echo $_blogBlock->getTagurl($tag); ?>">
+											<?php echo $block->escapeHtml($tag->getTitle()) ?>
+										<?php if ($tag_count != $_tagsTotalCount) { ?>, <?php } ?>
+										</a>
+										<?php }else{ ?>
+										<a class="show-tag" title="<?php echo $block->escapeHtml($tag->getTitle()) ?>" href="<?php echo $_blogBlock->getTagurl($tag); ?>" rel="nofollow">
+											<?php echo $block->escapeHtml($tag->getTitle()) ?>
+										<?php if ($tag_count != $_tagsTotalCount) { ?>, <?php } ?>
+										</a>
+										<?php } ?>
+									<?php } ?>
+									<?php if($tag_count > 1):?>
+									<span class="show-more-tag showmoretag"><?php echo __(' More'); ?></span>
+									<?php endif;?>
+								</div>
+							<?php } endif; ?>
+							</div>
+
+							<?php 
+									if(($block->getWdCommentCount())&&($show_blog_comment)):
+									if(($_blogBlock->getPostComment($_post)->getSize()) > 0) { ?>
+									<div class="meta-item mb-post-comments">
+										<a title="<?php echo $block->escapeHtml($_postName) ?>" href="<?php echo $_postUrl ?>#post-comments">
+											<?php echo $_blogBlock->getPostComment($_post)->getSize(); ?>
+										</a>
+										<span class="label"><?php echo __('comments') ?></span>
+									</div>
+								<?php } endif; ?> 
+
+							<?php if(($block->getWdAddThis())&&($show_blog_social_share)):?>
+							<div class="addthis_toolbox addthis_default_style meta-item" addthis:url="<?php echo $_postUrl ?>" addthis:title="<?php echo $_postName; ?>"
+								<?php if ($featuredImageUrl) { ?>
+									addthis:media="<?php echo $featuredImageUrl ?>"
+								<?php } ?>>
+								<a class="addthis_button_facebook"></a>
+								<a class="addthis_button_twitter"></a>
+								<a class="addthis_button_email"></a>
+								<a class="addthis_button_compact"></a>
+							</div>
+							<?php endif;?>
+						</div>
+					</div>
+
+					<?php if($block->getWdPostContent()):?>
+						<div class="clearfix mb-post-excerpt">
+							<?php 
+								$post_short_desc = $_post->getContentHeading();
+								if(!$_post->getContentHeading())
+								{
+									$post_short_desc = $_post->getContent();
+								}
+								$post_short_desc_length = $block->getWdPostContentLength();
+								if($block->getWdPostContentLength()):
+								$post_short_desc = strip_tags($post_short_desc);
+								if (strlen($post_short_desc) > $post_short_desc_length) {
+								$post_short_desc_cut = substr($post_short_desc, 0, $post_short_desc_length);
+									$post_short_desc_cut_end = strrpos($post_short_desc_cut, ' ');
+									$post_short_desc = $post_short_desc_cut_end? substr($post_short_desc_cut, 0, $post_short_desc_cut_end) : substr($post_short_desc_cut, 0);
+									$post_short_desc .= '...'; 
+								}
+								echo $block->escapeHtml($post_short_desc);
+								endif;
+							?>
+						</div>
+					<?php endif;?>
+				</div>
+				</div>
+			<?php if($slider): ?>
+				</div>
+			<?php else: ?>
+			</li>
+			<?php endif;?>
+			
+		<?php endforeach; ?>
+		
+		<?php if($slider): ?>
+		</div><!--End div swiper-wrapper-->
+			<?php if($pagination): ?>
+			<!-- Add Pagination -->
+			<div id="<?php echo "swiper-pagination-".$random_number;?>" class="swiper-pagination"></div>
+			<?php endif; ?>
+			<?php if($scrollbar): ?>
+			<!-- Add Scrollbar -->
+			<div id="<?php echo "swiper-scrollbar-".$random_number;?>" class="swiper-scrollbar"></div>	
+			<?php endif; ?>
+		<!--End div swiper-->
+		<?php if($navarrow): ?>
+			<!-- Add Arrows -->
+			<div id="<?php echo "swiper-button-next-".$random_number;?>" class="swiper-button-next"></div>
+			<div id="<?php echo "swiper-button-prev-".$random_number;?>" class="swiper-button-prev"></div>
+		<?php endif; ?>
+		</div><!--End div position-relative-->
+	
+		<?php else: ?>
+		</ul>
+		<?php endif;?>
+		<?php if($block->getWdPostShowViewAll()):
+			$view_all_text = $block->getWdPostViewAllText()?$block->getWdPostViewAllText():'View All';
+		?>
+		<div class="view-more <?php echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.5s" <?php endif;?>><a href="<?php echo $blogHelper->getViewAllUrl($block->getWdPostShowViewAllUrl());?>" title="<?php echo __('View All'); ?> " class="readMore action primary"><?php echo __(html_entity_decode($block->escapeHtml($view_all_text))); ?> </a></div>
+		<?php endif; ?>
+		<?php else: ?>	
+		<?php endif; ?>
+	</div>
+</div>
+
+<?php endif; ?>

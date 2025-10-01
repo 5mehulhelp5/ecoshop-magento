@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+		<add id="Magebees_TodayDealProducts::todaydealpro_content" title="MageBees Today's Deal Products" module="Magebees_TodayDealProducts" sortOrder="50" parent="Magento_CatalogRule::promo" resource="Magebees_TodayDealProducts::todaydealpro_content"  action="todaydealpro/dealproducts" />
+    </menu>
+</config>

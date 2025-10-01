@@ -1,0 +1,8 @@
+<?php
+$richSnippetData = $block->getRichSnippetData();
+//print_r($richSnippetData);
+if ($richSnippetData): ?>
+    <script type="application/ld+json">
+        <?= json_encode($richSnippetData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?>
+    </script>
+<?php endif; ?>

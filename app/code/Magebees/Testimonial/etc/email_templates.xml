@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="testimonial_admin_email_settings_post_template" label="Email Template for Admin on New Testimonial" file="new_testimonial.html" type="html" module="Magebees_Testimonial" area="frontend"/>	
+	<template id="testimonial_client_email_settings_approve_template" label="Email Template for Client on Approve Testimonial" file="approve_testimonial.html" type="html" module="Magebees_Testimonial" area="frontend"/></config>

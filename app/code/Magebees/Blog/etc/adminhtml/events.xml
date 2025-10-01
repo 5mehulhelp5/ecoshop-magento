@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="magebees_blog_tag_url">
+        <observer name="tag_url_update" instance="Magebees\Blog\Observer\Tagurl" />
+    </event>
+	<event name="magebees_blog_category_url">
+        <observer name="category_url_update" instance="Magebees\Blog\Observer\Categoryurl" />
+    </event>
+	<event name="magebees_blog_post_url">
+        <observer name="post_url_update" instance="Magebees\Blog\Observer\Posturl" />
+    </event>
+	<event name="magebees_blog_url_check">
+        <observer name="post_url_update" instance="Magebees\Blog\Observer\Urlrewrite" />
+    </event>
+	<event name="magebees_blog_rewrite_url_delete">
+        <observer name="url_remove" instance="Magebees\Blog\Observer\Urlrewriteremove" />
+    </event>
+</config>
+

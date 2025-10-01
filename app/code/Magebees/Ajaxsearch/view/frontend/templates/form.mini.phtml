@@ -1,0 +1,150 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php
+/** @var $block \Magento\Framework\View\Element\Template */
+/** @var $helper \Magento\Search\Helper\Data */
+$helper = $this->helper('Magento\Search\Helper\Data');
+$SearchHelper = $this->helper('\Magebees\Ajaxsearch\Helper\Data');
+$search_block=$block->getLayout()->createBlock('\Magebees\Ajaxsearch\Block\Searchbox');
+$cat_filter_config=$search_block->getCatFilterConfig();
+$cat_config=$search_block->getCatConfig();
+$cms_config=$search_block->getCmsConfig();
+$config=$search_block->getConfig();
+$product_config=$search_block->getProductsConfig();
+$suggest_config=$search_block->getSuggestedConfig();
+$recent_config=$search_block->getRecentConfig();
+$popular_config=$search_block->getPopularConfig();
+$_productCollection = $search_block->getRecentCollection();
+$search_block=$block->getLayout()->createBlock('\Magebees\Ajaxsearch\Block\Searchbox');
+
+if(isset($cat_filter_config['categories']))
+{
+	$categories=$cat_filter_config['categories'];
+	if($categories!=0)
+	{
+		$new= explode(",",$categories);
+	}
+}
+$cat_sel=$SearchHelper->getSelectedCategory();
+$cat_arr=$search_block->getConfigCateArray();	
+$image_url=$block->getViewFileUrl('Magebees_Ajaxsearch::images/ajax_loader.gif'); 		
+?>
+<div class="block block-search ajaxSearch">
+    <div class="block block-title"><strong><?php /* @escapeNotVerified */ echo __('Search'); ?></strong></div>
+    <div class="block block-content">
+        <form class="form minisearch mbAjaxSearch" id="search_mini_form" action="<?php /* @escapeNotVerified */ echo $helper->getResultUrl() ?>" method="get">
+			<label data-role="minisearch-label" for="search" class="label"><span><?php /* @escapeNotVerified */ echo __('Search'); ?></span></label>
+			<div class="control">
+				<?php
+					if($cat_filter_config['enable_cat']) {
+						if(isset($cat_filter_config['categories'])){
+							if(!empty($new))
+							{				?>
+				<div class="select-wrapper">
+					<select id="category" name="category">
+						<option value=""><?php /* @escapeNotVerified */ echo __('All Categories'); ?></option>
+						<?php
+							foreach($cat_arr as $id => $name){
+								$count=0;
+							$cat=$search_block->loadCategory($id);
+							$child=$cat->hasChildren();
+							
+								if($child){
+									$children=$cat->getChildren();
+									$child_array=explode(",",$children);
+									foreach($child_array as $child_arr)
+									{	$child_cat=$search_block->loadCategory($child_arr);
+										if(in_array($child_arr,$new))
+										{$count++;
+										
+										}
+									}
+									if($count>0)
+									{?>
+										<option value="<?php echo $id;?>" <?php if (!in_array($id, $new)) {?> disabled <?php }?>><?php echo $name;?></option>
+									<?php }
+									else if(in_array($id ,$new))
+									{
+										?>
+										<option value="<?php echo $id;?>" <?php if (!in_array($id, $new)) {?> disabled <?php }?>><?php echo $name;?></option>
+									<?php
+									}
+								}	
+else if(in_array($id ,$new))
+{?>
+	<option value="<?php echo $id;?>" <?php if (!in_array($id, $new)) {?> disabled <?php }?>><?php echo $name;?></option>
+<?php }	
+  } ?>
+					</select>
+				</div>
+				<?php } } }?>
+				<div class="searchField">
+					<div class="input-box">
+						<input id="search"
+						   data-mage-init='{"ajaxQuickSearch":{
+								"formSelector":"#search_mini_form",
+								"url":"<?php /* @escapeNotVerified */ echo $block->getUrl('search/ajax/suggest'); ?>",					
+								"destinationSelector":"#search_autocomplete",
+								"selectedCategory":"<?php /* @escapeNotVerified */ echo $cat_sel; ?>",
+								"enableProduct":"<?php /* @escapeNotVerified */ echo $product_config['enable']; ?>",
+								"enableSuggested":"<?php /* @escapeNotVerified */ echo $suggest_config['enable']; ?>",
+								"enablePopular":"<?php /* @escapeNotVerified */ echo $popular_config['enable']; ?>",
+								"enableRecent":"<?php /* @escapeNotVerified */ echo $recent_config['enable']; ?>",
+								"enableCategory":"<?php /* @escapeNotVerified */ echo $cat_config['enable']; ?>",
+								"enableCms":"<?php /* @escapeNotVerified */ echo $cms_config['enable']; ?>",
+								"enableRecentClick":"<?php /* @escapeNotVerified */ echo $recent_config['enable_first_click']; ?>",
+								"suggestTitle":"<?php /* @escapeNotVerified */ echo $suggest_config['title']; ?>",
+								"suggestLimit":"<?php /* @escapeNotVerified */ echo $suggest_config['limit']; ?>",
+								"productTitle":"<?php /* @escapeNotVerified */ echo $product_config['title']; ?>",
+								"categoryTitle":"<?php /* @escapeNotVerified */ echo $cat_config['title']; ?>",
+								"cmsTitle":"<?php /* @escapeNotVerified */ echo $cms_config['title']; ?>",
+								"suggestOrder":"<?php /* @escapeNotVerified */ echo $suggest_config['position']; ?>",
+								"productOrder":"<?php /* @escapeNotVerified */ echo $product_config['position']; ?>",					
+								"rightToLeft":"<?php /* @escapeNotVerified */ echo $config['right_to_left']; ?>",					
+								"minSearchLength":"<?php /* @escapeNotVerified */ echo $config['search_min_length']; ?>"}
+						   }'
+						   type="text"
+						   name="<?php /* @escapeNotVerified */ echo $helper->getQueryParamName() ?>"
+						   value="<?php /* @escapeNotVerified */ echo $helper->getEscapedQueryText() ?>"
+						   placeholder="<?php /* @escapeNotVerified */ echo __('Search entire store here...'); ?>"
+						   class="input-text"
+						   maxlength="<?php /* @escapeNotVerified */ echo $helper->getMaxQueryLength();?>"
+						   role="combobox"
+						   aria-haspopup="false"
+						   aria-autocomplete="both"
+						   autocomplete="off"/>
+						<div id="search_loading" style="display:none;"><img src="<?php echo $image_url; ?>" alt="Loading..." /></div>
+						<button type="submit" title="<?php /* @escapeNotVerified */ echo __('Search'); ?>" class="action search"><span><?php /* @escapeNotVerified */ echo __('Search'); ?></span></button>
+					</div>
+					<div class="mbAutoSearch">
+						<div id="search_autocomplete" class="search-autocomplete"></div>
+						<div class="recent_content" style="display:none;">
+							<?php
+								if($recent_config['enable_first_click']){
+									if(count($_productCollection)){
+							?>
+								<ul id="ajax_recent" class="searchTags">
+									<li class="titleRow"><h6 class="mbSecTitle"><?php echo $recent_config['title']; ?></h6></li>
+									<?php
+										foreach ($_productCollection as $_product):
+										$query_text=str_replace(' ', '+', $_product['query_text']);
+									?>
+										<li class="searchTag recent_item"><a href="<?php echo $searchresult_url =$search_block->getCatalogSearchUrl().'?q='.htmlentities($query_text);?>"><?php echo htmlentities($_product['query_text']); ?></a></li>
+									<?php  endforeach; ?>
+								</ul>
+							<?php } } ?>
+						</div>
+					</div>
+					<?php echo $block->getChildHtml() ?>
+				</div>
+				
+			</div>
+        </form>
+    </div>
+</div>

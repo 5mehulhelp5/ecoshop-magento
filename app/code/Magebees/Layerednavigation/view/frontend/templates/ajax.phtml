@@ -1,0 +1,74 @@
+<?php 
+// Get the Infinite Scroll block
+$scrollBlock = $this->getLayout()->createBlock('Magebees\AjaxInfiniteScroll\Block\AjaxScroll');
+$config = $scrollBlock->getConfig();
+?>
+<span id="magebees_navigation_before" data-block-name="catalog.leftnav"></span>
+<div id="layered-navigation"></div>
+<script type="text/javascript" data-rocketjavascript="false">
+document.addEventListener("DOMContentLoaded", function () {
+	require(['jquery','Magebees_Layerednavigation/js/magebees-layer'], function ($,layeredNav) 
+	{	
+		function loadContent(event) 
+		{
+			const url = new URL(window.location.href);
+			const params = new URLSearchParams(url.search);
+			params.set('left_layerednavigation', '1');
+			const newUrl = `${url.origin}${url.pathname}?${params.toString()}`;
+
+			fetch(newUrl)
+				.then(response => response.text())
+				.then(html => {						
+					const parser = new DOMParser();
+					const doc = parser.parseFromString(html, 'text/html');
+					var layeredNavHtml = doc.querySelector('.block.filter');
+					if (layeredNavHtml) {
+						let htmlContent = layeredNavHtml.outerHTML.replace(/&amp;/g, '&');
+						htmlContent = htmlContent.replace(/\b(left_layerednavigation=1)(&|$)/g, '').replace(/\?&/, '?');
+						htmlContent = htmlContent.replace(/[\?&]$/, '');
+						htmlContent = htmlContent.replaceAll('&left_layerednavigation=1', '');
+						htmlContent = htmlContent.replaceAll('?left_layerednavigation=1', '');
+						var filltercontainer = document.getElementById('layered-navigation');
+						filltercontainer.innerHTML = htmlContent;
+				
+						filltercontainer.querySelectorAll("script").forEach(script => {
+						  let newScript = document.createElement("script");
+						  newScript.textContent = script.textContent;
+						  document.body.appendChild(newScript);
+						});
+						$("#layered-navigation").trigger('contentUpdated');
+						
+						//var layerednav = new layeredNav();
+						var layerednav = new layeredNav({
+							infinitescroll:{
+								loading_type: <?php echo $config['loading_type']; ?>,
+								product_container: "<?php echo $config['product_container']; ?>",
+								page_number: "<?php echo $config['show_page_no']; ?>",
+								load_next_text: "<?php echo $config['label_next_button']; ?>",
+								load_prev_text: "<?php echo $config['label_prev_button']; ?>",
+								load_button_style: "<?php echo $config['button_style']; ?>",
+								threshold: "<?php echo $config['threshold']; ?>",
+								text_no_more: "<?php echo $config['text_no_more']; ?>"
+							}
+						});
+						layerednav.dropChange();
+						layerednav.initAjaxLayerNavigation();
+						layerednav.initFilterNavigation();
+						layerednav.gridSwitchList();
+						layerednav.gridSorterOptions();
+						layerednav.gridSorterAction();
+						layerednav.gridLimiterAction();
+					}
+				});
+		}
+
+		if (document.readyState !== 'loading') {
+			loadContent();
+		} else {
+			document.addEventListener('DOMContentLoaded', function () {
+				loadContent();
+			});
+		}	
+	});
+});
+</script>

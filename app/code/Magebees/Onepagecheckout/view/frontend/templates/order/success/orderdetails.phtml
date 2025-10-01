@@ -1,0 +1,98 @@
+<?php
+$mbhelper = $this->helper('Magebees\Onepagecheckout\Helper\Data');
+$getProductImage = $mbhelper->getObjectManager()->create('Magebees\Onepagecheckout\Block\Thankyou');
+$order_details = $mbhelper->getObjectManager()->create('Magebees\Onepagecheckout\Block\Thankyou')->getOrder();
+$priceHelper = $mbhelper->getObjectManager()->create('Magento\Framework\Pricing\Helper\Data');
+$store = $mbhelper->getObjectManager()->get('Magento\Store\Model\StoreManagerInterface')->getStore();
+$priceCheck = $mbhelper->getObjectManager()->create('Magento\Framework\Pricing\PriceCurrencyInterface');
+?>
+<h2 class="sub-title"><?php echo __("Item Ordered") ?></h2>
+<div id="checkout-review-table-wrapper">
+    <table class="data-table linearize-table" id="checkout-review-table">
+        <thead>
+            <tr>
+				<th>&nbsp;</th>
+                <th><?php echo __('Product Name') ?></th>
+				<th><?php echo __('SKU') ?></th>
+                <th class="a-center"><?php echo __('Qty') ?></th>
+				<th class="a-center"><?php echo __('Price') ?></th>
+                <th class="a-center"><?php echo __('Subtotal') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+		
+		<?php //foreach ($order_details->getAllItems() as $item) {
+			foreach ($order_details->getAllVisibleItems() as $item) {
+			if($item->getProductType() != "bundle"){
+		?>
+		<?php $configItem = $mbhelper->getObjectManager()->create('Magento\Catalog\Model\ProductRepository')->get($item->getSku()); ?>
+		<tr class="first last odd">
+		    <td>
+		    	<?php
+				$product = $mbhelper->getObjectManager()->create('Magento\Catalog\Model\Product')->load($item->getData('product_id'));
+				$sku = $product->getSku();
+				?>
+		    	<?php //$sku = explode("-",$item->getSku()); ?>
+				<img src ="<?php echo $getProductImage->getProductImage(trim($sku)); ?>" width="100px" height="100px" />
+			</td>
+			<td><h3 class="product-name"><?php echo $item->getName(); ?></h3></td>
+			<td class="product-sku"><?php echo $item->getSku(); ?></td>
+			<!--<td class="a-right cart-price-head"><span class="cart-price"><span class="price">$50.00</span></span></td>-->
+			<td class="a-center qty-outer"><?php echo round($item->getQtyOrdered(), 0); ?></td>
+			<!-- sub total starts here -->
+			<td class="a-right cart-price-head last"><span class="cart-price"><span class="price"><?php echo $priceCheck->format($item->getPrice(), true, 2); ?></span></span></td>
+			<td><?php 	$rowTotal = $item->getPrice() * $item->getQtyOrdered();
+						echo $priceCheck->format($rowTotal, true, 2); ?></td>
+		</tr>
+		<?php }else{ ?>
+			<?php
+			$product = $mbhelper->getObjectManager()->create('Magento\Catalog\Model\Product')->load($item->getData('product_id'));
+			$sku = $product->getSku();
+			?>
+			<tr class="first last odd">
+		    <td>
+		    <?php //$sku = explode("-",$item->getSku()); ?>
+			<img src ="<?php echo $getProductImage->getProductImage(trim($sku)); ?>" width="100px" height="100px" />
+			</td>
+			<td><h3 class="product-name"><?php echo $item->getName(); ?></h3></td>
+			<td class="product-sku"><?php echo $item->getSku(); ?></td>
+			<!--<td class="a-right cart-price-head"><span class="cart-price"><span class="price">$50.00</span></span></td>-->
+			<td class="a-center qty-outer"><?php echo round($item->getQtyOrdered(), 0); ?></td>
+			<!-- sub total starts here -->
+			<td class="a-right cart-price-head last"><span class="cart-price"><span class="price"><?php echo $priceCheck->format($item->getPrice(), true, 2); ?></span></span></td>
+			<td><?php 	$rowTotal = $item->getPrice() * $item->getQtyOrdered();
+						echo $priceCheck->format($rowTotal, true, 2); ?></td>
+			</tr>
+		
+			<?php }
+		} 
+		?>
+        </tbody>
+		<tfoot>
+			<tr class="first">
+				<td colspan="5" class="a-right" style=""><?php echo __("Subtotal"); ?></td>
+				<td class="a-right last" style=""><span class="price"><?php echo $priceCheck->format($order_details->getSubTotal(), true, 2); ?></span></td>
+			</tr>
+			<tr>
+				<td colspan="5" class="a-right" style=""><?php echo __("Tax"); ?></td>
+				<td class="a-right last" style=""><span class="price">
+					<?php echo $priceCheck->format($order_details->getTaxAmount(), true, 2); ?></span>    </td>
+			</tr>
+			<tr>
+				<td colspan="5" class="a-right" style=""><?php echo __("Discount"); ?></td>
+				<td class="a-right last" style=""><span class="price">
+					<?php echo $priceCheck->format($order_details->getDiscountAmount(), true, 2); ?></span>    </td>
+			</tr>
+			<tr>
+				<td colspan="5" class="a-right" style=""><?php echo __("Shipping Charge"); ?></td>
+				<td class="a-right last" style=""><span class="price">
+					<?php echo $priceCheck->format($order_details->getShippingAmount(), true, 2); ?></span>    </td>
+			</tr>
+			<tr class="last">
+				<td colspan="5" class="a-right" style=""><strong><?php echo __("Grand Total"); ?></strong></td>
+				<td class="a-right last" style=""><strong><span class="price">
+					<?php echo $priceCheck->format($order_details->getGrandTotal(), true, 2); ?></span></strong></td>
+			</tr>
+			</tfoot>
+    </table>
+</div>

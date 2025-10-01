@@ -1,0 +1,42 @@
+<?php
+/**
+ * Copyright © 2018 Magebees, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/* $block Magebees\CustomCartStyle\Block\MiniCart */
+?>
+
+<div class="footer-minicart" id="poco-footer-minicart" data-block='minicartpro' style="display: none;">
+    <div class="footer-cart-inner" data-bind="scope: 'minicartpro_content'">
+        <a href="#;" class="cart-trigger" data-role="cart-trigger">
+            <span class="flying-destination" data-role="flying-destination"></span>
+            <span class="summary-count-label" data-role="cart-count">
+                <!-- ko if: getCartParam('summary_count') -->
+                    <!-- ko text: getCartParam('summary_count') --><!-- /ko -->&nbsp;
+                    <!-- ko template: 'Magebees_CustomCartStyle/minicart/cart.html' --><!-- /ko -->
+                <!-- /ko -->
+                <!-- ko ifnot: getCartParam('summary_count') -->
+                    <!-- ko template: 'Magebees_CustomCartStyle/minicart/cart-empty.html' --><!-- /ko -->
+                <!-- /ko -->
+            </span>
+            <span class="proccessing-label" data-role="cart-processing" style="display: none;">
+                 <!-- ko i18n: 'Proccessing...' --><!-- /ko -->
+				 <!-- ko template: 'Magebees_CustomCartStyle/minicart/cart-processing.html' --><!-- /ko -->
+            </span>
+        </a>
+        <div class="block-minicartpro" data-role="cart-content" style="display: none;">
+            <div id="minicartpro-content-wrapper">
+                <!-- ko template: 'Magebees_CustomCartStyle/minicart/content-footer.html' --><!-- /ko -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/x-magento-init">
+{
+	"[data-block='minicartpro']": {
+		"Magento_Ui/js/core/app": <?= $block->getJsLayout();?>
+	}
+}
+</script>

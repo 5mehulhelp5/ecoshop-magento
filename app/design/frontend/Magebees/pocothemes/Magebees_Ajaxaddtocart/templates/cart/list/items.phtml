@@ -1,0 +1,523 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Magento\Catalog\ViewModel\Product\Listing\PreparePostData;
+use Magento\Framework\App\ActionInterface;
+
+/* @var $block \Magento\Catalog\Block\Product\AbstractProduct */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+
+
+/* POCO THEME CUSTOMIZATION ADD CODE Start */ 
+include ($block->getTemplateFile('Magento_Catalog::product/product-list-theme-options.phtml'));
+/* POCO THEME CUSTOMIZATION ADD CODE End */ 
+
+switch ($type = $block->getType()) {
+	
+    case 'related-rule':
+        if ($exist = $block->hasItems()) {
+            $type = 'related';
+            $class = $type;
+
+            $image = 'related_products_list';
+            $title = __('Related Products');
+			$sort_desc = __('You might also like');
+            $items = $block->getAllItems();
+			$itemsCount = $items->getSize();
+            $limit = $block->getPositionLimit();
+            $shuffle = (int) $block->isShuffled();
+            $isWeightedRandom = (int) $block->getRotation()->isWeightedRandom($block->getProductListType());
+            $canItemsAddToCart = $block->canItemsAddToCart();
+
+            $showAddTo = false;
+            $showCart = false;
+            $templateType = null;
+            $description = false;
+			$slider = true;
+			$slider_id='related-rule-'.$randon_number;
+			$slider_class = $slider?"swiper swiper-container":" ";
+			//$pagination_class = $itemsCount > 4 ? " show-pagination ":" ";;
+			$pagination_class = null;
+			$slider_wrapper_class = $slider?"swiper-wrapper":" ";
+			$item_class =   $slider?"item product product-item swiper-slide":"item product product-item";
+
+        }
+        break;
+
+    case 'related':
+        /** @var \Magento\Catalog\Block\Product\ProductList\Related $block */
+        if ($exist = $block->getItems()->getSize()) {
+            $type = 'related';
+            $class = $type;
+
+            $image = 'related_products_list';
+            $title = __('Related Products');
+			$sort_desc = __('You might also like');
+            $items = $block->getItems();
+			$itemsCount = $items->getSize();
+            $limit = 0;
+            $shuffle = 0;
+            $isWeightedRandom = 0;
+            $canItemsAddToCart = $block->canItemsAddToCart();
+
+            $showAddTo = false;
+            $showCart = false;
+            $templateType = null;
+            $description = false;
+			$slider = true;
+			$slider_id='related-'.$randon_number;
+			$slider_class = $slider?"swiper swiper-container":" ";
+			$pagination_class = $itemsCount > 4 ? " show-pagination ":" ";;
+			$pagination_class = null;
+			$slider_wrapper_class = $slider?"swiper-wrapper":" ";
+			$item_class =   $slider?"item product product-item swiper-slide":"item product product-item";
+        }
+        break;
+
+    case 'upsell-rule':
+        if ($exist = $block->hasItems()) {
+            $type = 'upsell';
+            $class = $type;
+
+            $image = 'upsell_products_list';
+            $title = __('Upsell Product');
+			$sort_desc = __('Explore shop with');
+            $items = $block->getAllItems();
+			$itemsCount = $items->getSize();
+            $limit = $block->getPositionLimit();
+            $shuffle = (int) $block->isShuffled();
+            $isWeightedRandom = (int) $block->getRotation()->isWeightedRandom($block->getProductListType());
+
+            $showAddTo = false;
+            $showCart = false;
+            $templateType = null;
+            $description = false;
+            $canItemsAddToCart = false;
+			$slider = true;
+			$slider_id='upsell-rule-'.$randon_number;
+			$slider_class = $slider?"swiper swiper-container":" ";
+			$pagination_class = $itemsCount > 4 ? " show-pagination ":" ";;
+			$pagination_class = null;
+			$slider_wrapper_class = $slider?"swiper-wrapper":" ";
+			$item_class =   $slider?"item product product-item swiper-slide":"item product product-item";
+			
+			
+        }
+        break;
+
+    case 'upsell':
+        /** @var \Magento\Catalog\Block\Product\ProductList\Upsell $block */
+        if ($exist = count($block->getItemCollection()->getItems())) {
+            $type = 'upsell';
+            $class = $type;
+
+            $image = 'upsell_products_list';
+            $title = __('Upsell Product');
+			$sort_desc = __('Explore shop with');
+            $items = $block->getItemCollection()->getItems();
+            $limit = $block->getItemLimit('upsell');
+			$itemsCount = $block->getItemCollection()->getSize();
+			$shuffle = 0;
+            $isWeightedRandom = 0;
+
+            $showAddTo = false;
+            $showCart = false;
+            $templateType = null;
+            $description = false;
+            $canItemsAddToCart = false;
+			$slider = true;
+			$slider_id='upsell-'.$randon_number;
+			$slider_class = $slider?"swiper swiper-container":" ";
+			$pagination_class = $itemsCount > 4 ? " show-pagination ":" ";;
+			$pagination_class = null;
+			$slider_wrapper_class = $slider?"swiper-wrapper":" ";
+			$item_class =   $slider?"item product product-item swiper-slide":"item product product-item";
+
+			
+        }
+        break;
+
+    case 'crosssell-rule':
+        /** @var \Magento\Catalog\Block\Product\ProductList\Crosssell $block */
+        if ($exist = $block->hasItems()) {
+            $type = 'crosssell';
+            $class = $type;
+
+            $image = 'cart_cross_sell_products';
+            $title = __('Crosssell Products');
+			$sort_desc = __('More Choices');
+            $items = $block->getItemCollection();
+			$itemsCount = $block->getItemCollection()->getSize();
+            $showAddTo = false;
+            $showCart = false;
+            $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+            $description = false;
+            $canItemsAddToCart = false;
+			$slider = true;
+			$slider_id='crosssell-rule-'.$randon_number;;
+			$slider_class = $slider?"swiper swiper-container":" ";
+			$pagination_class = $itemsCount > 4 ? " show-pagination ":" ";;
+			$pagination_class = null;
+			$slider_wrapper_class = $slider?"swiper-wrapper":" ";
+			$item_class =   $slider?"item product product-item swiper-slide":"item product product-item";
+
+			
+        }
+        break;
+
+    case 'crosssell':
+        /** @var \Magento\Catalog\Block\Product\ProductList\Crosssell $block */
+        if ($exist = count($block->getItems())) {
+            $type = 'crosssell';
+            $class = $type;
+
+            $image = 'cart_cross_sell_products';
+            $title = __('Crosssell Products');
+			$sort_desc = __('More Choices');
+			$items = $block->getItems();
+			$itemsCount = count($items);
+			$showAddTo = false;
+            $showCart = false;
+            $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+            $description = false;
+            $canItemsAddToCart = false;
+			$slider = true;
+			$slider_id='crosssell-'.$randon_number;
+			$slider_class = $slider?"swiper swiper-container":" ";
+			$pagination_class = $itemsCount > 4 ? " show-pagination ":" ";;
+			$pagination_class = null;
+			$slider_wrapper_class = $slider?"swiper-wrapper":" ";
+			$item_class =   $slider?"item product product-item swiper-slide":"item product product-item";
+
+			
+        }
+        break;
+
+    case 'new':
+        if ($exist = $block->getProductCollection()) {
+            $type = 'new';
+            $mode = 'grid';
+            $type = $type . ' ' . $mode;
+
+            $class = 'widget' . ' ' . $type;
+
+            $image = 'new_products_content_widget_grid';
+            $title = __('New Products');
+			$sort_desc = null;
+            $items = $exist;
+
+            $showAddTo = false;
+            $showCart = false;
+            $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+            $description = ($mode == 'list') ? true : false;
+            $canItemsAddToCart = false;
+			$slider = true;
+			$slider_id='new-'.$randon_number;;
+			$slider_class = $slider?"swiper swiper-container":" ";
+			$pagination_class = $itemsCount > 4 ? " show-pagination ":" ";;
+			$pagination_class = null;
+			$slider_wrapper_class = $slider?"swiper-wrapper":" ";
+			$item_class =   $slider?"item product product-item swiper-slide":"item product product-item";
+
+			
+        }
+        break;
+
+    default:
+        $exist = null;
+}
+$_item = null;
+?>
+
+<?php if ($exist):?>
+<?php if($slider):
+$swiper_data_init = array();
+			$swiper_data_init['slider_id'] = $slider_id;
+			$swiper_data_init['autoHeight'] = false;
+			$swiper_data_init['slidesPerView'] = 1;
+			$swiper_data_init['spaceBetween'] = 10;
+			$swiper_data_init['lazy']['loadPrevNext'] = true;
+			$swiper_data_init['lazy']['loadPrevNextAmount'] = $itemsCount;
+			$swiper_data_init['a11y'] = false;
+			$swiper_data_init['speed'] = 600;
+			$swiper_data_init['navigation']['nextEl'] = "#swiper-button-next-".$random_number;
+			$swiper_data_init['navigation']['prevEl'] = "#swiper-button-prev-".$random_number;
+		
+		$swiper_data_init['breakpoints']['0']['slidesPerView'] = 1;
+		$swiper_data_init['breakpoints']['0']['spaceBetween'] = 20;
+		$swiper_data_init['breakpoints']['639']['slidesPerView'] = 2;
+		$swiper_data_init['breakpoints']['639']['spaceBetween'] = 20;
+		$swiper_data_init['breakpoints']['768']['slidesPerView'] = 3;
+		$swiper_data_init['breakpoints']['768']['spaceBetween'] = 30;
+		$swiper_data_init['breakpoints']['1200']['slidesPerView'] = 4;
+		$swiper_data_init['breakpoints']['1200']['spaceBetween'] = 30;
+ endif; ?>
+    <?php if ($type == 'related' || $type == 'upsell'):?>
+        <?php if ($type == 'related'):?>
+<div class="block block-slider <?= $block->escapeHtmlAttr($class) ?>"
+     data-mage-init='{"relatedProducts":{"relatedCheckbox":".related.checkbox"}}'
+     data-limit="<?= $block->escapeHtmlAttr($limit) ?>"
+     data-shuffle="<?= /* @noEscape */ $shuffle ?>"
+     data-shuffle-weighted="<?= /* @noEscape */ $isWeightedRandom ?>">
+    <?php else:?>
+        <div class="block block-slider <?= $block->escapeHtmlAttr($class) ?>" data-mage-init='{"upsellProducts":{}}' data-limit="<?= $block->escapeHtmlAttr($limit) ?>" data-shuffle="<?= /* @noEscape */ $shuffle ?>" data-shuffle-weighted="<?= /* @noEscape */ $isWeightedRandom ?>">
+    <?php endif; ?>
+        <?php else:?>
+            <div class="block block-slider <?= $block->escapeHtmlAttr($class) ?>">
+        <?php endif; ?>
+            <div class="section-title">
+                <h2 class="title" id="block-<?= $block->escapeHtmlAttr($class) ?>-heading" role="heading" aria-level="2"><?= $block->escapeHtml($title) ?></h2>
+                <?php if($sort_desc): ?>
+				    <div class="sort-details"><p class="sort-detail"><?php echo $sort_desc; ?></p></div>
+				<?php endif;?>
+            </div>
+            <div class="block-content content" aria-labelledby="block-<?= $block->escapeHtmlAttr($class) ?>-heading">
+                <?php if ($type == 'related' && $canItemsAddToCart):?>
+                    <div class="block-actions text-center">
+                        <?= $block->escapeHtml(__('Check items to add to the cart or')) ?>
+                        <button type="button" class="action secondary btn-small select" data-role="select-all"><span><?= $block->escapeHtml(__('select all')) ?></span></button>
+                    </div>
+                <?php endif; ?>
+				
+				
+                <div <?php if($slider): ?> id="<?php echo $slider_id; ?>" data-swiper='<?php echo json_encode($swiper_data_init);?>' <?php endif; ?> class="products-grid products-<?= $block->escapeHtmlAttr($type) ?> <?php if($slider): echo $slider_class; echo $swiper_btn_hover_effects_class; echo $pagination_class; endif; ?>">
+                    <div class="items product-items <?php echo $btn_hover_effects_class; ?> <?php if($slider): echo $slider_wrapper_class; endif; ?>" >
+                        <?php foreach ($items as $_item):?>
+                            <?php $available = ''; ?>
+                            <?php if (!$_item->isComposite() && $_item->isSaleable() && $type == 'related'):?>
+                                <?php if (!$_item->getRequiredOptions()):?>
+                                    <?php $available = 'related-available'; ?>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <?php if ($type == 'related' || $type == 'upsell'):?>
+                                <div class="<?php echo $item_class;?>"
+                                id="product-item_<?= /* @noEscape */ $_item->getId() ?>"
+                                data-shuffle-group="<?= $block->escapeHtmlAttr($_item->getPriority()) ?>" >
+                                
+                            <?php else:?>
+                                <div class="<?php echo $item_class;?>">
+                            <?php endif; ?>
+                            <div class="product-item-info <?= /* @noEscape */ $available ?>">
+                                <div class="pro-hover">
+								    <div class="product-item-photo">
+								        <?= /* @noEscape */ '<!-- ' . $image . '-->' ?>
+                                        <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>" class="product photo product-item-photo">
+                                            <?php echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template") ->setProduct($_item) ->setAspectRatio($aspect_ratio) ->setImageWidth($image_width) ->setImageHeight($image_height) ->setDisplayArea($image) ->setTemplate("Magento_Catalog::product/image.phtml") ->toHtml();?>
+                                        </a>
+										<?php if(($show_deal_timer)&&(($hover_effects == 'button-hover-style7')||($hover_effects == 'button-hover-style11'))): ?>
+													<!--Deal Timer On Hover Style7 Or 11 -->
+													<?php echo $this->getLayout()->createBlock('Magebees\TodayDealProducts\Block\DealTimerListingProducts')->setProduct($_item) ->setTemplate('Magebees_TodayDealProducts::category_page_timer.phtml')->toHtml(); ?>
+													<!--End Deal Timer On Hover Style7 Or 11 -->
+												<?php endif; ?>
+                                        
+								    </div>
+								
+                                    <?php if(($hover_effects != 'button-hover-style7')&&($hover_effects != 'button-hover-style11')): ?>
+							            <!--Buttons Hover Styles-->
+										<?php echo $this->getLayout()->createBlock('Magebees\PocoThemes\Block\AddToButtons') ->setProduct($_item) ->setDisplayTimer($show_deal_timer) ->setShowCart($show_cart) ->setShowWishlist($show_wishlist) ->setShowCompare($show_compare) ->setShowAjaxQuickView($ajaxquickview_enable) ->setCurrentAction($currentAction) ->
+							setAddCartIcon($add_cart_icon)->setWishlistIcon($whishlist_icon)->setCompareIcon($compare_icon)->setQuickviewIcon($quick_view_icon)->toHtml(); ?>
+							  <!--End Buttons Hover Styles-->
+                                    <?php endif; ?>
+								</div>
+								
+                                <div class="product details product-item-details">
+									<div class="detail-left">
+										<?php if($show_product_category): echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template") ->setProduct($_item) ->setStoreId($storeId) ->setTemplate("Magento_Catalog::product/category-link.phtml") ->toHtml();endif; ?>
+
+									    <?php if($show_product_brand_name): ?>
+                                            <?php echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template") ->setProduct($_item) ->setStoreId($storeId) ->setBrandCode($brand_attribute_code) ->setBrandUrlKey($brand_url_key) ->setBaseUrl($webUrl) ->setTemplate ("Magento_Catalog::product/brand-link.phtml") ->toHtml(); ?>
+                                        <?php endif; ?>
+									
+                                        <strong class="product name product-item-name">
+                                            <a class="product-item-link" title="<?= $block->escapeHtmlAttr($_item->getName()) ?>" href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>">
+                                                <?= $block->escapeHtml($_item->getName()) ?>
+                                            </a>
+                                        </strong>							
+
+                                        <?php if($show_product_rating): ?>
+                                            <?php if ($templateType):?>
+                                                <?= $block->getReviewsSummaryHtml($_item, $templateType) ?>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
+
+										<?php if($show_product_sku): ?>
+										    <?php echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template") ->setProduct($_item) ->setProductSkuLabel($product_sku_label) ->setProductSkuSeparator($product_sku_separator) ->setTemplate("Magento_Catalog::product/product-sku.phtml") ->toHtml();?>
+										<?php endif; ?>
+
+                                       <?php if(($hover_effects != 'button-hover-style10')&&($show_product_price)): ?>  
+                                            <?= /* @noEscape */ $block->getProductPrice($_item) ?>
+                                        <?php endif; ?>	
+
+										<?php if($buyNowEnabled): echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template") ->setProduct($_item) ->setButtonTitle($buyNowbuttonTitle) ->setBuyNowListProduct($buyNowListProduct) ->setTemplate("Magento_Catalog::product/buy-now.phtml") ->toHtml(); endif; ?>										
+
+										<?php if($_item->getTypeId() == \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE){ $swatchBlock = $this->getLayout()->createBlock("Magento\Swatches\Block\Product\Renderer\Listing\Configurable")->setTemplate("Magebees_Swatches::product/listing/renderer.phtml"); echo $swatchBlock->setProduct($_item)->toHtml(); ?>
+										<?php } ?>
+									</div>
+
+                                    <?php if ($canItemsAddToCart && !$_item->isComposite() && $_item->isSaleable()
+                                        && $type == 'related'):?>
+                                        <?php if (!$_item->getRequiredOptions()):?>
+                                            <div class="field choice related">
+                                                <input type="checkbox" class="checkbox related" id="related-checkbox<?= $block->escapeHtmlAttr($_item->getId()) ?>" name="related_products[]" value="<?= $block->escapeHtmlAttr($_item->getId()) ?>" />
+                                                <label class="label" for="related-checkbox<?= $block->escapeHtmlAttr($_item->getId()) ?>">
+                                                    <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+                                                </label>
+                                            </div>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+
+                                    <?php if ($showAddTo || $showCart):?>
+                                        <?php // phpcs:disable ?>
+                                        <div class="product actions product-item-actions">
+                                            <?php if ($showCart):?>
+											<?php if((($hover_effects == 'button-hover-style10')||($hover_effects == 'button-hover-style12'))&&($allow_add_to_cart)): ?>
+											<!-- Button Hover Style 10 Or 12 Start -->
+											<div class="d-flex alc  <?php echo $bottom_btn_hover_effects_class; ?> hvr_dtl">
+											<?php if(($hover_effects == 'button-hover-style10')&&($show_product_price)): ?>
+													<?= /* @noEscape */ $block->getProductPrice($_item) ?>
+												<?php endif; ?>
+												
+                                                <div class="actions-primary">
+                                                <?php if ($_item->isSaleable()):?>
+                                                    <?php if (!$_item->getTypeInstance()->isPossibleBuyFromList($_item)):?>
+                                                        <button class="action tocart primary" data-mage-init='{"redirectUrl": {"url": "<?= $block->escapeUrl($block->getAddToCartUrl($_item)) ?>"}}' type="button" title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>">
+                                                            <?php if($add_cart_icon): ?> <span class="icon"><?php echo $add_cart_icon;?></span><?php endif; ?>
+															<span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+                                                        </button>
+                                                    <?php else :?>
+                                                        <?php
+                                                        /** @var $viewModel PreparePostData */
+                                                        $viewModel = $block->getViewModel();
+                                                        $postArray = $viewModel->getPostData(
+                                                            $block->escapeUrl($block->getAddToCartUrl($_item)),
+                                                            ['product' => $_item->getEntityId()]
+                                                        );
+                                                        $value = $postArray['data'][ActionInterface::PARAM_NAME_URL_ENCODED];
+                                                        ?>
+                                                        <form data-role="tocart-form"
+                                                              data-product-sku="<?= $block->escapeHtmlAttr($_item->getSku()) ?>"
+                                                              action="<?= $block->escapeUrl($block->getAddToCartUrl($_item)) ?>"
+                                                              method="post">
+                                                            <input type="hidden" name="product"
+                                                                   value="<?= /* @noEscape */ (int)$_item->getEntityId() ?>">
+                                                            <input type="hidden"
+                                                                   name="<?= /* @noEscape */ ActionInterface::PARAM_NAME_URL_ENCODED?>"
+                                                                   value="<?= /* @noEscape */ $value ?>">
+                                                            <?= $block->getBlockHtml('formkey') ?>
+                                                            <button type="submit"
+                                                                    title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>"
+                                                                    class="action tocart primary">
+																	<?php if($add_cart_icon): ?> <span class="icon"><?php echo $add_cart_icon;?></span><?php endif; ?>
+                                                                <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+                                                            </button>
+                                                        </form>
+                                                    <?php endif; ?>
+                                                <?php else:?>
+                                                    <?php if ($_item->isAvailable()):?>
+                                                        <div class="stock available">
+                                                            <span><?= $block->escapeHtml(__('In stock')) ?></span>
+                                                        </div>
+                                                    <?php else:?>
+                                                        <div class="stock unavailable">
+                                                            <span><?= $block->escapeHtml(__('Out of stock')) ?></span>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+                                                </div>
+											</div>
+											<!-- Button Hover Style 10 Or 12 End -->
+                                            <?php endif; ?>
+
+                                            <?php /*if ($showAddTo):?>
+                                                <div class="secondary-addto-links actions-secondary"
+                                                     data-role="add-to-links">
+                                                    <?php if ($addToBlock = $block->getChildBlock('addto')):?>
+                                                        <?= $addToBlock->setProduct($_item)->getChildHtml() ?>
+                                                    <?php endif; ?>
+                                                </div>
+                                            <?php endif;*/ ?>
+                                        </div>
+                                        <?php // phpcs:enable ?>
+                                    <?php endif; ?>
+
+									<?php if(($hover_effects == 'button-hover-style7')||($hover_effects == 'button-hover-style11')): ?>
+                                        <!--Buttons Hover Styles 7 OR 11 -->
+										<?php echo $this->getLayout()->createBlock('Magebees\PocoThemes\Block\AddToButtons') ->setProduct($_item) ->setDisplayTimer($show_deal_timer) ->setShowCart($show_cart) ->setShowWishlist($show_wishlist) ->setShowCompare($show_compare) ->setShowAjaxQuickView($ajaxquickview_enable) ->setCurrentAction($currentAction) ->
+							setAddCartIcon($add_cart_icon)->setWishlistIcon($whishlist_icon)->setCompareIcon($compare_icon)->setQuickviewIcon($quick_view_icon)->toHtml(); ?>
+										<!--End Buttons Hover Styles-->
+								    <?php endif; ?>
+                                </div>
+                            </div>
+                            </div>
+                        <?php endforeach ?>
+                    </div>
+					<?php if($slider): ?>		
+				        <!-- Add Pagination -->
+				        <!--<div id="<?php //echo "swiper-pagination-".$randon_number;?>" class="swiper-pagination"></div>-->
+				        <!-- Add Arrows -->
+				        <div id="<?php echo "swiper-button-next-".$randon_number;?>" class="swiper-button-next"></div>
+				        <div id="<?php echo "swiper-button-prev-".$randon_number;?>" class="swiper-button-prev"></div>
+				    <?php endif; ?>
+                </div>
+				
+            </div>
+			<?php if($slider): ?>
+			<script>
+                requirejs(['jquery',"magebees.swiper"], function ($,Swiper) {
+                "use strict";
+                var slider_id="<?php echo $slider_id;?>";
+				var pagination = "<?php echo "#swiper-pagination-".$randon_number;?>";
+				var scrollbar = "<?php echo "#swiper-scrollbar-".$randon_number;?>";
+				var btn_next = "<?php echo "#swiper-button-next-".$randon_number;?>";
+				var btn_prev = "<?php echo "#swiper-button-prev-".$randon_number;?>";
+				var <?php echo "swiper_".$randon_number;?> = new Swiper("#"+slider_id, {
+                    autoHeight: false, 
+                    slidesPerView: 1,
+                    spaceBetween: 10,
+                    grabCursor: true,
+					a11y: false,
+					lazy: true,
+					speed: 600,
+                   
+                    navigation: {
+                            nextEl: btn_next,
+                            prevEl: btn_prev,
+                    },	
+                    breakpoints: {
+                            0: {
+                                slidesPerView: 1,
+                                spaceBetween: 20,
+                            },
+                            639: {
+                                slidesPerView: 2,
+                                spaceBetween: 20,
+                            },
+                            768: {
+                                slidesPerView: 3,
+                                spaceBetween: 30,
+                            },
+                            1200: {
+                                slidesPerView: 4,
+                                spaceBetween: 30,
+                            },
+                        }
+                    });
+                });
+                </script>
+			<?php endif;?>
+        </div>
+        <?php if (!$block->isRedirectToCartEnabled() && $_item):?>
+            <script type="text/x-magento-init">
+            {
+                "[data-role=tocart-form], .form.map.checkout": {
+                    "catalogAddToCart": {
+                        "product_sku": "<?= $block->escapeJs($_item->getSku()) ?>"
+                    }
+                }
+            }
+            </script>
+        <?php endif;?>
+        <?php endif;?>

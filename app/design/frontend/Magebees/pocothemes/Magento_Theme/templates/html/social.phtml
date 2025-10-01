@@ -1,0 +1,14 @@
+<?php $_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); ?>
+<?php $social_media = $_helper->getSocialMedia() ?>
+<?php if($social_media): ?>
+<ul>
+	<?php foreach($social_media as $sm): ?>
+	<li>
+		<a title="<?php echo $sm['name'] ?>" href="<?php echo $sm['url'] ?>"> 
+			<span class="poco icon-social"><?php echo $sm['font_icon'] ?></span>
+			<span class="text"><?php echo $sm['name'] ?></span>
+		</a>
+	</li>
+	<?php endforeach; ?>
+</ul>
+<?php endif; ?>

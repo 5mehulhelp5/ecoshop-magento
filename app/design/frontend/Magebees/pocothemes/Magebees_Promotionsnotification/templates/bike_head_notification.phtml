@@ -1,0 +1,69 @@
+<?php /* @var block \Magebees\Promotionsnotification\Block\View\Top */
+/* @var block \Magebees\Promotionsnotification\Block\View\Bottom */
+
+if ($block->getBarEnabled()) :
+	$notification_ids = [24,26];
+    $bar_collection = $block->getNotifictionBarByStore($notification_ids);
+    $bar_height = $block->getBarHeight() == 0 ? "" : 'height:' . $block->getBarHeight() . 'px';
+    $count = $bar_collection->getSize();
+    ?>
+    <?php if ($count) :
+        $notificationData = [];
+        $notificationinitData = [];
+        $notificationData['count'] = $count;
+        $notificationData['bar_height'] = $block->getBarHeight();
+        $notificationData['bar_after_time'] = $block->getBarAfterTime();
+        $notificationData['bar_auto_close'] = $block->getBarAutoClose();
+        $notificationData['bar_auto_close_time'] = $block->getBarAutoCloseTime();
+        $notificationData['bar_one_time_per_user'] = $block->getBarOneTimePerUser();
+        $notificationData['bar_all_or_one'] = $block->getBarAllOrOne();
+        $notificationData['id'] = "bar";
+        $notificationinitData['magebees.notification'] = $notificationData;
+        ?>
+        <?php $helper = $this->helper('Magebees\Promotionsnotification\Helper\Data'); ?>
+        <div id="notification_slider"
+             data-mage-init='<?php echo json_encode($notificationinitData); ?>'
+             class="<?php if (!$block->getBarShowInMobile()) echo 'hideInmobile'; ?>"
+             style="display:none;">
+            <?php
+            if ($block->getBarAllOrOne() != "one") {
+                $swiper_data_init = [];
+                $swiper_data_init['slider_id'] = 'swiper_notification_bar';
+                $swiper_data_init['autoplay']['delay'] = 5000;
+                $swiper_data_init['spaceBetween'] = 30;
+                $swiper_data_init['effect'] = 'fade';
+                $swiper_data_init['a11y'] = false;
+                $swiper_data_init['grabCursor'] = true;
+                $swiper_data_init['loop'] = $count > 1 ? true : false;
+
+                // Enable arrows
+                $swiper_data_init['navigation']['nextEl'] = '.swiper-button-next';
+                $swiper_data_init['navigation']['prevEl'] = '.swiper-button-prev';
+                ?>
+                <div id="swiper_notification_bar" class="swiper-container"
+                     data-swiper='<?php echo json_encode($swiper_data_init); ?>'>
+            <?php } else { ?>
+                <div id="swiper_notification_bar" class="swiper-container">
+            <?php } ?>
+                <div class="swiper-wrapper">
+                    <?php foreach ($bar_collection as $bar_item) : ?>
+                        <div class="swiper-slide"
+                             style="background-color:<?php echo $bar_item->getBackgroundColor(); ?>; <?php echo $bar_height; ?>">
+                            <?php echo $helper->getFilterProvider()->getPageFilter()->filter($bar_item->getData('notification_content')); ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <!-- Swiper Arrows -->
+                <!-- add arrow -->
+                 <div class="swiper-button-next swp_arw ">
+                    <svg xmlns="https://www.w3.org/2000/svg" class="st-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                 </div>
+                 <div class="swiper-button-prev swp_arw ">
+                    <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                 </div>
+
+            </div>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>

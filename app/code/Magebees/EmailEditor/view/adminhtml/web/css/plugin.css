@@ -1,0 +1,56 @@
+
+
+#row_addplugin_custom_css_product_page_plugin_select_product_page_plugins_images td label img,
+#row_addplugin_custom_css_product_page_plugin_select_product_page_plugins_icons td label img,
+#row_addplugin_custom_css_header_plugin_select_header_plugins_images td label img,
+#row_addplugin_custom_css_header_plugin_select_header_plugins_icons td label img,
+#row_addplugin_custom_css_footer_plugin_select_footer_plugins_images td label img,
+#row_addplugin_custom_css_footer_plugin_select_footer_plugins_icons td label img
+{
+    vertical-align:middle;
+}
+
+#row_addplugin_custom_css_product_page_plugin_select_product_page_plugins_icons td label span,
+#row_addplugin_custom_css_product_page_plugin_select_product_page_plugins_images td label span,
+#row_addplugin_custom_css_header_plugin_select_header_plugins_images td label span,
+#row_addplugin_custom_css_header_plugin_select_header_plugins_icons td label span,
+#row_addplugin_custom_css_footer_plugin_select_footer_plugins_images td label span,
+#row_addplugin_custom_css_footer_plugin_select_footer_plugins_icons td label span
+{
+
+    vertical-align:-moz-middle-with-baseline;
+    background: #3772ac;
+    color: #FFFFFF;
+    padding: 2px;
+    font-size: 22px;
+}
+
+
+#row_addplugin_custom_css_product_page_plugin_select_product_page_plugins_icons td label,
+#row_addplugin_custom_css_product_page_plugin_select_product_page_plugins_images td label,
+#row_addplugin_custom_css_header_plugin_select_header_plugins_images td label,
+#row_addplugin_custom_css_header_plugin_select_header_plugins_icons td label,
+#row_addplugin_custom_css_footer_plugin_select_footer_plugins_images td label,
+#row_addplugin_custom_css_footer_plugin_select_footer_plugins_icons td label
+{
+    margin-left:25px;
+    margin-top:12px;
+    display:block;
+}
+
+#row_addplugin_custom_css_product_page_plugin_select_product_page_plugins_icons td input,
+#row_addplugin_custom_css_product_page_plugin_select_product_page_plugins_images td input,
+#row_addplugin_custom_css_header_plugin_select_header_plugins_images td input,
+#row_addplugin_custom_css_header_plugin_select_header_plugins_icons td input,
+#row_addplugin_custom_css_footer_plugin_select_footer_plugins_images td input,
+#row_addplugin_custom_css_footer_plugin_select_footer_plugins_icons td input
+{
+    display: table-caption;
+    position: absolute;
+        margin: 17px 0 0;
+}
+
+#row_emaileditor_light_logo_image .value a {
+    display: block;
+}
+

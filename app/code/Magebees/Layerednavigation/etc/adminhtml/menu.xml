@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+ <menu>	     
+     <add id="Magebees_Layerednavigation::title" title="MageBees Layered Navigation"   module="Magebees_Layerednavigation" sortOrder="60" parent="Magento_Backend::stores" resource="Magebees_Layerednavigation::title"/>
+	<add id="Magebees_Layerednavigation::grid" title="Manage Attribute Filters"  action="layerednavigation/manage" module="Magebees_Layerednavigation" sortOrder="50" parent="Magebees_Layerednavigation::title" resource="Magebees_Layerednavigation::layerednavigation"/>
+	<add id="Magebees_Layerednavigation::brand" title="Manage Brands"  action="layerednavigation/brands" module="Magebees_Layerednavigation" sortOrder="60" parent="Magebees_Layerednavigation::title" resource="Magebees_Layerednavigation::brand"/>
+ </menu>
+</config>
+

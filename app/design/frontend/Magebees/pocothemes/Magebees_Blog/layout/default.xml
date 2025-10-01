@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<head>
+        <css src="Magebees_Blog::css/mb-blog-styles.css" />
+        <css src="Magebees_Blog::css/mb-blog-responsive.css" />
+    </head>
+	<body>
+		<move element="blog.link" destination="header.links" before="-"/>
+		<referenceBlock name="top.links">
+			<block class="Magebees\Blog\Block\Toplink" name="blog.link" template="Magebees_Blog::toplink.phtml" ifconfig="blog/general/module_enable_disable" before="-"/>
+		</referenceBlock>
+		<referenceContainer name="after.body.start">
+    <block class="Magento\Framework\View\Element\Template" name="blog.script" ifconfig="blog/general/module_enable_disable" before="-" template="Magebees_Blog::script.phtml"
+    />
+	</referenceContainer>
+	 
+	</body>
+</page>

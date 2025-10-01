@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="products_slider" class="Magebees\ProductsSlider\Block\Widget\ProductsSliderWidget">
+        <label translate="true">Magebees::Products Slider Widget</label>
+        <description>Products Slider Widget</description>
+        <parameters>
+			
+			<parameter name="wd_spacing" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="1">
+				<label translate="true">Spacing on Section</label>
+				<description translate="true">Select Yes for manage space on section.</description>
+			</parameter>
+            <parameter name="wd_bottom_spacing" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="2">
+				<label translate="true">Bottom Spacing on Section</label>
+				<description translate="true">Select Yes for manage space after section.</description>
+			</parameter>
+			
+			<parameter name="wd_bgcolor" xsi:type="block" visible="true" sort_order="3">
+                <label translate="true">Background Color</label>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\Color" />
+                
+            </parameter>
+			<parameter name="wd_bgimage" xsi:type="block" visible="true" sort_order="4">
+				<label translate="true">Background Image</label>
+				<block class="Magebees\PocoBase\Block\Adminhtml\Widget\ImageChooser">
+					<data>
+						<item name="button" xsi:type="array">
+							<item name="open" xsi:type="string">Choose Image...</item>
+						</item>
+					</data>
+				</block>
+			</parameter>
+			<parameter name="wd_position" xsi:type="select" visible="true" sort_order="5">
+				<label translate="true">Image Position</label>
+                <description translate="true"><![CDATA[]]></description>
+				<options>
+                    <option name="left" value="left" selected="true">
+                        <label translate="true">Left</label>
+                    </option>
+                    <option name="right" value="right">
+                        <label translate="true">Right</label>
+                    </option>
+                </options>
+			</parameter>
+            <parameter name="wd_title" xsi:type="text" visible="true" required="true" sort_order="7">
+				<label translate="true">Title</label>
+				<description translate="true"><![CDATA[]]></description>
+			</parameter>
+            <parameter name="wd_subtitle" xsi:type="text" visible="true" required="true" sort_order="8">
+				<label translate="true">Sub Title</label>
+				<description translate="true"><![CDATA[]]></description>
+			</parameter>
+            <parameter name="wd_description" xsi:type="block" visible="true" sort_order="9">
+                <label translate="true">Text</label>
+                <description translate="true"><![CDATA[]]></description>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\TextField"/>
+            </parameter>
+			<parameter name="wd_headingcolor" xsi:type="block" visible="true" sort_order="10">
+                <label translate="true">Heading Color</label>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\Color" />
+                
+            </parameter>
+			<parameter name="wd_detailscolor" xsi:type="block" visible="true" sort_order="11">
+                <label translate="true">Sort Details Color</label>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\Color" />
+                
+            </parameter>
+			
+			
+
+
+
+			<parameter name="wd_shopnow" xsi:type="select" visible="true" sort_order="12">
+				<label translate="true">Show Shop Now</label>
+				<options>
+				<option name="yes" value="1"><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+			</parameter>
+            <parameter name="wd_shopnow_text" xsi:type="text" required="true" visible="true" sort_order="13">
+				<label translate="true">Shop Now button Text</label>
+				<depends>
+					<parameter name="wd_shopnow" value="1" />                    
+				</depends>
+				<value>Shop Now</value>
+			</parameter>
+            <parameter name="wd_shopnow_url" xsi:type="text" visible="true" required="true" sort_order="14">
+                <label translate="true">Shop Now URL</label>
+				<depends>
+					<parameter name="wd_shopnow" value="1" />                    
+				</depends>
+                <value>#</value>
+            </parameter>
+            
+            <parameter name="wd_categories" xsi:type="select" visible="true"
+                       source_model="Magebees\AjaxCategoryProducts\Model\Categories" required="true" sort_order="15">				   
+                <label translate="true">Categories</label>
+            </parameter>
+            <parameter name="wd_no_of_products" xsi:type="text" visible="true" required="true" sort_order="16">
+                <label translate="true">Total Number of Products</label>
+            </parameter>
+            <parameter name="wd_products_per_slide" xsi:type="select" visible="true" required="true" sort_order="17">
+                <label translate="true">Number of Products per Slide</label>
+                <options>
+                    <option name="2" value="2" selected="true">
+                        <label translate="true">2</label>
+                    </option>
+                    <option name="3" value="3">
+                        <label translate="true">3</label>
+                    </option>
+					<option name="4" value="4">
+                        <label translate="true">4</label>
+                    </option>
+                </options>
+            </parameter>
+			<parameter name="wd_autoscroll" xsi:type="select" visible="true" sort_order="18">
+				<label translate="true">Autoplay</label>
+				<options>
+				<option name="yes" value="1"><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+			</parameter>
+			<parameter name="wd_auto_play_delaytime" xsi:type="text" visible="true" required="true" sort_order="19">
+				<label translate="true">Delay Time</label>
+				<description translate="true">Delay between transitions (in ms)</description>
+				<depends>
+					<parameter name="wd_autoscroll" value="1" />                    
+				</depends>
+				<value>3000</value>
+			</parameter>
+			<parameter name="wd_autoplayoff" xsi:type="select" visible="true" 
+						    sort_order="20">
+				<label translate="true">Disable On Mouse Enter</label>
+				<depends>
+					<parameter name="wd_autoscroll" value="1" />                    
+				</depends>
+				<options>
+				<option name="yes" value="1"><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+				
+			</parameter>
+			<parameter name="wd_navarrow" xsi:type="select" visible="true"
+						   sort_order="21">
+				<label translate="true">Show navigation arrow</label>
+				<options>
+				<option name="yes" value="1" selected="true"><label translate="true">Yes</label></option>
+				<option name="no" value="0"><label translate="true">No</label></option>
+				</options>
+			</parameter>
+			<parameter name="wd_pagination" xsi:type="select" visible="true" sort_order="22">
+				<label translate="true">Show Pagination</label>
+				<options>
+				<option name="yes" value="1" ><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true"><label translate="true">No</label></option>
+				</options>
+				
+			</parameter>
+			<parameter name="wd_pagination_type" xsi:type="select" visible="true"
+						   source_model="Magebees\PocoThemes\Model\Config\Source\SliderPaginationStyle" sort_order="23">
+				<label translate="true">Pagination Type</label>
+				<depends>
+					<parameter name="wd_pagination" value="1" />                   
+				</depends>
+			</parameter>
+		</parameters>
+    </widget> 
+</widgets>

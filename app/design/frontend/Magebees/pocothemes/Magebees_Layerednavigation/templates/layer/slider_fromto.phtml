@@ -1,0 +1,77 @@
+<?php 
+$url = $block->getFilterUrl();
+$price_slider_id = 'price-slider';
+$price_amount_id = 'amount';
+$shuffled_price_slider_id = str_shuffle($price_slider_id);
+$shuffled_price_amount_id = str_shuffle($price_amount_id);
+$button_id = 'from-to';
+$from_id = 'fromprice';
+$to_id = 'toprice';
+$shuffled_button_id = str_shuffle($button_id);
+$shuffled_from_id = str_shuffle($from_id);
+$shuffled_to_id = str_shuffle($to_id);
+$helper=$this->helper('\Magebees\Layerednavigation\Helper\Data');
+$currency_symbol=$helper->getCurrencySymbol();
+$enableAjax = $helper->getAjaxConfig();
+?>
+<script type="text/javascript" <?php if($enableAjax == 1){ ?> data-rocketjavascript="false" <?php } ?>>
+var price_url = "<?=$url;?>";
+require([
+    'jquery',
+    'jquery-ui-modules/core',
+	'jquery-ui-modules/widget',
+	'jquery/ui-modules/widgets/slider',
+    'domReady!',
+	"Magebees_Layerednavigation/js/magebees-layer"
+], function($,layeredNav){	
+ $("#"+"<?php echo $shuffled_button_id; ?>").on('click', function() {
+	 	var from_val=$("#"+"<?php echo $shuffled_from_id; ?>").val();
+				var to_val=$("#"+"<?php echo $shuffled_to_id; ?>").val();
+				if(price_url.indexOf( "?" ) > -1){
+					var price_filter_url=price_url+"&price="+from_val+"-"+to_val;
+				}else{
+					var price_filter_url=price_url+"?price="+from_val+"-"+to_val;
+				}				
+				if((from_val)||(to_val)){			
+					var widget = $(this).layeredNav({});
+					widget.layeredNav('ajaxLayerNav',price_filter_url);
+				}	 
+		 });	
+    $("#"+"<?php echo $shuffled_price_slider_id; ?>").slider({
+			range: true,
+			min: <?=$block->getMinValue()?>,
+			max: <?=$block->getMaxValue()?>,
+			values: [ <?=$block->getLeftValue()?>, <?=$block->getRightValue()?> ],
+			slide: function( event, ui ) {
+				$( "#"+"<?php echo $shuffled_price_amount_id; ?>" ).val( "<?=$currency_symbol;?>" + $( "#"+"<?php echo $shuffled_price_slider_id; ?>").slider( "values", 0 ) +
+			" - "+"<?=$currency_symbol;?>" + $("#"+"<?php echo $shuffled_price_slider_id; ?>" ).slider( "values", 1 ) );			
+				var from_val=$("#"+"<?php echo $shuffled_from_id; ?>").val( "<?=$currency_symbol;?>" + ui.values[ 0 ]);
+				var to_val=$("#"+"<?php echo $shuffled_to_id; ?>").val("<?=$currency_symbol;?>" + ui.values[ 1 ]);				
+			},
+			change: function( event, ui ) {				
+				if(price_url.indexOf( "?" ) > -1){
+					var price_filter_url=price_url+"&price="+ui.values[0]+"-"+ui.values[1];
+				}else{					
+					var price_filter_url=price_url+"?price="+ui.values[0]+"-"+ui.values[1];
+				}
+				var from_val=$("#"+"<?php echo $shuffled_from_id; ?>").val( "<?=$currency_symbol;?>" + ui.values[ 0 ]);
+				var to_val=$("#"+"<?php echo $shuffled_to_id; ?>").val("<?=$currency_symbol;?>" + ui.values[ 1 ]);			
+				var widget = $(this).layeredNav({});
+				widget.layeredNav('ajaxLayerNav',price_filter_url);
+				$( "#"+"<?php echo $shuffled_price_amount_id; ?>").val( "<?=$currency_symbol;?>" + ui.values[ 0 ] + " - "+"<?=$currency_symbol;?>" + ui.values[ 1 ] );
+			}
+			
+		});
+		$( "#"+"<?php echo $shuffled_price_amount_id; ?>" ).val( "<?=$currency_symbol;?>" + $( "#"+"<?php echo $shuffled_price_slider_id; ?>").slider( "values", 0 ) +
+			" - "+"<?=$currency_symbol;?>" + $("#"+"<?php echo $shuffled_price_slider_id; ?>" ).slider( "values", 1 ) );		
+});
+</script>
+<?php 
+?>      
+<input type="text" id="<?php echo $shuffled_price_amount_id; ?>" readonly class="priceFromTo" />
+<div id="<?php echo $shuffled_price_slider_id; ?>"></div>
+<div class="priceRange">	
+	<span><?php /* @escapeNotVerified */ echo __('From:'); ?><input type="text" id="<?php echo $shuffled_from_id;?>" name="from" class="from_price" value="<?php echo $block->getLeftValue();?>" aria-label="From" /></span>
+	<span><?php /* @escapeNotVerified */ echo __('To:'); ?><input type="text" id="<?php echo $shuffled_to_id;?>" name="to" class="to_price"  value="<?php echo $block->getRightValue();?>" aria-label="To"/></span>
+	<button id="<?php echo $shuffled_button_id;?>" class="from-to_price"><?php /* @escapeNotVerified */ echo __('Go'); ?></button>
+</div>

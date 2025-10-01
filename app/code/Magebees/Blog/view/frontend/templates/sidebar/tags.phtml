@@ -1,0 +1,24 @@
+<?php 
+$recentPostTagsIds = $block->getRecentTagsIds();
+if(count($recentPostTagsIds)>0): ?>
+<div class="mb-block-tags mb-block" data-bind="scope: 'tagclaud'">
+	<div class="block-title"><strong><?php echo $block->escapeHtml('Tags');?></strong></div>
+		<div class="tags-content">
+		<?php 
+			$font_size = 1.5;
+			foreach ($recentPostTagsIds as $_tagId => $tagPostCount): ?>
+			<?php 	
+				$_tag = $block->getTagbyId($_tagId);
+				$_tagUrl = $block->getTagurl($_tag);
+				$_tagName = $block->escapeHtml($_tag->getTitle(), null, true);
+			
+			$tag_font_size = $font_size + (($tagPostCount)/4);
+			$style = 'font-size: '.$tag_font_size.'rem;';
+			?>
+				<div class="tags-title" id="tag-<?php echo $_tagId ?>">
+					<a class="tags-item-link" style="<?php echo $style?>" href="<?php echo $_tagUrl ?>"><?php echo $_tagName; ?></a>
+				</div>   
+			<?php endforeach; ?>
+	</div>
+</div>	
+<?php endif;?>

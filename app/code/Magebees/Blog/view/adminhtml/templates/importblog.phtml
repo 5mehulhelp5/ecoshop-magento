@@ -1,0 +1,76 @@
+<?php
+$connection = $this->getUrl('blog/import/connection'); 
+$wordpress_copytables = $this->getUrl('blog/import/copytables'); 
+$wordpress_category = $this->getUrl('blog/import/category'); 
+$wordpress_assign_parent_category = $this->getUrl('blog/import/categoryparent'); 
+$wordpress_tag = $this->getUrl('blog/import/tag'); 
+$wordpress_post = $this->getUrl('blog/import/post'); 
+$wordpress_comment = $this->getUrl('blog/import/comment'); 
+
+$loadimageurl = $this->getViewFileUrl('Magebees_Blog::images/loading.gif');
+?>
+<style type="text/css">
+	.steps-list { margin-bottom: 15px; font-size: 16px; }
+	.pending-status { color: #c80000; text-transform: uppercase; font-weight: bold; }
+	#myProgress { margin-top: 20px; }
+</style>
+<div id='import_popup'><div class='steps-export' style='display:none;'>
+    <ul class='nav-bar'>
+		<li id='connection'><a href='#'><?php echo $block->escapeHtml('Connection'); ?></a></li>
+		<li id='importing-category'><a href='#'><?php echo $block->escapeHtml('Importing Categories'); ?></a></li>
+		<li id='assing-parent-category'><a href='#'><?php echo $block->escapeHtml('Assign Parent Category'); ?></a></li>
+		<li id='importing-tags'><a href='#'><?php echo $block->escapeHtml('Importing Tags'); ?></a></li>
+		<li id='importing-posts'><a href='#'><?php echo $block->escapeHtml('Importing Posts'); ?></a></li>
+		<li id='importing-comments'><a href='#'><?php echo $block->escapeHtml('Importing Comments'); ?></a></li>
+	</ul>
+	<div class='clearfix'></div>
+	</div>
+	<div id='loading-icon'></div>
+	<div id="steps">
+		<div id="create-category" style="display:none;" class="steps-list"><?php echo $block->escapeHtml('Category Total'); ?>
+			<span id="cat-process"></span> / <span id="cat-total"></span>
+			<span id="cat-process-status" class="pending-status"><?php echo $block->escapeHtml('Pending'); ?></span>
+		</div>
+		<div id="category-assing-parent" style="display:none;" class="steps-list"><?php echo $block->escapeHtml('Assign Parent Category Total'); ?>
+			<span id="cat-parent-process"></span> / <span id="cat-parent-total"></span>
+			<span id="cat-parent-process-status" class="pending-status"><?php echo $block->escapeHtml('Pending'); ?></span>
+		</div>
+		<div id="create-tag" style="display:none;" class="steps-list"><?php echo $block->escapeHtml('Tag Total'); ?>
+			<span id="tag-process"></span> / <span id="tag-total"></span>
+			
+			<span id="tag-process-status" class="steps-list pending-status"><?php echo $block->escapeHtml('Pending'); ?></span>
+		</div>
+		<div id="create-post" style="display:none;" class="steps-list"><?php echo $block->escapeHtml('Post Total'); ?>
+			<span id="post-process"></span> / <span id="post-total"></span>
+			
+			<span id="post-process-status" class="steps-list pending-status"><?php echo $block->escapeHtml('Pending'); ?></span>
+		</div>
+		<div id="create-comment" style="display:none;" class="steps-list"><?php echo $block->escapeHtml('Comment Total'); ?>
+			<span id="comment-process"></span> / <span id="comment-total"></span>
+			
+			<span id="comment-process-status" class="steps-list pending-status"><?php echo $block->escapeHtml('Pending'); ?></span>
+		</div>
+	</div>
+	<div id='myProgress' style='display:none;'>
+			<div id='myBar'>
+				<div id='label'></div>
+			</div>
+	</div>
+	<div id='import_popup1'></div>
+	<div id='error_message' style='display:none;'></div>
+</div>
+
+<script>
+	requirejs(['jquery','domReady!','importblog'], function(jQuery){
+		jQuery('#import').importblog({
+			loading_image_url : '<?php echo $loadimageurl;?>',
+			wordpress_connection : '<?php echo $connection;?>',
+			wordpress_copytables : '<?php echo $wordpress_copytables;?>',
+			wordpress_category : '<?php echo $wordpress_category;?>',
+			wordpress_assign_parent_category : '<?php echo $wordpress_assign_parent_category;?>',
+			wordpress_tag : '<?php echo $wordpress_tag;?>',
+			wordpress_post : '<?php echo $wordpress_post;?>',
+			wordpress_comment : '<?php echo $wordpress_comment;?>',
+		});
+	});
+</script>

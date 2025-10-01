@@ -1,0 +1,85 @@
+<?php 
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); 
+$storeId = $poco_helper->getStoreId();
+$mediaURL = $poco_helper->getStoreMediaUrl($storeId);
+
+$pubPath = $poco_helper->getPubAbsolutePath();
+$_imgUrl= $mediaURL.'poco/catthumbanil/dummy-image-style-4.jpg';
+$_imgPath= $pubPath.'media/poco/catthumbanil/dummy-image-style-4.jpg';
+list($width, $height) = getimagesize($_imgPath);
+
+
+$slider = $block->getSlider();
+$category_description = $block->getDescription();
+$animation = $block->getAnimation();
+$animation_class = $animation?"wow animate__fadeIn":" ";
+$slider_class = $slider?" swiper":" ";
+$item_class =   $slider?"category-item swiper-slide":"category-item";
+$shop_now = $block->getShopnow();
+$shop_now_txt = $block->getShopnowtext();
+$categories =array(
+array('name'=>'Category 1','url'=>"#",'productcount'=>5,'circletitle'=>null,'circlediscount'=>null,'description'=>null,'discountlabel'=>null,'discountcode'=>null),
+array('name'=>'Category 2','url'=>"#",'productcount'=>0,'circletitle'=>null,'circlediscount'=>null,'description'=>null,'discountlabel'=>null,'discountcode'=>null),
+array('name'=>'Category 3','url'=>"#",'productcount'=>15,'circletitle'=>null,'circlediscount'=>null,'description'=>null,'discountlabel'=>null,'discountcode'=>null),
+array('name'=>'Category 4','url'=>"#",'productcount'=>22,'circletitle'=>null,'circlediscount'=>null,'description'=>null,'discountlabel'=>null,'discountcode'=>null),
+array('name'=>'Category 5','url'=>"#",'productcount'=>12,'circletitle'=>null,'circlediscount'=>null,'description'=>null,'discountlabel'=>null,'discountcode'=>null),
+array('name'=>'Category 6','url'=>"#",'productcount'=>14,'circletitle'=>null,'circlediscount'=>null,'description'=>null,'discountlabel'=>null,'discountcode'=>null),
+array('name'=>'Category 7','url'=>"#",'productcount'=>8,'circletitle'=>null,'circlediscount'=>null,'description'=>null,'discountlabel'=>null,'discountcode'=>null),
+array('name'=>'Category 8','url'=>"#",'productcount'=>0,'circletitle'=>null,'circlediscount'=>null,'description'=>null,'discountlabel'=>null,'discountcode'=>null),
+array('name'=>'Category 9','url'=>"#",'productcount'=>6,'circletitle'=>null,'circlediscount'=>null,'description'=>null,'discountlabel'=>null,'discountcode'=>null),
+array('name'=>'Category 10','url'=>"#",'productcount'=>0,'circletitle'=>null,'circlediscount'=>null,'description'=>null,'discountlabel'=>null,'discountcode'=>null),
+array('name'=>'Category 11','url'=>"#",'productcount'=>5,'circletitle'=>null,'circlediscount'=>null,'description'=>null,'discountlabel'=>null,'discountcode'=>null),
+array('name'=>'Category 12','url'=>"#",'productcount'=>22,'circletitle'=>null,'circlediscount'=>null,'description'=>null,'discountlabel'=>null,'discountcode'=>null));
+
+?> 
+<?php $categoryId = 1; ?>
+<?php foreach ($categories as $category): ?>
+<?php $categoryId++; ?>
+<?php 
+	if(isset($category['productcount'])&&($category['productcount'] > 0)){
+	$align_class = 'justify-space-between';
+	}else{
+	$align_class = 'justify-content-center';
+	}
+?>
+	<div class="<?php echo $item_class ?> <?php echo $animation_class ?>" <?php if($animation): ?> data-wow-delay="0.6s" <?php endif;?>>
+	
+			<div class="category-thumbnail">
+				<a href="<?php echo $category['url'];?>">
+				<img loading="lazy" src="<?php echo $_imgUrl; ?>" alt="<?php echo $block->escapeHtml($category['name']) ?>" width="<?php echo $width;?>" height="<?php echo $height;?>" title="<?php echo $block->escapeHtml($category['name']); ?>" /><div class="round_anm"></div>
+				</a>
+				
+			</div> 
+			
+			<div class="category-details w-100">
+				<div class="category-title w-100 p-2 d-flex align-item-center justify-space-between">
+					<?php if((!$shop_now)||(!$shop_now_txt)): ?>
+							<h3 class="title mb-0">
+								<a href="<?php echo $category['url'];?>" id="cat_<?php echo $categoryId ?>"><?php echo $block->escapeHtml($category['name']) ?></a>
+							</h3>
+							<?php if($category['productcount'] > 0 ): ?>
+								<div class="cat-product-count"><?php echo __($category['productcount'].'+ Items');?></div>
+							<?php endif; ?>
+						<?php else: ?>
+							<h3 class="title mb-0"><?php echo $block->escapeHtml($category['name']) ?></h3>
+							<?php if($category['productcount']  > 0 ): ?>
+								<div class="cat-product-count"><?php echo __($category['productcount'] .'+ Items');?></div>
+							<?php endif; ?>
+						<?php endif; ?>
+						
+					
+				
+				</div>
+				<?php if(($shop_now)&&($shop_now_txt)): ?>
+											<div class="category-btn"><a href="<?php echo $category['url'];?>" id="cat_<?php echo $categoryId ?>" class="action btn-link"><span class="text"><?php echo __(html_entity_decode($shop_now_txt)); ?></span> <span class="icon"><i class="feather-arrow-right"></i></span></a></div>
+										<?php endif; ?>
+				<?php if(isset($category['description'])&&($category['description'])):?>
+								<div class="sort-detail"><?php echo __($_category['description']);?></div>
+				<?php endif; ?>
+			</div>
+	
+	</div>
+<?php endforeach;?>
+			
+			
+		

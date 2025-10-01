@@ -1,0 +1,26 @@
+{
+	"name": "magebees/module-ajaxcategoryproducts-theme",
+	"description": "Products Listing based on category select with ajax using widget or shortcode.",
+	"type": "magento2-module",
+	"version": "1.0.6",
+	"license": [
+		"OSL-3.0",
+		"AFL-3.0"
+	],
+	"authors": [
+		{
+			"name": "MageBees",
+			"email": "support@magebees.com",
+			"homepage": "https://www.magebees.com",
+			"role": "Developer"
+		}
+  	],
+	"autoload": {
+		"files": [
+			"registration.php"
+		],
+		"psr-4": {
+			"Magebees\\AjaxCategoryProducts\\": ""
+		}
+	}
+}

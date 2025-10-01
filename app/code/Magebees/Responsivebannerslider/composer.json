@@ -1,0 +1,26 @@
+{
+  "name": "magebees/module-responsivebannerslider-theme",
+  "description": "Responsive Banner Slider Extension is generally used to show responsive banner slider on any pages, CMS pages, Category pages, Product View pages based on selection you did from admin side. ",
+  "type": "magento2-module",
+  "version": "2.2.1",
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "authors": [
+    {
+      "name": "MageBees",
+      "email": "support@magebees.com",
+      "homepage": "https://www.magebees.com/",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Magebees\\Responsivebannerslider\\": ""
+    }
+  }
+}

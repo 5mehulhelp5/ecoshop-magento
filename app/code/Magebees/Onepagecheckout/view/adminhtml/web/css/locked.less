@@ -1,0 +1,120 @@
+.magebees_free_Onepagecheckout_locked_button, .magebees_free_Onepagecheckout_locked_button_small {
+  font-family: 'Open Sans', sans-serif;
+  position: absolute;
+  z-index: 600;
+  background: #018999;
+  color: #fff;
+  padding: 22px 25px;
+  line-height: 1;
+  //letter-spacing: 1px;
+  border-radius: 8px;
+  font-size: 24px;
+  left: calc(~'50% - 95px');
+  top: calc(~'50% - 34px');
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-block;
+  -webkit-box-shadow: 0px 2px 0px 0px rgba(1, 137, 153, 0.25);
+  -moz-box-shadow: 0px 2px 0px 0px rgba(1, 137, 153, 0.25);
+  box-shadow: 0px 2px 0px 0px rgba(1, 137, 153, 0.25);
+  text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.25);
+  &:hover {
+    background-color: #22a1ad;
+  }
+  i.fa {
+    margin-right: 15px;
+  }
+}
+
+#magebees_free_Onepagecheckout_locked_popup_container {
+  display: none;
+  position: absolute;
+  z-index: 601;
+  width: 100%;
+  top: 0;
+  left: 0;
+  .magebees_free_Onepagecheckout_locked_pop_up {
+    -webkit-box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.25);
+    background: #fff;
+    border-radius: 8px;
+    padding: 60px;
+    box-sizing: border-box;
+    width: 786px;
+    z-index: 603;
+    position: absolute;
+    top: calc(~'50% - 345px');
+    left: calc(~'50% - 393px');
+    text-align: center;
+    color: #343434;
+    font-family: 'Open Sans', sans-serif;
+    .magebees_free_Onepagecheckout_locked_pop_up_title_img {
+      background: url('../images/title_img.png') no-repeat center center;
+      width: 100%;
+      height: 80px;
+      margin-bottom: 54px;
+    }
+    .clear {
+      clear: both;
+    }
+    .magebees_free_Onepagecheckout_locked_pop_up_features {
+      text-align: left;
+      margin: 0 auto;
+      display: inline-block;
+      margin-bottom: 60px;
+      margin-left: 46px;
+      .magebees_free_Onepagecheckout_locked_pop_up_one_feature {
+        font-size: 24px;
+        line-height: 1;
+        margin-bottom: 17px;
+        position: relative;
+        &:last-child {
+          margin-bottom: 0;
+        }
+        &:before {
+          position: absolute;
+          top: -1px;
+          left: -46px;
+          color: #22a1ad;
+          line-height: 1;
+          font-family: 'FontAwesome';
+          content: '\f058';
+        }
+      }
+    }
+    .magebees_free_Onepagecheckout_locked_pop_up_content {
+      font-size: 18px;
+      margin-bottom: 47px;
+      padding: 0 40px;
+      line-height: 1.4;
+    }
+    .magebees_free_Onepagecheckout_locked_button_small {
+      position: static;
+      text-decoration: none;
+      &:hover {
+        text-decoration: none;
+        color: #fff;
+      }
+    }
+    .magebees_free_Onepagecheckout_locked_pop_up_close {
+      position: absolute;
+      font-size: 24px;
+      line-height: 1;
+      color: #b6b6b6;
+      top: 16px;
+      cursor: pointer;
+      right: 20px;
+    }
+  }
+  .magebees_free_Onepagecheckout_locked_mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.5;
+    z-index: 601;
+  }
+}

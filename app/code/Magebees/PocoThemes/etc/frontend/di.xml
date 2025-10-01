@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+	<type name="Magento\Framework\View\Result\Page">
+		<plugin name="pocoThemeModuleResultPage" type="Magebees\PocoThemes\Plugin\Result\Page"/>
+		 <arguments>
+			<argument name="layoutReaderPool" xsi:type="object">pageConfigRenderPool</argument>
+			<argument name="generatorPool" xsi:type="object">pageLayoutGeneratorPool</argument>
+			<argument name="template" xsi:type="string">Magento_Theme::root.phtml</argument>
+		</arguments>
+	</type>
+	<type name="Magento\Catalog\Helper\Product\View">
+        <plugin name="Magebees_Productview" type="Magebees\PocoThemes\Plugin\Product\View"/>
+	</type>
+	<type name="Magento\Framework\App\Response\Http">
+        <plugin name="speed-optimizer-response-http-process" type="Magebees\PocoThemes\Plugin\SpeedOptimizer"/>
+    </type>
+	<type name="Magento\Framework\Controller\ResultInterface">
+        <plugin name="result-rocketjavascript" type="Magebees\PocoThemes\Model\Controller\ResultPlugin" sortOrder="999999" />
+    </type>
+	
+	<!--<type name="Magento\Framework\Controller\ResultInterface">
+        <plugin name="result-deferredjs" type="Magebees\PocoThemes\Controller\Result\JsPlugin" sortOrder="999999" />
+    </type>-->
+	<type name="Magento\Framework\View\Result\Layout">
+        <plugin name="theme_optimization" type="Magebees\PocoThemes\Controller\Result\AsyncCssPlugin" sortOrder="-10" />
+    </type>
+	<!--<type name="Magento\Framework\View\Result\Layout">
+        <plugin name="removeBlankHtml" type="Magebees\PocoThemes\Controller\Result\Removeblankline" sortOrder="-10" />
+    </type>-->
+	<!--
+	<type name="Magento\Framework\Controller\ResultInterface">
+        <plugin name="css-load" type="Magebees\PocoThemes\Controller\Result\CssPlugin" sortOrder="999999" />
+    </type>
+	-->
+	<!--<type name="Magento\Framework\Controller\ResultInterface">
+        <plugin name="css-load" type="Magebees\PocoThemes\Controller\Result\InlineCss" sortOrder="999999" />
+    </type>-->
+</config>

@@ -1,0 +1,11 @@
+<?php $mail_helper = $this->helper('Magebees\EmailEditor\Helper\Data');
+
+$image=$mail_helper->getLightLogoImageUrl();
+$alt_text=$mail_helper->getConfig('emaileditor/light_logo/alt_text');
+$width=$mail_helper->getConfig('emaileditor/light_logo/width');
+$height=$mail_helper->getConfig('emaileditor/light_logo/height');
+$link=$mail_helper->getConfig('emaileditor/light_logo/link');
+?>
+<?php if($image): ?>
+ <a href="<?= $link ?>"><img height="<?= $height ?>" width="<?= $width ?>" src="<?= $image ?>" alt="<?= $alt_text ?>"/></a>
+ <?php endif;?>

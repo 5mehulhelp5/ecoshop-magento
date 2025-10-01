@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+		<add id="Magebees_Finder::finder_content" title="MageBees Manage Finders" module="Magebees_Finder" sortOrder="50" parent="Magento_Catalog::inventory" action="finder/finder" resource="Magebees_Finder::finder_content"/>
+    </menu>
+</config>

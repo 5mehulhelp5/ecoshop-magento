@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="magebees_critical_css" resource="default" engine="innodb" comment="Magebees Critical Css">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+    <column xsi:type="varchar" name="type" nullable="false" length="255" comment="Type"/>
+    <column xsi:type="varchar" name="stores" nullable="false" length="255" comment="Stores"/>
+	<column xsi:type="longtext" name="css" nullable="true" comment="css"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+  </table>
+</schema>

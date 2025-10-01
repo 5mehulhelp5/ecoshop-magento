@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd" layout="2columns-left">
+    <body>
+        <referenceContainer name="columns.top">
+            
+            <container name="page.messages" htmlTag="div" htmlClass="page messages">
+                <block class="Magento\Framework\View\Element\Template" name="ajax.message.placeholder" template="Magento_Theme::html/messages.phtml"/>
+                <block class="Magento\Framework\View\Element\Messages" name="messages" as="messages" template="Magento_Theme::messages.phtml"/>
+            </container>
+        </referenceContainer>
+        <referenceContainer name="content">
+			<block class="Magento\Theme\Block\Html\Title" name="page.main.title" template="html/title.phtml"/>
+           <block class="Magebees\Blog\Block\Post\AuthorPostList" name="author_post_list" template="Magebees_Blog::post/list.phtml" >
+				<block class="Magebees\Blog\Block\Post\Addthis" name="post_add_this" template="Magebees_Blog::post/addthis.phtml" ></block>
+			   <block class="Magebees\Blog\Block\Post\Postlistdetails" name="post_listview" template="Magebees_Blog::post/post-listview.phtml" ></block>
+						<block class="Magebees\Blog\Block\Post\Postlistdetails" name="post_gridview" template="Magebees_Blog::post/post-gridview.phtml" ></block>
+            </block>
+        </referenceContainer>
+		<referenceContainer name="sidebar.additional">
+         <referenceBlock name="catalog.compare.sidebar" remove="true"/>
+		<referenceBlock name="wishlist_sidebar" remove="true" />	
+		
+        </referenceContainer>
+		<referenceContainer name="sidebar.main">
+             <referenceBlock name="catalog.compare.sidebar" remove="true"/>
+		<referenceBlock name="wishlist_sidebar" remove="true" />	
+		<block class="Magebees\Blog\Block\Sidebar\Search" name="sidebar.blog.search" template="Magebees_Blog::sidebar/search.phtml" ></block>
+			<block class="Magebees\Blog\Block\Sidebar\Category" name="sidebar.blog.category" template="Magebees_Blog::sidebar/category.phtml" >
+				
+            </block>
+			<block class="Magebees\Blog\Block\Sidebar\Recentposts" name="sidebar.blog.recentposts" template="Magebees_Blog::sidebar/recentposts.phtml" ></block>
+			<block class="Magebees\Blog\Block\Sidebar\Recentcomments" name="sidebar.blog.recentcomments" template="Magebees_Blog::sidebar/recentcomments.phtml" ></block>
+			<block class="Magebees\Blog\Block\Sidebar\Archive" name="sidebar.blog.archive" template="Magebees_Blog::sidebar/archive.phtml" ></block>
+			<block class="Magebees\Blog\Block\Sidebar\TagList" name="sidebar.blog.tags" template="Magebees_Blog::sidebar/tags.phtml" ></block>
+        </referenceContainer>
+    </body>
+</page>

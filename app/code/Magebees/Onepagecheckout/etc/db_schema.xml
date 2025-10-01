@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="quote" resource="default">
+    <column xsi:type="smallint" name="newsletter_subscribe" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Newsletter Subscribe"/>
+    <column xsi:type="datetime" name="delivery_date" on_update="false" nullable="false" default="NULL" comment="Delivery Date"/>
+    <column xsi:type="text" name="order_comments" nullable="true" comment="Order Comments"/>
+    <column xsi:type="text" name="order_for" nullable="true" comment="Order File Attachment"/>
+  </table>
+  <table name="sales_order" resource="default">
+    <column xsi:type="datetime" name="delivery_date" on_update="false" nullable="false" default="NULL" comment="Delivery Date"/>
+    <column xsi:type="text" name="order_comments" nullable="true" comment="Order Comments"/>
+    <column xsi:type="text" name="order_for" nullable="true" comment="Order File Attachment"/>
+  </table>
+  <table name="sales_order_grid" resource="default">
+    <column xsi:type="datetime" name="delivery_date" on_update="false" nullable="false" default="NULL" comment="Delivery Date"/>
+    <column xsi:type="text" name="order_comments" nullable="true" comment="Order Comments"/>
+    <column xsi:type="text" name="order_for" nullable="true" comment="Order File Attachment"/>
+  </table>
+  <table name="cws_magebees_ocp_successcustom" resource="default" engine="innodb" comment="cws_magebees_ocp_successcustom">
+    <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity id"/>
+    <column xsi:type="varchar" name="oscsection" nullable="false" length="100" comment="Oscsection"/>
+    <column xsi:type="varchar" name="oscfieldname" nullable="false" length="100" comment="Oscfieldname"/>
+    <column xsi:type="varchar" name="oscfieldvalue" nullable="false" length="100" comment="Oscfieldvalue"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="entity_id"/>
+    </constraint>
+  </table>
+</schema>

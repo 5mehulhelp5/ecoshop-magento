@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magebees" translate="label" sortOrder="100">
+            <label>MageBees</label>
+        </tab>
+        <section id="ajaxcatpro" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Ajax Category Products</label>
+            <tab>magebees</tab>
+            <resource>Magebees_AjaxCategoryProducts::configuration_settings</resource>
+			<group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>General</label>
+				<field id="enabled" translate="label comment" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enable Ajax Category Products</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="list_position" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Category List Position</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magebees\AjaxCategoryProducts\Model\PageLayout</source_model> 
+				</field>
+				
+				<field id="categories" translate="label comment" type="multiselect" sortOrder="15" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Select Categories</label> 
+					<validate>required-entry</validate>  					
+					<source_model>Magebees\AjaxCategoryProducts\Model\Categories</source_model> 
+				</field>
+				<field id="default_category" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Add Default Category for Filter</label> 
+					<comment><![CDATA[Add category ID for filter products by default category. Find the category id enclosed with square brackets <b>"[ ]"</b> from <b>"Select Categories"</b> list.]]></comment> 
+					<validate>validate-number</validate>  
+				</field>
+				<field id="show_category_section_title" translate="label comment" type="select" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Category Section Title</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="category_section_title" translate="label comment" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Category Section Title</label> 
+					<comment><![CDATA[]]></comment> 
+					<depends>
+                    	<field id="show_category_section_title">1</field>
+                	</depends>
+				</field>
+				<field id="number_of_products" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Number of products appear on page load</label> 
+					<comment><![CDATA[]]></comment> 
+				</field>
+				<field id="sort_by" translate="label comment" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Sort By</label> 
+					<comment>Set attribute that is initially used to sort the products list.</comment> 
+					<source_model>Magebees\AjaxCategoryProducts\Model\Sortby</source_model> 
+				</field>
+				
+				<field id="sort_order" translate="label comment" type="select" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Sort Order</label> 			
+					<source_model>Magebees\AjaxCategoryProducts\Model\Sortorder</source_model> 
+				</field>
+				<field id="loading_text" translate="label comment" type="text" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Loading Text</label>  
+				</field> 
+				
+				<field id="done_text" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Done Text</label>   
+				</field>
+				<field id="load_more_text" translate="label comment" type="text" sortOrder="55" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Load More Text</label> 
+					<comment><![CDATA[]]></comment> 
+				</field>
+			</group>
+			<group id="code" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+	            <label>Use Code Inserts</label>
+			    <field id="templatecode" translate="label comment" type="text" sortOrder="1" showInDefault="1" 
+			                showInWebsite="0" showInStore="0">
+					    <label>Template Tag</label>
+					    <frontend_model>Magebees\AjaxCategoryProducts\Block\Adminhtml\TemplateCode</frontend_model>
+					    
+			    </field>
+			    <field id="xmlcode" translate="label comment" type="text" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+					    <label>XML Code</label>
+					    <frontend_model>Magebees\AjaxCategoryProducts\Block\Adminhtml\XmlCode</frontend_model>
+					    
+			    </field>
+			    <field id="fronttemplatecode" translate="label comment" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+					    <label>Call via Frontend Template File</label>
+					   <frontend_model>Magebees\AjaxCategoryProducts\Block\Adminhtml\FrontTemplateCode</frontend_model>
+			    </field>
+		   </group>
+			
+		</section>
+    </system>
+</config>

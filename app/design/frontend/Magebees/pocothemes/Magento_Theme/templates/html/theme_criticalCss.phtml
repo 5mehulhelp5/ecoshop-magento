@@ -1,0 +1,110 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var \Magento\Theme\Block\Html\Header\CriticalCss $criticalCssViewModel
+ */
+?>
+<?php 
+$merge_css = '';
+?>
+<?php $criticalCssViewModel = $block->getData('criticalCssViewModel'); ?>
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+	$store_code = $poco_helper->getStoreCode();
+	$storeId = $poco_helper->getStoreId();
+	$top_menu_code = $poco_helper->getHeader('top_menu',$storeId);
+	$vertical_menu_code = $poco_helper->getHeader('vertical_menu',$storeId);
+	$slider_group_code = $poco_helper->getHome('home_slider',$storeId); 
+	
+	$css_file_name = "poco_config".$store_code.".css";
+	$critical_css_file_name = "poco_critical".$store_code.".css";
+	$config_href = $poco_helper->getMediaUrl().'pocothemes/'.$css_file_name;
+	$critical_href = $poco_helper->getMediaUrl().'pocothemes/'.$critical_css_file_name;
+	$critical_css_types = array();
+	$critical_css_types['storeId'] = $storeId;
+	$critical_css_types['type'] = array('theme_config','header_critical','theme_critical','conditional','ajax_search');
+	$critical_css_types['swiper_slider'] = 0;
+	
+	if($slider_group_code):
+	$critical_css_types['slider_group'] = $slider_group_code;
+	endif;
+	if($top_menu_code):
+	$critical_css_types['menu_group'][] = $top_menu_code;
+	endif;
+	if($vertical_menu_code):
+	$critical_css_types['menu_group'][] = $vertical_menu_code;
+	endif;
+	
+	$theme_all_critical_css = $poco_helper->getAllCriticalCss($critical_css_types);
+
+	if(isset($theme_all_critical_css['theme_config']))
+	{
+		$theme_config_css = $theme_all_critical_css['theme_config'];	
+	}
+	if(isset($theme_all_critical_css['header_critical']))
+	{
+		$header_critical_css = $theme_all_critical_css['header_critical'];	
+	}
+	if(isset($theme_all_critical_css['theme_critical']))
+	{
+		$theme_critical_css = $theme_all_critical_css['theme_critical'];	
+	
+	}
+	if(isset($theme_all_critical_css['conditional']))
+	{
+		$conditional_css = $theme_all_critical_css['conditional'];	
+	}
+	if(isset($theme_all_critical_css['ajax_search']))
+	{
+		$ajax_search_critical_css = $theme_all_critical_css['ajax_search'];	
+	}
+	if(isset($theme_all_critical_css['swiper_slider']))
+	{
+		$swiper_slider_css = $theme_all_critical_css['swiper_slider'];	
+	}
+	
+	
+	$developerConfig = $poco_helper->getConfigGroup('developer',$storeId);
+	$custom_css = array_key_exists('custom_css', $developerConfig) ? $developerConfig['custom_css'] : null;
+	?>
+	
+	
+	
+<style type="text/css" data-type="criticalCss">
+
+	<?= /* @noEscape */ $theme_critical_css; ?>
+	<?= /* @noEscape */ $theme_config_css; ?>
+	<?= /* @noEscape */ $ajax_search_critical_css; ?>
+	<?= /* @noEscape */ $header_critical_css; ?>
+	<?= /* @noEscape */ $swiper_slider_css; ?>
+	
+<?php if(($top_menu_code)&&(isset($theme_all_critical_css[$top_menu_code]))): ?>
+<?php $menu_css = $theme_all_critical_css[$top_menu_code];?>
+<?= /* @noEscape */ $menu_css; ?>
+<?php endif;?>
+<?php if(($vertical_menu_code)&&(isset($theme_all_critical_css[$vertical_menu_code]))): ?>
+<?php $vertical_menu_css = $theme_all_critical_css[$vertical_menu_code];?>
+<?= /* @noEscape */ $vertical_menu_css; ?>
+<?php endif;?>
+
+
+<?php if(($slider_group_code)&&(isset($theme_all_critical_css['slider_group']))): ?>
+
+<?php $slider_css = $theme_all_critical_css['slider_group'];?>
+<?= /* @noEscape */ $slider_css; ?>
+
+<?php endif; ?>
+<?php if($conditional_css): ?>
+<?= /* @noEscape */ $conditional_css; ?>
+<?php endif; ?>
+
+<?php if($custom_css): ?>
+<?= /* @noEscape */ $custom_css; ?>
+<?php endif; ?>
+
+
+    <?= /* @noEscape */ $criticalCssViewModel->getCriticalCssData() ?>
+</style>

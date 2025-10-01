@@ -1,0 +1,147 @@
+<?php use Magento\Framework\App\Action\Action; ?>
+<?php 
+$helper = $this->helper('\Magebees\Testimonial\Helper\Data');
+$testimonial_config=$block->getTestimonialConfig();
+$collection=$block->getLoadedTestimonialColl();
+if($collection) 
+{ $testimonialCollection=$collection->getData(); }
+else
+{
+    $testimonialCollection='';
+}
+
+$width=$block->getImageWidth(); 
+if(!$width)
+{
+	$width='100';
+}
+$height=$block->getImageHeight(); 
+if(!$height)
+{
+	$height='100';
+}?>
+<?php if($testimonialCollection) { ?> 
+<div id="testimonial_details">
+
+	<?php if($testimonial_config['allow_submit']):?>
+        <div class="submitBtn submit-testimonial">
+            <form data-role="testimonial-form" action="<?php /* @escapeNotVerified */ echo $block->getFormUrl(); ?>" method="post">
+                <button class="action primary"><span><?php echo __('Submit Your Testimonial');?></span></button>
+            </form>
+        </div>
+    <?php endif;?>
+
+    <ul class="mageTestList">
+		<?php $default_image=$this->getViewFileUrl("Magebees_Testimonial::images/no_profile.png");?>
+        <?php foreach($testimonialCollection as $testimonial):?>     
+        <li class="items">
+			<?php if($this->getShowVideo()):?>
+                <?php if($testimonial['video_url']):?>
+                    <div id="video" class="mageTmVideo">
+                        	<div class="videoWraper">
+								<?php $link = $testimonial['video_url'];				
+                                      $video = explode("?v=", $link);
+							$video_id = '';
+							if(isset($video[1])){
+								$video_id = $video[1];
+							}
+							$autoplay = 0;
+							if($this->getAutoplayVideo()){
+								$autoplay = 1;
+							}
+									  
+                            ?>
+							<?php if (stripos($link,"embed") !== false) {	?>
+									<iframe src="<?php echo $link."?autoplay=".$autoplay; ?>&rel=0&modestbranding=1&autohide=1&showinfo=0&controls=0" frameborder="0" width="100%" height="400" allowFullScreen></iframe>
+								<?php } else { ?>
+									<iframe src="https://www.youtube.com/embed/<?php echo $video_id."?autoplay=".$autoplay; ?>&rel=0&modestbranding=1&autohide=1&showinfo=0&controls=0" frameborder="0" width="100%" height="400" allowFullScreen></iframe>
+								<?php } ?>
+                            </div>
+                    </div>
+                <?php endif;?>
+            <?php endif;?>	
+            
+            <div class="magetmQuotes">
+                <?php $length=$this->getContentLength(); $testimonialcontent=$testimonial['testimonial']; 
+                echo $this->limit_word($testimonialcontent,$length);?>
+            </div>
+            
+            <div class="mageTmClient">
+				<?php if($this->getShowProfile()):?>
+				<?php if($testimonial['image']){
+					$img_path=$helper->checkImgExist($testimonial['image'],$width,$height);
+				}?>
+                    <div class="clientPic"><img src="<?php if($testimonial['image']){ echo $img_path; } else { echo $default_image; }?>" width="<?php echo $width."px" ?>" height="<?php echo $height."px" ?>" alt="" /></div>
+                <?php endif;?>
+                <div class="clientDetails">
+                    <div class="clientname">
+                    	<b><?php echo $testimonial['name']; ?>, </b>
+                        <span class="mageTmComp">
+                            <?php if($this->getShowWebsite()):?>
+                            <a href="<?php echo $testimonial['website']; ?>" target="_blank"><?php echo $testimonial['company']; ?></a>
+                            <?php else:?>
+                             <?php if($this->getShowCompany()):?>
+                                <?php echo $testimonial['company']; ?>
+                            <?php endif;?>
+                            <?php endif;?>
+                        </span>
+                    </div>
+                    
+                    <?php if($this->getShowEmail()):?>
+                        <div class="mageTmEmail"><i title="Email"></i> <?php echo $testimonial['email']; ?></div>
+                    <?php endif;?>
+                    
+                    <?php if(($this->getShowAddress())&&($testimonial['address'])):?>
+                        <div class="mageTmAddress"><i title="Address"></i> <?php echo $testimonial['address']; ?></div>
+                    <?php endif;?>
+                    
+                    <?php if($this->getShowCreatedate()):?>
+                        <div class="mageTmDate"><i title="Posted on"></i> <?php echo $testimonial['inserted_date']; ?></div>
+                    <?php endif;?>
+                        
+                    <?php if($this->getShowRating()):?>
+                        <?php if($testimonial['rating']):?>
+                            <div id="ratings" class="mageTmRating">
+                                <?php $rating =$testimonial['rating'];
+                                    $src=$this->getViewFileUrl("Magebees_Testimonial::images/rating.png");
+                                    $src_empty=$this->getViewFileUrl("Magebees_Testimonial::images/empty_rating.png");
+                                    $i=0;
+                                    while($i<5){
+                                    if($i<$rating) { ?>
+                                        <img src= "<?php echo $src ?>" height="15" width="15" alt="" />	
+                                    <?php } else { ?>
+                                        <img src="<?php echo $src_empty ?>" height="15" width="15" alt=""/>
+                                    <?php } $i++; }?>	
+                                </div>
+                        <?php endif;	?>
+           
+		   		<?php endif; ?>
+                </div>
+            </div>
+		</li>       
+  <?php endforeach; ?>        
+	</ul>
+</div>	
+
+<?php if ($block->getPagerHtml()): ?>
+	<div class="mageTestitoolbar toolbar bottom"><?php echo $block->getPagerHtml(); ?></div>
+<?php endif ?>
+ 
+<?php } else { if($testimonial_config['allow_submit']): ?>
+<div class="submit-testimonial" align="right">
+	<form data-role="testimonial-form" action="<?php /* @escapeNotVerified */ echo $block->getFormUrl(); ?>" method="post">
+		<button class="action primary">					
+			<span><?php echo __('Submit Your Testimonial');?></span>					
+		</button>
+	</form>
+</div>
+<?php endif; } ?>
+		
+<script type="text/javascript">
+	requirejs(['jquery','domReady!'], function($){	
+		  $('.mageTestitoolbar #limiter').change(function () {
+                         var url=$(this).val();
+                        window.location.href=url;
+                     });
+	});
+</script>	

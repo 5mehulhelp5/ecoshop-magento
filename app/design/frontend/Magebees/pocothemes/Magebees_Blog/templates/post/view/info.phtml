@@ -1,0 +1,97 @@
+<?php $show_blog_tag = false;
+	$show_blog_social_share = false;
+	$show_blog_comment = false;
+	$show_blog_author = false;
+
+ $_postName = $block->getPost()->getTitle();?>
+
+
+<?php if ($_categoriesCount = $block->getCategoriesCount()) { ?>
+<div class="item-meta mb-post-categories">
+<span class="label"><?php echo __('Categories:') ?></span>
+<?php $cat_count = 0; 
+		foreach($block->getPostCategories() as $category) { $cat_count++; ?>
+	<?php if($cat_count > 2){ ?>	
+	<a class="hide-cat-more" title="<?php echo $block->escapeHtml($category['title']) ?>" href="<?php echo $category['url']; ?>">
+        <?php echo $block->escapeHtml($category['title']) ?>
+    <?php if ($cat_count != $_categoriesCount) { ?>, <?php } ?>
+	</a>
+	<?php }else{ ?>
+	<a class="show-cat" title="<?php echo $block->escapeHtml($category['title']) ?>" href="<?php echo $category['url']; ?>">
+        <?php echo $block->escapeHtml($category['title']) ?>
+    <?php if ($cat_count != $_categoriesCount) { ?>, <?php } ?>
+	</a>
+	
+	<?php } ?>
+
+    
+<?php } ?>
+		<?php if($_categoriesCount > 2):?>
+	<a class="show-more-cat showmorecat"><?php echo __(' More'); ?></a>
+	<?php endif;?>
+</div>
+<?php }  ?>
+<?php if($block->EnablePublishDate()): ?>
+<div class="item-meta mb-post-posed-date">
+	<span class="label"><?php echo __('Posted:') ?></span>
+	<span class="value"><?php echo $block->getCreationDate();?></span>
+</div> 
+<?php endif;?>
+<?php if ($_commentsCount = $block->getPostCommentsCount()) { ?>
+<div class="item-meta mb-post-comments">
+<span class="label"><?php echo __('Comments:') ?></span>
+<a title="<?php echo $block->escapeHtml($_postName) ?>" href="#post-comments">
+    <?php echo $block->getPostCommentsCount();?>
+</a>
+</div>
+<?php 
+}
+if($show_blog_tag):
+$posttags = $block->getPostTags();
+if ($_tagsTotalCount = $posttags->getSize()) { ?>
+<div class="item-meta mb-post-tags">
+<span class="label"><?php echo __('Tags:') ?></span>
+<?php $tag_count = 0; foreach($posttags as $tag) { $tag_count++; ?>
+   
+	
+	<?php if($tag_count > 2){ ?>	
+	<a class="hide-tag-more" title="<?php echo $block->escapeHtml($tag->getTitle()) ?>" href="<?php echo $block->getTagurl($tag); ?>">
+        <?php echo $block->escapeHtml($tag->getTitle()) ?>
+     <?php if ($tag_count != $_tagsTotalCount) { ?>, <?php } ?>
+	</a>
+	<?php }else{ ?>
+	<a class="show-tag" title="<?php echo $block->escapeHtml($tag->getTitle()) ?>" href="<?php echo $block->getTagurl($tag); ?>">
+        <?php echo $block->escapeHtml($tag->getTitle()) ?>
+     <?php if ($tag_count != $_tagsTotalCount) { ?>, <?php } ?>
+	</a>
+	<?php } ?>
+	  
+<?php } ?>
+	<?php if($tag_count > 2):?>
+	<a class="show-more-tag showmoretag"><?php echo __(' More'); ?></a>
+	<?php endif;?>
+</div>
+<?php } ?>
+<?php endif;?>
+<?php 
+if($show_blog_author):
+if($block->EnableAuthorDisplay()):
+$authorInfo = $block->getPostAuthorInfo();
+if ($authorInfo) { 
+?>
+<div class="item-meta mb-post-author">
+    <span class="label"><?php echo __('Author:') ?></span>
+    <span class="value">
+		<?php if($block->EnableAuthorLink()):?>
+        <a title="<?php echo $block->escapeHtml($authorInfo['name']) ?>" href="<?php echo $authorInfo['url']; ?>">
+			<?php endif;?>
+	            <?php echo $block->escapeHtml($authorInfo['name']) ?>
+		    <?php if($block->EnableAuthorLink()):?>
+		</a>
+		<?php endif;?>
+	
+    </span>
+</div>
+<?php } ?>
+<?php endif; ?>
+<?php endif;?>

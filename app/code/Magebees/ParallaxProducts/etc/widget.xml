@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="parallax_products" class="Magebees\ParallaxProducts\Block\Widget\ParallaxProductsWidget">
+        <label translate="true">Magebees::Parallax Products Widget</label>
+        <description>Parallax Products Widget</description>
+        <parameters>
+			
+			<parameter name="wd_spacing" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="1">
+				<label translate="true">Spacing on Section</label>
+				<description translate="true">Select Yes for manage space on section.</description>
+			</parameter>
+            <parameter name="wd_bottom_spacing" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="2">
+				<label translate="true">Bottom Spacing on Section</label>
+				<description translate="true">Select Yes for manage space after section.</description>
+			</parameter>
+			
+			<parameter name="wd_bgcolor" xsi:type="block" visible="true" sort_order="3">
+                <label translate="true">Background Color</label>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\Color" />
+                <!-- <depends>
+                    <parameter name="wd_content" value="desc" />
+                </depends> -->
+            </parameter>
+			<parameter name="wd_bgimage" xsi:type="block" visible="true" required="true" sort_order="4">
+				<label translate="true">Parallax Image</label>
+                <description translate="true"><![CDATA[]]></description>
+				<block class="Magebees\PocoBase\Block\Adminhtml\Widget\ImageChooser">
+					<data>
+						<item name="button" xsi:type="array">
+							<item name="open" xsi:type="string">Choose Image...</item>
+						</item>
+					</data>
+				</block>
+			</parameter>
+            <parameter name="wd_position" xsi:type="select" visible="true" sort_order="5">
+				<label translate="true">Image Position</label>
+                <description translate="true"><![CDATA[]]></description>
+				<options>
+                    <option name="left" value="left" selected="true">
+                        <label translate="true">Left</label>
+                    </option>
+                    <option name="right" value="right">
+                        <label translate="true">Right</label>
+                    </option>
+                </options>
+			</parameter>
+            <parameter name="wd_content" xsi:type="select" visible="true" sort_order="6">
+				<label translate="true">Content Type</label>
+                <description translate="true"><![CDATA[]]></description>
+				<options>
+                    <option name="products" value="products" selected="true">
+                        <label translate="true">Products</label>
+                    </option>
+                    <option name="desc" value="desc">
+                        <label translate="true">Description</label>
+                    </option>
+                </options>
+			</parameter>
+          
+            <parameter name="wd_title" xsi:type="text" visible="true" required="true" sort_order="7">
+				<label translate="true">Title</label>
+				<description translate="true"><![CDATA[]]></description>
+				<!-- <depends>
+					<parameter name="wd_content" value="desc" />
+				</depends> -->
+    		</parameter>
+            <parameter name="wd_subtitle" xsi:type="text" visible="true" required="true" sort_order="8">
+				<label translate="true">Sub Title</label>
+				<description translate="true"><![CDATA[]]></description>
+				<!-- <depends>
+					<parameter name="wd_content" value="desc" />
+				</depends> -->
+    		</parameter>
+            <parameter name="wd_description" xsi:type="block" visible="true" sort_order="9">
+                <label translate="true">Text</label>
+                <description translate="true"><![CDATA[]]></description>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\TextField"/>
+                <!-- <depends>
+					<parameter name="wd_content" value="desc" />
+				</depends> -->
+            </parameter>
+            <parameter name="wd_shopnow_text" xsi:type="text" visible="true" sort_order="10">
+				<label translate="true">Shop Now button Text</label>
+				<!-- <depends>
+					<parameter name="wd_content" value="desc" />
+				</depends> -->
+				<value>Shop Now</value>
+			</parameter>
+            <parameter name="wd_shopnow_url" xsi:type="text" visible="true" sort_order="11">
+                <label translate="true">Shop Now URL</label>
+                <!-- <depends>
+                    <parameter name="wd_content" value="desc" />
+                </depends> -->
+                <value>#</value>
+            </parameter>
+            
+            <parameter name="wd_categories" xsi:type="select" visible="true"
+                       source_model="Magebees\AjaxCategoryProducts\Model\Categories" required="true" sort_order="12">				   
+                <label translate="true">Categories</label>
+                <depends>
+					<parameter name="wd_content" value="products" />
+				</depends>
+	       	</parameter>
+            <parameter name="wd_no_of_products" xsi:type="text" visible="true" required="true" sort_order="13">
+                <label translate="true">Total Number of Products</label>
+                <depends>
+                    <parameter name="wd_content" value="products" />
+                </depends>
+            </parameter>
+            <parameter name="wd_products_per_row" xsi:type="select" visible="true" required="true" sort_order="14">
+                <label translate="true">Number of Products per Row</label>
+                <depends>
+                    <parameter name="wd_content" value="products" />
+                </depends>
+				<options>
+                    <option name="2" value="2" selected="true">
+                        <label translate="true">2</label>
+                    </option>
+                    <option name="3" value="3">
+                        <label translate="true">3</label>
+                    </option>
+					<option name="4" value="4">
+                        <label translate="true">4</label>
+                    </option>
+                </options>
+            </parameter>
+		</parameters>
+    </widget> 
+</widgets>

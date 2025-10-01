@@ -1,0 +1,70 @@
+<?php $count_time = $block->getCountTime() ?>
+<?php $toTime = $count_time['to_time'] ?>   
+<?php $fromTime = $count_time['from_time'] ?>   
+<?php $currentTime = $count_time['current_time'] ?>   
+<?php $time_format = $count_time['time_format'] ?>   
+<div class="magebees-timecountdown-container timer-product" data-totime="<?php echo $toTime ?>" data-fromtime="<?php echo $fromTime ?>" data-currenttime="<?php echo $currentTime ?>" data-timerformat="<?php echo $time_format ?>">
+    <div class="timer-countbox" id="timer-countbox"></div>
+</div>
+<script type="text/javascript">
+    'use strict';
+    require(['jquery', 'magebees.countdown'], function ($) {
+        $(document).ready(function () {
+            $('.magebees-timecountdown-container').each(function () {
+                if($(this).data('timerformat')== 1){
+                    //based on from and to date timer
+                    var totime = $(this).data('totime');
+                    if (totime != '') {
+                        //var jsnowTime = Math.round((new Date()).getTime()/1000);
+                        var fromtime = $(this).data('currenttime');
+                        var remainTime = totime - fromtime ;
+                        if (remainTime > 0) {
+                            $(this).children('#timer-countbox').countdown({until: remainTime});
+                        }
+                    }
+                }else{
+                    //24 hours timer format
+                    var totime = $(this).data('totime');
+                    if (totime != '') {
+                        //var jsnowTime = Math.round((new Date()).getTime()/1000);
+                        var remainTime = 0;
+                        var fromtime = $(this).data('fromtime');
+                        var currenttime = $(this).data('currenttime');
+                        var totaldays = (currenttime - fromtime);
+                        var one_day_time = 60 * 60 * 24;
+                            
+                        // calculate (and subtract) whole days
+                        var days = Math.floor(totaldays / one_day_time);
+                        totaldays -= days * one_day_time;
+
+                        var last_day_diff = totime - currenttime;
+                        if(last_day_diff < one_day_time){
+                            remainTime = totime - currenttime;
+                        }else{
+                            days += 1;
+                            var nextdaytime = (fromtime + (one_day_time * days));
+                            remainTime = nextdaytime - currenttime;
+                        }
+                            
+                        // calculate (and subtract) whole hours
+                        /*var hours = Math.floor(totaldays / 3600) % 24;
+                        totaldays -= hours * 3600;
+                        
+                        // calculate (and subtract) whole minutes
+                        var minutes = Math.floor(totaldays / 60) % 60;
+                        totaldays -= minutes * 60;
+                        
+                        // what's left is seconds
+                        var seconds = totaldays % 60;  // in theory the modulus is not required
+                        */
+                        
+                        if (remainTime > 0) {
+                            $(this).children('#timer-countbox').countdown({until: remainTime});
+                        }
+                    }
+                }
+            });
+
+        });
+    });
+</script>

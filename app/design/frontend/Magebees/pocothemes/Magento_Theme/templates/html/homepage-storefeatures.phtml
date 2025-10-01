@@ -1,0 +1,20 @@
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+	$animation = $poco_helper->getThemeLayout('animation',$poco_helper->getStoreId())? true:false; 
+	$animation_class = $animation?"wow animate__fadeIn":" ";
+?>
+<?php $store_features = $poco_helper->getStoreFeaturesBlocks(); ?>
+<?php $store_features_style = $poco_helper->getHome('store_features_style',$poco_helper->getStoreId()); ?>
+<?php if($store_features): ?>
+<?php $store_features_class = 'store-feature-'.$store_features_style ?>
+<div class="store-features <?php echo $store_features_class ?>">
+	<div class="container">
+		<ul class="store-feature d-flex align-item-center">
+			<?php foreach($store_features as $blockid): ?>
+				<li class="flex-1 <?php echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.3s" <?php endif;?>>
+					<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($blockid['static_block_id'])->toHtml(); ?>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+</div>
+<?php endif; ?>

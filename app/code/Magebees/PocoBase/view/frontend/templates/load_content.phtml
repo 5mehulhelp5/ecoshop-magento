@@ -1,0 +1,19 @@
+<?php 
+$randon_number = rand();	
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$contentData = $this->getData();
+if(count($contentData)>0):
+$contentWidgetEmptyOptions = array('template'=>null,'wd_spacing'=>null,'wd_bottom_spacing'=>null,'wd_bgcolor'=>null,'wd_content_position'=>null,'wd_content_type'=>null,'wd_block'=>null,'wd_title'=>null,'wd_description'=>null,'wd_view_more'=>null,'wd_view_more_text'=>null,'wd_view_more_link'=>null,'wd_additional_content'=>null,'wd_additional_content_type'=>null,'wd_additional_block'=>null,'wd_image_section'=>null,'wd_video_on_text'=>null,'wd_video_on_popup'=>null,'wd_video_url'=>null,'store_id'=>null);
+$contentWidget = array();
+$ajaxLoadingData = array();
+$ajaxLoadingData['randon_number'] = $randon_number;
+$ajaxLoadingData['url'] = $block->getUrl('poco/index/content');
+$ajaxLoadingData['res_div'] = '#content'.$randon_number;
+$ajaxLoadingData['loading_div'] = '#loadingImage'.$randon_number;
+$ajaxLoadingData['loaderUrl'] = $poco_helper->getLoadingIcon();  
+$contentWidget['ajaxloading'] = (array_merge($contentWidgetEmptyOptions,$contentData,$ajaxLoadingData));
+?>
+<div id="content<?php echo $randon_number; ?>" class="ajx_loader" data-mage-init='<?php echo $poco_helper->getJsonEncode($contentWidget);?>'>
+<div id="loadingImage<?php echo $randon_number; ?>" style="display:none;"></div>
+</div>
+<?php endif; ?>

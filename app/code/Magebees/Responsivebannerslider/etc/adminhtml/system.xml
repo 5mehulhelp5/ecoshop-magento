@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/system_file.xsd">
+    <system>
+        <tab id="magebees" translate="label" sortOrder="100">
+            <label>Magebees</label>
+        </tab>
+        <section id="responsivebannerslider" translate="label" type="text" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Responsive Banner Slider</label>
+            <tab>magebees</tab>
+            <resource>Magebees_Responsivebannerslider::banner_config</resource>
+				<group id="setting" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Responsive Banner Slider - Settings</label>
+					<field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1"> 
+						<label>Enabled</label> 
+						<comment>Select Yes for display the Responsive Banner Slider on frontend.</comment> 
+						<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+					</field>
+										
+					<field id="cms_page" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1"> 
+						<label>Show in CMS Pages</label> 
+						<comment>Select Yes for display the Responsive Banner Slider on frontend for Selected CMS Pages.</comment> 
+						<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+					</field>
+					<field id="category_page" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1"> 
+						<label>Show in Category Pages</label> 
+						<comment>Select Yes for display the Responsive Banner Slider on frontend for Selected Category Pages.</comment> 
+						<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+					</field>
+					<field id="product_page" translate="label comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1"> 
+						<label>Show in Product Pages</label> 
+						<comment>Select Yes for display the Responsive Banner Slider on frontend for Selected Product Pages.</comment> 
+						<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+					</field>
+			    </group>
+			    <group id="optimize_performance" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+	            <label>Super Cache (Improves Performance)</label>
+
+					<field id="banner_refresh" translate="label comment" type="button" sortOrder="2" showInDefault="1"
+					 showInWebsite="0" showInStore="0"> 
+						<depends>
+	    				<field id="responsivebannerslider/optimize_performance/developer_mode_enable_disable">0</field>
+						</depends>
+									<label>Publish Static HTML Slider</label> 
+									<comment>If Developer Mode is set to "No" and you made any changes in slider items ( like add,add-sub,edit,delete,re-order slider items or change in the slider group ) then you must PUBLISH Static HTML Slider again so that your changes reflect in frontend.</comment> 
+								 <frontend_model>Magebees\Responsivebannerslider\Block\Adminhtml\System\Config\Form\Button</frontend_model>
+								 
+					 </field>
+					<field id="developer_mode_enable_disable" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0"> 
+									<label>Developer Mode</label> 
+									<comment>Select "Yes" when you are working on staging/development environment. In production envionment(when you make your site live) set this to "No", by doing this it will generate Static HTML Code for your slider(s).Please note that this will decrease page load time, and help you in making your site load fast.</comment> 
+								<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+					 </field>
+				</group>
+			   
+        </section>
+    </system>
+</config>

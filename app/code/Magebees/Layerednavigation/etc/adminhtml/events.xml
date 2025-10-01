@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">  
+	
+	 <event name="controller_action_postdispatch_catalog_product_attribute_save">
+        <observer name="admin_magebees_catalog_product_attribute_save" instance="Magebees\Layerednavigation\Observer\ManageAttribute" />
+    </event>
+		 <event name="controller_action_postdispatch_catalog_product_attribute_delete">
+        <observer name="admin_magebees_layerednavigation_product_attribute_delete" instance="Magebees\Layerednavigation\Observer\RemoveAttribute" />
+    </event>
+	 <event name="admin_system_config_changed_section_layerednavigation">
+        <observer name="admin_system_config_changed_section_layerednavigation" instance="Magebees\Layerednavigation\Observer\SaveConfig" />
+    </event>	
+</config>

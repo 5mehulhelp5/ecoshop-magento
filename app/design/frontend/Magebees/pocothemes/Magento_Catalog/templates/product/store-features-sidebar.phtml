@@ -1,0 +1,18 @@
+<?php $_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); ?>
+<?php $store_features = $_helper->getStoreFeaturesBlocks(); 
+?>
+<?php $store_features_style = $_helper->getHome('store_features_style',$_helper->getStoreId()); ?>
+<?php if($store_features): ?>
+<?php $store_features_class = 'store-feature-'.$store_features_style ?>
+<div class="store-feature <?php echo $store_features_class ?>">
+	<div class="container">
+		<ul class="store-features-home">
+			<?php foreach($store_features as $blockid): ?>
+				<li>
+					<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($blockid['static_block_id'])->toHtml(); ?>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+</div>
+<?php endif; ?>

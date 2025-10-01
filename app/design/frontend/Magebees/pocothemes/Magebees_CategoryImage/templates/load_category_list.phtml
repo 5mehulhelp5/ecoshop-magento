@@ -1,0 +1,22 @@
+<?php 
+	$randon_number = rand();	
+	$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+
+$categoryThumbanailWidgetData = $this->getData(); 
+if(count($categoryThumbanailWidgetData)>0): 
+$categoryWidgetEmptyOptions = array('wd_enable'=>null,'wd_show_heading'=>null,'wd_heading'=>null,'wd_heading_position'=>null,'wd_heading_logo'=>null,'wd_short_desc'=>null,'wd_short_desc'=>null,'wd_categories'=>null,'wd_spacing'=>null,'wd_bottom_spacing'=>null,'wd_shopnow'=>null,'store_id'=>null,'wd_show_viewall'=>null,'wd_viewall_txt'=>null,'wd_viewall_url'=>null,'wd_no_of_items'=>null,'wd_bgimage'=>null,'wd_description'=>null,'wd_slider'=>null,'wd_autoscroll'=>null,'wd_navarrow'=>null,'wd_pagination'=>null,'wd_pagination_type'=>null,'wd_infinite_loop'=>null,'wd_scrollbar'=>null,'wd_grap_cursor'=>null,'wd_slide_auto_height'=>null,'wd_centered'=>null,'wd_items_per_slide'=>null,'wd_auto_play_delaytime'=>null,'wd_autoplayoff'=>null,'wd_items_per_row'=>null,'wd_shopnow_text'=>null,'wd_bgcolor'=>null,'template'=>null);
+
+$categoryThumbanailWidget = array();
+$ajaxLoadingData = array();
+$ajaxLoadingData['randon_number'] = $randon_number;
+$ajaxLoadingData['url'] = $block->getUrl('catthumb/index/ajaxload');
+$ajaxLoadingData['res_div'] = '#categoryThumbanail'.$randon_number;
+$ajaxLoadingData['loading_div'] = '#loadingImage'.$randon_number;
+$ajaxLoadingData['loaderUrl'] = $poco_helper->getLoadingIcon(); 
+$categoryThumbanailWidget['ajaxloading'] = (array_merge($categoryWidgetEmptyOptions,$categoryThumbanailWidgetData,$ajaxLoadingData));
+
+?>
+<div id="categoryThumbanail<?php echo $randon_number; ?>" class="ajx_loader" data-mage-init='<?php echo $poco_helper->getJsonEncode($categoryThumbanailWidget);?>'>
+<div id="loadingImage<?php echo $randon_number; ?>" style="display:none;"></div>
+</div>
+<?php endif; ?>

@@ -1,0 +1,36 @@
+<?php 
+
+
+	$randon_number = rand();	
+	$res_div = '#bloglist'.$randon_number;
+	$loading_div = '#loadingImage'.$randon_number;
+	$url = $block->getUrl('poco/index/blog');
+	$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$loaderUrl = $poco_helper->getLoadingIcon();  
+$blogWidgetData = $this->getData();
+if(count($blogWidgetData)>0): 
+$blogWidgetEmptyOptions = array('template','wd_spacing','wd_bottom_spacing','wd_custom_link','wd_custom_title','wd_custom_link_title','wd_custom_link_url','wd_show_heading','wd_heading','wd_show_description','wd_description','wd_post_show_feature_image','feature_image_height','feature_image_width','resize_type','wd_post_type','wd_post_limit','wd_slider','wd_items_per_slide','wd_autoscroll','wd_auto_play_delaytime','wd_autoplayoff','wd_slide_auto_height','wd_navarrow','wd_pagination','wd_infinite_loop','wd_scrollbar','wd_grap_cursor','wd_sort_by','wd_category','wd_comment_count','wd_tags','wd_author','wd_add_this','wd_post_readmore','wd_post_show_view_all','store_id','wd_bgimage','wd_bgcolor','wd_items_per_row','wd_post_content','wd_post_view_all_text','wd_post_show_view_all_url','wd_post_ids');
+?>
+
+<div id="bloglist<?php echo $randon_number; ?>" class="ajx_loader">
+<div id="loadingImage<?php echo $randon_number; ?>" style="display:none;"><div><img loading="lazy" src="<?php echo $loaderUrl; ?>" alt="Loading..." width="90" height="90" /></div></div>
+</div>
+ <script type="text/javascript">
+            require(['jquery','ajaxloading','domReady!'],function(jQuery){
+				var blogWidgetData = <?php echo json_encode($blogWidgetData); ?>;
+				var blogWidgetEmptyOptionsData = <?php echo json_encode($blogWidgetEmptyOptions); ?>;
+				var blogDataVar = {};
+				blogDataVar['url']='<?php echo $url ?>';
+				blogDataVar['res_div']='<?php echo $res_div ?>';
+				blogDataVar['loading_div']='<?php echo $loading_div ?>';
+				blogDataVar['loaderUrl']='<?php echo $loaderUrl ?>';
+				jQuery.each(blogWidgetEmptyOptionsData, function (i, elem) {
+					blogDataVar[i]=elem;
+				});
+				jQuery.each(blogWidgetData, function (i, elem) {
+					blogDataVar[i]=elem;
+				});
+				jQuery('<?= $res_div ?>').ajaxloading(blogDataVar);
+            });
+        </script>
+<?php endif; ?>

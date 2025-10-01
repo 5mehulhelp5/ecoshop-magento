@@ -1,0 +1,256 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+		<tab id="magebees" translate="label" sortOrder="100">
+            <label>Magebees</label>
+        </tab>
+        <section id="mbsocialsharing" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Social Sharing</label>
+            <tab>magebees</tab>
+            <resource>Magebees_Socialsharing::configuration</resource>			
+			
+			<group id="general" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Select <strong>Yes</strong> to enable this module]]></comment>
+                </field>
+				<field id="sharecounter" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Counter</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="thankyou" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Thank You Popup</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment>Display after customers sharing action.</comment>
+				</field>
+				<field id="show_under_cart" translate="label" type="select" sortOrder= "35" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Show Under Add To Cart on Product Detail Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="btnsize" translate="label comment" type="select" sortOrder= "40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Button Size</label>
+                    <source_model>Magebees\Socialsharing\Model\System\Config\Source\Btnsize</source_model>
+					<depends>
+                        <field id="show_under_cart">1</field>
+                    </depends>
+                    <comment>Recommended button size is 32x32px.</comment>
+                </field>
+			</group>
+			<group id="colorstyle" translate="label comment" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Color and Style</label>
+				<field id="iconcolor" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Icon Color</label>
+                    <frontend_model>Magebees\Socialsharing\Block\Adminhtml\System\Config\Color</frontend_model>
+					<comment>Applicable for default icon only.</comment>
+				</field>
+				<field id="btncolor" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Button Color</label>
+                    <frontend_model>Magebees\Socialsharing\Block\Adminhtml\System\Config\Color</frontend_model>
+					<comment>Applicable for default icon only.</comment>
+				</field>
+				<field id="bgcolor" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Background Color</label>
+                    <frontend_model>Magebees\Socialsharing\Block\Adminhtml\System\Config\Color</frontend_model>
+					<comment>Applicable for default icon only.</comment>
+				</field>
+				<field id="style" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Display Style</label>
+                    <source_model>Magebees\Socialsharing\Model\System\Config\Source\Style</source_model>
+                </field>
+                <field id="margin_top" translate="label comment" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Margin Top</label>
+                    <comment>Specify the top margin of sharing button block. Default is 150px.</comment>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-0-1000</validate>
+                    <depends>
+                        <field id="style">vertical</field>
+                    </depends>
+                </field>
+                <field id="margin_bottom" translate="label comment" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Margin Bottom</label>
+                    <comment>Specify the bottom margin of sharing button block. Default is 0px.</comment>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-0-1000</validate>
+                    <depends>
+                        <field id="style">horizontal</field>
+                    </depends>
+                </field>
+				<field id="position" translate="label" type="select" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Position</label>
+                    <source_model>Magebees\Socialsharing\Model\System\Config\Source\Floatposition</source_model>
+                </field>
+                <field id="btnsizedesktop" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Desktop Button Size</label>
+                    <source_model>Magebees\Socialsharing\Model\System\Config\Source\Btnsize</source_model>
+                    <comment>Recommended button size is 32x32px.</comment>
+                </field>
+				<field id="btnsizemobile" translate="label comment" type="select" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Mobile Button Size</label> <source_model>Magebees\Socialsharing\Model\System\Config\Source\Btnsize</source_model>
+                    <comment>Recommended button size is 32x32px.</comment>
+                </field>
+				<field id="hideondevice" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Hide On Mobile Device?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment>Set to Yes to hide the Social Sharing Buttons on targeted device size. If "No", the Social Sharing Buttons will display on All devices.</comment>
+                </field>
+				<field id="devicemaxwidth" translate="label" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Device Max Width (in pixels)</label>
+					<comment>This field is used to set max. resolution of mobile devices. The mobile buttons will appear for any value below this field value . Default max width is set to 767px.</comment>
+					<validate>validate-digits validate-digits-range digits-range-0-5000</validate>
+					<!--<depends>
+                        <field id="hideondevice">1</field>
+                    </depends>-->
+                </field>				
+			</group>
+			
+			<group id="socialservice" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+			<label>Social Share Services</label>
+				<group id="whatsapp" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Whatsapp</label>
+                    <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Enable</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="image" translate="label comment" type="image" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Image</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                        <upload_dir config="system/filesystem/media" scope_info="1">magebees/socialsharing/whatsapp</upload_dir>
+                        <base_url type="media" scope_info="1">magebees/socialsharing/whatsapp</base_url>
+                        <comment>If empty, the default icon will be used.</comment>
+                    </field>
+                </group>
+				<group id="facebook" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Facebook</label>
+                    <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Enable</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="image" translate="label comment" type="image" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Image</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                        <upload_dir config="system/filesystem/media" scope_info="1">magebees/socialsharing/facebook</upload_dir>
+                        <base_url type="media" scope_info="1">magebees/socialsharing/facebook</base_url>
+                        <comment>If empty, the default icon will be used.</comment>
+                    </field>
+                </group>
+				
+				<group id="twitter" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Twitter</label>
+                    <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Enable</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="image" translate="label comment" type="image" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Image</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                        <upload_dir config="system/filesystem/media" scope_info="1">magebees/socialsharing/twitter</upload_dir>
+                        <base_url type="media" scope_info="1">magebees/socialsharing/twitter</base_url>
+                        <comment>If empty, the default icon will be used.</comment>
+                    </field>
+                </group>
+				
+				<group id="pinterest" translate="label" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Pinterest</label>
+                    <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Enable</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="image" translate="label comment" type="image" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Image</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                        <upload_dir config="system/filesystem/media" scope_info="1">magebees/socialsharing/pinterest</upload_dir>
+                        <base_url type="media" scope_info="1">magebees/socialsharing/pinterest</base_url>
+                        <comment>If empty, the default icon will be used.</comment>
+                    </field>
+                </group>
+				
+				<group id="linkedin" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>LinkedIn</label>
+                    <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Enable</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="image" translate="label comment" type="image" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Image</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                        <upload_dir config="system/filesystem/media" scope_info="1">magebees/socialsharing/linkedin</upload_dir>
+                        <base_url type="media" scope_info="1">magebees/socialsharing/linkedIn</base_url>
+                        <comment>If empty, the default icon will be used.</comment>
+                    </field>
+                </group>
+				
+				<group id="tumblr" translate="label" type="text" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Tumblr</label>
+                    <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Enable</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="image" translate="label comment" type="image" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Image</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                        <upload_dir config="system/filesystem/media" scope_info="1">magebees/socialsharing/tumblr</upload_dir>
+                        <base_url type="media" scope_info="1">magebees/socialsharing/tumblr</base_url>
+                        <comment>If empty, the default icon will be used.</comment>
+                    </field>
+                </group>
+				<group id="add_more_share" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Add More Sharing Buttons</label>
+                    <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Enable</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="display_menu" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Show Menu Type</label>
+                        <source_model>Magebees\Socialsharing\Model\System\Config\Source\Menu</source_model>
+                    </field>
+                    <field id="full_menu" translate="label" type="select" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Show Full Menu</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <depends>
+                            <field id="display_menu">click</field>
+                        </depends>
+                    </field>
+                    <field id="number_service" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Number of Services</label>
+                        <validate>required-entry validate-digits validate-digits-range digits-range-1-400</validate>
+                        <depends>
+                            <field id="full_menu">0</field>
+                        </depends>
+                    </field>
+                </group>
+			</group>
+			
+			<group id="float" translate="label" type="text" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Pages</label>
+                <field id="apply_for" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Apply For</label>
+                    <source_model>Magebees\Socialsharing\Model\System\Config\Source\Floatapplyfor</source_model>
+                </field>
+                <field id="select_page" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <source_model>Magebees\Socialsharing\Model\System\Config\Source\Floatslctpgs</source_model>
+                    <label>Apply for Select Page</label>
+                    <depends>
+                        <field id="apply_for">select_pages</field>
+                    </depends>
+                </field>
+                <field id="cms_page" translate="label" type="multiselect" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <source_model>Magebees\Socialsharing\Model\System\Config\Source\Floatcms</source_model>
+                    <label>Apply for CMS Page</label>
+                    <depends>
+                        <field id="apply_for">select_pages</field>
+                    </depends>
+                </field>
+				<field id="pagelinks" translate="label" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>By Links</label>
+					<comment><![CDATA[ <p>Please add the links of the pages to enable the social share buttons. One link per line.<br/>Example:<br/>http://domain.com/blog<br/>http://domain.com/aboutus<br/>http://domain.com/contacts </p> ]]></comment>
+                    <depends>
+                        <field id="apply_for">select_pages</field>
+                    </depends>
+                </field>
+            </group>
+			
+			
+			
+        </section>
+    </system>
+</config>

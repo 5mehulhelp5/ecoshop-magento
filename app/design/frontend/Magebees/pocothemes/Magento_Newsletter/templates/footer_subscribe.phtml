@@ -1,0 +1,37 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php $_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); ?>
+<div class="block newsletter">
+	<div class="title-section">
+		<div class="h3 title"><?php echo __($_helper->getFooter('newsletter_title',$_helper->getStoreId())) ?></div>
+		<p><?php echo __($_helper->getFooter('newsletter_text',$_helper->getStoreId())) ?></p>
+	</div>
+    <div class="content">
+        <form class="form subscribe"
+            novalidate
+            action="<?php /* @escapeNotVerified */ echo $block->getFormActionUrl() ?>"
+            method="post"
+            data-mage-init='{"validation": {"errorClass": "mage-error"}}'
+            id="newsletter-validate-detail">
+            <label class="label" for="newsletter"><span><?php /* @escapeNotVerified */ echo __('Sign Up for Our Newsletter:') ?></span></label>
+            <div class="field newsletter">
+                <div class="control">
+                    <input name="email" type="email" id="newsletter" placeholder="<?php /* @escapeNotVerified */ echo __('Enter your email address') ?>" data-validate="{required:true, 'validate-email':true}"/>
+                </div>
+                <div class="actions">
+                    <button class="action subscribe primary" title="<?php /* @escapeNotVerified */ echo __('Subscribe') ?>" type="submit">
+                        <svg xmlns="https://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        <span><?php /* @escapeNotVerified */ echo __('Subscribe') ?></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

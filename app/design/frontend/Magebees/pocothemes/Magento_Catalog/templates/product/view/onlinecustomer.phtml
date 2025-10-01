@@ -1,0 +1,52 @@
+<?php 
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $poco_helper->getStoreId(); 
+
+$EnabledShowVisitorCount = (bool)$poco_helper->getProductDetail('show_visitor_count',$poco_helper->getStoreId()); 
+if($EnabledShowVisitorCount):
+
+$objctManager = \Magento\Framework\App\ObjectManager::getInstance();
+$remote = $objctManager->get('Magento\Framework\HTTP\PhpEnvironment\RemoteAddress');
+$remote_address = $remote->getRemoteAddress();
+$_product = $block->getProduct();
+$productId = $_product->getId();
+$remoteAddressint = (int) filter_var($remote_address, FILTER_SANITIZE_NUMBER_INT).$_product->getId();  
+
+
+$VisitorCountLabel = $poco_helper->getProductDetail('visitor_count_text',$poco_helper->getStoreId()); 
+$ShowVisitorIcon = $poco_helper->getProductDetail('show_visitor_icon',$poco_helper->getStoreId()); 
+$VisitorIcon = $poco_helper->getProductDetail('visitor_icon',$poco_helper->getStoreId()); 
+?>
+
+<div class="visitorcounts <?php echo 'visitorcounts_'.$remoteAddressint;?> block-icon-text" style="display: none;">
+<?php if($ShowVisitorIcon): echo $VisitorIcon; endif; ?><span class="text"><span class="online-customer"></span><span class="light"><?php echo __($VisitorCountLabel); ?></span></span>
+            </div>
+			<script>
+require(['jquery','jquery/jquery.cookie'], function(jQuery){
+	
+	/* Select the visitorcounts	 elements*/
+  const visitorcounts = document.querySelector('.visitorcounts');
+  const onlineCustomerNumber = visitorcounts.querySelector('.online-customer');
+  /* Generate a random product object, number of sales, and location*/
+  var min = 1;
+  var max = 60;
+  var LocalStorageId = '<?php echo $remoteAddressint; ?>';
+  var visitorcountsRemoteAddressElement = '<?php echo '.visitorcounts_'.$remoteAddressint; ?>';
+   var visitorcountElement = document.querySelector(visitorcountsRemoteAddressElement);
+
+	if(!jQuery.cookie(LocalStorageId)){
+	var onlineCustomer = Math.floor(Math.random() * (max - min + 1)) + min;
+	var now = new Date();
+	now.setTime(now.getTime() + (1 *  60 * 60 * 1000));
+	jQuery.cookie(LocalStorageId, onlineCustomer, {expires : now,SameSite : 'Strict',path    : '/',secure  : true});
+    }else{ 
+	var onlineCustomer = jQuery.cookie(LocalStorageId);
+	}
+			
+	if(document.querySelector('.online-customer')){
+    onlineCustomerNumber.innerHTML = onlineCustomer;
+	jQuery(visitorcountElement).show();
+	}
+}); 
+</script>
+<?php endif;?>

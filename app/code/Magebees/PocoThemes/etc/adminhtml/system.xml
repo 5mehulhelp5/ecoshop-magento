@@ -1,0 +1,2215 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="poco_themes" translate="label" sortOrder="10">
+            <label>Poco Themes</label>
+        </tab>
+        <section id="pocothemes" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Configuration</label>
+            <tab>poco_themes</tab>
+            <resource>Magebees_PocoThemes::configuration_settings</resource>
+			<group id="general" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Design Configuration</label>
+				<!-- Start Font -->
+				<field id="typography" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Typography</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="custom_font" translate="label comment" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Custom</label> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="font" translate="label comment" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Body Font</label> 
+					<source_model>Magebees\PocoBase\Model\Config\Source\BodyFont</source_model> 
+					<depends>
+                    	<field id="custom_font">1</field>
+                	</depends>
+				</field>
+				<field id="google_font" translate="label comment" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Google Font</label> 
+					<source_model>Magebees\PocoBase\Model\Config\Source\GoogleFont</source_model>
+					<depends>
+                    	<field id="font">google_font</field>
+						<field id="custom_font">1</field>
+                	</depends>
+				</field>
+				<field id="custom_body_font" translate="label comment" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Body Font - Custom</label>
+                    <depends>
+                        <field id="custom_font">1</field>
+                        <field id="font">custom</field>
+                    </depends>
+                </field>
+				
+				<field id="font_size" translate="label comment" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Font Size</label> 
+					<source_model>Magebees\PocoBase\Model\Config\Source\FontSize</source_model>
+					<depends>
+                    	<field id="custom_font">1</field>
+                	</depends>					
+				</field>
+
+				<field id="heading_font" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Heading Font</label> 
+					<source_model>Magebees\PocoBase\Model\Config\Source\BodyFont</source_model>
+					<depends>
+                    	<field id="custom_font">1</field>
+                	</depends>
+				</field>
+				<field id="custom_heading_font" translate="label comment" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Heading Font - Custom</label>
+                    <depends>
+                        <field id="custom_font">1</field>
+                        <field id="heading_font">custom</field>
+                    </depends>
+                </field>
+				<field id="heading_google_font" translate="label comment" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Heading Google Font</label> 
+					<source_model>Magebees\PocoBase\Model\Config\Source\GoogleFont</source_model>
+					<depends>
+                    	<field id="heading_font">google_font</field>
+						<field id="custom_font">1</field>
+                	</depends>
+				</field>
+
+				<field id="heading_font_size" translate="label comment" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Heading Font Size</label> 
+					<source_model>Magebees\PocoBase\Model\Config\Source\HeadingFontSize</source_model>
+					<depends>
+                    	<field id="custom_font">1</field>
+                	</depends>
+				</field>
+				<field id="sub_heading_font_size" translate="label comment" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Sub Heading Font Size</label> 
+					<source_model>Magebees\PocoBase\Model\Config\Source\SubHeadingFontSize</source_model>
+					<depends>
+                    	<field id="custom_font">1</field>
+                	</depends>
+				</field>
+				<field id="heading_element_googlefont" translate="label" type="text" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Element Google Font</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="element_google_font" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Google Font Target</label>
+					<source_model>Magebees\PocoBase\Model\Config\Source\GoogleFont</source_model>
+				</field>
+				<field id="google_font_targets" translate="label" type="textarea" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Google Font Elements</label>
+				</field> 
+				<!-- End Font -->
+				
+				<!-- Start Color -->
+				<field id="heading_color" translate="label" type="text" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Colors</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				
+				<field id="custom_color" translate="label comment" type="select" sortOrder="18" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Custom</label> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				
+				<field id="link_color" translate="label comment" type="text" sortOrder="19" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Link Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>
+				</field>
+				<field id="hover_link_color" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Hover Link Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model> 
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>
+				</field>
+				<field id="text_color" translate="label comment" type="text" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Text Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model> 
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>
+				</field>
+				<field id="heading_text_color" translate="label comment" type="text" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Heading Text Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model> 
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>
+				</field>
+				<field id="subheading_text_color" translate="label comment" type="text" sortOrder="23" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Sub Heading Text Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model> 
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>
+				</field>
+				<field id="heading_button" translate="label" type="text" sortOrder="24" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Buttons</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>
+				</field>
+				<field id="primary_btn_bg_color" translate="label comment" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Primary Button Background Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>					
+				</field>
+				<field id="primary_btn_text_color" translate="label comment" type="text" sortOrder="26" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Primary Button Text Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>
+				</field>
+				<field id="primary_btn_hover_bg_color" translate="label comment" type="text" sortOrder="27" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Primary Button Hover Background Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>					
+				</field>
+				<field id="primary_btn_hover_text_color" translate="label comment" type="text" sortOrder="28" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Primary Button Hover Text Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>
+				</field>
+				
+				<field id="secondary_btn_bg_color" translate="label comment" type="text" sortOrder="29" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Secondary Button Background Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>					
+				</field>
+				<field id="secondary_btn_text_color" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Secondary Button Text Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>
+				</field>
+				<field id="secondary_btn_hover_bg_color" translate="label comment" type="text" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Secondary Button Hover Background Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>					
+				</field>
+				<field id="secondary_btn_hover_text_color" translate="label comment" type="text" sortOrder="32" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Secondary Button Hover Text Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>
+				</field>
+				<field id="btn_style" translate="label comment" type="select" sortOrder="33" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Button Style</label> 
+					<source_model>Magebees\PocoThemes\Model\Config\Source\ButtonStyle</source_model> 
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>
+				</field>
+				
+				<field id="heading_breadcrumbs" translate="label" type="text" sortOrder="34" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Breadcrumbs</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>
+					
+				</field>
+				
+				<field id="breadcrumbs_bg_color" translate="label comment" type="text" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Breadcrumbs Background Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>
+				</field>
+				<field id="breadcrumbs_text_color" translate="label comment" type="text" sortOrder="36" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Breadcrumbs Text Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>	
+                    	<field id="custom_color">1</field>
+                	</depends>					
+				</field>
+				<field id="breadcrumbs_links_color" translate="label comment" type="text" sortOrder="37" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Breadcrumbs Links Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>
+				</field>
+ 				<field id="breadcrumbs_links_hover_color" translate="label comment" type="text" sortOrder="38" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Breadcrumbs Links Hover Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>
+				</field>
+				
+				<field id="btn_hover_style_colors" translate="label" type="text" sortOrder="39" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Button Hover Style Colors</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+					<depends>
+                    	<field id="custom_color">1</field>
+                	</depends>
+					
+				</field>
+				<field id="addtocart_btn_text_color" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Add to cart button text color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>	
+                    	<field id="custom_color">1</field>
+                	</depends>					
+				</field>
+				<field id="addtocart_btn_bg_color" translate="label comment" type="text" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Add to cart button background color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>	
+                    	<field id="custom_color">1</field>
+                	</depends>					
+				</field>
+				<field id="addtocart_btn_border_color" translate="label comment" type="text" sortOrder="42" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Add to cart button border color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>	
+                    	<field id="custom_color">1</field>
+                	</depends>					
+				</field>
+				<field id="addtocart_btn_hover_text_color" translate="label comment" type="text" sortOrder="43" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Add to cart button hover text color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>	
+                    	<field id="custom_color">1</field>
+                	</depends>					
+				</field>
+				<field id="addtocart_btn_hover_bg_color" translate="label comment" type="text" sortOrder="44" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Add to cart button hover background color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>	
+                    	<field id="custom_color">1</field>
+                	</depends>					
+				</field>
+				<field id="other_btn_text_color" translate="label comment" type="text" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Add to Wishlist/Compare/Quickview button text color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>	
+                    	<field id="custom_color">1</field>
+                	</depends>					
+				</field>
+				<field id="other_btn_bg_color" translate="label comment" type="text" sortOrder="46" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Add to Wishlist/Compare/Quickview button background color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>	
+                    	<field id="custom_color">1</field>
+                	</depends>					
+				</field>
+				<field id="other_btn_border_color" translate="label comment" type="text" sortOrder="47" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Add to Wishlist/Compare/Quickview button border color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>	
+                    	<field id="custom_color">1</field>
+                	</depends>					
+				</field>
+				<field id="other_btn_hover_text_color" translate="label comment" type="text" sortOrder="48" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Add to Wishlist/Compare/Quickview button hover text color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>	
+                    	<field id="custom_color">1</field>
+                	</depends>					
+				</field>
+				<field id="other_btn_hover_bg_color" translate="label comment" type="text" sortOrder="49" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Add to Wishlist/Compare/Quickview button hover background color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>	
+                    	<field id="custom_color">1</field>
+                	</depends>					
+				</field>
+				<!-- End Color -->
+				<field id="heading_page_wrapper" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Page Wrapper</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				
+				<field id="custom_page_wrapper" translate="label comment" type="select" sortOrder="51" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Custom</label> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				
+				<field id="bg_color" translate="label comment" type="text" sortOrder="52" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Backgorund Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>
+                    	<field id="custom_page_wrapper">1</field>
+                	</depends>
+				</field>
+				
+				<field id="bg_image" translate="label comment" type="image" sortOrder="53" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Backgorund Image</label> 
+					<comment>Allowed file types:PNG, GIF, JPG, JPEG.</comment>
+                    <backend_model>Magebees\PocoBase\Model\Config\Backend\Image\Background</backend_model>
+                    <base_url type="media" scope_info="1">poco/background</base_url>
+					<depends>
+                    	<field id="custom_page_wrapper">1</field>
+                	</depends>
+				</field>
+				<field id="page_custom_style" translate="label comment" type="textarea" sortOrder="54" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Custom Style</label>
+                    <comment><![CDATA[Type in your custom styles , e.g.:<br/>
+                            <em>&nbsp;&nbsp;&nbsp;&nbsp;background-repeat: no-repeat;<br/>&nbsp;&nbsp;&nbsp;&nbsp;background-size: cover;<br/>&nbsp;&nbsp;&nbsp;&nbsp;background-attachment: fixed;</em>
+                            ]]></comment>
+                    <depends>
+                        <field id="custom_page_wrapper">1</field>
+                    </depends>
+                </field>
+								
+				<field id="heading_main_content" translate="label" type="text" sortOrder="55" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Main Content</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				
+				<field id="custom_main_content" translate="label comment" type="select" sortOrder="56" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Custom</label> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				
+				<field id="main_bgcolor" translate="label comment" type="text" sortOrder="57" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Backgorund Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="custom_main_content">1</field>
+                    </depends>
+                </field>
+                <field id="main_bg_image" translate="label" type="image" sortOrder="58" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Backgorund Image</label> 
+					<comment>Allowed file types:PNG, GIF, JPG, JPEG.</comment>
+                    <backend_model>Magebees\PocoBase\Model\Config\Backend\Image\Background</backend_model>
+                    <base_url type="media" scope_info="1">poco/background</base_url>
+                    <depends>
+                        <field id="custom_main_content">1</field>
+                    </depends>
+                </field>
+                <field id="main_custom_style" translate="label comment" type="textarea" sortOrder="59" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Custom Style</label>
+                    <comment><![CDATA[Type in your custom styles , e.g.:<br/>
+                            <em>&nbsp;&nbsp;&nbsp;&nbsp;background-repeat: no-repeat;<br/>&nbsp;&nbsp;&nbsp;&nbsp;background-size: cover;<br/>&nbsp;&nbsp;&nbsp;&nbsp;background-attachment: fixed;</em>
+                            ]]></comment>
+                    <depends>
+                        <field id="custom_main_content">1</field>
+                    </depends>
+                </field>
+				
+    		</group>
+			<group id="theme_layout" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Theme Layout</label>
+				<field id="layout_width" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="1"> 
+					<label>Layout Width Options</label> 
+					<source_model>Magebees\PocoThemes\Model\Config\Source\LayoutWidth</source_model> 
+				</field>
+				<field id="custom_width" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="3"> 
+					<label>Custom Width</label> 
+					<comment><![CDATA[Width in px.]]></comment> 
+					<depends>
+                    	<field id="layout_width">custom</field>
+                	</depends>
+				</field>
+				<field id="boxlayout_width" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="4"> 
+					<label>Box Layout Width</label> 
+					<comment><![CDATA[Width in px.]]></comment> 
+					<depends>
+                    	<field id="layout_width">boxed</field>
+                	</depends>
+				</field>
+				<field id="home_padding" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="5"> 
+					<label>Home Page Sections Padding</label> 
+					<comment><![CDATA[Padding in px. Default 0px ]]></comment>
+				</field>
+				<field id="home_bottom_margin" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="7"> 
+					<label>Home Page Section Bottom Margin</label> 
+					<comment><![CDATA[Padding in px. Default 0px ]]></comment>
+				</field>
+                <field id="rtl" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="9"> 
+					<label>Right to Left Layout</label> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="animation" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="10"> 
+					<label>Enable Animation</label> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="animation_in_mobile" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="11"> 
+					<label>Enable Animation In Mobile</label> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+					<depends>
+                    	<field id="animation">1</field>
+                	</depends>
+				</field>
+                
+               <field id="scroll_top" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="12"> 
+					<label>Enable Scroll to Top</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+                <field id="scroll_position" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="13"> 
+					<label>Scroll to Top Button Position</label> 
+					<comment><![CDATA[]]></comment> 
+               		<source_model>Magebees\PocoBase\Model\Config\Source\ScrollPosition</source_model> 
+                    <depends>
+                    	<field id="scroll_top">1</field>
+                	</depends>
+				</field>
+				<field id="breadcrumbs" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="19"> 
+					<label>Show Breadcrumbs</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				
+				<field id="add_to_cart" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="21"> 
+					<label>Show Add to Cart</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="add_to_wishlist" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="23"> 
+					<label>Show Add to Wishlist</label> 
+					<comment><![CDATA[Note : You can hide Add to Wishlist Button From Button Hover Styles.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="add_to_compare" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="25"> 
+					<label>Show Add to Compare</label> 
+					<comment><![CDATA[Note : You can hide Add to Compare Button From Button Hover Styles.]]></comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+
+				<field id="newsletter_popup" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="27"> 
+					<label>Select Popup for Newsletter</label> 
+					<source_model>Magebees\PocoBase\Model\Config\Source\PopupNotification</source_model> 
+				</field>
+				
+				<field id="newsletter_popup_title_text" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="29"> 
+					<label>Newsletter Popup Title Text</label> 
+					<comment><![CDATA[]]></comment>
+				</field>
+				
+				
+				<field id="newsletter_popup_content_text" translate="label comment" type="textarea" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="31"> 
+					<label>Newsletter Popup Content Text</label> 
+					<comment><![CDATA[]]></comment>
+				</field>
+				<field id="enable_minicart_drawer" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="32"> 
+					<label>MiniCart Drawer</label> 
+					<comment><![CDATA[For Display Minicart As Drawer. ]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				
+				<field id="free_shipping_bar" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="33"> 
+					<label>Free Shipping Bar</label> 
+					<comment><![CDATA[For Display Free Shipping Bar we must need to Enable Free Shipping method from Configuration - Sales - Delivery Methods section. ]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="free_shipping_success_msg" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="34"> 
+					<label>Free Shipping Success Message</label> 
+					<depends>
+                        <field id="free_shipping_bar">1</field>
+                    </depends>
+					<comment><![CDATA[Display Message when customer eligible for Free Shipping.]]></comment> 
+				</field>
+				<field id="free_shipping_remain_msg" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="35"> 
+					<label>Free Shipping Remaining Message</label> 
+					<depends>
+                        <field id="free_shipping_bar">1</field>
+                    </depends>
+					<comment><![CDATA[Display Message when customer remaining for Free Shipping. %s will be display remaining amount.]]></comment> 
+				</field>
+				<field id="visible_free_shipping_bar" translate="label comment" type="multiselect" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="36"> 
+					<label>Display Free Shipping Bar</label> 
+					<depends>
+                        <field id="free_shipping_bar">1</field>
+                    </depends>
+					<comment><![CDATA[Display Free Shipping Bar on selected page or section.]]></comment> 
+					<source_model>Magebees\PocoThemes\Model\Config\Source\FreeShippingBarVisible</source_model> 
+				</field>
+				
+				<field id="theme_loading_image" translate="label" type="image" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="37">
+                    <label>Loading Image</label>
+                    <comment>Allowed file types:PNG, GIF, JPG, JPEG, WEBP.</comment>
+                    <backend_model>Magebees\PocoBase\Model\Config\Backend\Image\ThemeLoadingIcon</backend_model>
+                    <base_url type="media" scope_info="1">poco/loadingicon</base_url>
+                    
+                </field>
+				
+				
+					
+			</group>
+
+			<group id="font_icons" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label><![CDATA[Font Icons & Labels]]></label>
+				<field id="user" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>User Icon</label>
+	            </field>
+				<field id="setting" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Setting Icon</label>
+					<comment><![CDATA[Note: When header top bar is on than this icon appear otherwise disappear. It's language & currency display.]]></comment> 
+	            </field>
+	            <field id="search" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Search Icon</label>
+	            </field>
+				
+	            <field id="cart" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cart Icon</label>
+	            </field>
+				<field id="cart_label" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cart Label</label>
+	            </field>
+	            <field id="contact" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Contact</label>
+	            </field>
+	            <field id="whishlist" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Add To Whishlist</label>
+	            </field>
+	            <field id="compare" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Add To Compare</label>
+	            </field>
+	            <field id="add_cart" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Add To Cart</label>
+	            </field>
+	            <field id="quick_view" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Quick View</label>
+	            </field>
+				<field id="login_label" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Login Label</label>
+	            </field>
+				<field id="logout_label" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logout Label</label>
+	            </field>
+	        </group>
+			<group id="header" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Header</label>
+				<field id="custom_header" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Custom</label> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				
+				<field id="header_heading" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Header</label>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+                    <depends>
+                        <field id="custom_header">1</field>
+                    </depends>
+                </field>
+				<field id="bgcolor" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Background Color</label>
+                   <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="custom_header">1</field>
+                    </depends>
+                </field>
+                <field id="bg_image" translate="label" type="image" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Background Image</label>
+                    <comment>Allowed file types:PNG, GIF, JPG, JPEG.</comment>
+                    <backend_model>Magebees\PocoBase\Model\Config\Backend\Image\Background</backend_model>
+                    <base_url type="media" scope_info="1">poco/background</base_url>
+                    <depends>
+                        <field id="custom_header">1</field>
+                    </depends>
+                </field>
+                <field id="bordercolor" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Border Color</label>
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="custom_header">1</field>
+                    </depends>
+                </field>
+                <field id="textcolor" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Text Color</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="custom_header">1</field>
+                    </depends>
+                </field>
+               	<field id="toplinks_heading" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Top Links</label>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+                    <depends>
+                        <field id="custom_header">1</field>
+                    </depends>
+                </field>
+                <field id="top_links_bgcolor" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Top Links Block Background Color</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="custom_header">1</field>
+                    </depends>
+                </field>
+                <field id="top_links_color" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Top Links Block Font Color</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="custom_header">1</field>
+                    </depends>
+                </field>
+				<field id="top_links_hover_color" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Top Links Hover Color</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="custom_header">1</field>
+                    </depends>
+                </field>
+				
+				 <field id="search_heading" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Searchbox</label>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+                    <depends>
+                        <field id="custom_header">1</field>
+                    </depends>
+                </field>
+                <field id="search_bgcolor" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Background Color</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="custom_header">1</field>
+                    </depends>
+                </field>
+                <field id="search_text_color" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Search Text Font Color</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="custom_header">1</field>
+                    </depends>
+                </field>
+                <field id="search_bordercolor" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Border Color</label>
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="custom_header">1</field>
+                    </depends>
+                </field>
+				
+				<field id="minicart_heading" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Mini Cart</label>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+                    <depends>
+                        <field id="custom_header">1</field>
+                    </depends>
+                </field>
+                <field id="minicart_bgcolor" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Background Color</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="custom_header">1</field>
+                    </depends>
+                </field>
+                <field id="minicart_color" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Font Color</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="custom_header">1</field>
+                    </depends>
+                </field>
+                <field id="minicart_icon_color" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Icon Color</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="custom_header">1</field>
+                    </depends>
+                </field>
+							
+				<field id="settings_heading" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Settings</label>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+								
+				<field id="header_style" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Select Header Style</label> 
+					<source_model>Magebees\PocoThemes\Model\Config\Source\HeaderStyle</source_model> 
+				</field>
+				<field id="logo_image" translate="label" type="image" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Logo Image</label>
+                    <!-- <comment>Allowed file types:PNG, GIF, JPG, JPEG.</comment> -->
+                    <backend_model>Magebees\PocoBase\Model\Config\Backend\Image\Logo</backend_model>
+                    <base_url type="media" scope_info="1">poco/logo</base_url>
+	            </field>
+				<field id="innerpage_logo_image" translate="label" type="image" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Inner Page Logo Image</label>
+                    <comment><![CDATA[Applied For Header Style 3 Only ]]></comment> 
+                    <backend_model>Magebees\PocoBase\Model\Config\Backend\Image\Logo</backend_model>
+					<depends>
+                        <field id="header_style" separator=",">header-3</field>
+                    </depends>
+                    <base_url type="media" scope_info="1">poco/logo</base_url>
+	            </field>
+				<field id="logo_image_width" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Logo Image Width</label>
+                    <comment><![CDATA[Set Image Width, Ex: 109 ]]></comment>
+                </field>
+				<field id="logo_image_height" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Logo Image Height</label>
+                    <comment><![CDATA[Set Image Height, Ex: 39]]></comment>
+                </field>
+				<field id="mobile_logo_image_width" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Mobile Store Logo Width</label>
+                    <comment><![CDATA[Only work in responsive logo width]]></comment>
+                </field>
+					<field id="vertical_menu" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Select Vertical Menu</label> 
+					<comment><![CDATA[Set left menu here. you can find it from MageBees >> Navigation Menu Pro >> Manage Group >> Manage Menu Groups.]]></comment>
+					<source_model>Magebees\PocoBase\Model\Config\Source\MenuGroup</source_model>
+					<depends>
+                        <field id="header_style" separator=",">header-12,header-17</field>
+                    </depends>
+				</field>
+				<field id="top_menu" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Select Top Menu</label> 
+					<comment><![CDATA[Set top menu here. you can find it from MageBees >> Navigation Menu Pro >> Manage Group >> Manage Menu Groups.]]></comment>
+					<source_model>Magebees\PocoBase\Model\Config\Source\MenuGroup</source_model>
+					<depends>
+                        <field id="header_style" separator=",">header-1,header-2,header-3,header-4,header-5,header-6
+						,header-7,header-8,header-9,header-10,header-11,header-12,header-13,header-14,header-15,header-16,header-17,header-18,header-19</field>
+                    </depends>
+				</field>
+				<field id="header_links" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Select Links</label> 
+					<comment><![CDATA[]]></comment>
+					<source_model>Magebees\PocoBase\Model\Config\Source\MenuGroup</source_model>
+					<depends>
+                        <field id="header_style" separator=",">header-19</field>
+                    </depends>
+				</field>
+			
+				<field id="show_best_seller" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Best Seller Link</label> 
+					<comment><![CDATA[Set Yes For display Best Seller Link.]]></comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+                        <field id="header_style" separator=",">header-12,header-19</field>
+                    </depends>
+				</field>
+				<field id="best_seller_title" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Set Best Link Title</label> 
+					<comment><![CDATA[Set Best Seller Link Title.]]></comment>
+					<validate>required-entry</validate>  
+					<depends>
+						<field id="show_best_seller">1</field>
+                        <field id="header_style" separator=",">header-12,header-19</field>
+                    </depends>
+				</field>
+				<field id="best_seller_link" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Set Best Link Link</label> 
+					<comment><![CDATA[Set Best Seller Link.]]></comment>
+					<validate>required-entry</validate>  
+					<depends>
+						<field id="show_best_seller">1</field>
+                        <field id="header_style" separator=",">header-12,header-19</field>
+                    </depends>
+				</field>
+				<field id="show_gift_ideas" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Gift Ideas Link</label> 
+					<comment><![CDATA[Set Yes For display Gift Ideas Link.]]></comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+                        <field id="header_style" separator=",">header-17,header-19</field>
+                    </depends>
+				</field>
+				<field id="gift_ideas_title" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Set Gift Ideas Title</label> 
+					<comment><![CDATA[Set Gift Ideas Link Title.]]></comment>
+					<validate>required-entry</validate>  
+					<depends>
+						<field id="show_gift_ideas">1</field>
+                        <field id="header_style" separator=",">header-17,header-19</field>
+                    </depends>
+				</field>
+				<field id="gift_ideas_link" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Set Gift Ideas Link</label> 
+					<comment><![CDATA[Set Gift Ideas Link.]]></comment>
+					<validate>required-entry</validate>  
+					<depends>
+						<field id="show_gift_ideas">1</field>
+                        <field id="header_style" separator=",">header-17,header-19</field>
+                    </depends>
+				</field>
+				<field id="show_sell_link" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Sell Link</label> 
+					<comment><![CDATA[Set Yes For display Sell Link.]]></comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+                        <field id="header_style" separator=",">header-17,header-19</field>
+                    </depends>
+				</field>
+				<field id="sell_link_title" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Set Sell Link Title</label> 
+					<comment><![CDATA[Set Sell Link Title.]]></comment>
+					<validate>required-entry</validate>  
+					<depends>
+						<field id="show_gift_ideas">1</field>
+                        <field id="header_style" separator=",">header-17,header-19</field>
+                    </depends>
+				</field>
+				<field id="sell_link" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Set Sell Link</label> 
+					<comment><![CDATA[Set Sell Link.]]></comment>
+					<validate>required-entry</validate>  
+					<depends>
+						<field id="show_gift_ideas">1</field>
+                        <field id="header_style" separator=",">header-17,header-19</field>
+                    </depends>
+				</field>
+				<field id="currency" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Display Currency</label> 
+					<comment><![CDATA[Select Yes for display Currency on Header Section.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+					
+				</field>
+				<field id="currency_pattern" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Currency Drop down Format</label>
+                    <source_model>Magebees\PocoThemes\Model\Config\Source\CurrencyStyle</source_model>
+                    <depends>
+                        <field id="currency">1</field>
+                    </depends>
+                </field>
+				<field id="language" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Display Store Language</label> 
+					<comment><![CDATA[Select Yes for display Store Language on Header Section.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					
+				</field>
+				<field id="language_flag" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Flag Images in Store Language Switcher</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="language">1</field>
+                    </depends>
+                </field>
+                <field id="top_header" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Display Header Top Bar</label> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					
+				</field>
+				<field id="top_header_bgcolor" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Top Header Background Color</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="top_header">1</field>
+                    </depends>
+                </field>
+                <field id="top_header_text_color" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Top Header Text Color</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="top_header">1</field>
+                    </depends>
+                </field>
+				<field id="phone_enable" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Phone Number</label> 
+					<comment><![CDATA[PocoThemes - Configuration - Contact Us Page - Contact No option value will be display.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+                        <field id="top_header">1</field>
+					</depends>
+				</field>
+                <field id="social_media_enable" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Social Media Links</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+                        <field id="top_header">1</field>
+					</depends>
+				</field>
+				<field id="top_header_text" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Top Header Text</label>
+					<comment><![CDATA[Ex: In the Text field Use (%s)200 to convert number as Current Currency Like $200.00 , if you want to use only number then do not use (%s) before number.]]></comment> 
+					
+                    <depends>
+                        <field id="top_header">1</field>
+                        
+                    </depends>
+                </field>
+				<field id="top_left_header_text" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Top left Header Text</label>
+					<comment><![CDATA[Applied Only In Header Style 14.]]></comment> 
+                    <depends>
+                        <field id="top_header">1</field>
+                         <field id="header_style">header-14</field>
+                    </depends>
+                </field>
+                <field id="sticky_menu" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Sticky Menu</label> 
+					<comment><![CDATA[Note:Reverse sticky header is not work on header-3, header-5, header-14, header-15, header-transparent.]]></comment> 
+					<source_model>Magebees\PocoBase\Model\Config\Source\StickyOptions</source_model> 
+				</field>
+				<field id="sticky_menu_bgcolor" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sticky Menu Background Color</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="sticky_menu" separator=",">1,2</field>
+                    </depends>
+                </field>
+			</group>
+			
+            <group id="home" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Home Page</label>
+				<field id="home_style" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Select Home Style</label> 
+					<source_model>Magebees\PocoThemes\Model\Config\Source\HomeStyle</source_model> 
+				</field>
+				<field id="home_slider" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Select Banner Slider</label> 
+					<comment><![CDATA[Set banner slider here. you can find it from MageBees >> Responsive Banner Slider >> Manage Group. ]]></comment> 
+					<source_model>Magebees\PocoBase\Model\Config\Source\BannerSlider</source_model> 
+				</field>
+				<field id="store_features_heading" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Features</label>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="store_features_style" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Features Style</label>
+                    <comment><![CDATA[]]></comment> 
+					<source_model>Magebees\PocoThemes\Model\Config\Source\StoreFeaturesStyle</source_model> 
+                </field>
+                
+				<field id="store_features" translate="label" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Features</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\StoreFeatures</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                </field>
+			</group>
+			<group id="sidebar" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Sidebar</label>
+				
+				<field id="show_html_text_block" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="1">
+                    <label>Show HTML Text Block</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+				
+				<field id="html_text_block" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="2"> 
+					<depends>
+                    	<field id="show_html_text_block">1</field>
+                	</depends>
+					<label>HTML Text Block</label> 
+					<comment><![CDATA[]]></comment> 
+					
+				</field>
+				<field id="show_banner_block" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="3">
+                    <label>Show Banner Block</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+				<field id="banner_block" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="4"> 
+					<depends>
+                    	<field id="show_banner_block">1</field>
+                	</depends>
+					<label>Banner Block</label> 
+					<comment><![CDATA[]]></comment> 
+				</field>
+			</group>
+            <group id="pro_list" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Product Listing / Category View Page</label>
+				<field id="page_layout" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="1"> 
+					<label>Page Layout</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magebees\PocoBase\Model\Config\Source\PageLayout</source_model> 
+				</field>
+				<field id="aspect_ratio" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="2">
+                    <label>Keep Image Aspect Ratio</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="ratio_width" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="3">
+                    <label>Image Width</label>
+                </field>
+                <field id="ratio_height" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="4">
+                    <label>Image Height</label>
+                    <depends>
+                        <field id="aspect_ratio">0</field>
+                    </depends>
+                </field>
+				
+                <field id="enable_subcategory_thumbnail" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="5"> 
+					<label>Show Sub Categories Thumbnail</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="no_of_items_per_slide" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="5"> 
+					<label>No Of Categories Thumbnail Per Slider</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magebees\PocoThemes\Model\Config\Source\RowPerSlide</source_model>
+					<depends>
+                        <field id="enable_subcategory_thumbnail">1</field>
+                    </depends>
+				</field>
+				<field id="move_desc_atbottom" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="5"> 
+					<label>Move Category Description Below Product List</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="move_image_atbottom" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="6"> 
+					<label>Move Category Image Below Product List</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="show_product_sku" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="7"> 
+					<label>Show Product SKU</label> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="sku_label" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Sku Label</label>
+					<depends>
+                        <field id="show_product_sku">1</field>
+                    </depends>
+				</field> 
+				<field id="sku_separator" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label><![CDATA[Sku & Price Section Separator]]></label>
+					<comment><![CDATA[Note :  Add Septaror Between SKU and Price.]]></comment> 
+					<depends>
+						<field id="show_product_sku">1</field>
+                    </depends>
+				</field>
+				
+				<field id="show_product_category" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="10"> 
+					<label>Show Product Category</label> 
+					<comment><![CDATA[Note : This Option is not applied on Category Page.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				
+				<field id="enable_rating" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="11"> 
+					<label>Show Rating Stars</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="enable_swatch" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="12"> 
+					<label>Show Configurable Swatch</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="enable_price" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="13"> 
+					<label>Show Product Price</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				
+				<field id="short_desc" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="14"> 
+					<label>Show Short Description</label> 
+					<comment><![CDATA[Note : Applied Only In List Mode]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="view_link" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="15"> 
+					<label>Show Product View Link</label> 
+					<comment><![CDATA[Note : Applied Only In List Mode]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="brand_name" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="16"> 
+					<label>Show Product Brand Name</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="brand_code" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="17"> 
+					<label>Product Brand Code</label> 
+					<comment><![CDATA[]]></comment> 
+					<validate>required-entry</validate>  
+					<depends>
+                        <field id="brand_name">1</field>
+                    </depends>
+				</field>
+				<field id="recent_prod" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="18"> 
+					<label>Show Recently View Products</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+						<field id="page_layout" separator=",">2columns-left,2columns-right,3columns</field>
+					</depends>
+				</field>
+				<field id="compare_prod" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="19"> 
+					<label>Show Compare Products</label> 
+					<comment><![CDATA[Note : You can hide Add to Compare Blocks From Sidebar section.]]></comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+						<field id="page_layout" separator=",">2columns-left,2columns-right,3columns</field>
+					</depends>
+				</field>
+				<field id="wishlist_prod" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20"> 
+					<label>Show Wishlist Products</label> 
+					<comment><![CDATA[Note : You can hide Add to Wishlist Blocks From Sidebar section.]]></comment>  
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+						<field id="page_layout" separator=",">2columns-left,2columns-right,3columns</field>
+					</depends>
+				</field>
+				<field id="show_deal_timer" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="21"> 
+					<label>Show Deal Timer</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="grid_heading" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="21">
+                    <label>Grid Mode</label>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				
+				<field id="prod_per_row_1_column" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="22"> 
+					<label>Show Product Per Row</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magebees\PocoBase\Model\Config\Source\ProductRowOneColumn</source_model>
+					<depends>
+						<field id="page_layout">1column</field>
+					</depends>
+				</field>
+				<field id="prod_per_row_2_columns" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="23"> 
+					<label>Show Product Per Row</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magebees\PocoBase\Model\Config\Source\ProductRowTwoColumns</source_model>
+					<depends>
+						<field id="page_layout" separator=",">2columns-left,2columns-right</field>
+					</depends>
+				</field>
+				<field id="prod_per_row_3_columns" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="24"> 
+					<label>Show Product Per Row</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magebees\PocoBase\Model\Config\Source\ProductRowThreeColumns</source_model>
+					<depends>
+						<field id="page_layout" separator=",">3columns</field>
+					</depends>
+				</field>
+				
+				<field id="hover_effects" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
+                    <label>Product Hover Button Effects</label>
+                    <source_model>Magebees\PocoThemes\Model\Config\Source\ProductHoverButton</source_model>
+                    <comment></comment>
+                </field>
+				
+			</group>
+			<group id="pro_view" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Product Detailed / View Page</label>
+				<field id="page_layout" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Page Layout</label> 
+					<comment><![CDATA[Here, You can set Product Detailed Page Layout.]]></comment> 
+					<source_model>Magebees\PocoBase\Model\Config\Source\PageLayout</source_model> 
+				</field>
+				<field id="image_box_heading" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Image Box and Thumbs Style</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="thumbs_style" translate="label comment" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Thumbs Styles</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magebees\PocoThemes\Model\Config\Source\ThumbStyle</source_model> 
+				</field>
+				<field id="show_nav_arrows" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Navigation Arrows</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+						<field id="thumbs_style" separator=",">horizontal,vertical,dots</field>
+                	</depends>
+				</field>
+				<field id="fullscreen" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Image Fullscreen</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+						<field id="thumbs_style" separator=",">horizontal,vertical,dots</field>
+                	</depends>
+				</field>
+				<field id="use_zoom_image" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Product Image Zoom</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+						<field id="thumbs_style" separator=",">horizontal,vertical,dots</field>
+                	</depends>
+				</field>
+				<field id="thumbs_width" translate="label comment" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Thumbs Width</label>
+					<depends>
+						<field id="thumbs_style" separator=",">horizontal,vertical</field>
+                	</depends>
+				</field>
+				<field id="thumbs_height" translate="label comment" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Thumbs Height</label>
+					<depends>
+						<field id="thumbs_style" separator=",">horizontal,vertical</field>
+                	</depends>
+				</field>
+				<field id="thumbs_nav_arrows" translate="label" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Thumbs Navigation Arrows</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+						<field id="thumbs_style" separator=",">horizontal,vertical</field>
+					</depends>
+				</field>
+				
+				
+				<field id="products_heading" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Products Settings</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="related_prod" translate="label comment" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Related Products</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				
+				<field id="upsell_prod" translate="label comment" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Upsell Products</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+                <field id="recent_prod" translate="label comment" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Recently View Products</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="recent_prod_pos" translate="label comment" type="select" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Recently View Products Position</label> 
+					<source_model>Magebees\PocoBase\Model\Config\Source\BlockPosition</source_model> 
+					<depends>
+                    	<field id="recent_prod">1</field>
+						<field id="page_layout" separator=",">2columns-left,2columns-right,3columns</field>
+                	</depends>
+				</field>
+				<field id="no_of_products_per_slide" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="15"> 
+					<label>No Of Products Per Slider</label> 
+					<comment><![CDATA[Set Number of products per slider for Related, Upsell, Recently View Products]]></comment> 
+					<source_model>Magebees\PocoThemes\Model\Config\Source\RowPerSlide</source_model>
+				</field>
+                <field id="compare_prod" translate="label comment" type="select" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Compared Products</label> 
+					<comment><![CDATA[Note : You can hide Add to Compare Buttons and Blocks From Sidebar section.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="wishlist_prod" translate="label comment" type="select" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Wishlist Products</label> 
+					<comment><![CDATA[Note : You can hide Add to Wishlist Buttons and Blocks From Sidebar section.]]></comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="show_size_guide" translate="label comment" type="select" sortOrder="18" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Size Guide Button</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="size_guide_label" translate="label comment" type="text" sortOrder="19" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Size Guide Button Label</label> 
+					<comment><![CDATA[Add Size Guide Button Label.]]></comment> 
+					<depends>
+                    	<field id="show_size_guide">1</field>
+					</depends>
+					<validate>required-entry</validate>  
+				</field>
+				<field id="size_guide_block" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Size Guide Block</label> 
+					<comment><![CDATA[Add Size Guide Block Identifier.]]></comment> 
+					<depends>
+                    	<field id="show_size_guide">1</field>
+					</depends>
+					<validate>required-entry</validate>  
+				</field>
+				<field id="show_soldout_count" translate="label comment" type="select" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Sold Out Count</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="show_soldout_icon" translate="label comment" type="select" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Sold Out Icon</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+					<depends>
+                    	<field id="show_soldout_icon">1</field>
+						<field id="show_soldout_count">1</field>
+					</depends>
+				</field>
+				<field id="soldout_icon" translate="label comment" type="text" sortOrder="23" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Sold Out Icon</label> 
+					<comment><![CDATA[Add Sold Out Icon.]]></comment> 
+					<depends>
+                    	<field id="show_soldout_icon">1</field>
+						<field id="show_soldout_count">1</field>
+					</depends>
+					<validate>required-entry</validate>  
+				</field>
+				<field id="soldout_count_text" translate="label comment" type="text" sortOrder="24" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Soldout Count Text</label> 
+					<comment><![CDATA[Add Sold Out Text.]]></comment> 
+					<depends>
+                    	<field id="show_soldout_count">1</field>
+					</depends>
+					<validate>required-entry</validate>  
+				</field>
+				<field id="show_visitor_count" translate="label comment" type="select" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Visitor Count</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="show_visitor_icon" translate="label comment" type="select" sortOrder="26" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Visitor Icon</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+					<depends>
+                    	<field id="show_visitor_count">1</field>
+					</depends>
+				</field>
+				<field id="visitor_icon" translate="label comment" type="text" sortOrder="27" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Visitor Icon</label> 
+					<comment><![CDATA[Add Visitor Count Icon.]]></comment> 
+					<depends>
+                    	<field id="show_visitor_count">1</field>
+                    	<field id="show_visitor_icon">1</field>
+					</depends>
+					<validate>required-entry</validate>  
+				</field>
+				<field id="visitor_count_text" translate="label comment" type="text" sortOrder="28" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Visitor Count Text</label> 
+					<comment><![CDATA[Add Visitor Count Text.]]></comment> 
+					<depends>
+                    	<field id="show_visitor_count">1</field>
+					</depends>
+					<validate>required-entry</validate>  
+				</field>
+				 <field id="prev_next" translate="label comment" type="select" sortOrder="29" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Prev/Next Product Links</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="prev_text" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Previous Link Text</label>
+					<depends>
+                    	<field id="prev_next">1</field>
+						
+                	</depends>
+                </field>
+                <field id="next_text" translate="label comment" type="text" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Next Link Text</label>
+					<depends>
+                    	<field id="prev_next">1</field>
+						
+                	</depends>
+                </field>
+				
+				<field id="sticky_cart" translate="label comment" type="select" sortOrder="32" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Add to Cart Sticky</label>
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+				
+				<field id="mobile_sticky_cart" translate="label comment" type="select" sortOrder="33" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Add to Cart Sticky in Mobile</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model> 
+					<depends>
+                        <field id="sticky_cart">1</field>
+                    </depends>
+				</field>
+				
+				<field id="tab_heading" translate="label" type="text" sortOrder="34" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Tab Style and Custom Tab</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="tab_style" translate="label comment" type="select" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Tab Style</label> 
+					<source_model>Magebees\PocoBase\Model\Config\Source\TabStyles</source_model> 
+				</field>
+				<field id="move_tab" translate="label comment" type="select" sortOrder="36" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Move Tabs To Content</label> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="custom_tab_enable" translate="label comment" type="select" sortOrder="37" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Add Custom Tab</label> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+					
+				</field>
+				
+				<field id="custom_tabs" translate="label" showInDefault="1" sortOrder="38" showInWebsite="1" showInStore="1">
+                    <label>Custom Tabs</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Customtabs</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+					
+                </field>
+      	    </group>
+            <group id="footer" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Footer</label>
+				
+				<field id="custom_footer" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Custom</label> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="bgcolor" translate="label comment" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Background Color</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="custom_footer">1</field>
+                    </depends>
+                </field>
+				<field id="bg_image" translate="label" type="image" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Background Image</label>
+                    <comment>Allowed file types:PNG, GIF, JPG, JPEG.</comment>
+                    <backend_model>Magebees\PocoBase\Model\Config\Backend\Image\Background</backend_model>
+                    <base_url type="media" scope_info="1">poco/background</base_url>
+                    <depends>
+                        <field id="custom_footer">1</field>
+                    </depends>
+                </field>
+				<field id="bordercolor" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Border Color</label>
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="custom_footer">1</field>
+                    </depends>
+                </field>
+				<field id="textcolor" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Text Color</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="custom_footer">1</field>
+                    </depends>
+                </field>
+				<field id="heading_text_color" translate="label comment" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Heading Text Color</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="custom_footer">1</field>
+                    </depends>
+                </field>
+                <field id="font_size" translate="label comment" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Font Size</label>
+                    <source_model>Magebees\PocoBase\Model\Config\Source\FontSize</source_model>
+                    <depends>
+                        <field id="custom_footer">1</field>
+                    </depends>
+                </field>
+				
+				<field id="footer_links_heading" translate="label comment" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Footer Links</label>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+                    <depends>
+                        <field id="custom_footer">1</field>
+                    </depends>
+                </field>
+                <field id="footer_links_color" translate="label comment" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Footer Links Color</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="custom_footer">1</field>
+                    </depends>
+                </field>
+				<field id="footer_link_hover_color" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Footer Links Hover Color</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+                    <depends>
+                        <field id="custom_footer">1</field>
+                    </depends>
+                </field>
+				
+				<field id="settings_heading" translate="label comment" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Settings</label>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="footer_style" translate="label comment" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1"> 
+					<label>Select Footer Style</label> 
+					<source_model>Magebees\PocoThemes\Model\Config\Source\FooterStyle</source_model> 
+				</field>
+				<field id="custom_footer_style" translate="label comment" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1"> 
+					<label>Custom Footer Style</label> 
+					<comment><![CDATA[Note: Please create static block with identifier like "custom-footer-1" to "custom-footer-18" range and select it here.]]></comment>
+					<depends>
+						<field id="footer_style" separator=",">custom-footer</field>
+                    </depends>
+					<source_model>Magebees\PocoThemes\Model\Config\Source\CustomFooterStyle</source_model> 
+				</field>
+				<field id="logo_image" translate="label" type="image" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Logo Image</label>
+                    <!-- <comment>Allowed file types:PNG, GIF, JPG, JPEG.</comment> -->
+                    <backend_model>Magebees\PocoBase\Model\Config\Backend\Image\Logo</backend_model>
+                    <base_url type="media" scope_info="1">poco/logo</base_url>
+                    <depends>
+						<field id="footer_style" separator=",">footer-2,footer-3,footer-4,footer-5,footer-6,footer-7,
+						footer-8,footer-11,footer-12,footer-13,footer-14,footer-15,footer-16,footer-17,footer-18,footer-19</field>
+                    </depends>
+	            </field>
+				<field id="logo_image_width" translate="label comment" type="text" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Logo Image Width</label>
+                    <comment><![CDATA[Set Image Width, Ex:109]]></comment>
+					 <depends>
+                    	<field id="footer_style" separator=",">footer-2,footer-3,footer-4,footer-5,footer-6,footer-7,
+						footer-8,footer-11,footer-12,footer-13,footer-14,footer-15,footer-16,footer-17,footer-18,footer-19</field>
+                	</depends>
+                </field>
+				<field id="logo_image_height" translate="label comment" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Logo Image Height</label>
+                    <comment><![CDATA[Set Image Height, Ex:39]]></comment>
+					 <depends>
+                    	<field id="footer_style" separator=",">footer-2,footer-3,footer-4,footer-5,footer-6,footer-7,
+						footer-8,footer-11,footer-12,footer-13,footer-14,footer-15,footer-16,footer-17,footer-18,footer-19</field>
+                	</depends>
+					
+					
+                </field>
+				<field id="footer_content" translate="label comment" type="select" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Select Footer Content</label> 
+					<comment><![CDATA[Note: Please create Static Block and Select it here.]]></comment>
+					<source_model>Magebees\PocoBase\Model\Config\Source\StaticBlocks</source_model>
+					<depends>
+                    	<field id="footer_style" separator=",">footer-3,footer-4,footer-5,footer-6,footer-8,footer-11,footer-12,footer-13,footer-14,footer-15,footer-16,footer-17</field>
+                	</depends>
+				</field>
+                <field id="footer_column_1" translate="label comment" type="select" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Select Footer Column One</label> 
+					<comment><![CDATA[]]></comment>
+					<source_model>Magebees\PocoBase\Model\Config\Source\MenuGroup</source_model>
+					<depends>
+                    	<field id="footer_style" separator=",">footer-1,footer-2,footer-3,footer-4,footer-5,footer-6,footer-7,footer-8,footer-10,footer-11,footer-12,footer-13,footer-14,footer-15,footer-16,footer-17,footer-18,footer-19</field>
+                	</depends>
+				</field>
+                <field id="footer_column_2" translate="label comment" type="select" sortOrder="18" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Select Footer Column Two</label> 
+					<comment><![CDATA[]]></comment>
+					<source_model>Magebees\PocoBase\Model\Config\Source\MenuGroup</source_model>
+					<depends>
+                    	<field id="footer_style" separator=",">footer-1,footer-2,footer-3,footer-4,footer-5,footer-6,footer-7,footer-8,footer-9,footer-10,footer-11,footer-12,footer-13,footer-14,footer-15,footer-16,footer-17,footer-18,footer-19</field>
+                	</depends>
+				</field>
+                <field id="footer_column_3" translate="label comment" type="select" sortOrder="19" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Select Footer Column Three</label> 
+					<comment><![CDATA[]]></comment>
+					<source_model>Magebees\PocoBase\Model\Config\Source\MenuGroup</source_model>
+					<depends>
+                    	<field id="footer_style" separator=",">footer-1,footer-2,footer-3,footer-4,footer-5,footer-6,footer-7,footer-9,footer-10,footer-11,footer-12,footer-13,footer-14,footer-17,footer-18,footer-19</field>
+                	</depends>
+				</field>
+				<field id="footer_column_4" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Select Footer Column Four</label> 
+					<comment><![CDATA[]]></comment>
+					<source_model>Magebees\PocoBase\Model\Config\Source\MenuGroup</source_model>
+					<depends>
+                    	<field id="footer_style" separator=",">footer-2,footer-7,footer-13</field>
+                	</depends>
+				</field>
+				<field id="footer_last_content" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Select Last Content</label> 
+					<comment><![CDATA[Note: Please create Static Block and Select it here.]]></comment>
+					<source_model>Magebees\PocoBase\Model\Config\Source\StaticBlocks</source_model>
+					<depends>
+                    	<field id="footer_style" separator=",">footer-14</field>
+                	</depends>
+				</field>
+				<field id="footer_links" translate="label comment" type="select" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Footer Links</label> 
+					<comment><![CDATA[]]></comment>
+					<source_model>Magebees\PocoBase\Model\Config\Source\MenuGroup</source_model>
+					<depends>
+                    	<field id="footer_style" separator=",">footer-9,footer-18</field>
+                	</depends>
+				</field>
+				<field id="show_newsletter" translate="label comment" type="select" sortOrder="22" showInDefault="1" showInWebsite=
+				"1" showInStore="1"> 
+					<label>Show News letter</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+                    	<field id="footer_style" separator=",">footer-1,footer-9,footer-10,footer-15,footer-17,footer-18</field>
+                	</depends> 
+				</field>
+                <field id="newsletter_title" translate="label comment" type="text" sortOrder="23" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Newsletter Block Title</label> 
+					<comment><![CDATA[]]></comment> 
+					<depends>
+                    	<field id="show_newsletter">1</field>
+						<field id="footer_style" separator=",">footer-1,footer-9,footer-10,footer-15,footer-18</field>
+                    	<!-- <field id="footer_style" separator=",">footer-1,footer-2,footer-5,footer-6</field> -->
+                	</depends>
+				</field>
+                <field id="newsletter_text" translate="label comment" type="text" sortOrder="24" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Newsletter Block Text</label> 
+					<comment><![CDATA[]]></comment> 
+					<depends>
+                    	<field id="show_newsletter">1</field>
+						<field id="footer_style" separator=",">footer-1,footer-9,footer-10,footer-15,footer-18</field>
+                    	<!-- <field id="footer_style" separator=",">footer-1,footer-2,footer-4,footer-5,footer-6</field> -->
+                	</depends>
+				</field>
+				<field id="footer_newsletter_content" translate="label comment" type="select" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Select Footer Newsletter Content</label> 
+					<comment><![CDATA[Note: Please create Static Block and Select it here.]]></comment>
+					<source_model>Magebees\PocoBase\Model\Config\Source\StaticBlocks</source_model>
+					<depends>
+                    	<field id="footer_style" separator=",">footer-17</field>
+                	</depends>
+				</field>
+                <field id="social_media_enable" translate="label comment" type="select" sortOrder="26" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Social Media Links</label> 
+					<comment><![CDATA[Select Yes for display social media on frontend.]]></comment> 
+					<depends>
+                    	<field id="footer_style" separator=",">footer-1,footer-2,footer-3,footer-4,footer-5,footer-6,footer-7,footer-8,footer-10,footer-11,footer-12,footer-13,footer-14,footer-15,footer-16,footer-17,footer-18,footer-19</field>
+                	</depends>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="marquee_content_enable" translate="label comment" type="select" sortOrder="27" showInDefault="1" showInWebsite="1" showInStore="1"> 
+				<label>Show Marquee Content</label> 
+				<comment><![CDATA[Select Yes for display Marquee Content on frontend.]]></comment> 
+				<depends>
+                    	<field id="footer_style" separator=",">footer-15</field>
+                	</depends>
+				<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="marquee_content" translate="label comment" type="textarea" sortOrder="28" showInDefault="1" showInWebsite="1" showInStore="1"> 
+				<label>Marquee Content</label> 
+				<comment><![CDATA[Add Marquee Content for disaply on frontend.]]></comment> 
+				<depends>
+						<field id="marquee_content_enable">1</field>
+                    	<field id="footer_style" separator=",">footer-15</field>
+                	</depends>
+				<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="payment_method_enable" translate="label comment" type="select" sortOrder="29" showInDefault="1" showInWebsite="1" showInStore="1"> 
+				<label>Show Payment Method Icon</label> 
+				<comment><![CDATA[Select Yes for display payment method icon on frontend.]]></comment> 
+				<depends>
+                    	<field id="footer_style" separator=",">footer-1,footer-2,footer-3,footer-4,footer-5,footer-6,footer-7,footer-8,footer-10,footer-11,footer-12,footer-13,footer-14,footer-15,footer-16,footer-17,footer-18,footer-19</field>
+                	</depends>
+				<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="payment_method_block" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Payment Method Block Identifier</label> 
+				    <depends>
+						<field id="footer_style" separator=",">footer-1,footer-2,footer-3,footer-4,footer-5,footer-6,footer-7,footer-8,footer-10,footer-11,footer-12,footer-13,footer-14,footer-15,footer-16,footer-17,footer-18,footer-19</field>
+                    	<field id="payment_method_enable">1</field>
+                	</depends>
+				</field>
+                <field id="copyright" translate="label comment" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Custom Copyright</label> 
+					<comment><![CDATA[]]></comment> 
+					<depends>
+                    	<field id="footer_style" separator=",">footer-1,footer-2,footer-3,footer-4,footer-5,footer-6,footer-7,footer-8,footer-10,footer-11,footer-12,footer-13,footer-14,footer-15,footer-16,footer-17,footer-18,footer-19</field>
+                	</depends>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="copyright_text" translate="label comment" type="textarea" sortOrder="32" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Custom Copyright Text</label> 
+				    <depends>
+                    	<field id="copyright">1</field>
+						<field id="footer_style" separator=",">footer-1,footer-2,footer-3,footer-4,footer-5,footer-6,footer-7,footer-8,footer-10,footer-11,footer-12,footer-13,footer-14,footer-15,footer-16,footer-17,footer-18,footer-19</field>
+                	</depends>
+				</field>
+            </group>
+            <group id="socials" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Social Media Links</label>
+				<field id="social_media" translate="label" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Social Media Details</label>
+				    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\SocialMedia</frontend_model>
+				    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+				</field>
+            </group>
+            <group id="contactus" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Contact Us Page</label>
+				<field id="google_map" translate="label comment" type="select" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Google Map</label> 
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>	
+				<field id="map_code" translate="label comment" type="textarea" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Google Map Embeded Code</label> 
+					<comment><![CDATA[]]></comment> 
+					<depends>
+                    	<field id="google_map">1</field>
+                	</depends>
+				</field>
+				<field id="store_name" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Store Name</label> 
+					<comment><![CDATA[]]></comment> 
+				</field>
+				<field id="store_address" translate="label comment" type="textarea" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Store Address</label> 
+					<comment><![CDATA[]]></comment> 
+				</field>
+				<field id="contact" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Contact No.</label> 
+					<comment><![CDATA[]]></comment> 
+				</field>
+				<field id="store_email" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Store Email</label> 
+					<comment><![CDATA[]]></comment> 
+				</field>
+				<field id="contact_form_image" translate="label" type="image" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Contact Form Image</label>
+                    <comment>Allowed file types:PNG, GIF, JPG, JPEG, WEBP.</comment>
+                    <backend_model>Magebees\PocoBase\Model\Config\Backend\Image\ContactForm</backend_model>
+                    <base_url type="media" scope_info="1">poco/contactform</base_url>
+                    
+                </field>
+			</group>
+			<group id="advanced" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Social Feeds</label>
+				<field id="fbfanbox_heading" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Facebook Fanbox</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="fbfanbox_enable" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Facebook Fanbox</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                    <comment><![CDATA[Enable Facebook Fanbox]]></comment>
+                </field>
+				<field id="fb_url" translate="label comment" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Facebook Page URL</label>
+                    <comment><![CDATA[Add the absolute URL of the Facebook Page >> https://www.facebook.com/example/]]></comment>
+                    <depends>
+                        <field id="fbfanbox_enable">1</field>
+                    </depends>
+                    <validate>required-entry</validate>  
+                </field>
+			</group>
+			<group id="cookie_policy" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Cookie Policy</label>
+				<field id="enable_cookie_policy" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Cookie Policy</label>
+					<comment><![CDATA[]]></comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>					
+					
+				</field>
+				<field id="cookie_policy_style" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Cookie Policy Style</label>
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magebees\PocoThemes\Model\Config\Source\CookieStyle</source_model>
+				</field>
+				<field id="url" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Cookie policy URL</label>
+					<comment><![CDATA[]]></comment> 
+					<depends>
+                        <field id="enable_cookie_policy">1</field>
+                    </depends>
+				</field>
+				<field id="text" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Cookie Policy Text</label>
+					<comment><![CDATA[]]></comment> 
+					<depends>
+                        <field id="enable_cookie_policy">1</field>
+                    </depends>
+				</field>
+				<field id="text_font_size" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Cookie Policy Text Font Size</label>
+					<comment><![CDATA[]]></comment> 
+					<depends>
+                        <field id="enable_cookie_policy">1</field>
+                    </depends>
+				</field>
+											
+				<field id="read_more_btn_title" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>"Read more" button title</label>
+					<comment><![CDATA[]]></comment> 
+					<depends>
+                        <field id="enable_cookie_policy">1</field>
+                    </depends>
+				</field> 
+				<field id="read_more_text_color" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>"Read more" text color</label>
+					 <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<comment><![CDATA[]]></comment> 
+					<depends>
+                        <field id="enable_cookie_policy">1</field>
+                    </depends>
+				</field>  
+				<field id="read_more_btn_color" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>"Read more" Button color</label>
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<comment><![CDATA[]]></comment> 
+					<depends>
+                        <field id="enable_cookie_policy">1</field>
+                    </depends>
+				</field>   
+				<field id="agree_btn_text" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>"I agree" button text</label>
+					<comment><![CDATA[]]></comment> 
+					<depends>
+                        <field id="enable_cookie_policy">1</field>
+                    </depends>
+				</field>  
+				<field id="agree_text_color" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>"I agree" text color</label>
+					 <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<comment><![CDATA[]]></comment> 
+					<depends>
+                        <field id="enable_cookie_policy">1</field>
+                    </depends>
+				</field>  
+				<field id="agree_btn_color" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>"I agree" Button color</label>
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<comment><![CDATA[]]></comment> 
+					<depends>
+                        <field id="enable_cookie_policy">1</field>
+                    </depends>
+				</field>  
+				<field id="bar_height" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Bar Height</label>
+					<comment><![CDATA[]]></comment> 
+					<depends>
+                        <field id="enable_cookie_policy">1</field>
+                    </depends>
+				</field>  
+				<field id="bar_background_color" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Bar Background Color</label>
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<comment><![CDATA[]]></comment> 
+					<depends>
+                        <field id="enable_cookie_policy">1</field>
+                    </depends>
+				</field>   
+					
+				  
+				  
+			</group>
+			<group id="sales_notification" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Products Notification</label>
+				<field id="enable_sales_notification" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Notification</label>
+					<comment><![CDATA[]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Title</label>
+					<comment><![CDATA[]]></comment> 
+					<validate>required-entry</validate>
+					<depends>
+                        <field id="enable_sales_notification">1</field>
+                    </depends>
+				</field>
+				<field id="product_skus" translate="label" type="textarea" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Product SKUs</label>
+					<validate>required-entry</validate>
+					<comment><![CDATA[Add List of SKUs septated By , for showing list in frontend]]></comment>
+					<depends>
+                        <field id="enable_sales_notification">1</field>
+                    </depends>
+				</field>
+				<field id="enable_locations" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Locations</label>
+					<comment><![CDATA[]]></comment> 
+					<depends>
+                        <field id="enable_sales_notification">1</field>
+                    </depends>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				
+				<field id="list_locations" translate="label" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>List of Locations</label>
+					<depends>
+                        <field id="enable_locations">1</field>
+                    </depends>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\ListLocations</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                </field>
+				
+				<field id="display_device" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Display Device</label>
+					<validate>required-entry</validate>
+					<source_model>Magebees\PocoBase\Model\Config\Source\Device</source_model>
+					<comment><![CDATA[Select display device.]]></comment>
+					<depends>
+                        <field id="enable_sales_notification">1</field>
+                    </depends>
+				</field>
+				<field id="time_interval" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification Interval (mili seconds)	</label>
+					<validate>required-entry</validate>
+					<comment><![CDATA[Add Time In Mili Seconds for Notification Interval. ]]></comment>
+					<depends>
+                        <field id="enable_sales_notification">1</field>
+                    </depends>
+				</field>
+			</group>
+			<group id="browser_tab_notification" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Browser tab notification</label>
+				<field id="enable_browser_tab_notification" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Browser tab Notification</label>
+					<comment><![CDATA[Browser tab notifications can alert customers and bring them back to your shop. A browser tab notification occurs when you make changes to your website's tab while the user is browsing a different website. By incorporating a browser tab notification feature, you can capture the user's attention as soon as they switch to another tab, thereby preventing them from leaving your page.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="notification_message" translate="label" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>List of notification message</label>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\NotificationMessage</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                </field>
+				<field id="time_interval" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification Interval (mili seconds)	</label>
+					<validate>required-entry</validate>
+					<comment><![CDATA[Add Time In Mili Seconds for Notification Interval. ]]></comment>
+					<depends>
+                        <field id="enable_browser_tab_notification">1</field>
+                    </depends>
+				</field>
+			</group>
+			<group id="mobile_menu" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Mobile Fixed Bottom Menu</label>
+				<field id="enable_mobile_menu" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Mobile Fixed Bottom Menu</label>
+					<comment><![CDATA[Mobile Fixed Bottom Menu will display Home , Search , My Cart & My Wishlist Icon at bottom.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="enable_home_link" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Home Link</label>
+					<comment><![CDATA[Set Yes for show Home Link]]></comment> 
+					<depends>
+                        <field id="enable_mobile_menu">1</field>
+					</depends>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="home_icon" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Home Icon</label>
+					<comment><![CDATA[Add Icon For Home]]></comment>
+					<depends>
+                        <field id="enable_mobile_menu">1</field>
+						<field id="enable_home_link">1</field>
+						
+                    </depends>
+				</field>
+				<field id="home_label" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Home Label</label>
+					<comment><![CDATA[Add Label For Home]]></comment>
+					<depends>
+                        <field id="enable_mobile_menu">1</field>
+						<field id="enable_home_label">1</field>
+						
+                    </depends>
+				</field>
+				<field id="enable_search_link" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Search Link</label>
+					<comment><![CDATA[Set Yes for show Search Link]]></comment> 
+					<depends>
+                        <field id="enable_mobile_menu">1</field>
+					</depends>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="search_label" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Search Label</label>
+					<depends>
+                        <field id="enable_mobile_menu">1</field>
+						<field id="enable_search_link">1</field>
+                    </depends>
+				</field>
+				<field id="enable_wishlist_link" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Wishlist Link</label>
+					<comment><![CDATA[Set Yes for show Wishlist Link]]></comment> 
+					<depends>
+                        <field id="enable_mobile_menu">1</field>
+					</depends>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="wishlist_label" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Wishlist Label</label>
+					<depends>
+                        <field id="enable_mobile_menu">1</field>
+						<field id="enable_wishlist_link">1</field>
+                    </depends>
+				</field>
+				<field id="enable_cart_link" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Cart Link</label>
+					<comment><![CDATA[Set Yes for show Cart Link]]></comment> 
+					<depends>
+                        <field id="enable_mobile_menu">1</field>
+					</depends>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="cart_label" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Cart Label</label>
+					<depends>
+                        <field id="enable_mobile_menu">1</field>
+						<field id="enable_cart_link">1</field>
+                    </depends>
+				</field>
+			</group>
+			<group id="exit_intent_popup" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Exit Intent Popup</label>
+				<field id="enable_exit_intent_popup" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Exit Intent Popup</label>
+					<comment><![CDATA[Exit Intent Popup will display when Customer going to leave the page or close the tab. This Popup only displayed in Desktop.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="show_image" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Image</label>
+					<depends>
+                        <field id="exit_intent_popup">1</field>
+					</depends>
+					<comment><![CDATA[Show Image In the Popup.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				
+				<field id="exit_intent_popup_image" translate="label" type="image" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Exit Intent Popup Image</label>
+					<depends>
+                        <field id="enable_exit_intent_popup">1</field>
+						<field id="show_image">1</field>
+					</depends>
+                    <comment>Allowed file types:PNG, GIF, JPG, JPEG, WEBP.</comment>
+                    <backend_model>Magebees\PocoBase\Model\Config\Backend\Image\ExitIntentPopup</backend_model>
+                    <base_url type="media" scope_info="1">poco/exitintentpopup</base_url>
+                </field>
+				<field id="bg_color" translate="label comment" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Background Color</label> 
+					<frontend_model>Magebees\PocoBase\Block\System\Config\Form\Field\Color</frontend_model>
+					<depends>
+                    	<field id="exit_intent_popup">1</field>
+                	</depends>
+				</field>
+				
+				<field id="show_title" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Title</label>
+					<depends>
+                        <field id="enable_exit_intent_popup">1</field>
+					</depends>
+					<comment><![CDATA[Show Title In the Popup.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Title</label>
+					<comment><![CDATA[]]></comment> 
+					<validate>required-entry</validate>
+					<depends>
+                        <field id="enable_exit_intent_popup">1</field>
+						<field id="show_title">1</field>
+					 </depends>
+				</field>
+				<field id="show_description" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Description</label>
+					<depends>
+                        <field id="enable_exit_intent_popup">1</field>
+					</depends>
+					<comment><![CDATA[Show Description In the Popup.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="description" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Description</label>
+					<comment><![CDATA[]]></comment> 
+					<validate>required-entry</validate>
+					<depends>
+                        <field id="enable_exit_intent_popup">1</field>
+						<field id="show_description">1</field>
+					 </depends>
+				</field>
+				<field id="show_btn" translate="label" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Button</label>
+					<depends>
+                        <field id="enable_exit_intent_popup">1</field>
+					</depends>
+					<comment><![CDATA[Show Buttom In the Popup.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="btn_title" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Button Title</label>
+					<comment><![CDATA[]]></comment> 
+					<validate>required-entry</validate>
+					<depends>
+                        <field id="enable_exit_intent_popup">1</field>
+						<field id="show_btn">1</field>
+					 </depends>
+				</field>
+				
+				<field id="btn_url" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Button Url</label>
+					<comment><![CDATA[]]></comment> 
+					<validate>required-entry</validate>
+					<depends>
+                        <field id="enable_exit_intent_popup">1</field>
+						<field id="show_btn">1</field>
+					 </depends>
+				</field>
+				<field id="product_skus" translate="label" type="textarea" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Product SKUs</label>
+					<validate>required-entry</validate>
+					<comment><![CDATA[Add List of SKUs septated By , for showing list in popup]]></comment>
+					<depends>
+                        <field id="enable_exit_intent_popup">1</field>
+                    </depends>
+				</field>
+				<field id="enable_autoplay" translate="label" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Autoplay Slider</label>
+					<depends>
+                        <field id="enable_exit_intent_popup">1</field>
+					</depends>
+					<comment><![CDATA[Enable Autoplay In Product Slider.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="autoplay_dealytime" translate="label" type="text" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Autoplay Delay Time</label>
+					<validate>required-entry</validate>
+					<comment><![CDATA[Add Autoplay Slider in milisecond]]></comment>
+					<depends>
+                        <field id="enable_exit_intent_popup">1</field>
+						<field id="enable_autoplay">1</field>
+                    </depends>
+				</field>
+			</group>
+			<group id="developer" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Developer</label>
+				<field id="custom_css" translate="label" type="textarea" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Custom Css</label>
+				</field>
+				
+				<field id="custom_js" translate="label" type="textarea" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Custom Javascript</label>
+				</field>
+			</group>
+			<group id="product_information" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Product Information</label>
+				<field id="author" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label><![CDATA[<p>Version: 1.5.0</p>]]></label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+			</group>
+		</section>
+		<section id="pocothemesinstall" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Install Theme Demo Data</label>
+            <tab>poco_themes</tab>
+            <resource>Magebees_PocoThemes::install</resource>
+			<group id="install" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Install Theme</label>
+				
+				<field id="import_blocks_heading" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Import Static Blocks</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+
+				<field id="overwrite_blocks" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Overwrite Existing Blocks</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment>If set to "Yes", imported blocks will overwrite existing blocks with the same identifiers (if any blocks with the same identifiers already exist).</comment>
+				</field>
+				
+                <field id="import_blocks" translate="button_label" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <button_label>Import Static Blocks</button_label>
+                    <attribute type="action_url">pocothemes/themesetup_cms/import</attribute>
+                    <attribute type="import_type">blocks</attribute>
+                    <attribute type="theme_name">pocothemesinstall</attribute>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Button\Import\Cms</frontend_model>
+					<comment><![CDATA[Click this button to create all static blocks provided with this theme.]]></comment>
+                </field>				
+				
+				<field id="import_pages_heading" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Import CMS Pages</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+
+				<field id="overwrite_pages" translate="label" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Overwrite Existing Pages</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[If set to "Yes", imported pages will overwrite existing pages with the same identifiers (if any pages with the same identifiers already exist).]]></comment>
+				</field>
+				
+				<field id="import_pages" translate="button_label" showInDefault="1" showInWebsite="1" showInStore="1">
+					<button_label>Import CMS Pages</button_label>
+					<attribute type="action_url">pocothemes/themesetup_cms/import</attribute>
+                    <attribute type="import_type">pages</attribute>
+                    <attribute type="theme_name">pocothemesinstall</attribute>
+                    <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Button\Import\Cms</frontend_model>
+					<comment><![CDATA[Click this button to create CMS pages provided with this theme.]]></comment>	
+				</field>				
+							
+				<field id="import_demo_setup_custom" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Setup Demo</label>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+		        </field>
+				<field id="import_demo_Custom" translate="button_label" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <attribute type="action_url">pocothemes/themesetup_demo/import</attribute>
+                   <frontend_model>Magebees\PocoBase\Block\System\Config\Form\Button\Import\DemoCustom</frontend_model>
+                </field>
+        	</group> 
+		</section>
+    </system>
+</config>	

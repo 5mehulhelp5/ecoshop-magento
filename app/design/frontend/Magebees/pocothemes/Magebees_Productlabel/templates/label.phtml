@@ -1,0 +1,40 @@
+<?php $_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); ?>
+<?php $thumbs_style = $_helper->getProductDetail('thumbs_style',$_helper->getStoreId()); ?>
+<?php if($thumbs_style != "grid"): ?>
+<div id="prodLabel">
+<?php echo $this->helper('Magebees\Productlabel\Helper\Data')->getLabel($block->getProduct(),'product'); ?>
+</div>
+<?php if($thumbs_style == "vertical"): ?>
+<script type="text/javascript">
+    require(['jquery', 'mage/gallery/gallery'], function($, gallery){
+		$('[data-gallery-role=gallery-placeholder]').on('gallery:loaded', function () {
+			$('.fotorama__stage').append($("#prodLabel"));
+			$(".prodLabel").show();
+			$(this).on('fotorama:ready', function(){
+				$('.fotorama__stage').append($("#prodLabel"));
+				$(".prodLabel").show();
+			});
+			$(this).on('fotorama:load', function(){
+				$('.fotorama__stage').append($("#prodLabel"));
+				$(".prodLabel").show();
+			});
+        });
+    });
+</script>
+<?php else: ?>
+<script type="text/javascript">
+    require(['jquery', 'mage/gallery/gallery'], function($, gallery){
+		$('[data-gallery-role=gallery-placeholder]').on('gallery:loaded', function () {
+			$(this).on('fotorama:ready', function(){
+				$('.fotorama__stage').append($("#prodLabel"));
+				$(".prodLabel").show();
+			});
+			$(this).on('fotorama:load', function(){
+				$('.fotorama__stage').append($("#prodLabel"));
+				$(".prodLabel").show();
+			});
+        });
+    });
+</script>
+<?php endif; ?>
+<?php endif; ?>

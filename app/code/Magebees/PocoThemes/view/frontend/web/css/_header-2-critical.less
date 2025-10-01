@@ -1,0 +1,76 @@
+.header-2 {
+	.header { padding: 0; }
+	.nav-sections { margin-bottom: 0; }
+	.icon .st-icon { width: 18px; height: 18px; }
+	.logo { margin: 0; }
+	.logo a { max-width: 100%; }
+	.icon-right { position: relative; }
+	.whilist-link a .counter.qty,
+	.whilist-link a .counter.qty.empty { top: -5px; left: 12px; }
+	.search-toggle .label { text-transform: uppercase; padding-left: 5px; font-weight: 500; display: none; }
+	.minicart .icon { margin-right: 5px; }
+	.minicart-wrapper .action.showcart .text { position: static; clip: inherit; margin: 0; text-transform: uppercase; font-weight: 600; vertical-align: middle; line-height: normal; }
+	.minicart .minicartPrice { display: none !important; }
+    .minicart .action.showcart {
+        .counter.qty,
+        .counter.qty.empty { font-weight: 600; display: inline; margin-top: 0; padding: 0; line-height: normal; margin: 0; vertical-align: middle; text-align: center;
+            &:before { content: '('; display: inline; padding-right: 5px; }
+            &:after { content: ')'; display: inline; padding-left: 10px; }
+        }
+        @media (min-width: 769px){
+            .counter.qty, .counter.qty.empty { background: inherit; position: static; }
+        }
+        &:before { display: none; }
+    }
+	.cwsMenuOuter { text-align: center; }
+	.nav-sections .cwsMenuOuter { padding:0 !important; }
+	.cwsMenu a { line-height: normal !important; }
+	.cwsMenu.horizontal > li { float: none !important; display: inline-block !important; }
+	.cwsMenu.horizontal.mega-menu > li > a { line-height: 60px !important; }	
+	.setting-links, .whilist-link, .search-toggle { float: right; margin-right: 25px; cursor: pointer; }
+    &.page-header .setting-links .switcher ul.dropdown { padding: 0; box-shadow: none; -webkit-box-shadow:none; display: flex; flex-wrap: wrap; }
+	&.page-header .setting-links .switcher ul.dropdown li { border: 0 !important; display: block; margin-right: 15px !important; margin-bottom: 5px !important; }
+	&.page-header .setting-links .switcher ul.dropdown li:last-of-type { margin-right: 0 !important;  }
+	&.page-header .setting-links .switcher ul.dropdown li b { text-decoration: underline !important; }
+	&.page-header .setting-links .switcher ul.dropdown li a { padding: 0; }
+	&.page-header .setting-links .switcher { display: block; }
+	&.page-header .setting-links .switcher .action.toggle:after { display: none !important; }
+	.currency-grid.links-cols .title { display: block !important; }
+	.currency-grid.links-cols ul > li { margin-right: 0 !important; display: block !important; }
+	.currency-grid.links-cols b { text-decoration: none !important; }
+}
+.header-2 .minicart .minicart-wrapper .action.showcart .counter .counter-number { display: inline; text-align: center; }
+
+@media (max-width: 1350px) {
+	.header-2 .setting-links, .header-2 .whilist-link, .header-2 .search-toggle { margin-right: 20px; }
+}
+
+@media (max-width: 1201px) {
+	.header-2 .cwsMenu.horizontal.mega-menu > li > a { line-height: normal !important; }
+	.header-2 { 
+		.header { padding: 15px 0; }
+		.whilist-link, .setting-links { display: none; }
+		.cwsMenu.horizontal > li { display: block !important; margin-right: 0 !important; }
+		.nav-toggle { flex: 1 !important; -webkit-flex: 1 !important; -ms-flex: 1 !important; max-width: 33.33%; margin-right: 0; }
+		.main-nav { flex: 0 !important; -webkit-flex: 0 !important; -ms-flex: 0 !important; }
+		.icon-right, .logo { max-width: 33.33%; padding-right: 0 !important; }
+	}
+	.header-2 .main-nav .cwsMenu.mega-menu { padding: 0; }
+}
+
+@media (max-width: 768px) {
+	.header-2 .minicart .icon { margin-right: 2px; }
+	.header-2 .minicart-wrapper .action.showcart .text { display: none; }
+	.header-2 { 
+		.minicart .minicart-wrapper .action.showcart .counter.qty:before, .minicart .minicart-wrapper .action.showcart .counter.qty.empty:before,
+		.minicart .minicart-wrapper .action.showcart .counter.qty:after, .minicart .minicart-wrapper .action.showcart .counter.qty.empty:after { display: none; }
+	}
+}
+
+@media (max-width: 639px) {
+.header-2 .search-toggle { margin-right: 15px; }
+}
+
+@media (max-width: 480px) {
+.header-2 .logo { max-width: 80px; }
+}

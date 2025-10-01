@@ -1,0 +1,211 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var \Magebees\PocoThemes\Block\Html\Header $block
+ */
+?>
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); 
+$storeId = $poco_helper->getStoreId();
+$headerConfig =$poco_helper->getConfigGroup('header',$storeId);
+$font_icons = $poco_helper->getConfigGroup('font_icons',$storeId);
+$top_header = array_key_exists('top_header', $headerConfig) ? $headerConfig['top_header'] : false;
+$social_media_enable = array_key_exists('social_media_enable', $headerConfig) ? $headerConfig['social_media_enable'] : false;
+$phone_enable = array_key_exists('phone_enable', $headerConfig) ? $headerConfig['phone_enable'] : false;
+$top_header_text = array_key_exists('top_header_text', $headerConfig) ? $headerConfig['top_header_text'] : false;
+$top_left_header_text = array_key_exists('top_left_header_text', $headerConfig) ? $headerConfig['top_left_header_text'] : false;
+$language = array_key_exists('language', $headerConfig) ? $headerConfig['language'] : false;
+$currency = array_key_exists('currency', $headerConfig) ? $headerConfig['currency'] : false;
+$user_icon = array_key_exists('user', $font_icons) ? $font_icons['user'] : false;
+$setting_icon = array_key_exists('setting', $font_icons) ? $font_icons['setting'] : false;
+$whishlist_icon = array_key_exists('whishlist', $font_icons) ? $font_icons['whishlist'] : false;
+$phone_icon = array_key_exists('contact', $font_icons) ? $font_icons['contact'] : false;
+$search_icon = array_key_exists('search', $font_icons) ? $font_icons['search'] : false;
+ ?>
+<div class="search-drawer">
+	<div class="container">
+		<div class="title"><?php echo __('What are you looking for?') ;?></div>
+		<?php echo $this->getChildHtml("topSearch"); ?>
+		<span class="close icon" id="mbsearch-close"><svg xmlns="https://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+	</div>
+</div>
+
+<!-- Header Style-15 -->
+<header class="page-header header-15 header-transparent">
+	<!--Topbar Header-->
+	 <?php if($top_header): ?>
+    	<div class="top-header">
+			<div class="container">
+				<div class="d-flex alc jcb">
+					<div class="flex-1 leftTop <?php if(!$phone_enable):?>flx_full<?php endif; ?>">
+						<?php if($social_media_enable): ?>
+							<!-- Top Social Icon -->
+							<div class="social-header">
+								<?php echo $block->getLayout()->createBlock('Magento\Framework\View\Element\Template')
+								->setCacheLifetime(7200)
+								->setTemplate('Magento_Theme::html/social.phtml')->toHtml(); ?>
+							</div>
+							<!-- End Top Social Icon -->
+						<?php endif; ?>
+						<?php if($top_left_header_text): ?>
+							<!--Offer Text-->
+							<div class="ofr_text_tl">
+								<?php echo $top_left_header_text; ?>
+							</div>
+							<!--Offer Text-->
+						<?php endif; ?>
+					</div>
+					<?php if($top_header_text): ?>
+						<!--Free Shipping Msg-->
+						<div class="flex-1 middleTop">
+							<div class="shipping-msg">
+							<?php 
+								/* Get Number From String in which number start Like (%s)59 */
+								preg_match_all('/\)[^\d]*(\d+(\.\d+)?)/', $top_header_text, $matches);
+								if(isset($matches[1])&&(count($matches[1]) > 0))
+								{
+									$text_price = array();
+									foreach($matches[1] as $key => $value):
+									
+										$convertedPrice = $poco_helper->getFreeShippingCurrentPrice($value,$storeId);
+										$formattedPrice = $poco_helper->getFormattedPrice($convertedPrice);
+										$text_price[$value] = $formattedPrice;
+										$findString = '(%s)'.$value;
+										$top_header_text =  str_replace($findString,$formattedPrice,$top_header_text);
+										 
+									endforeach;
+								}
+								?>
+								<?php echo $top_header_text; ?>
+								
+							</div>
+						</div>
+						<!--End Free Shipping Msg-->
+					<?php endif; ?>
+					<div class="flex-1 rightTop d-flex alc jce">
+						<?php if($language): ?>
+							<!-- Language Dropdown -->
+							<?php if($poco_helper->isStoreMultiStoreView($storeId)): ?>
+								<div class="language-grid"><?php echo $this->getChildHtml("store_language"); ?></div>
+							<?php endif; ?>
+							<!-- End Language Dropdown -->
+						<?php endif; ?>
+						<?php if($currency): ?>
+							<!--Currency Dropdown-->
+							<div class="currency-grid"><?php echo $this->getChildHtml("currency"); ?></div>
+							<!--End Currency Dropdown-->
+						<?php endif; ?>
+						</div>
+					</div>
+				</div>
+			</div>
+    <?php endif; ?>
+	<!--End Topbar Header-->
+	
+	<div id="header-content" class="header">
+		<div class="container">
+			<div class="d-flex alc jcb">
+				<!-- Mobile Navigation Bar -->
+				<span data-action="toggle-nav" class="action nav-toggle">
+					<svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon bar_icon"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+					<svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon close_icon"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+					<span><?= /* @escapeNotVerified */ __('Toggle Nav') ?></span>
+				</span>
+				<!-- End Mobile Navigation Bar -->
+
+				<!-- Main Navigation Menu -->
+				<div class="col-5 main-nav d-flex flex-1">
+					<?php echo $block->getChildHtml('navigation.sections'); ?>
+				</div>
+				<!-- End Main Navigation Menu -->	
+
+				<!-- Logo -->
+				<div class="flex-1 col-2 d-flex-small justify-content-center-small">
+					<div class="logo"><?php echo $this->getChildHtml("logo"); ?></div>
+				</div>
+				<!-- End Logo -->
+				
+				<div class="col-5 icon-right d-flex flex-1 jce">
+					<?php $contactNo = $poco_helper->getContactus('contact',$storeId);?>
+					<!--Phone No-->
+					<?php if(($contactNo)):?>
+						<?php $phone_icon = $font_icons['contact'];?>
+						<div class="phone_no">
+							<a href="tel:<?php echo $contactNo; ?>" title="<?php echo __('Contact No') ;?>">
+								<span class="icon"><?= $phone_icon ?></span>
+								<span class="number"><?php echo $contactNo; ?></span>
+							</a>
+						</div>
+						<!--End Phone No-->
+					<?php endif; ?>
+
+					<!-- Search Bar -->
+					<div class="search-toggle">
+						<?php $search_icon = $font_icons['search'];?>
+						<a class="topSearch f-right" href="#;" title="<?php echo __('Search') ;?>"><span class="icon"><?= $search_icon ?></span></a>
+					</div>
+					<!-- End Search Bar -->
+
+					<!-- Setting Links -->
+					<div class="setting-links  <?php if($top_header):  echo 'stg_dd'; endif; ?>">
+						<div class="setting-icon">
+							<span class="icon">
+							<?php if($top_header): ?><?= $setting_icon ?><?php else: ?><?= $user_icon ?><?php endif; ?>
+							</span>
+						</div>
+						<div class="setting-dropdown">
+							<!--Userlinks-->
+							<div class="user-account links-cols">
+								<div class="top-links">
+									<h6 class="title body-font"><?php echo __('My Account') ;?></h6>
+									<?php echo $this->getChildHtml("top.links"); ?>
+								</div>
+							</div>
+							<!-- End Userlinks -->
+							<?php if(!$top_header): ?>
+								<?php if($language): ?>
+									<!-- Language Dropdown -->
+									<?php if($poco_helper->isStoreMultiStoreView($storeId)): ?>
+									<?php echo $this->getChildHtml("store_language_ver_2"); ?>
+									<?php endif; ?>
+									<!-- End Language Dropdown -->
+								<?php endif; ?>
+								<?php if($currency): ?>
+									<!-- Currency Dropdown -->
+									<?php if($poco_helper->isMultipleCurrency($storeId)): ?>
+										<?php echo $this->getChildHtml("currency_ver_2"); ?>
+									<?php endif; ?>
+									<!--Currency Dropdown-->
+								<?php endif; ?>
+							<?php endif; ?>
+						</div>
+					</div>
+					<!--End Setting Links-->
+					
+					<!-- Wishlist Icon -->
+					<?php $whishlist_icon = $font_icons['whishlist'];?>
+					<div class="whilist-link" data-bind="scope: 'wishlist'">
+						<a href="<?php /* @escapeNotVerified */ echo $this->getUrl('wishlist', ['_secure' => true]); ?>" title="<?php echo __('My Wishlist') ;?>" aria-label="Wishlist"><span class="icon"><?= $whishlist_icon ?></span>
+							<!-- ko if: wishlist().counter -->
+							<span data-bind="text: wishlist().counter" class="wishlist-counter counter qty"></span>
+							<!-- /ko -->
+						</a>
+					</div>
+
+					<!-- Minicart Popup -->
+					<div class="minicart">
+						<?php echo $this->getChildHtml("minicart"); ?>
+					</div>
+					<!-- End Minicart Popup -->
+				</div>
+			</div>
+		</div>
+	</div>
+    
+</header>
+<!-- End Header Style-14 -->

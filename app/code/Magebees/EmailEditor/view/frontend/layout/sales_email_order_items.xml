@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" >
+    <body>
+        <referenceBlock name="items">
+        <action method="setTemplate">
+            <argument name="template" xsi:type="string">Magebees_EmailEditor::email/items.phtml</argument>
+        </action>
+    </referenceBlock>
+    <referenceBlock name="order_totals">
+      <action method="setLabelProperties" ifconfig="emaileditor/setting/show_img">
+           <argument name="value" xsi:type="string">colspan="3" align="right"</argument>
+       </action>
+</referenceBlock>
+    </body>
+</page>
+

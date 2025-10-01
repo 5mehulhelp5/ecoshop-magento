@@ -1,0 +1,25 @@
+<?php
+/**
+ * Template for displaying today deal products
+ *
+ * @var $block \Magebees\PocoThemes\Block\DealProducts
+ */
+ 
+	$block->getDealProductsCollection();
+	if($this->getProduct()){
+		$product = $this->getProduct();
+	}else{
+		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+		$product = $objectManager->get('Magento\Framework\Registry')->registry('current_product');
+	}
+	
+	$deal_pro_ids = $this->_dealProductIds;
+	if(in_array($product->getId(),$deal_pro_ids)){	
+		$timer = $block->getCountTimer();
+	    echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setData('count_time', $timer)->setTemplate("Magebees_TodayDealProducts::timer.phtml")->toHtml();
+	}
+?>
+
+    
+            
+  

@@ -1,0 +1,20 @@
+<?php 
+$randon_number = rand();	
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$newsLetterData = $this->getData();
+if(count($newsLetterData)>0): 
+$newsLetterWidgetEmptyOptions = array('wd_enable'=>null,'load_ajax'=>null,'wd_spacing'=>null,'wd_bottom_spacing'=>null,'wd_bgimage'=>null,'wd_bgcolor'=>null,'wd_show_heading'=>null,'wd_newsletter_title'=>null,'wd_heading_logo'=>null,'wd_newsletter_text_placeholder'=>null,'wd_newsletter_text'=>null,'wd_newsletter_button_text'=>null,'store_id'=>null,'wd_slider'=>null);
+
+$newsLetterWidget = array();
+$ajaxLoadingData = array();
+$ajaxLoadingData['randon_number'] = $randon_number;
+$ajaxLoadingData['url'] = $block->getUrl('poco/index/newsletter');
+$ajaxLoadingData['res_div'] = '#newsLetter'.$randon_number;
+$ajaxLoadingData['loading_div'] = '#loadingImage'.$randon_number;
+$ajaxLoadingData['loaderUrl'] = $poco_helper->getLoadingIcon(); 
+$newsLetterWidget['ajaxloading'] = (array_merge($newsLetterWidgetEmptyOptions,$newsLetterData,$ajaxLoadingData));
+?>
+<div id="newsLetter<?php echo $randon_number; ?>" class="ajx_loader" data-mage-init='<?php echo $poco_helper->getJsonEncode($newsLetterWidget);?>'>
+<div id="loadingImage<?php echo $randon_number; ?>" style="display:none;"></div>
+</div>
+<?php endif; ?>

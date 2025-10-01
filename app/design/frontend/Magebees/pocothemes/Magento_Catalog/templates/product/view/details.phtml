@@ -1,0 +1,97 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php if ($detailedInfoGroup = $block->getGroupChildNames('detailed_info', 'getChildHtml')):?>
+<?php
+
+    $_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); 
+	$tab_style = $_helper->getProductDetail('tab_style',$_helper->getStoreId());
+	$custom_tab_enable = $_helper->getProductDetail('custom_tab_enable',$_helper->getStoreId());
+	$default_tab_sort_order = array('product.info.description','product.attributes','reviews.tab');
+	//$detailedInfoGroup = array('product.info.description','product.attributes','reviews.tab');
+	$tab_difference=array_diff($detailedInfoGroup,$default_tab_sort_order);
+	$detailedInfoGroup = array_merge($default_tab_sort_order,$tab_difference);
+?>
+   	<div class="product info detailed <?php echo $tab_style; ?>">
+	<?php $layout = $block->getLayout(); ?>
+	<?php //if($tab_style == "default"): ?>
+		<div class="product data items" data-mage-init='{"tabs":{"openedState":"active"}}'>
+			
+			<?php foreach ($detailedInfoGroup as $name):?>
+                <?php
+                    $html = $layout->renderElement($name);
+                    if (!trim($html)) {
+                        continue;
+                    }
+                    $alias = $layout->getElementAlias($name);
+                    $label = $block->getChildData($alias, 'title');
+                ?>
+                <div class="data item title" aria-labeledby="tab-label-<?= /* @escapeNotVerified */ $alias ?>-title" data-role="collapsible" id="tab-label-<?= /* @escapeNotVerified */ $alias ?>">
+                    <a class="data switch" tabindex="-1" data-toggle="switch" href="#<?= /* @escapeNotVerified */ $alias ?>" id="tab-label-<?= /* @escapeNotVerified */ $alias ?>-title">
+                        <?= /* @escapeNotVerified */ $label ?>
+                    </a>
+                </div>
+                <div class="data item content" id="<?= /* @escapeNotVerified */ $alias ?>" data-role="content">
+                    <?= /* @escapeNotVerified */ $html ?>
+                </div>
+            <?php endforeach; ?>
+				<?php if($custom_tab_enable) {
+					$custom_tabs_array = $_helper->getCustomTabs($block->getProduct());
+					$i = 1;
+					foreach($custom_tabs_array as $_item) {
+						?>
+						<div class="data item title"
+							 aria-labeledby="tab-label-<?php /* @escapeNotVerified */ echo "custom-".$i;?>-title"
+							 data-role="collapsible" id="tab-label-<?php /* @escapeNotVerified */ echo "custom-".$i;?>">
+							<a class="data switch"
+							   tabindex="-1"
+							   data-toggle="switch"
+							   href="#<?php /* @escapeNotVerified */ echo "custom-".$i; ?>"
+							   id="tab-label-<?php /* @escapeNotVerified */ echo "custom-".$i;?>-title">
+								<?php /* @escapeNotVerified */ echo $_item['tab_title']; ?>
+							</a>
+						</div>
+						<div class="data item content" id="<?php /* @escapeNotVerified */ echo "custom-".$i; ?>" data-role="content">
+							<?php /* @escapeNotVerified */ echo $_item['tab_content']; ?>
+						</div>
+						<?php
+						$i++;
+					}
+				}
+				?>
+			</div>
+    <?php endif; ?>
+		
+	<script>
+		require([
+			'jquery'
+		], function ($) {
+			 (function() {
+				var ev = new $.Event('tabclassadded'),
+					orig = $.fn.addClass;
+				$.fn.addClass = function() {
+					$(this).trigger(ev, arguments);
+					return orig.apply(this, arguments);
+				}
+			})();
+			
+			$(document).ready(function(){
+				<?php if($tab_style && $tab_style == "vertical"): ?>
+					$(".product.info.detailed.vertical .product.data.items .data.item.title").off("tabclassadded").on("tabclassadded",function(){
+						$(this).parent().css("min-height",$(this).next().outerHeight()+"px");
+					});
+				<?php endif; ?>
+			});
+		});
+	</script>
+	</div>
+<?php //endif; ?>
+
+<style>
+	.product.info.detailed.vertical .product.data.items .item.content { width: calc(100% - 200px); }
+</style>

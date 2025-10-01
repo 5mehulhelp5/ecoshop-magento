@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Magebees_Onepagecheckout::css/magebees_cart.css"/>
+    </head>
+    <body>
+        <referenceBlock name="checkout.cart.empty">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Magebees_Onepagecheckout::cart/empty.phtml</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>

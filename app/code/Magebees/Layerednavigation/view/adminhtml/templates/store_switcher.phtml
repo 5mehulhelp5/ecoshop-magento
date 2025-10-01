@@ -1,0 +1,34 @@
+<?php 
+/*Magebees\Layerednavigation\Block\Adminhtml\Attribute\Edit\Tab\Optioninfo $block*/
+$store_info = $block->getStoreData(); ?>
+<?php $current_store= $block->getCurrentStore(); ?>
+<?php $url = $block->getCurrentUrl(); ?>
+<div class="admin__field field field-basic_behavior">
+					<label class="label admin__field-label">
+						<span><b>Store View:</b></span> &nbsp;&nbsp;
+					</label>
+					<select id="storeid" name="storeid" class="select admin__control-select" onchange="switchStore(this);">
+						<?php  foreach($store_info as $value){ if($value['value']==0){ ?>
+							<option value="0"><?php echo $value['label']; ?></option>
+						<?php } else { ?>
+							<optgroup label="<?php echo $value['label']; ?>"></optgroup>
+						<?php if(!empty($value['value'])){ foreach ($value['value'] as $option){ ?>
+							<option value="<?php echo $option['value']; ?>" <?php if($option['value']==$current_store){?> selected=selected<?php } ?>><?php echo "&nbsp;&nbsp;&nbsp;&nbsp;".$option['label'];?></option>
+						<?php  } } } } ?>
+
+					</select>
+				</div>
+				
+	<?php echo $block->getChildHtml('grid') ?>		
+
+
+<script type="text/javascript">
+    function switchStore(obj) {
+        var storeParam = obj.value ? 'store/' + obj.value + '/?active_tab=option_section' : '';
+		 if (obj.switchParams) {
+            storeParam += obj.switchParams;
+        }
+		setLocation('<?php echo $url ?>' + storeParam);
+    }
+</script>
+					

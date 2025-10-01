@@ -1,0 +1,96 @@
+<?php
+use Magento\Framework\App\Action\Action;
+?>
+<?php	
+$_productCollection = $block->getLoadedProductCollection();
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+$search_block=$block->getLayout()->createBlock('\Magebees\Ajaxsearch\Block\Searchbox');
+$autocompleteConfig=$search_block->getProductsConfig();
+$name_length=$autocompleteConfig['name_length'];
+$desc_length=$autocompleteConfig['desc_length'];
+$limit=$autocompleteConfig['product_limit'];
+$order=1;
+
+?>
+<?php if(count($_productCollection)){ 
+if($limit!=0){?>
+
+	<ul id="ajax_ul">
+		<span class="order" style="display:none;"><?php echo $order;?></span>
+		<?php foreach ($_productCollection as $_product):
+				$productId=$_product->getId();				
+				$product= $search_block->loadProduct($productId);
+				$name=$_product->getName();
+				$product_name=substr($name,0,$name_length);
+		?>
+		<li class="item">
+			<a href="<?php echo $_product->getProductUrl() ?>">
+				<?php if ($autocompleteConfig['product_image']): ?>
+					<span class="product-image">
+						<?php
+							$imageUrl = $this->helper('Magento\Catalog\Helper\Image')
+							->init($_product, 'product_page_image_large')
+							->constrainOnly(FALSE)
+							->keepAspectRatio(TRUE)
+							->keepFrame(FALSE)
+							->resize(90)
+							->getUrl();
+						?>
+						<img src="<?php echo $imageUrl; ?>" alt="<?php echo $product_name;?>" />
+					</span>
+				<?php endif; ?>
+				<div class="ajxRightDetails">
+					<p class="product-name"><?php echo $product_name;?></p>
+					<?php if ($autocompleteConfig['product_sku']): ?>
+						<p class='ajxSku'><b><?php /* @escapeNotVerified */ echo __('SKU'); ?>:</b> <?php echo $_product->getSku(); ?>
+					<?php endif; ?>
+					<p class="ajxDescription"><?php $desc=strip_tags($product->getData('description')); 
+              $description=$search_block->limit_word($desc,$desc_length);
+              //$description=substr($desc,0,$desc_length); 
+              echo $description; ?>
+                    </p>
+					<?php if ($autocompleteConfig['product_review']): ?>
+						<div class="review"><?php echo preg_replace('/<\/?a[^>]*>/','',$block->getReviewsSummaryHtml($_product, $templateType)); ?></div>
+					<?php endif; ?>
+			
+					<?php if ($autocompleteConfig['product_price']): ?>
+						<?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
+					<?php endif; ?>
+					
+					<?php if ($autocompleteConfig['product_cart']): ?>
+						<?php if ($_product->isSaleable()): ?>
+							<?php $postParams = $block->getAddToCartPostParams($_product); ?>
+							<form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post">
+                                            <input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $postParams['data']['product']; ?>">
+                                            <input type="hidden" name="<?php /* @escapeNotVerified */ echo Action::PARAM_NAME_URL_ENCODED; ?>" value="<?php /* @escapeNotVerified */ echo $postParams['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
+                                            <?php echo $block->getBlockHtml('formkey')?>
+                                            <button type="submit"
+                                                    title="<?php echo $block->escapeHtml(__('Add to Cart')); ?>"
+                                                    class="action tocart primary">
+                                                <span><?php /* @escapeNotVerified */ echo __('Add to Cart') ?></span>
+                                            </button>
+                                        </form>
+                                    <?php else: ?>
+                                        <?php if ($_product->getIsSalable()): ?>
+                                            <div class="stock available"><span><?php /* @escapeNotVerified */ echo __('In stock') ?></span></div>
+                                        <?php else: ?>
+                                            <div class="stock unavailable"><span><?php /* @escapeNotVerified */ echo __('Out of stock') ?></span></div>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+					<?php endif; ?>
+				</div>
+			</a>
+		</li>
+		<?php endforeach; ?>
+	</ul>
+<?php if (!$block->isRedirectToCartEnabled()) : ?>
+	<script type="text/x-magento-init">
+        {
+            "[data-role=tocart-form], .form.map.checkout": {
+                "catalogAddToCart": {}
+            }
+        }
+	</script>
+<?php endif; ?>
+<?php }} ?>

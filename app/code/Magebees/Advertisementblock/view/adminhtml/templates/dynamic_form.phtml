@@ -1,0 +1,312 @@
+<?php $pattern=$block->getPatternValue(); 
+$no_of_field=$block->getNumberOfField($pattern);
+$i=1;
+$helper=$this->helper('\Magebees\Advertisementblock\Helper\Data');
+$effect_arr=$helper->getEffectArr();
+$text_position_arr=$helper->getTextPositionArr();
+for($i=1;$i<=$no_of_field;$i++)
+{?>
+		<style type="text/css">
+        .image-list { background:#f8f8f8; border-bottom:1px solid #e3e3e3; border-top:1px solid #e3e3e3; padding:1.5rem; position:relative; }
+		.image-list:before, .image-list:after { content:''; clear:both; display:block; }
+		.image-list .legend { display:block; }
+		.image-list .expand_image { font-size:16px; padding:6px 10px; display:inline-block; cursor:pointer; position:absolute; left:50%; margin-top:-5px; text-transform:uppercase; }
+        </style>
+	<fieldset class="fieldset admin__fieldset " id="page_base_fieldset">
+    	<div class="image-list">
+            <legend class="admin__legend legend">
+                <span>Image <?php echo $i;?></span>
+				<span class='expand_image action-default scalable action-secondary' id='expand_<?php echo $i;?>' onclick="expandImage(this,<?php echo $i;?>)">+ Add Image</span>
+            </legend>
+        </div>
+	</fieldset>	
+	<div class="image_data" id="image_data_<?php echo $i;?>" style="display:none;">
+		
+		<div class="admin__field field field-display_text_mode" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-display-text-mode">
+            <label class="label admin__field-label" for="page_display_text_mode" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-display-text-mode-label"><span>Display Text Mode</span></label>
+            <div class="admin__field-control control">
+                <select id="page_display_text_mode" name="display_text_mode_<?php echo $i;?>" title="Display Text Mode" class=" select admin__control-select" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-display-text-mode" >
+					<option value="1">On Page Load</option>
+					<option value="0" selected="selected">On Mouse Hover</option>
+				</select>
+            </div>
+        </div> 
+		
+		<div class="admin__field field field-show_image " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-show_image">
+            <label class="label admin__field-label" for="page_show_image" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-show_image-label"><span>Show Image</span></label>
+            <div class="admin__field-control control">
+                <select id="page_show_image" name="show_image_<?php echo $i;?>" title="Show Image" class=" select admin__control-select" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-show_image" onchange="changeShowImage(this.value,<?php echo $i;?>)">
+					<option value="1">Yes</option>
+					<option value="0" selected="selected">No</option>
+				</select>
+            </div>
+        </div>    
+		
+		 <div class="admin__field field field-bg_color " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-bg_color" id="bg_color_element_<?php echo $i;?>">
+            <label class="label admin__field-label" for="page_bg_color" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-bg_color-label"><span>Background Color</span></label>
+            <div class="admin__field-control control">
+                <input id="bg_color_<?php echo $i;?>" name="bg_color_<?php echo $i;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-bg_color" value="" title="Background Color" class="input-text admin__control-text ignore-validate" type="text">                           
+			</div>
+        </div> 
+		<script>
+		
+		require([
+		'jquery',
+		'jquery/colorpicker/js/colorpicker',
+		], function ($) {
+			'use strict';
+			console.log("required the colorpicker. Be free!");
+			var i="<?php echo $i;?>";
+			var $el = $("#bg_color_"+i); 
+			$el.ColorPicker({				
+				onChange: function (hsb, hex, rgb) {					
+					$el.css("backgroundColor", "#" + hex).val("#" + hex);
+				}
+			});			
+		});
+		
+		
+		</script>		
+		
+	<div class="admin__field field field-show_hover_heading_text " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-show-hover-heading-text">
+            <label class="label admin__field-label" for="page_show_hover_heading_text" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-show-hover-heading-text-label"><span>Show Heading Text</span></label>
+            <div class="admin__field-control control">
+                <select id="page_show_hover_heading_text" name="show_hover_heading_text_<?php echo $i;?>" title="Show Heading Text" class=" select admin__control-select" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-show-hover-heading-text" onchange="changeHeading(this.value,<?php echo $i;?>)">
+					<option value="1">Yes</option>
+					<option value="0" selected="selected">No</option>
+				</select>
+            </div>
+        </div>    
+        <div class="admin__field field field-hover_heading_text " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-hover-heading-text" style="display:none;" id="hover_heading_text_<?php echo $i;?>">
+            <label class="label admin__field-label" for="page_hover_heading_text" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-hover-heading-text-label"><span>Heading Text</span></label>
+            <div class="admin__field-control control">
+                <input id="page_hover_heading_text" name="hover_heading_text_<?php echo $i;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-hover-heading-text" value="" title="Heading Text" class="input-text admin__control-text ignore-validate" type="text">                           
+			</div>
+        </div>  
+		
+		 <div class="admin__field field field-heading_text_size " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-heading_text_size" style="display:none;" id="heading_text_size_<?php echo $i;?>">
+            <label class="label admin__field-label" for="page_heading_text_size" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-heading_text_size-label"><span>Heading Text Font Size</span></label>
+            <div class="admin__field-control control">
+                <input id="page_heading_text_size" name="heading_text_size_<?php echo $i;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-heading_text_size" value="" title="Heading Text Font Size" class="input-text admin__control-text ignore-validate" type="text">                           
+			</div>
+        </div>   
+		
+		
+		 <div class="admin__field field field-heading_text_color " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-heading_text_color" style="display:none;" id="heading_text_color_element_<?php echo $i;?>">
+            <label class="label admin__field-label" for="page_heading_text_color" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-heading_text_color-label"><span>Heading Text Color</span></label>
+            <div class="admin__field-control control">
+                <input id="heading_text_color_<?php echo $i;?>" name="heading_text_color_<?php echo $i;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-heading_text_color" value="" title="Heading Text Color" class="input-text admin__control-text ignore-validate" type="text">                           
+			</div>
+        </div> 
+		<script>
+		
+		require([
+		'jquery',
+		'jquery/colorpicker/js/colorpicker',
+		], function ($) {
+			'use strict';
+			console.log("required the colorpicker. Be free!");
+			var i="<?php echo $i;?>";
+			var $el = $("#heading_text_color_"+i); 
+			$el.ColorPicker({				
+				onChange: function (hsb, hex, rgb) {					
+					$el.css("backgroundColor", "#" + hex).val("#" + hex);
+				}
+			});			
+		});
+		
+		
+		</script>	
+		
+        <div class="admin__field field field-show_hover_short_text " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-show-hover-short-text">
+            <label class="label admin__field-label" for="page_show_hover_short_text" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-show-hover-short-text-label"><span>Show Short Text</span></label>
+            <div class="admin__field-control control">
+                <select id="page_show_hover_short_text" name="show_hover_short_text_<?php echo $i;?>" title="Show Short Text" class=" select admin__control-select" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-show-hover-short-text" onchange="changeSortText(this.value,<?php echo $i;?>)">
+					<option value="1">Yes</option>
+					<option value="0" selected="selected">No</option>
+				</select>
+            </div>
+        </div>    
+        <div class="admin__field field field-hover_short_text " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-hover-short-text" style="display:none;" id="hover_short_text_<?php echo $i;?>">
+            <label class="label admin__field-label" for="page_hover_short_text" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-hover-short-text-label"><span>Short Text</span></label>
+            <div class="admin__field-control control">
+               <input id="page_hover_short_text" name="hover_short_text_<?php echo $i;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-hover-short-text" value="" title="Short Text" class="input-text admin__control-text ignore-validate" type="text">                           
+			</div>
+        </div>   
+		
+		 <div class="admin__field field field-short_text_size " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-short_text_size" style="display:none;" id="short_text_size_<?php echo $i;?>">
+            <label class="label admin__field-label" for="page_short_text_size" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-short_text_size-label"><span>Short Text Font Size</span></label>
+            <div class="admin__field-control control">
+                <input id="page_short_text_size" name="short_text_size_<?php echo $i;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-short_text_size" value="" title="Short Text Font Size" class="input-text admin__control-text ignore-validate" type="text">                           
+			</div>
+        </div>   
+		
+		
+		 <div class="admin__field field field-short_text_color" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-short_text_color" style="display:none;" id="short_text_color_element_<?php echo $i;?>">
+            <label class="label admin__field-label" for="page_short_text_color" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-short_text_color-label"><span>Short Text Color</span></label>
+            <div class="admin__field-control control">
+                <input id="short_text_color_<?php echo $i;?>" name="short_text_color_<?php echo $i;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-short_text_color" value="" title="Short Text Color" class="input-text admin__control-text ignore-validate" type="text">                           
+			</div>
+        </div> 
+		<script>
+		
+		
+		require([
+		'jquery',
+		'jquery/colorpicker/js/colorpicker',
+		], function ($) {
+			'use strict';
+			console.log("required the colorpicker. Be free!");
+			var i="<?php echo $i;?>";
+			var $el = $("#short_text_color_"+i); 
+			$el.ColorPicker({				
+				onChange: function (hsb, hex, rgb) {					
+					$el.css("backgroundColor", "#" + hex).val("#" + hex);
+				}
+			});			
+		});
+		
+		</script>			
+		
+        <div class="admin__field field field-show_button_text " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-show-button-text">
+            <label class="label admin__field-label" for="page_show_button_text" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-show-button-text-label"><span>Show Button Text</span></label>
+            <div class="admin__field-control control">
+                <select id="page_show_button_text" name="show_button_text_<?php echo $i;?>" title="Show Button Text" class=" select admin__control-select" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-show-button-text" onchange="changeButtonText(this.value,<?php echo $i;?>)">
+					<option value="1">Yes</option>
+					<option value="0" selected="selected">No</option>
+				</select>
+            </div>
+        </div>
+    
+        <div class="admin__field field field-button_text " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-button-text" style="display:none;" id="button_text_<?php echo $i;?>">
+            <label class="label admin__field-label" for="page_button_text" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-button-text-label"><span>Button Text</span></label>
+            <div class="admin__field-control control">
+                <input id="page_button_text" name="button_text_<?php echo $i;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-button-text" value="" title="Button Text" class="input-text admin__control-text ignore-validate"  type="text">                           
+			</div>
+        </div>    
+		
+		 <div class="admin__field field field-button_text_size " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-button_text_size" style="display:none;" id="button_text_size_<?php echo $i;?>">
+            <label class="label admin__field-label" for="page_button_text_size" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-button_text_size-label"><span>Button Text Font Size</span></label>
+            <div class="admin__field-control control">
+                <input id="page_button_text_size" name="button_text_size_<?php echo $i;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-button_text_size" value="" title="Button Text Font Size" class="input-text admin__control-text ignore-validate" type="text">                           
+			</div>
+        </div>   
+		
+		
+		 <div class="admin__field field field-button_text_color " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-button_text_color" style="display:none;" id="button_text_color_element_<?php echo $i;?>">
+            <label class="label admin__field-label" for="page_button_text_color" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-button_text_color-label"><span>Button Text Color</span></label>
+            <div class="admin__field-control control">
+                <input id="button_text_color_<?php echo $i;?>" name="button_text_color_<?php echo $i;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-button_text_color" value="" title="Button Text Color" class="input-text admin__control-text ignore-validate" type="text">                           
+			</div>
+        </div> 
+		<script>
+		
+		
+		require([
+		'jquery',
+		'jquery/colorpicker/js/colorpicker',
+		], function ($) {
+			'use strict';
+			console.log("required the colorpicker. Be free!");
+			var i="<?php echo $i;?>";
+			var $el = $("#button_text_color_"+i); 
+			$el.ColorPicker({				
+				onChange: function (hsb, hex, rgb) {					
+					$el.css("backgroundColor", "#" + hex).val("#" + hex);
+				}
+			});			
+		});
+		
+		
+		</script>	
+		
+		<div class="admin__field field field-button_bg_color " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-button_bg_color" style="display:none;" id="button_bg_color_element_<?php echo $i;?>">
+            <label class="label admin__field-label" for="page_button_bg_color" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-button_bg_color-label"><span>Button Background Color</span></label>
+            <div class="admin__field-control control">
+                <input id="button_bg_color_<?php echo $i;?>" name="button_bg_color_<?php echo $i;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-button_bg_color" value="" title="Button Background Color" class="input-text admin__control-text ignore-validate" type="text">                           
+			</div>
+        </div> 
+		<script>
+		
+		
+		require([
+		'jquery',
+		'jquery/colorpicker/js/colorpicker',
+		], function ($) {
+			'use strict';
+			console.log("required the colorpicker. Be free!");
+			var i="<?php echo $i;?>";
+			var $el = $("#button_bg_color_"+i); 
+			$el.ColorPicker({				
+				onChange: function (hsb, hex, rgb) {					
+					$el.css("backgroundColor", "#" + hex).val("#" + hex);
+				}
+			});			
+		});
+		</script>	
+		
+		
+		
+		
+        <div class="admin__field field field-image_effect " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-image-effect">
+            <label class="label admin__field-label" for="page_image_effect" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-image-effect-label"><span>Effect</span></label>
+            <div class="admin__field-control control">             
+				<select id="page_image_effect" name="image_effect_<?php echo $i;?>" title="Effect" class="select admin__control-select" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-image-effect" >
+				<?php 
+				foreach( $effect_arr as $key=>$option )
+				{    
+					?>
+					<option value='<?php echo $key; ?>'>
+					<?php echo $option; ?>
+					</option>
+					<?php
+				}?>						
+				</select>			   
+			</div>
+        </div>
+		
+		 <div class="admin__field field field-text_position" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-text_position">
+            <label class="label admin__field-label" for="page_text_position" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-text-position-label"><span>Text Position</span></label>
+            <div class="admin__field-control control">            
+			   <select id="page_text_position" name="text_position_<?php echo $i;?>" title="Text Position" class="select admin__control-select" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-text-position" >
+				<?php 
+				foreach( $text_position_arr as $key=>$option )
+				{    
+					?>
+					<option value='<?php echo $key; ?>' >
+					<?php echo $option; ?>
+					</option>
+					<?php
+				}?>						
+				</select>			
+			</div>
+        </div>	
+		
+		<div class="admin__field field field-external_url " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-external-url">
+            <label class="label admin__field-label" for="page_external_url" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-external-url-label"><span>Enable External URL</span></label>
+            <div class="admin__field-control control">
+                <select id="page_external_url_<?php echo $i ?>" name="external_url_<?php echo $i;?>" title="Enable External URL" class=" select admin__control-select" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-external-url" onchange="toggleValidateClass(this.value,<?php echo $i;?>)">
+					<option value="1">Yes</option>
+					<option value="0" selected="selected">No</option>
+				</select>
+            </div>
+        </div>
+		
+    
+        <div id="advertise_url_<?php echo $i+1;?>" class="admin__field field field-advertise_url " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-advertise-url">
+            <label class="label admin__field-label" for="page_advertise_url" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-advertise-url-label"><span>Url</span></label>
+            <div class="admin__field-control control">
+                <input id="page_advertise_url_<?php echo $i;?>" name="advertise_url_<?php echo $i;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-advertise-url" value="" title="Url" class="input-text admin__control-text" type="text">     
+			</div>
+        </div>
+		
+		
+		<div class="admin__field field field-filename image-upload" data-ui-id="layerednavigation-brands-edit-tab-brandinfo-fieldset-element-form-field-filename">
+            <label class="label admin__field-label" for="main_filename" data-ui-id="layerednavigation-brands-edit-tab-brandinfo-fieldset-element-file-filename-label"><span>Image</span></label>
+            <div class="admin__field-control control">
+                <input id="main_filename" name="filename_<?php echo $i;?>"  data-ui-id="layerednavigation-brands-edit-tab-brandinfo-fieldset-element-file-filename" value="" title="Image" class="input-file" type="file"> 
+			</div>
+        </div>
+        </div>
+<?php }
+?>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="magebees_today_deal" resource="default" engine="innodb" comment="Magebees Today Deal Deatils">
+    <column xsi:type="int" name="today_deal_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Today Deal ID"/>
+    <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Title"/>
+    <column xsi:type="text" name="description" nullable="true" comment="Description"/>
+    <column xsi:type="boolean" name="is_active" nullable="true" comment="Is_active"/>
+    <column xsi:type="smallint" name="sort_order" padding="6" unsigned="false" nullable="false" identity="false" comment="Sort_order"/>
+    <column xsi:type="varchar" name="stores" nullable="false" length="255" comment="Stores"/>
+    <column xsi:type="varchar" name="customer_group_ids" nullable="false" length="255" comment="Customer_group_ids"/>
+    <column xsi:type="datetime" name="from_date" on_update="false" nullable="true" comment="From_date"/>
+    <column xsi:type="datetime" name="to_date" on_update="false" nullable="true" comment="To_date"/>
+    <column xsi:type="smallint" name="timer_format" padding="6" unsigned="false" nullable="false" identity="false" comment="Timer_format"/>
+    <column xsi:type="text" name="layoutoptions" nullable="true" comment="Layoutoptions"/>
+    <column xsi:type="text" name="cond_serialize" nullable="true" comment="Cond_serialize"/>
+    <column xsi:type="varchar" name="unique_code" nullable="true" length="255" comment="Unique_code"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="today_deal_id"/>
+    </constraint>
+  </table>
+</schema>

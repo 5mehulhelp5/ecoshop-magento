@@ -1,0 +1,44 @@
+<?php
+/**
+ * Copyright © 2018 Magebees, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/* $block Magebees\CustomCartStyle\Block\MiniCart */
+?>
+
+<?php $helper = $this->getHelper(); ?>
+
+<?php if ($helper->enableCustomCart()) : ?>
+
+<?php
+$style = $helper->getMiniCartStyle();
+$is_auto_close = $helper->isAutoClosePopup() ? $helper->isAutoClosePopup() : false; 
+$popupAutoCloseTime = $helper->getAutoClosePopupTime() ? $helper->getAutoClosePopupTime() : 60; 
+$fly_cart_time = $helper->getFlyCartTime() ? $helper->getFlyCartTime() : 300; 
+$flycart_showing_time = $helper->getFlyCartCloseTime() ? $helper->getFlyCartCloseTime() : 5000; 
+$auto_close_flycart = $helper->isAutoCloseFooterCart() ? $helper->isAutoCloseFooterCart() : false; 
+$maxVisibleItems = 2;
+$continueShoppingLabel = __('Continue Shopping');
+$config = [
+    'optionUrl'     => $this->getUrl('quickview/index/view', ['ajaxcart_option' => 1]),
+    'miniCartStyle' => (int)$helper->getMiniCartStyle(),
+    'popupId'       => 'poco-minicart-popup',
+    'minicartMaxItemsVisible' => $maxVisibleItems,
+	'is_auto_close' => $is_auto_close,
+	'auto_close_time' => $popupAutoCloseTime,
+	'fly_cart_time' => $fly_cart_time,
+	'flycart_showing_time' => $flycart_showing_time,
+	'auto_close_flycart' => $auto_close_flycart,
+	'continue_shopping_label' => $continueShoppingLabel,
+];
+?>
+
+<script type="text/javascript">
+var ajaxShoppingCart = <?php echo json_encode($config) ?>;
+</script>
+<?php else : ?>
+<script type="text/javascript">
+var ajaxShoppingCart = {minicartMaxItemsVisible: 2};
+</script>
+<?php endif ?>

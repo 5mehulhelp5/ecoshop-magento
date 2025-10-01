@@ -1,0 +1,23 @@
+<?php 
+$archivePostsCollection = $block->getArchivePosts();
+if(count($archivePostsCollection)>0): 
+ksort($archivePostsCollection);
+$archivePostsCollection = array_reverse($archivePostsCollection);
+?>
+<div class="mb-block-archive mb-block" data-bind="scope: 'blog-archive'">
+	<div class="block-title"><strong><?php echo $block->escapeHtml('Archive'); ?> </strong></div>
+	<div class="mb-archive-list">
+		<ul>
+			<?php foreach ($archivePostsCollection as $key => $_archive): ?>
+			<?php foreach ($_archive as $ar_key => $_ar_value):?>	
+			<li class="mb-archive-item">
+				<a class="mb-item-link"	href="<?php echo $block->escapeHtml($_ar_value['url']); ?>" title="<?php echo $block->escapeHtml($_ar_value['title']); ?>">
+					<?php echo $block->escapeHtml($_ar_value['title']); ?>
+				</a>
+			</li>
+			<?php endforeach; ?>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+</div>
+<?php endif;?>

@@ -1,0 +1,18 @@
+<?php 
+$_product = $block->getProduct();
+if($_product):
+$product_sku_label = $block->getProductSkuLabel();
+$product_sku_separator = $block->getProductSkuSeparator();
+if($_product->getId()):
+?>
+    <div class="p_sku">
+        <?php if($product_sku_label): ?>
+            <span class="p_sku_label"><?php echo $product_sku_label;?></span>
+        <?php endif;?>
+            <span class="p_sku"><?php echo $_product->getSku();?></span>
+        <?php if($product_sku_separator): ?>
+            <span class="p_sku_seprator"><?php echo $product_sku_separator;?></span>
+        <?php endif;?>
+    </div>
+    <?php endif; ?>
+<?php endif; ?>

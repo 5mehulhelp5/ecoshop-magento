@@ -1,0 +1,35 @@
+<?php 
+$_product = $block->getProduct();
+if($_product):
+if ($_product->isSaleable()):
+$buyNowListProduct = $block->getBuyNowListProduct();
+$buyNowbuttonTitle = $block->getButtonTitle();
+$postParams = $buyNowListProduct->getAddToCartPostParams($_product);
+?>
+<div class="buynow-btn">
+								<form action="<?php /* @noEscape */ echo $postParams['action']; ?>"
+									  id="product_addtocart_form_<?php /* @noEscape */ echo $postParams['data']['product']; ?>"
+									  method="post">
+									<input type="hidden" 
+										   name="product"
+										   value="<?php /* @noEscape */ echo $postParams['data']['product']; ?>">
+									<input type="hidden"
+										   name="<?php /* @noEscape */ echo 'uenc'; ?>"
+										   value="<?php /* @noEscape */ echo $postParams['data']['uenc']; ?>">
+									<?php echo $block->getBlockHtml('formkey')?>
+									<button type="submit"
+											title="<?php echo $block->escapeHtml(__($buyNowbuttonTitle)); ?>"
+											class="action tocart buynow primary"
+											data-mage-init='
+											{
+												"Magebees_Buynow/js/buy-now": {
+													"form": "#product_addtocart_form_<?php echo $postParams['data']['product']; ?>"
+												}
+											}
+										'>
+										<span><?php /* @noEscape */ echo __($buyNowbuttonTitle) ?></span>
+									</button>
+								</form>
+</div>
+<?php endif; ?>
+<?php endif; ?>

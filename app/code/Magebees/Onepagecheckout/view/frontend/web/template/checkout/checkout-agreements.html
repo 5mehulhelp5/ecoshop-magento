@@ -1,0 +1,17 @@
+<div class="mbOpc-terms">
+<form data-role="checkout-agreements" method="post" class="magebees-checkout-form-wrapper" id="magebees-checkout-agreements-form">
+    <div class="checkout-agreements magebees-checkout-agreements-wrapper mageb-modal" data-bind="visible: isVisible">
+            <div class="checkout-agreement">
+				<input type="checkbox" id="termconditon" name="termconditon" /><span data-bind="html: checkboxTitle"></span>
+				<button type="button" class="action action-show primary mageb-button"
+                        data-bind="click: function(data, event) { return showContent(data, event) }">
+					<span data-bind="html: termtitle"></span>
+                </button>
+			</div>
+        <div class="magebees-checkout-agreements-modal" id="checkout-agreements-modal" data-bind="afterRender: initModal" style="display: none">
+            <h1 class="mageb-m-title checkout-agreements-item-title" data-bind="html: modalTitle"></h1>
+            <div class="magebees-checkout-agreements-item-content checkout-agreements-item-content" data-bind="html: modalContent"></div>
+        </div>
+    </div>
+</form>
+</div>

@@ -1,0 +1,22 @@
+<?php $_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$store_id = $_helper->getStoreId(); ?>
+
+
+<?php $enable = (bool)$_helper->getConfigValue('general','enabled','mbsocialsharing',$store_id); ?>
+<?php $show_under_cart = (bool)$_helper->getConfigValue('general','show_under_cart','mbsocialsharing',$store_id); ?>
+
+<?php if(($enable)&&($show_under_cart)):?>
+<div class="shareIcons">
+    <div class="label">
+        <?php echo __('Share:') ?>
+    </div>
+	<?php 
+		echo  $this->getLayout()->createBlock("Magebees\Socialsharing\Block\Socialsharing")
+		->setName('productsocialshare')
+		->setPage('under_cart')
+		->setPosition('under_cart')
+		->setType('inline')
+		->setTemplate("Magebees_Socialsharing::socialsharing.phtml")
+		->toHtml(); ?>
+</div>
+<?php endif; ?>

@@ -1,0 +1,298 @@
+<?php use Magento\Framework\App\Action\Action; ?>
+<?php 
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$helper = $this->helper('\Magebees\Testimonial\Helper\Data');
+$testimonial_config=$block->getTestimonialConfig();
+$enabled=$block->getEnabled();
+$collection=$block->getTestimonialCollection();
+if($collection) {
+	$testimonialCollection=$collection->getData(); 
+	}
+    else
+    {
+        $testimonialCollection='';
+    }
+$width=$block->getImageWidth()?$block->getImageWidth():'100'; 
+$height=$block->getImageHeight()?$block->getImageHeight():'100';
+
+$animation = $poco_helper->getThemeLayout('animation',$poco_helper->getStoreId())? true:false; 
+$animation_class = $animation?"wow animate__fadeIn":" ";
+$auto_play_slider=$block->getAutoplaySlider(); 
+if(!$auto_play_slider){
+	$auto_play_slider = false;
+} else {
+	$auto_play_slider = $block->getSliderSpeed()?$block->getSliderSpeed():"5000";
+	$auto_play_dealytime = $block->getSliderSpeed()?$block->getSliderSpeed():"5000";
+	
+}
+
+$display_arrow=$block->getShowNavArrow()?true:false; 
+$pagination=$block->getShowPagination()?true:false;
+$paginationtype=$block->getPaginationType();
+$pagination=$block->getShowPagination()?true:false;
+$auto_play_off=$block->getAutoplayoff()?true:false;
+$auto_height=$block->getSlideAutoHeight()?true:false;
+$auto_slide=$block->getAutoplaySlider()?true:false;
+$loop=$block->getInfiniteLoop()?true:false;
+$scrollbar=$block->getScrollbar()?true:false;
+$grabCursor=$block->getGrabCursor()?true:false;
+$items_per_slide = $block->getItemsPerSlide();
+$items_per_slide = $this->getData('wd_items_per_slide');
+
+$slide_mode = null;
+
+$sliderClass = $pagination?'swiper-wrapper pagination-on':'swiper-wrapper';
+if($this->getSlidemode()=="1"){
+	$items_per_slide = 1;
+	$slide_mode = 'vertical';
+	$auto_height= false;
+	$scrollbar=false;
+	$display_arrow=false;
+}else if($this->getSlidemode()=="2") {
+	$slide_mode = 'fade';
+	$items_per_slide = 1;
+}
+$random_number = rand();
+$sliderId = 'magebees_testimonial_slider-style-2'.$random_number;
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); 
+$rtl = $poco_helper->getThemeLayout('rtl',$poco_helper->getStoreId())?true:false;
+$bg_color = $this->getWdBgcolor();
+$bg_image = $poco_helper->getMediaUrl().$this->getWdBgimage();
+
+if($this->getWdBgimage()){
+	$bg_image_url = $poco_helper->getMediaUrl().$this->getWdBgimage();
+    $bg_image = 'background-image: url('.$bg_image_url.'); background-attachment: fixed; background-repeat: no-repeat; background-size: 100%; background-position: center center;';
+}else{
+	$bg_image = '';
+}
+$spacing_class = '';
+$spacing_class .= $this->getWdSpacing()?'sections-spacing ':'';
+$spacing_class .= $this->getWdBottomSpacing()?'section-bottom-spacing':'';
+$show_viewall = $this->getData('wd_viewall');
+$viewall_text = $this->getData('wd_viewall_text');
+$short_desc = $this->getData('wd_short_desc');
+$swiper_data_init = array();
+		$swiper_data_init['slider_id'] = $sliderId;
+		$swiper_data_init['autoHeight'] = $auto_height;
+		$swiper_data_init['slidesPerView'] = $items_per_slide;
+		$swiper_data_init['spaceBetween'] = 30;
+		$swiper_data_init['a11y'] = false;
+		$swiper_data_init['lazy']['loadPrevNext'] = true;
+		$swiper_data_init['lazy']['loadPrevNextAmount'] = $items_per_slide;
+		$swiper_data_init['slidemode']['loadPrevNextAmount'] = $this->getSlidemode();
+		if($slide_mode == 'fade'):
+		$swiper_data_init['speed'] = 600;
+		$swiper_data_init['effect'] = 'fade';
+		elseif($slide_mode == 'vertical'):
+		$swiper_data_init['direction'] = 'vertical';
+		$swiper_data_init['mousewheel'] = true;
+		
+		endif;
+		$swiper_data_init['loop'] = $loop;
+		$swiper_data_init['grabCursor'] = $grabCursor;
+		$swiper_data_init['centeredSlides'] = true;
+		 if($block->getAutoplaySlider()):
+			$swiper_data_init['autoplay']['delay'] = $auto_play_dealytime;
+			$swiper_data_init['autoplay']['disableOnInteraction'] = false;
+			$swiper_data_init['autoplay']['pauseOnMouseEnter'] = $auto_play_off;
+		endif;
+		if($scrollbar):
+		$swiper_data_init['scrollbar']['el'] = "#swiper-scrollbar-".$random_number;
+		$swiper_data_init['scrollbar']['hide'] = false;
+		endif;
+		if($paginationtype=='default'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['paginationtype'] = $paginationtype;
+		elseif($paginationtype=='dynamic'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['paginationtype'] = $paginationtype;
+		 elseif($paginationtype=='progress'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['paginationtype'] = $paginationtype;
+		elseif($paginationtype=='fraction'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['paginationtype'] = $paginationtype;
+		elseif($paginationtype=='custom'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['paginationtype'] = $paginationtype;
+		endif;
+		if($display_arrow):
+		$swiper_data_init['navigation']['nextEl'] = "#swiper-button-next-".$random_number;
+		$swiper_data_init['navigation']['prevEl'] = "#swiper-button-prev-".$random_number;
+		endif;
+		if($items_per_slide==1):
+		$swiper_data_init['breakpoints']['0']['slidesPerView'] = 1;
+		$swiper_data_init['breakpoints']['0']['spaceBetween'] = 0;
+		$swiper_data_init['breakpoints']['480']['slidesPerView'] = 1;
+		$swiper_data_init['breakpoints']['480']['spaceBetween'] = 0;
+		$swiper_data_init['breakpoints']['639']['slidesPerView'] = 1;
+		$swiper_data_init['breakpoints']['639']['spaceBetween'] = 20;
+		$swiper_data_init['breakpoints']['768']['slidesPerView'] = 1;
+		$swiper_data_init['breakpoints']['768']['spaceBetween'] = 30;
+		$swiper_data_init['breakpoints']['1200']['slidesPerView'] = $items_per_slide;
+		$swiper_data_init['breakpoints']['1200']['spaceBetween'] = 30;
+		else:
+		$swiper_data_init['breakpoints']['0']['slidesPerView'] = 1;
+		$swiper_data_init['breakpoints']['0']['spaceBetween'] = 0;
+		$swiper_data_init['breakpoints']['480']['slidesPerView'] = 1;
+		$swiper_data_init['breakpoints']['480']['spaceBetween'] = 0;
+		$swiper_data_init['breakpoints']['639']['slidesPerView'] = 2;
+		$swiper_data_init['breakpoints']['639']['spaceBetween'] = 20;
+		$swiper_data_init['breakpoints']['768']['slidesPerView'] = 2;
+		$swiper_data_init['breakpoints']['768']['spaceBetween'] = 30;
+		$swiper_data_init['breakpoints']['1200']['slidesPerView'] = $items_per_slide;
+		$swiper_data_init['breakpoints']['1200']['spaceBetween'] = 30;
+		endif;
+		
+
+ ?>
+
+<?php if($testimonialCollection && $enabled):?>
+<?php if(($bg_image)||($bg_color)): ?>
+<style type="text/css">
+	<?php echo '#testimonial-'.$random_number. " { ".$bg_image."; background-color: ".$bg_color."; } " ?>
+	
+</style>
+<?php endif; ?>
+
+<div class="mageTestimonials <?php echo $spacing_class ?>" id="<?php echo 'testimonial-'.$random_number;?>">
+    <div class="section-title <?php echo $animation_class ?>" <?php if($animation): ?> data-wow-delay="0.3s" <?php endif;?>>
+    	<h2 class="title"><?php $title=$block->getTestimonialTitle();
+			if($title!='0') { 
+			echo __(html_entity_decode($block->getTestimonialTitle())); 
+			}
+			
+			else{ echo('Customer Testimonial');} ?>
+		</h2>
+		<?php if($short_desc!=''): ?>
+			<div class="sort-details"><p class="sort-detail">
+			<?php echo __(html_entity_decode($short_desc)); ?></p></div>
+		<?php endif; ?>
+    </div>
+	
+    <div class="block-content <?php echo $animation_class ?>" <?php if($animation): ?> data-wow-delay="0.5s" <?php endif;?>>      
+        <div id="<?php echo $sliderId;?>" data-swiper='<?php echo json_encode($swiper_data_init);?>'  class="swiper swiper-container <?php if($block->getShowPagination()): echo ' show-pagination '; endif; ?>">
+            <?php 
+            $default_image=$this->getViewFileUrl("Magebees_Testimonial::images/no_profile.png");?>
+           <div class="<?php echo $sliderClass; ?> <?php if($grabCursor): ?>grab-cursor<?php endif;?>" <?php if($rtl): ?> dir="rtl" <?php endif;?>>
+		   <?php foreach($testimonialCollection as $testimonial):?>          
+			<div class="swiper-slide">	
+                <?php if($this->getShowVideo()):?>
+                    <?php if($testimonial['video_url']): ?>
+                        <div id="video" class="mageTmVideo">
+                        	<div class="videoWraper">
+								<?php $link = $testimonial['video_url'];				
+                                      $video = explode("?v=", $link);
+							$video_id = '';
+							if(isset($video[1])){
+								$video_id = $video[1];
+							}
+							$autoplay = 0;
+							if($this->getAutoplayVideo()){
+								$autoplay = 1;
+							}
+                            ?>
+							<?php if (stripos($link,"embed") !== false) :?>
+									<iframe src="<?php echo $link."?autoplay=".$autoplay; ?>&rel=0&modestbranding=1&autohide=1&showinfo=0&controls=0" frameborder="0" width="100%" height="400" allowFullScreen></iframe>
+								<?php else: ?>
+									<iframe src="https://www.youtube.com/embed/<?php echo $video_id."?autoplay=".$autoplay; ?>&rel=0&modestbranding=1&autohide=1&showinfo=0&controls=0" frameborder="0" width="100%" height="400" allowFullScreen></iframe>
+								<?php endif; ?>
+                            </div>
+                    	</div>
+                    <?php endif;?>
+                <?php endif;?>		
+
+				<?php if($this->getShowProfile()):?>
+					<?php if($testimonial['image']):?>
+						<?php $img_path=$helper->checkImgExist($testimonial['image'],$width,$height);?>
+					<?php endif;?>
+                        <div class="clientPic"><img class="swiper-lazy" loading="lazy" src="<?php if($testimonial['image']){ echo $img_path; } else { echo $default_image; }?>" width="<?php echo $width."px" ?>" height="<?php echo $height."px" ?>" alt="" />
+						<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+						</div>
+                    <?php endif;?>
+				 <div class="mageTmClient">
+                    <div class="clientDetails">
+                        <?php if($this->getShowRating()):?>
+                        <?php if($testimonial['rating']):?>                   	
+                            <div id="ratings" class="mageTmRating">
+                                <?php $rating =$testimonial['rating'];
+                                $src=$this->getViewFileUrl("Magebees_Testimonial::images/rating.png");
+                                $src_empty=$this->getViewFileUrl("Magebees_Testimonial::images/empty_rating.png");
+                                $i=0;
+                                while($i<5){
+                                    if($i<$rating){ ?>
+                                        <img src= "<?php echo $src ?>" height="15" width="15" alt="Ratings" loading="lazy" />
+                                    <?php } else{ ?>
+                                        <img src= "<?php echo $src_empty ?>" height="15" width="15" alt="Ratings" loading="lazy" />
+                                    <?php }
+                                    $i++;
+                                }?>
+                            </div>
+                        <?php endif; ?>
+                        <?php endif;?>
+                    </div>
+                </div>
+                <div class="magetmQuotes">				
+				<?php $length=$this->getContentLength(); $testimonialcontent=$testimonial['testimonial']; 
+				echo $this->limit_word($testimonialcontent,$length);?>                    
+                </div>                
+                <div class="mageTmClient">
+                    <div class="clientDetails">
+                        <div class="clientname">
+                        	<b><?php echo $testimonial['name']; ?>, </b>
+                            <span class="mageTmComp">
+                        	<?php if(($this->getShowWebsite())&&($testimonial['website'])&&($testimonial['company'])):?>
+                                <a href="<?php echo $testimonial['website']; ?>" target="_blank"><?php echo $testimonial['company']; ?></a>
+                                <?php else:?>
+                                 <?php if($this->getShowCompany()):?>
+                                    <?php echo $testimonial['company']; ?>
+                                <?php endif;?>
+							<?php endif;?>
+                           	</span>
+                        </div>
+                        
+                        <?php if($this->getShowEmail()):?>
+                            <div class="mageTmEmail"><i title="Email"></i> <?php echo $testimonial['email']; ?>
+                            </div>
+                        <?php endif;?>
+                        
+                        <?php if(($this->getShowAddress())&&($testimonial['address'])):?>
+                            <div class="mageTmAddress"><i title="Address"></i> <?php echo $testimonial['address']; ?>
+                            </div>
+                        <?php endif;?>
+                        
+                        <?php if($this->getShowCreatedate()):?>
+                            <div class="mageTmDate"><i title="Posted on"></i> <?php echo $testimonial['inserted_date']; ?>
+                            </div>
+                        <?php endif;?>
+                        
+                       
+                    </div>
+                </div>
+            </div>	          
+             <?php endforeach; ?>	
+		</div>	          
+			 <?php if($block->getShowPagination()): ?>	
+			 <!-- Add Pagination -->		
+			 <div id="<?php echo "swiper-pagination-".$random_number;?>" class="swiper-pagination"></div>
+			 <?php endif; ?>			
+			 <?php if($display_arrow): ?>	
+			 <!-- Add Arrows -->		
+			 <div id="<?php echo "swiper-button-next-".$random_number;?>" class="swiper-button-next"></div>
+			 <div id="<?php echo "swiper-button-prev-".$random_number;?>" class="swiper-button-prev"></div>
+			 <?php endif; ?>		
+			  <?php if($scrollbar): ?>	
+			 <!-- Add Scrollbar -->		
+			 <div id="<?php echo "swiper-scrollbar-".$random_number;?>" class="swiper-scrollbar"></div>
+			 <?php endif; ?>	
+        </div>
+		<?php if($show_viewall): ?>
+        	<div class="button-set mt-6 md-mt-3 text-center <?php echo $animation_class ?>" <?php if($animation): ?> data-wow-delay="0.7s" <?php endif;?>>
+				<a href="<?php /* @escapeNotVerified */ echo $this->getUrl('testimonial/'); ?>" id="view_all" class="action primary"><span><?php echo($viewall_text); ?></span></a>
+			</div>
+		<?php endif; ?>
+    </div>
+</div><!--mageTestimonials-->
+<?php endif; ?>
+
+		

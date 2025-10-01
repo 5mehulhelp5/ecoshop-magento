@@ -1,0 +1,10 @@
+<ul class="navigation">
+<?php 
+$mail_helper = $this->helper('Magebees\EmailEditor\Helper\Data');
+
+$cat_arr=$mail_helper->getCategoryMenu();
+foreach($cat_arr as $key=>$val)
+{?>
+	<li><a href="<?php echo $val->getUrl();?>"><span><?php echo $val->getName();?></span></a></li>
+<?php }?>
+</ul>

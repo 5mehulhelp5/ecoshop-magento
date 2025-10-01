@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<ajaxinfinitescroll>			
+			<setting>			
+				<enable>1</enable>									
+				<loading_type>0</loading_type>		
+				<label_prev_button>Load Previous</label_prev_button>							
+				<label_next_button>Load Next</label_next_button>							
+				<button_style>background-color:#FF570F;color:#FFFFFF;</button_style>							
+				<threshold>1</threshold>							
+				<show_page_no>1</show_page_no>							
+				<text_no_more>No more pages left to load.</text_no_more>							
+				<enabled_top>1</enabled_top>														
+				<product_container>.products.products-grid,.products.products-list</product_container>														
+			</setting>	
+		</ajaxinfinitescroll>
+    </default>
+</config>

@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="magebees_blog_post" resource="default" engine="innodb" comment="Magebees Blog Post Table">
+    <column xsi:type="int" name="post_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Post ID"/>
+    <column xsi:type="varchar" name="title" nullable="true" length="255" comment="Post Title"/>
+    <column xsi:type="text" name="meta_title" nullable="true" comment="Post Meta Title"/>
+    <column xsi:type="text" name="meta_keywords" nullable="true" comment="Post Meta Keywords"/>
+    <column xsi:type="text" name="meta_description" nullable="true" comment="Post Meta Description"/>
+    <column xsi:type="varchar" name="identifier" nullable="true" length="100" comment="Post String Identifier"/>
+    <column xsi:type="varchar" name="og_title" nullable="true" length="255" comment="Post String Identifier"/>
+    <column xsi:type="varchar" name="og_description" nullable="true" length="255" comment="Post String Identifier"/>
+    <column xsi:type="varchar" name="og_img" nullable="true" length="255" comment="Post String Identifier"/>
+    <column xsi:type="varchar" name="og_type" nullable="true" length="255" comment="Post String Identifier"/>
+    <column xsi:type="varchar" name="content_heading" nullable="true" length="255" comment="Post Content Heading"/>
+    <column xsi:type="mediumtext" name="content" nullable="true" comment="Post Content"/>
+    <column xsi:type="timestamp" name="creation_time" on_update="false" nullable="true" comment="Post Creation Time"/>
+    <column xsi:type="timestamp" name="update_time" on_update="false" nullable="true" comment="Post Modification Time"/>
+    <column xsi:type="timestamp" name="publish_time" on_update="false" nullable="true" comment="Post Publish Time"/>
+    <column xsi:type="int" name="save_as_draft" padding="11" unsigned="false" nullable="true" identity="false" comment="Save As Draft"/>
+    <column xsi:type="smallint" name="is_active" padding="6" unsigned="false" nullable="false" identity="false" default="1" comment="Is Post Active"/>
+    <column xsi:type="smallint" name="include_in_recent" padding="6" unsigned="false" nullable="false" identity="false" default="1" comment="Include In Recent"/>
+    <column xsi:type="smallint" name="position" padding="6" unsigned="false" nullable="false" identity="false" default="1" comment="Position"/>
+    <column xsi:type="text" name="featured_img" nullable="false" comment="Featured Img"/>
+    <column xsi:type="int" name="author_id" padding="11" unsigned="false" nullable="false" identity="false" default="1" comment="Author Id"/>
+    <column xsi:type="text" name="page_layout" nullable="false" comment="Page Layout"/>
+    <column xsi:type="text" name="layout_update_xml" nullable="false" comment="Layout Update Xml"/>
+    <column xsi:type="text" name="custom_theme" nullable="false" comment="Custom Theme"/>
+    <column xsi:type="text" name="custom_layout" nullable="false" comment="Custom Layout"/>
+    <column xsi:type="text" name="custom_layout_update_xml" nullable="false" comment="Custom Layout Update Xml"/>
+    <column xsi:type="date" name="custom_theme_from" comment="Custom Theme From"/>
+    <column xsi:type="date" name="custom_theme_to" comment="Custom Theme To"/>
+    <column xsi:type="text" name="media_gallery" nullable="false" comment="Media Gallery "/>
+    <column xsi:type="text" name="secret" nullable="false" comment="Post Secret"/>
+    <column xsi:type="int" name="views_count" padding="11" unsigned="false" nullable="false" identity="false" comment="Post View Count"/>
+    <column xsi:type="int" name="is_recent_posts_skip" padding="11" unsigned="false" nullable="false" identity="false" comment="Skip Recent Post"/>
+    <column xsi:type="text" name="short_content" nullable="false" comment="Post Short Content"/>
+    <column xsi:type="text" name="customer_group" nullable="false" comment="Customer Group"/>
+    <column xsi:type="text" name="store_id" nullable="false" comment="Post Store Id"/>
+    <column xsi:type="varchar" name="category_ids" nullable="true" length="255" comment="Category Ids"/>
+    <column xsi:type="varchar" name="tag_ids" nullable="true" length="255" comment="Tag Ids"/>
+    <column xsi:type="varchar" name="products_id" nullable="true" length="255" comment="Products Ids"/>
+    <column xsi:type="varchar" name="related_post_ids" nullable="true" length="255" comment="Related Post Ids"/>
+    <column xsi:type="varchar" name="is_featured" nullable="false" length="255" comment="Is Featured"/>
+    <column xsi:type="int" name="is_imported" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="Is Imported From Wordpress"/>
+    <column xsi:type="int" name="term_id" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="Term Id From Wordpress"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="post_id"/>
+    </constraint>
+    <index referenceId="MAGEBEES_BLOG_POST_IDENTIFIER" indexType="btree">
+      <column name="identifier"/>
+    </index>
+    <index referenceId="FTI_28C2DF8069CE7F7A19D86A857579FB63" indexType="fulltext">
+      <column name="title"/>
+      <column name="meta_keywords"/>
+      <column name="meta_description"/>
+      <column name="identifier"/>
+      <column name="content"/>
+    </index>
+  </table>
+  <table name="magebees_blog_category" resource="default" engine="innodb" comment="Magebees Blog Category Table">
+    <column xsi:type="int" name="category_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Category ID"/>
+    <column xsi:type="varchar" name="title" nullable="true" length="255" comment="Category Title"/>
+    <column xsi:type="text" name="meta_title" nullable="true" comment="Category Meta Title"/>
+    <column xsi:type="text" name="meta_keywords" nullable="true" comment="Category Meta Keywords"/>
+    <column xsi:type="text" name="meta_description" nullable="true" comment="Category Meta Description"/>
+    <column xsi:type="varchar" name="identifier" nullable="true" length="100" comment="Category String Identifier"/>
+    <column xsi:type="varchar" name="content_heading" nullable="true" length="255" comment="Category Content Heading"/>
+    <column xsi:type="mediumtext" name="content" nullable="true" comment="Category Content"/>
+    <column xsi:type="varchar" name="path" nullable="true" length="255" comment="Category Path"/>
+    <column xsi:type="smallint" name="position" padding="6" unsigned="false" nullable="false" identity="false" comment="Category Position"/>
+    <column xsi:type="smallint" name="posts_sort_by" padding="6" unsigned="false" nullable="false" identity="false" comment="Post Sort By"/>
+    <column xsi:type="smallint" name="include_in_menu" padding="6" unsigned="false" nullable="false" identity="false" comment="Include In Menu"/>
+    <column xsi:type="smallint" name="is_active" padding="6" unsigned="false" nullable="false" identity="false" default="1" comment="Is Category Active"/>
+    <column xsi:type="smallint" name="display_mode" padding="6" unsigned="false" nullable="false" identity="false" default="1" comment="Display Mode"/>
+    <column xsi:type="text" name="page_layout" nullable="false" comment="Page Layout"/>
+    <column xsi:type="text" name="layout_update_xml" nullable="false" comment="Page Layout XML"/>
+    <column xsi:type="text" name="custom_theme" nullable="false" comment="Custom Theme"/>
+    <column xsi:type="text" name="custom_layout" nullable="false" comment="Custom layout"/>
+    <column xsi:type="text" name="custom_layout_update_xml" nullable="false" comment="Custom layout Update Xml"/>
+    <column xsi:type="date" name="custom_theme_from" comment="Custom Theme From"/>
+    <column xsi:type="date" name="custom_theme_to" comment="Custom Theme To"/>
+    <column xsi:type="varchar" name="store_id" nullable="true" length="255" comment="Store Id"/>
+    <column xsi:type="varchar" name="customer_group" nullable="true" length="255" comment="Customer Group"/>
+    <column xsi:type="smallint" name="parent_category_id" padding="6" unsigned="false" nullable="true" identity="false" comment="Parent Category Id"/>
+    <column xsi:type="int" name="is_imported" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="Is Imported From Wordpress"/>
+    <column xsi:type="int" name="term_id" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="Term Id From Wordpress"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="category_id"/>
+    </constraint>
+    <index referenceId="MAGEBEES_BLOG_CATEGORY_IDENTIFIER" indexType="btree">
+      <column name="identifier"/>
+    </index>
+    <index referenceId="FTI_1632428897C8F78FA65AC2D4A5AB38CC" indexType="fulltext">
+      <column name="title"/>
+      <column name="meta_keywords"/>
+      <column name="meta_description"/>
+      <column name="identifier"/>
+      <column name="content"/>
+    </index>
+  </table>
+  <table name="magebees_blog_tag" resource="default" engine="innodb" comment="Magebees Blog Tag Table">
+    <column xsi:type="int" name="tag_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Tag ID"/>
+    <column xsi:type="varchar" name="title" nullable="true" length="255" comment="Tag Title"/>
+    <column xsi:type="text" name="meta_title" nullable="true" comment="Tag Meta Title"/>
+    <column xsi:type="text" name="meta_keywords" nullable="true" comment="Tag Meta Keywords"/>
+    <column xsi:type="text" name="meta_description" nullable="true" comment="Tag Meta Description"/>
+    <column xsi:type="text" name="meta_robots" nullable="true" comment="Tag Meta Robots"/>
+    <column xsi:type="varchar" name="identifier" nullable="true" length="100" comment="Tag String Identifier"/>
+    <column xsi:type="varchar" name="page_layout" nullable="true" length="100" comment="Tag String Identifier"/>
+    <column xsi:type="smallint" name="is_active" padding="6" unsigned="false" nullable="false" identity="false" default="1" comment="Is Category Active"/>
+    <column xsi:type="text" name="content" nullable="false" comment="Content"/>
+    <column xsi:type="text" name="layout_update_xml" nullable="false" comment="Page Layout"/>
+    <column xsi:type="text" name="custom_theme" nullable="false" comment="Custom Theme"/>
+    <column xsi:type="text" name="custom_layout" nullable="false" comment="Custom layout"/>
+    <column xsi:type="text" name="custom_layout_update_xml" nullable="false" comment="Custom layout Update Xml"/>
+    <column xsi:type="date" name="custom_theme_from" comment="Custom Theme From"/>
+    <column xsi:type="date" name="custom_theme_to" comment="Custom Theme To"/>
+    <column xsi:type="int" name="is_imported" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="Is Imported From Wordpress"/>
+    <column xsi:type="int" name="term_id" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="Term Id From Wordpress"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="tag_id"/>
+    </constraint>
+  </table>
+  <table name="magebees_blog_post_like_dislike" resource="default" engine="innodb" comment="Magebees Blog Post Like Dislike">
+    <column xsi:type="int" name="like_dislike_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Like DisLike ID"/>
+    <column xsi:type="int" name="post_id" padding="11" unsigned="false" nullable="false" identity="false" comment="Post ID"/>
+    <column xsi:type="int" name="store_id" padding="11" unsigned="false" nullable="false" identity="false" comment="Store ID"/>
+    <column xsi:type="int" name="customer_id" padding="11" unsigned="false" nullable="false" identity="false" comment="Customer ID"/>
+    <column xsi:type="text" name="system_ip" nullable="false" comment="System Ip"/>
+    <column xsi:type="int" name="postlike" padding="11" unsigned="false" nullable="false" identity="false" comment="Like"/>
+    <column xsi:type="int" name="postdislike" padding="11" unsigned="false" nullable="false" identity="false" comment="DisLike"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="like_dislike_id"/>
+    </constraint>
+  </table>
+  <table name="magebees_blog_url_rewrite" resource="default" engine="innodb" comment="Magebees Blog URL Rewrite">
+    <column xsi:type="int" name="url_id" padding="10" unsigned="true" nullable="false" identity="true" comment="URL ID"/>
+    <column xsi:type="text" name="old_url" nullable="false" comment="Old Url"/>
+    <column xsi:type="text" name="new_url" nullable="false" comment="New Url"/>
+    <column xsi:type="text" name="type" nullable="false" comment="Type"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="url_id"/>
+    </constraint>
+  </table>
+  <table name="magebees_blog_comment" resource="default" engine="innodb" comment="Magebees Blog Comment Table">
+    <column xsi:type="int" name="comment_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Comment ID"/>
+    <column xsi:type="int" name="parent_id" padding="11" unsigned="false" nullable="true" identity="false" comment="Parent Id"/>
+    <column xsi:type="int" name="post_id" padding="11" unsigned="false" nullable="true" identity="false" comment="Post Id"/>
+    <column xsi:type="int" name="customer_id" padding="11" unsigned="false" nullable="true" identity="false" comment="Customer Id"/>
+    <column xsi:type="int" name="admin_id" padding="11" unsigned="false" nullable="true" identity="false" comment="Admin Id"/>
+    <column xsi:type="int" name="status" padding="11" unsigned="false" nullable="true" identity="false" comment="Status"/>
+    <column xsi:type="text" name="author_type" nullable="true" comment="Author Type"/>
+    <column xsi:type="text" name="author_nickname" nullable="true" comment="Author NickName"/>
+    <column xsi:type="text" name="author_email" nullable="true" comment="Author Email"/>
+    <column xsi:type="text" name="text" nullable="true" comment="Text"/>
+    <column xsi:type="date" name="creation_time" comment="Creation Time"/>
+    <column xsi:type="date" name="update_time" comment="Content"/>
+    <column xsi:type="int" name="is_imported" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="Is Imported From Wordpress"/>
+    <column xsi:type="int" name="wp_comment_id" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="Wordpress Comment Id From Wordpress"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="comment_id"/>
+    </constraint>
+  </table>
+</schema>

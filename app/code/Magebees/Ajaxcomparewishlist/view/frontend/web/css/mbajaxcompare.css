@@ -1,0 +1,37 @@
+.mbcomparemodalpopup.modal-popup.modal-slide .modal-header,
+.customer-popup-ajaxwishlist.modal-popup.modal-slide .modal-header,
+.modal-popup_ajaxwishlist_magebees.modal-popup.modal-slide .modal-header { padding: 0 !important; }
+.mbcomparemodalpopup .modal-footer,
+.modal-popup_ajaxwishlist_magebees .modal-footer { display: none !important; }
+.mbcomparemodalpopup.modal-popup .modal-inner-wrap,
+.modal-popup_ajaxwishlist_magebees .modal-inner-wrap { width: 100%; max-width: 400px; text-align: center; }
+.customer-popup-ajaxwishlist .modal-inner-wrap { width: 100%; max-width: 470px; }
+.mbcomparemodalpopup.modal-popup.modal-slide .action-close:before,
+.customer-popup-ajaxwishlist.modal-popup.modal-slide .action-close:before,
+.modal-popup_ajaxwishlist_magebees.modal-popup.modal-slide .action-close:before { font-size: 14px; line-height: 18px; }
+.mbpopupbox a { display: block; }
+.mbpopupbox .mbproname { font-size: 16px; font-weight: 600; margin: 10px 0 20px; }
+.mbsuccessmsg { font-size: 14px; font-weight: 600; margin: 0 0 20px; line-height: normal; background-color: #eff4ed; padding: 10px; color: #196c01; border-radius: 4px; }
+
+.customer-popup-ajaxwishlist .image-system-wishlist { text-align: center; }
+.customer-popup-ajaxwishlist .fieldset.login .field.note { font-size: 16px; font-weight: 600; margin-top: 15px; text-align: center; }
+.customer-popup-ajaxwishlist .fieldset.login .secondary { display: block; margin-top: 10px; }
+.customer-popup-ajaxwishlist .fieldset.login .actions-toolbar .secondary { display: inline-block; margin-top: 0; }
+.customer-popup-ajaxwishlist .block-customer-login { margin-bottom: 0; }
+
+.customer-popup-login._disabled { display: none; }
+
+@media (max-width: 768px) {
+    .mbcomparemodalpopup.modal-popup .modal-inner-wrap,
+    .modal-popup_ajaxwishlist_magebees.modal-popup .modal-inner-wrap,
+    .customer-popup-ajaxwishlist .modal-inner-wrap { width: auto; max-width: inherit; }
+}
+@media (max-width: 480px) {
+    .mbcomwishbtns .action { width: 100%; margin-bottom: 10px; }
+    .mbcomparemodalpopup.modal-popup.modal-slide .action-close,
+    .customer-popup-ajaxwishlist.modal-popup.modal-slide .action-close,
+    .modal-popup_ajaxwishlist_magebees.modal-popup.modal-slide .action-close { margin: 8px; }
+    .mbcomparemodalpopup.modal-popup.modal-slide .action-close:before,
+    .customer-popup-ajaxwishlist.modal-popup.modal-slide .action-close:before,
+    .modal-popup_ajaxwishlist_magebees.modal-popup.modal-slide .action-close:before { font-size: 11px; line-height: 15px; }
+}

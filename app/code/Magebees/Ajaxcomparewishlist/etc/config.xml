@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <magebees_ajaxcomparewishlist>
+            <general>
+                <enabledcompare>1</enabledcompare>
+                <comparemsg>You added this product to the comparison list</comparemsg>
+                <popuptime>10</popuptime>
+            </general>
+			<ajaxwishgeneral>
+                <enabledwish>1</enabledwish>
+                <wishmessage>You added this product to the wish list</wishmessage>
+                <popupwishtime>10</popupwishtime>
+            </ajaxwishgeneral>
+        </magebees_ajaxcomparewishlist>
+    </default>
+</config>

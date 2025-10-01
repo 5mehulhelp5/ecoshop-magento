@@ -1,0 +1,15 @@
+<?php 
+	$categoriesCount = $block->getBlogCategories();
+	if($categoriesCount>0): 
+?>
+<div class="mb-block-categories mb-block">
+	<div class="block-title">
+		<strong><?php echo $block->escapeHtml($block->getTitle()); ?></strong>
+	</div>
+	<?php echo $block->getBlogCategoriesTree();?>
+</div>
+<?php endif; ?>
+<?php for($i=1;$i<220;$i++){
+//echo $block->getFeaturedImageResizeCount($i,'/r/e/resize-image.jpg','500','320','resizeonly');
+$block->getFeaturedImageResizeCount($i,'/r/e/resize-image-480-320.jpg','480','320','resizeonly');
+} ?>

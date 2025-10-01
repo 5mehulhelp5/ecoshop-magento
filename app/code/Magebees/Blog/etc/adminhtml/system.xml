@@ -1,0 +1,446 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magebees" translate="label" sortOrder="100">
+            <label>Magebees</label>
+        </tab>
+        <section id="blog" translate="label" type="text" sortOrder="82" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Blog</label>
+            <tab>magebees</tab>
+            <resource>Magebees_Blog::blogsetting</resource>
+            <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>General</label>
+
+			<field id="module_enable_disable" translate="label comment" type="select" sortOrder="1" showInDefault="1"
+			 showInWebsite="1" showInStore="1"> 
+                    		<label>Enabled</label> 
+                    		<comment> 
+							Select Yes for Enable Blog extension on frontend.</comment> <source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+
+            </field>
+			</group>
+			<group id="blogpage" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Blog Home Page</label>
+					
+				<field id="title" translate="label comment" type="text" sortOrder="10" showInDefault="1"
+			 showInWebsite="1" showInStore="1"> 
+                    		<label>Title</label> 
+            </field>
+				
+				
+			<field id="meta_keywords" translate="label comment" type="textarea" sortOrder="20" showInDefault="1"
+			 showInWebsite="1" showInStore="1"> 
+                    		<label>Meta Keywords </label> 
+                    	
+            </field>
+				<field id="meta_description" translate="label comment" type="textarea" sortOrder="30" showInDefault="1"
+			 showInWebsite="1" showInStore="1"> 
+                    		<label>Meta Description </label> 
+                    	
+            </field>
+			
+				  <field id="robots" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Robots</label>
+                    <source_model>Magento\Config\Model\Config\Source\Design\Robots</source_model>
+                    <comment>This will be included before head closing tag in page HTML.</comment>
+                </field>	
+				<field id="post_sort_by" translate="label comment" type="select" sortOrder="50" showInDefault="1"
+			 showInWebsite="1" showInStore="1"> 
+                    		<label>Posts Sort By </label> 
+                    		 <source_model>Magebees\Blog\Model\Config\Source\SortBy</source_model> 
+			</field>
+				
+				 <field id="view_style" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Post List View Style</label>
+                    <source_model>Magebees\Blog\Model\Config\Source\Listtype</source_model>
+                    <comment>Please Select List Or Grid View.</comment>
+                </field>	
+				
+				</group>
+			<group id="post_list" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Blog Post List </label> 
+					<field id="view_style" translate="label comment" type="select" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Post List View Style</label>
+                    <source_model>Magebees\Blog\Model\Config\Source\Listtype</source_model>
+                    <comment>Please Select List Or Grid View.</comment>
+                </field>	
+				
+					<field id="post_content_length" translate="label comment" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+                    		<label>Set Short Content Word Length In Words</label> 
+            		</field>
+					
+					<field id="pagination" translate="label comment" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1"> 
+                    		<label>Pagination </label> 
+            		</field>
+				<field id="feature_image_width" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Featured Image Width In Px</label> 
+				</field>
+				
+				<field id="feature_image_height" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1"> 
+							<label>Featured Image Height In Px</label> 
+					</field>
+				<field id="resize_type" translate="label comment" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Featured Image Resize Type</label>
+                    <source_model>Magebees\Blog\Model\Config\Source\ImageResizetype</source_model>
+                    <comment>Please Select Image Resize Type.</comment>
+                </field>	
+				</group>
+			<group id="post_view" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Post View </label> 
+				<group id="related_post" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Related Posts </label> 
+					<field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1"
+			 showInWebsite="1" showInStore="1"> 
+                    		<label>Display Related Posts </label> 
+						
+                    	 <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            </field>
+					<field id="count" translate="label comment" type="text" sortOrder="2" showInDefault="1"
+			 showInWebsite="1" showInStore="1"> 
+                    		<label>Number of Posts </label>
+						<depends> <field id="enable">1</field></depends>
+                    	
+            </field>
+				</group>
+				<group id="related_products" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Related Products </label> 
+					<field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1"
+			 showInWebsite="1" showInStore="1"> 
+                    		<label>Display Related Products </label> 
+						
+                    	 <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            </field>
+					<field id="count" translate="label comment" type="text" sortOrder="2" showInDefault="1"
+			 showInWebsite="1" showInStore="1"> 
+                    		<label>Number of Products </label> 
+                    		<depends> <field id="enable">1</field></depends>
+							<comment> Default Date Formating For Post Creation Date Ex: "F d, Y H:i:s".</comment>
+            		</field>
+				</group>
+				<group id="comment" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Comments </label> 
+					
+					<field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1"
+			 showInWebsite="1" showInStore="1"> 
+                    		<label>Enabled</label> 
+						<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            	</field>
+					
+					<field id="allow_guest" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"><label>Allow Guest Comments </label> 
+						<depends> <field id="enable">1</field></depends>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					</field>
+					<field id="comment_status" translate="label comment" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1"><label>New Comment Status </label> 
+						<depends> <field id="enable">1</field></depends>
+					<source_model>Magebees\Blog\Model\Config\Source\Commentstatus</source_model>
+					</field>
+					<field id="privacy_policy" translate="label comment" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1"><label>Display Privacy Policy Agreement </label> 
+							<depends> <field id="enable">1</field></depends>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					</field>
+					<field id="number_of_comments" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+							<depends> <field id="enable">1</field></depends>
+						<label>Number of Comments </label> </field>
+					<field id="number_of_replied" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">	<depends> <field id="enable">1</field></depends>
+						<label>Number of Replies </label> </field>
+					<field id="date_format" translate="label comment" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1"> 
+	<depends> <field id="enable">1</field></depends>
+						<label>Comments Date Format</label> 
+						<comment> Default Date Formating For Post Creation Date Ex: "F d, Y H:i:s".</comment>
+</field>
+					
+					
+					<group id="recaptcha" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+            	<label>ReCAPTCHA</label>	
+
+			 <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label>Enable ReCAPTCHA on Storefront</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+						
+						<field id="captchatype" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Captcha Type</label>
+                    <source_model>Magebees\Blog\Model\Config\Source\CaptchaType</source_model>
+                </field>
+						
+				 <field id="invisible_site_key" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>In Visible Site Key</label>
+                    <depends>
+                        <field id="captchatype">invisible</field>
+                    </depends>                    
+                </field>
+				<field id="invisible_secret_key" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>In Visible Secret Key</label>
+                    <depends>
+                        <field id="captchatype">invisible</field>
+                    </depends>                    
+                </field> 		
+                <field id="visible_site_key" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Visible Site Key</label>
+                    <depends>
+                        <field id="captchatype">visible</field>
+                    </depends>                    
+                </field>
+				<field id="visible_secret_key" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Visible Secret Key</label>
+                    <depends>
+                        <field id="captchatype">visible</field>
+                    </depends>                    
+                </field>                                 
+                
+                <field id="type" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Type of ReCAPTCHA</label>
+                    <source_model>Magebees\Blog\Model\Config\Source\Type</source_model>
+                     <depends>
+                        <field id="captchatype">visible</field>
+                    </depends> 
+                </field> 
+                <field id="size" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Size of ReCAPTCHA</label>
+                    <source_model>Magebees\Blog\Model\Config\Source\Size</source_model>
+                     <depends>
+                        <field id="captchatype">visible</field>
+                    </depends> 
+                </field>  
+                <field id="theme" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Color theme of ReCAPTCHA</label>
+                    <source_model>Magebees\Blog\Model\Config\Source\Theme</source_model>
+                     <depends>
+                        <field id="captchatype">visible</field>
+                    </depends> 
+                </field>
+			</group>
+				</group>
+				<group id="next_previous_link" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Previous Next Link Posts </label> 
+					<field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1"
+			 showInWebsite="1" showInStore="1"> 
+                    		<label>Display Prev.  Next Post Links </label> 
+						
+                    	 <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            </field>
+					
+				</group>
+				<group id="like_dislike_post" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Like / Dislike Post</label> 
+					<field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1"
+			 showInWebsite="1" showInStore="1"> 
+                    		<label>Display Like / Dislike Post Links </label> 
+						<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            </field>
+					
+				</group>
+			</group>
+			
+			<group id="product" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Product View  </label> 
+					<group id="related_post" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+						<label>Related Posts </label> 
+						<field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1"
+			 showInWebsite="1" showInStore="1"> 
+                    	<label>Display Related Posts </label> 
+						 <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            </field>
+						<field id="count" translate="label comment" type="text" sortOrder="2" showInDefault="1"
+			 showInWebsite="1" showInStore="1"> 
+                    		<label>Number of Posts </label>
+						<depends> <field id="enable">1</field></depends>
+                    	
+            </field><field id="feature_image_width" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Featured Image Width In Px</label> 
+					<depends> <field id="enable">1</field></depends>
+				</field>
+					<field id="feature_image_height" translate="label comment" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1"> 
+							<label>Featured Image Height In Px</label> 
+						<depends> <field id="enable">1</field></depends>
+					</field>
+				
+					<field id="resize_type" translate="label comment" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Featured Image Resize Type</label>
+						<depends> <field id="enable">1</field></depends>
+                    <source_model>Magebees\Blog\Model\Config\Source\ImageResizetype</source_model>
+                    <comment>Please Select Image Resize Type.</comment>
+                </field>
+				</group>
+				</group>
+			
+			 <group id="permalink" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Permalink Settings</label>
+                <field id="route" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Blog Route</label>
+                    <comment>E.g.: "blog" will make the blog accessible from mystore.com/blog</comment>
+                </field>
+                <field id="redirect_to_no_slash" translate="label" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Auto-redirect to No-Slash URL</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[E.g. auto 301 redirect from <b>http://example.com/blog/</b> to <b>http://example.com/blog</b>]]></comment>
+                </field>
+                <field id="type" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Permalink Type</label>
+                     <source_model>Magebees\Blog\Model\Config\Source\PermalinkType</source_model>
+                </field>
+
+                <field id="post_route" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Post Route</label>
+                    <depends>
+                        <field id="type">default</field>
+                    </depends>
+                    <comment>E.g.: "post" will make the blog post accessible from mystore.com/{blog_route}/post/post-identifier</comment>
+                </field>
+                <field id="post_sufix" translate="label comment" type="text" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Post URL Suffix</label>
+                    <comment>E.g.: ".html" will make the blog post accessible from mystore.com/{blog_route}/post/post-identifier.html</comment>
+                </field>
+                <field id="post_use_categories" translate="label" type="select" sortOrder="36" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Categories Path for Post URLs</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+				 <field id="cateogry_permalink_type" translate="label comment" type="select" sortOrder="37" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Category Permalink Type</label>
+                     <source_model>Magebees\Blog\Model\Config\Source\PermalinkCategoryType</source_model>
+                </field>
+                <field id="category_route" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Category Route</label>
+					 <depends>
+                        <field id="cateogry_permalink_type">default</field>
+                    </depends>
+                    <comment>E.g.: "category" will make the blog category accessible from mystore.com/{blog_route}/category/category-identifier</comment>
+                </field>
+                <field id="category_sufix" translate="label comment" type="text" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Category URL Suffix</label>
+                    <comment>E.g.: ".html" will make the blog category accessible from mystore.com/{blog_route}/category/category-identifier.html</comment>
+                </field>
+                <field id="category_use_categories" translate="label" type="select" sortOrder="46" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Parent Category Path for Category URLs</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+				 <field id="archive_url_type" translate="label comment" type="select" sortOrder="47" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Archive Permalink Type</label>
+                     <source_model>Magebees\Blog\Model\Config\Source\ArchivePermalinkType</source_model>
+                </field>
+				 
+                <field id="archive_route" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Archive Route</label>
+                    <comment>E.g.: "archive" will make the blog archive accessible from mystore.com/{blog_route}/archive/2016-02</comment>
+                </field>
+				 <field id="tag_url_type" translate="label comment" type="select" sortOrder="51" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Tag Permalink Type</label>
+                     <source_model>Magebees\Blog\Model\Config\Source\TagPermalinkType</source_model>
+                </field>
+                <field id="tag_route" translate="label comment" type="text" sortOrder="55" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Tag Route</label>
+                    <comment>E.g.: "tag" will make the blog posts by tag accessible from mystore.com/{blog_route}/tag/tag-name</comment>
+                </field>
+                <field id="tag_sufix" translate="label comment" type="text" sortOrder="56" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Tag URL Suffix</label>
+                    <comment>E.g.: ".html" will make the blog tag accessible from mystore.com/{blog_route}/tag/tag-name.html</comment>
+                </field>
+                <field id="author_route" translate="label comment" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Author Route</label>
+                    <comment>E.g.: "author" will make the blog author posts accessible from mystore.com/{blog_route}/author/author-name</comment>
+                </field>
+				 <field id="author_url_type" translate="label comment" type="select" sortOrder="61" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Author Permalink Type</label>
+                     <source_model>Magebees\Blog\Model\Config\Source\AuthorPermalinkType</source_model>
+                </field>
+				 
+                <field id="author_sufix" translate="label comment" type="text" sortOrder="62" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Author URL Suffix</label>
+                    <comment>E.g.: ".html" will make the blog author accessible from mystore.com/{blog_route}/author/author-name.html</comment>
+                </field>
+                <field id="search_route" translate="label comment" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Search Route</label>
+                    <comment>E.g.: "search" will make the blog search accessible from mystore.com/{blog_route}/search/query</comment>
+                </field>
+            </group>
+			<group id="author" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Author</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display Author Information</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="page_enabled" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display Post List By Author</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <comment>If set to "Yes". author page with post list will be available.</comment>
+                </field>
+                <field id="robots" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Robots</label>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <source_model>Magento\Config\Model\Config\Source\Design\Robots</source_model>
+                    <comment>This will be included before head closing tag in page HTML.</comment>
+                </field>
+
+            </group>
+			<group id="date" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Post Date</label>
+			<field id="post_publication_date" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+		  			<label>Display Posts Date</label> 
+           			<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+            	</field>
+				<field id="post_publication_date_format" translate="label comment" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					
+					<depends>
+                        <field id="post_publication_date">1</field>
+                    </depends>
+					
+		  			<label>Posts Date Format</label> 
+					<comment> Default Date Formating For Post Creation Date Ex: "F d, Y H:i:s".</comment>
+					
+					   
+           		</field>
+			</group>
+			<group id="add_this" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Add This</label> 
+					<field id="enabled" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+                    		<label>AddThis Enabled </label> 
+							<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+            		</field>
+					<field id="id" translate="label comment" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1"> 
+						 <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    		<label>AddThis ID</label> 
+            		</field>
+				<field id="language" translate="label comment" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    		<label>AddThis Language</label> 
+            		</field>
+				
+				</group>
+			<group id="top_navigation" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Category Top Navigation</label> 
+					<field id="enable_link" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+                    		<label>Display Blog Link </label> 
+							<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+            		</field>
+					<field id="link_text" translate="label comment" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1"> 
+                    		<label>Link Text</label>
+<depends>
+                        <field id="enable_link">1</field>
+                    </depends> 
+            		</field>
+				<field id="include_categories" translate="label comment" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1"> 
+                    		<label>Include Blog Categories </label> 
+							<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+            		</field>
+				<field id="maximum_depth" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1"> 
+                    		<label>Maximal Depth</label> 
+<depends>
+                        <field id="include_categories">1</field>
+                    </depends>
+            		</field>
+				</group>
+			
+				
+        </section>
+    </system>
+</config>

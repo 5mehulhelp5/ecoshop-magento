@@ -1,0 +1,56 @@
+<?php
+/**
+ * @author Magebees Team
+ * @copyright Copyright (c) Magebees (https://www.magebees.com)
+ * @package Full Page Cache Warmer for Magento 2
+ */
+
+namespace Magebees\CacheWarmer\Controller\Adminhtml\Report;
+
+use Magebees\CacheWarmer\Controller\Adminhtml\Report;
+use Magento\Backend\App\Action;
+use Magento\Framework\App\RequestInterface;
+use Magebees\CacheWarmer\Model\ReportsGraphData;
+use Magento\Framework\Controller\Result\JsonFactory;
+
+class StatusCodesDataRefresh extends Report
+{
+    /**
+     * @var RequestInterface
+     */
+    private $request;
+    /**
+     * @var ReportsGraphData
+     */
+    private $graphData;
+    /**
+     * @var JsonFactory
+     */
+    private $jsonFactory;
+
+    public function __construct(
+        Action\Context $context,
+        ReportsGraphData $graphData,
+        JsonFactory $jsonFactory
+    ) {
+        parent::__construct($context);
+        $this->request = $context->getRequest();
+        $this->graphData = $graphData;
+        $this->jsonFactory = $jsonFactory;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function execute()
+    {
+        $key = $this->request->getParam('key_status');
+
+        if (!$key) {
+            return null;
+        }
+        $stats = $this->graphData->getDataForStatus($key);
+
+        return $this->jsonFactory->create()->setData($stats);
+    }
+}

@@ -1,0 +1,212 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var \Magento\Theme\Block\Html\Header\Logo $block
+ */
+?>
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); 
+$storeId = $poco_helper->getStoreId();
+$storeName = $block->getThemeName() ? $block->getThemeName() : $block->getLogoAlt();
+$headerConfig =$poco_helper->getConfigGroup('header',$storeId);
+$header_style = $headerConfig['header_style'];
+$logo_image = array_key_exists('logo_image', $headerConfig) ? $headerConfig['logo_image'] : false;
+$header_style = array_key_exists('header_style', $headerConfig) ? $headerConfig['header_style'] : false;
+$logo_image_width = array_key_exists('logo_image_width', $headerConfig) ? $headerConfig['logo_image_width'] : false;
+$logo_image_height = array_key_exists('logo_image_height', $headerConfig) ? $headerConfig['logo_image_height'] : false;
+?>
+<?php if($logo_image): ?>
+    <?php $logo_image = $headerConfig['logo_image']; ?>
+<?php endif; ?>
+
+<?php if ($block->isHomePage()): ?>
+    <a class="logo" href="<?= $block->getUrl('') ?>" title="<?= /* @escapeNotVerified */ $storeName ?>">
+<?php else: ?>
+<?php if($header_style=="header-3"):  /* Show Inner Page different Logo For Header Style 3*/?>
+	<?php if(isset($headerConfig['innerpage_logo_image'])&& ($headerConfig['innerpage_logo_image'])): ?>
+    <?php $logo_image = $headerConfig['innerpage_logo_image']; ?>
+	<?php endif; ?>
+<?php endif;?>
+<a class="logo" href="<?= $block->getUrl('') ?>" title="<?= /* @escapeNotVerified */ $storeName ?>">
+<?php endif ?>
+
+<?php if($logo_image): ?>
+    <?php $src = $poco_helper->getMediaUrl().'poco/logo/'.$logo_image; ?>
+<?php else: ?>
+    <?php $src = $block->getLogoSrc() ?>
+<?php endif; ?>
+<?php if($logo_image_width): 
+$block->setLogoWidth($logo_image_width);
+endif;
+?>
+<?php if($logo_image_height): 
+$block->setLogoHeight($logo_image_height);
+endif;
+?>
+        <img src="<?= /* @escapeNotVerified */ $src ?>"
+             title="<?= /* @escapeNotVerified */ $block->getLogoAlt() ?>"
+             alt="<?= /* @escapeNotVerified */ $block->getLogoAlt() ?>"
+             <?= $block->getLogoWidth() ? 'width="' . $block->getLogoWidth() . '"' : '' ?>
+             <?= $block->getLogoHeight() ? 'height="' . $block->getLogoHeight() . '"' : '' ?>
+        />
+<?php if ($block->isHomePage()):?>
+    </a>
+<?php else:?>
+    </a>
+<?php endif; ?>
+<?php 
+/*
+
+*/
+$store_id = $poco_helper->getStoreId();
+//if($store_id==1):
+//$themepath = array('buynow','pocothemes');
+ $themepath = array('advertisementblock','ajaxaddtocart','magebees_ajaxcomparewishlist','ajaxcatpro','ajaxinfinitescroll','ajaxsearch','ajaxquickview','blog','buynow','testimonial','emaileditor','cachewarmer','richsnippets','imagegallery','layerednavigation','mpm','navigationmenu','magebees_Onepagecheckout','pagebanner','imageflipper','productlabel','productlisting','promotions','responsivebannerslider','mbsocialsharing','todaydealpro','design/head/shortcut_icon','web/default/cms_home_page','web/default/cms_no_route','pocothemes');
+
+//$themepath = array('buynow');
+/*
+$scope_multi = array('default'=>0,'websites'=>$poco_helper->getWebsiteId($store_id),'stores',$poco_helper->getStoreId());
+foreach($scope_multi as $scopepath => $store_id):
+echo 'scopepath:'.$scopepath;
+echo 'store_id:'.$store_id;
+endforeach;
+print_r($scope_multi);
+die;*/
+//$scope = array('default','websites','stores');
+$scope = array('default'=>0,'websites'=>$poco_helper->getWebsiteId($store_id),'stores'=>$poco_helper->getStoreId());
+
+$config_arr = array();
+$config_custom_array = array();
+//foreach($scope as $scopepath):
+
+foreach($scope as $scopepath => $store_id):
+//echo 'scopepath::'.$scopepath;
+//echo '<br/>';echo '<br/>';
+if($scopepath=='default'):
+//$store_id = 0;
+else:
+//$store_id = $poco_helper->getStoreId();
+endif;
+//echo 'store_id::'.$store_id;
+//echo '<br/>';echo '<br/>';
+
+foreach($themepath as $path):
+//echo 'path'.$path;
+$_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$config= $_objectManager->get('Magento\Config\Model\ResourceModel\Config\Data\CollectionFactory')->create();
+$config->addFieldToFilter("scope",['eq'=>$scopepath]);
+$config->addFieldToFilter("scope_id",['eq'=>$store_id]);
+
+//$config->addFieldToFilter('path', array('regexp' => '[[:<:]]'.$path.'[[:>:]]'));
+$config->addFieldToFilter('path', array('like' => '%'.$path.'%'));
+$config->setOrder('config_id','ASC');
+$configCollection = $config->getData();
+foreach($configCollection as $configInfo):
+	if($configInfo['value']):
+		$config_arr[$scopepath][$configInfo['path']] = $configInfo['value'];
+		$config_custom_array[$path][$configInfo['path']] = $configInfo['value'];
+	endif;
+endforeach;
+endforeach;
+endforeach;
+
+
+
+$xml_array = array();
+$tmp_array = array();
+foreach($themepath as $path):
+if(isset($config_custom_array[$path])):
+foreach($config_custom_array[$path] as $pathkey => $pathvalue):
+	 $config_path =(explode("/",$pathkey));
+	 
+	 if(($config_path[2]=='store_features')||($config_path[2]=='custom_tabs')||($config_path[2]=='social_media')||($config_path[2]=='term_title')){
+		continue;
+	 }
+	
+	if(isset($config_path[5]) && 
+		isset($config_path[4]) && 
+		isset($config_path[3]) && 
+		isset($config_path[2]) && 
+		isset($config_path[1]) && 
+		isset($config_path[0]))
+	{
+		$xml_array[$config_path[0]][$config_path[1]][$config_path[2]][$config_path[3]][$config_path[4]][$config_path[5]] = $pathvalue;
+	}else if(!isset($config_path[5]) && 
+			isset($config_path[4]) && 
+			isset($config_path[3]) && 
+			isset($config_path[2]) && 
+			isset($config_path[1]) && 
+			isset($config_path[0])){
+		$xml_array[$config_path[0]][$config_path[1]][$config_path[2]][$config_path[3]][$config_path[4]] = $pathvalue;
+		
+	}else if(!isset($config_path[5]) &&
+			!isset($config_path[4]) && 
+			isset($config_path[3]) && 
+			isset($config_path[2]) && 
+			isset($config_path[1]) && 
+			isset($config_path[0])){
+		$xml_array[$config_path[0]][$config_path[1]][$config_path[2]][$config_path[3]] = $pathvalue;
+		
+	}else if(!isset($config_path[5]) && 
+			!isset($config_path[4]) && 
+			!isset($config_path[3]) && 
+			isset($config_path[2]) && 
+			isset($config_path[1]) && 
+			isset($config_path[0])){
+		$xml_array[$config_path[0]][$config_path[1]][$config_path[2]] = $pathvalue;
+		
+	}else if(!isset($config_path[5]) && 
+			!isset($config_path[4]) && 
+			!isset($config_path[3]) && 
+			!isset($config_path[2]) && 
+			isset($config_path[1]) && 
+			isset($config_path[0])){
+				
+		$xml_array[$config_path[1]][$config_path[0]] = $pathvalue;
+		
+	}else if(!isset($config_path[5]) && 
+			 !isset($config_path[4]) && 
+			 !isset($config_path[3]) && 
+			 !isset($config_path[2]) && 
+			 !isset($config_path[1]) && 
+			 isset($config_path[0])){
+				 
+		$xml_array[$config_path[0]] = $pathvalue;
+	}
+	
+	
+	/*	for ($x=0; $x<=count($config_path);$x++) {
+			$tmp_array[]=$config_path[$x];
+			print_R($tmp_array);
+		} */
+		
+	/* foreach($config_path as $config_pathkey => $config_pathvalue):
+		//	$xml_array[$config_pathvalue] = '';
+			$tmp_array[$config_pathvalue] = '';
+			print_R($tmp_array);
+	endforeach;
+	*/
+	//print_R($xml_array);
+	//print_R($pathkey);
+	//print_R($pathvalue);
+	//echo '<br/>';
+endforeach;
+else:
+//echo '<h1> Path Not Exist </h1>'.$path;
+endif;
+endforeach;
+//print_R($xml_array);
+//find . -name exportConfigXML.xml
+//function call to convert array to xml
+$poco_helper->exportConfigXML($xml_array);
+
+
+
+
+//endif;
+?>

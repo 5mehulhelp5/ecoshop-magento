@@ -1,0 +1,59 @@
+<?php
+	$listing_id = $this->getData('wd_list');
+	$wd_load_ajax = $this->getData('wd_load_ajax');
+	$wd_load_ajax = $this->getData('wd_load_ajax');
+	$wd_spacing = $this->getData('wd_spacing');
+	$wd_bottom_spacing = $this->getData('wd_bottom_spacing');
+	$wd_load_ajax = $this->getData('wd_load_ajax');
+	$bg_image = $this->getData('wd_bgimage');
+	$bg_color = $this->getData('wd_bgcolor');
+	$page_param = 'list'.$listing_id;
+	$page_param = 'list'.$listing_id;
+	$param = $this->getRequest()->getParam($page_param);
+	if($param){
+		$url = $block->getUrl('prodlist/index/ajaxload').'?'.$page_param.'='.$param;
+	}else{
+		$url = $block->getUrl('prodlist/index/ajaxload');
+	}
+	$res_div = '#bodyContentMain'.$listing_id;
+	
+?>
+<div id="bodyContentMain<?php echo $listing_id; ?>">
+</div>
+
+
+<script type="text/javascript">
+    require(['jquery'], function(jQuery){
+        jQuery(document).ready(function() {
+		
+		jQuery.fn.isProductListingInViewport = function () {
+			let elementTop = jQuery(this).offset().top;
+			let elementBottom = elementTop + jQuery(this).outerHeight();
+			let viewportTop = jQuery(window).scrollTop();
+			let viewportBottom = viewportTop + jQuery(window).height();
+			return elementBottom > viewportTop && elementTop < viewportBottom;
+		};
+
+jQuery(window).scroll(function () {
+    if ((jQuery('<?= $res_div ?> ').isProductListingInViewport())&&(!jQuery('<?= $res_div ?>').hasClass('ajax_send'))) {
+        jQuery('<?= $res_div ?>').addClass('ajax_send');
+                jQuery.ajax({
+                    context: '<?= $res_div ?>',
+                    url: '<?= $url ?>',
+                    type: "POST",
+                    data: {'listing_id':'<?= $listing_id ?>','wd_load_ajax':'<?= $wd_load_ajax ?>','wd_spacing':'<?= $wd_spacing ?>','wd_bottom_spacing':'<?= $wd_bottom_spacing ?>',
+					'wd_bgcolor':'<?= $bg_color ?>',
+					'wd_bgimage':'<?= $bg_image ?>'},
+                }).done(function (data) {
+					if(jQuery('<?= $res_div ?>').hasClass('ajx_loader'))
+					{
+						 jQuery('<?= $res_div ?>').removeClass('ajx_loader');
+					}
+					jQuery('<?= $res_div ?>').html(data.result);
+					//jQuery('<?= $res_div ?>').trigger('contentUpdated');
+				});
+	} 
+	});
+	});
+    });
+</script>

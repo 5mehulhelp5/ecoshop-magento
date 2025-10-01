@@ -1,0 +1,83 @@
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $poco_helper->getStoreId();
+$mobile_menu = $poco_helper->getConfigGroup('mobile_menu',$storeId);
+$enable_mobile_menu = array_key_exists('enable_mobile_menu', $mobile_menu) ? $mobile_menu['enable_mobile_menu'] : false;
+if($enable_mobile_menu):
+$storeName = $poco_helper->getContactus('store_name',$storeId);
+$font_icons = $poco_helper->getConfigGroup('font_icons',$storeId);
+$search_icon = array_key_exists('search', $font_icons) ? $font_icons['search'] : false;
+$whishlist_icon = array_key_exists('whishlist', $font_icons) ? $font_icons['whishlist'] : false;
+$cart_icon = array_key_exists('cart', $font_icons) ? $font_icons['cart'] : false;
+$enable_home_link = array_key_exists('enable_home_link', $mobile_menu) ? $mobile_menu['enable_home_link'] : false;
+$enable_search_link = array_key_exists('enable_search_link', $mobile_menu) ? $mobile_menu['enable_search_link'] : false;
+$enable_wishlist_link = array_key_exists('enable_wishlist_link', $mobile_menu) ? $mobile_menu['enable_wishlist_link'] : false;
+$enable_cart_link = array_key_exists('enable_cart_link', $mobile_menu) ? $mobile_menu['enable_cart_link'] : false;
+$home_icon = array_key_exists('home_icon', $mobile_menu) ? $mobile_menu['home_icon'] : false;
+$home_label = array_key_exists('home_label', $mobile_menu) ? $mobile_menu['home_label'] : false;
+$search_label = array_key_exists('search_label', $mobile_menu) ? $mobile_menu['search_label'] : false;
+$wishlist_label = array_key_exists('wishlist_label', $mobile_menu) ? $mobile_menu['wishlist_label'] : false;
+$cart_label = array_key_exists('cart_label', $mobile_menu) ? $mobile_menu['cart_label'] : false;
+?>
+
+<div class="fixbtm_menu_mbl">
+    <div class="mbl_menu_btm">
+        <ul class="d_fl">
+            <?php if($enable_home_link): ?>
+			<li>
+                <!--Home-->
+                <a href="<?= $block->getUrl('') ?>" title="<?= /* @escapeNotVerified */ $storeName ?>">
+                    <?php if($home_icon): ?><span class="icon"><?= $home_icon ?></span><?php endif;?>
+					<?php if($home_label): ?><span class="lbl"><?php echo __($home_label) ;?></span><?php endif;?>
+                </a>
+                <!--End Home-->
+            </li>
+			<?php endif;?>
+            <?php if($enable_search_link): ?>
+			<li>
+			    <!--Search-->
+				<div class="search-toggle">
+					<div class="topSearch">
+                        <?php if($search_icon): ?><span class="icon"><?= $search_icon ?></span><?php endif;?>
+						<?php if($search_label): ?><span class="lbl"><?php echo __($search_label) ;?></span><?php endif;?>
+					</div>
+				</div>
+				<!--End Search-->
+			</li>
+			<?php endif;?>
+			<?php if($enable_wishlist_link): ?>
+			<li>
+			<!--Wishlist-->
+            <div data-bind="scope: 'wishlist'" class="psr">
+                <a href="<?php /* @escapeNotVerified */ echo $this->getUrl('wishlist', ['_secure' => true]); ?>" aria-label="Wishlist">
+					<?php if($whishlist_icon): ?><span class="icon"><?= $whishlist_icon ?></span><?php endif;?>
+                    <!-- ko if: wishlist().counter -->
+                    <span data-bind="text: wishlist().counter" class="wishlist-counter counter qty"></span>
+                    <!-- /ko -->
+					<?php if($wishlist_label): ?><span class="lbl"><?php echo __($wishlist_label) ;?></span><?php endif;?>
+                </a>
+            </div>
+            <!-- End Wishlist -->
+            </li>
+			<?php endif;?>
+			<?php if($enable_cart_link): ?>
+			<li>
+                <!--Cart-->
+                <div data-block="minicart" class="fxd_btm_cart psr">
+                    <a class="action showcart" title="My Cart" href="<?= $this->getUrl('checkout/cart', ['_secure' => true]); ?>" data-bind="scope: 'minicart_content'">
+						<?php if($cart_icon): ?><span class="icon"><?= $cart_icon ?></span><?php endif;?>
+                        <?php if($cart_label): ?><span class="lbl"><?php echo __($cart_label) ;?></span><?php endif;?>
+                        <span class="counter qty empty" data-bind="css: { empty: !!getCartParam('summary_count') == false && !isLoading() }, blockLoader: isLoading">
+                            <span class="counter-number">
+                            <!-- ko if: getCartParam('summary_count') -->
+                            <!-- ko text: getCartParam('summary_count').toLocaleString(window.LOCALE) --><!-- /ko -->
+                            <!-- /ko --><!-- ko ifnot: getCartParam('summary_count') -->0<!-- /ko --></span>
+                        </span>
+                    </a>
+                </div>
+                <!--End Cart-->
+			</li>
+			<?php endif;?>
+        </ul>
+    </div>
+</div>
+<?php endif;?>

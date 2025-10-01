@@ -1,0 +1,40 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php $mail_helper = $this->helper('Magebees\EmailEditor\Helper\Data');
+$is_ext_enabled=$mail_helper->getConfig('emaileditor/setting/enable');
+$is_show_img=$mail_helper->getConfig('emaileditor/setting/show_img');?>
+<?php $_shipment = $block->getShipment() ?>
+<?php $_order    = $block->getOrder() ?>
+<?php if ($_shipment && $_order): ?>
+    <table class="email-items">
+        <thead>
+            <tr>
+                <?php if (($is_show_img)&&($is_ext_enabled)): ?>
+                <th class="item-image">
+                    <?= /* @escapeNotVerified */  __('Image') ?>
+                </th>
+                <?php endif; ?>
+                <th class="item-info">
+                    <?= /* @escapeNotVerified */  __('Items') ?>
+                </th>
+                <th class="item-qty">
+                    <?= /* @escapeNotVerified */  __('Qty') ?>
+                </th>
+            </tr>
+        </thead>
+        <?php foreach ($_shipment->getAllItems() as $_item): ?>
+            <?php if (!$_item->getOrderItem()->getParentItem()) : ?>
+                <tbody>
+                    <?= $block->getItemHtml($_item) ?>
+                </tbody>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </table>
+<?php endif; ?>

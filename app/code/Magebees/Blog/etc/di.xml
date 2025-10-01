@@ -1,0 +1,19 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Add Plugin for add custom link in navigation -->
+    <type name="Magento\Theme\Block\Html\Topmenu">
+        <plugin name="add_menu_item_plugin" type="Magebees\Blog\Plugin\Topmenu" sortOrder="10" disabled="false"/>
+    </type>
+	<type name="Magebees\Blog\Block\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Magebees\Blog\Block\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">blogimpotlog</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">Magebees\Blog\Block\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

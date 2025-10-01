@@ -1,0 +1,18 @@
+<?php 
+$config=$block->getConfig();
+if ($config['enable']){
+?>
+<script>
+ requirejs(['jquery','magebeesFlipper'],
+        function($) {		
+			var widget = $(this).magebeesFlipper({
+			"mainclass":"<?php echo $config['product_container'];?>",
+			"imageclass":"<?php echo $config['product_image'];?>",			
+			"imageflip":"<?php echo $config['flip_image'];?>"
+			});	
+        });
+</script>
+<?php } ?>
+
+
+	

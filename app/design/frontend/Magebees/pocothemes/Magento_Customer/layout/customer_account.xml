@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" label="Customer My Account (All Pages)" design_abstraction="custom">
+    <body>
+		<!--<move element="page.main.title" destination="page.top" after="-"/>
+		<move element="page.main.title" destination="page-title-wrap" before="-" />
+    	<referenceContainer name="page.top">
+    		<container name="page-title-wrap" label="Page Title Wrap" as="page-title-wrap" htmlTag="div" htmlClass="page-title-wrap" />
+        </referenceContainer>-->
+		
+		<referenceContainer name="page.top">
+			<container name="page-title-wrap" label="Page Title Wrap" as="page-title-wrap" htmlTag="div" htmlClass="page-title-wrap" />
+		</referenceContainer>
+		<move element="page.main.title" destination="image.wrapper" before="-" />
+		<move element="breadcrumbs" destination="page.main.title" after="page.main.title" />
+		<move element="page.banner" destination="page.main.title" before="-"  />
+		<referenceContainer name="page-title-wrap" >
+			<container name="image.wrapper" htmlTag="div" htmlClass="container"  />
+		</referenceContainer>
+		<referenceContainer name="page-title-wrap">
+				<block class="Magento\Framework\View\Element\Template" name="page.banner" template="Magebees_Pagebanner::html/banner.phtml" after="page.main.title" ifconfig="pagebanner/general/enabled" />
+		</referenceContainer>
+		<move element="page.banner" destination="page-title-wrap" before="-" />
+
+		<referenceBlock name="sidebar.productlisting" remove="true" />
+		<referenceBlock name="sidebar.blog.tags.pocotheme" remove="true" />
+		<referenceBlock name="poco.custom.sidebar.block" remove="true" />
+		<referenceBlock name="magebees.sidebar.imagegallery" remove="true" />
+		<referenceBlock name="magebeesLayNav" remove="true" />
+		<referenceBlock name="blog.script" remove="true" />
+    </body>
+</page>

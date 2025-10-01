@@ -1,0 +1,226 @@
+<?php use Magento\Framework\App\Action\Action; ?>
+<?php
+	$viewMode = 'grid';
+	$image = 'category_page_grid';
+	$showDescription = false;
+	$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+	$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+	$storeId = $poco_helper->getStoreId();
+	/**
+	 * Position for actions regarding image size changing in vde if needed
+	 */
+	$pos = $block->getPositioned();
+	$position = '';
+	if ($pos != null) {
+		$position = ' style="left:' . $block->getVar("{$image}:width") . 'px;'
+				. 'top:' . $block->getVar("{$image}:height") . 'px;"';
+	}
+	
+	/* POCO THEME CUSTOMIZATION ADD CODE Start */ 
+	include ($block->getTemplateFile('Magento_Catalog::product/product-list-theme-options.phtml'));
+	/* POCO THEME CUSTOMIZATION ADD CODE End */ 
+	
+	$random_number = $this->random_number;
+	$slider_id = 'productListing-'.$random_number;
+	$slider = $this->slider_options['enable_slider']?$this->slider_options['enable_slider']:0;
+	
+	$slider_grid = null;
+	if(($slider)&&(isset($this->slider_options['grid']))):
+	$slider_grid = $this->slider_options['grid']?$this->slider_options['grid']:0;
+	endif;
+	$slider_class = $slider?" swiper swiper-container":" ";
+	$slider_grid_class = $slider_grid?" swiper-grid ":" ";
+	$slider_wrapper_class = $slider?"swiper-wrapper":" ";
+	$pagination = array_key_exists('pagination', $this->slider_options) ? ($this->slider_options['pagination']=='1' ? true:false) : false;
+	$pagination_class = $this->pagination_class;
+	$item_class =   $slider?"item product product-item swiper-slide":"item product product-item";
+	//$items_per_row_class =   $slider?" ":"product-item-".$this->slider_options['items_per_row'];
+	$items_per_row_class =   $slider?"product-swiper-item-".$this->slider_options['items_per_slide']:"fx_grid products-items-".$this->slider_options['items_per_row'];
+	$scrollbar = array_key_exists('scrollbar', $this->slider_options) ? ($this->slider_options['scrollbar']=='1' ? true:false) : false;
+	$navarrow = array_key_exists('nav_arr', $this->slider_options) ? ($this->slider_options['nav_arr']=='1' ? true:false) : false;
+	$grap_cursor = array_key_exists('grab_cur', $this->slider_options) ? ($this->slider_options['grab_cur']=='1' ? 'true':'false') : false;
+	$grap_cursor_enabled = array_key_exists('grab_cur', $this->slider_options) ? ($this->slider_options['grab_cur']=='1' ? true:false) : false;
+	
+	$custom_class = array_key_exists('custom_class', $this->display_settings) ? $this->display_settings['custom_class'] : null;
+	
+	$display_product_short_description = array_key_exists('display_product_short_description', $this->display_settings) ? ($this->display_settings['display_product_short_description']=='1' ? true:false) : false;
+	$product_short_description_length = array_key_exists('product_short_description_length', $this->display_settings) ? $this->display_settings['product_short_description_length'] : null;	
+	$_productCollection = $block->getProductCollection();
+	$productsCount = count($_productCollection->getData());
+	$_helper = $this->helper('Magento\Catalog\Helper\Output');
+	$template = $this->general['template']; 
+	$swiper_data_init = $block->getSwiperinitdata($this->_listing_id);
+	$home_style =$poco_helper->getConfigValue('home','home_style','pocothemes',$storeId);
+?>
+<div id="<?php echo $slider_id; ?>" <?php if($slider): ?> data-swiper='<?php echo json_encode($swiper_data_init);?>' <?php endif; ?> class="<?php echo 'list'.$this->_listing_id ?> products wrapper <?php echo $viewMode; ?> products-<?php echo $viewMode; ?> <?php echo $slider_class ?> <?php echo $slider_grid_class ?> <?php echo $pagination_class ?> <?php echo $swiper_btn_hover_effects_class ?>">
+	<?php $iterator = 1; ?>
+	
+	<div class="auto_load_featured list items product-items <?php echo $btn_hover_effects_class; ?> <?php echo $slider_wrapper_class;?> <?php echo $items_per_row_class ?> <?php if($scrollbar): ?>show-scrollbar<?php endif; ?> <?php if($grap_cursor_enabled): ?>grab-cursor<?php endif;?> <?php echo $animation_class ?>" <?php if($animation): ?> data-wow-delay="0.4s" <?php endif;?> <?php if($rtl): ?> dir="rtl" <?php endif;?>>
+		<?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
+		<?php 
+		/* Set Condition for Sample Data Start */
+			if(!$productsCount):
+			if($slider):
+			$dummyproductCount = $this->slider_options['num_of_prod']?$this->slider_options['num_of_prod']:8;
+			else:
+			$dummyproductCount = $this->slider_options['items_per_page']?$this->slider_options['items_per_page']:8;
+			
+			endif;
+			echo $this->getLayout()
+			  ->createBlock('Magento\Framework\View\Element\Template')
+			  ->setProductCount($dummyproductCount)
+			  ->setSlider($slider)
+			   ->setImageWidth($image_width) 
+			  ->setImageHeight($image_height)
+			  ->setTemplate('Magebees_Productlisting::dummy-products-grid.phtml')
+			  ->toHtml();
+		 	 endif;
+			/* Set Condition for Sample Data End */
+		?>
+		<?php foreach ($_productCollection as $_product): ?>
+			<?php echo($iterator++ == 1) ? '<div class="'.$item_class.'">' : '</div><div class="'.$item_class.'">' ?>
+			<div class="product-item-info" data-container="product-grid">
+				<?php // Product Image  ?>
+				
+				<div class="pro-hover">
+					<a href="<?php echo $_product->getProductUrl() ?>" class="product photo product-item-photo" tabindex="-1">
+						<?php $productId = $_product->getId();?>
+						<?php echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template") ->setSlider($slider) ->setProduct($_product)->setAspectRatio($aspect_ratio) ->setImageWidth($image_width)->setImageHeight($image_height) ->setDisplayArea($image) ->setTemplate("Magento_Catalog::product/image.phtml") ->toHtml();  ?>
+					</a>
+					<?php if(($show_deal_timer)&&(($hover_effects == 'button-hover-style7')||($hover_effects == 'button-hover-style11'))): ?>
+					            <!--Deal Timer On Hover Style7 Or 11 --> 
+								<?php echo $this->getLayout()->createBlock('Magebees\TodayDealProducts\Block\DealTimerListingProducts')->setProduct($_product) ->setTemplate('Magebees_TodayDealProducts::category_page_timer.phtml')->toHtml(); ?>
+                                <!--End Deal Timer On Hover Style7 or 11-->
+							<?php endif; ?>
+					<?php if(($hover_effects != 'button-hover-style7')&&($hover_effects != 'button-hover-style11')): ?>
+						<!--Buttons Hover Styles-->
+						<?php echo $this->getLayout()->createBlock('Magebees\PocoThemes\Block\AddToButtons') ->setProduct($_product) ->setDisplayTimer($show_deal_timer) ->setShowCart($show_cart) ->setShowWishlist($show_wishlist) ->setShowCompare($show_compare) ->setShowAjaxQuickView($ajaxquickview_enable) ->setCurrentAction($currentAction) ->
+							setAddCartIcon($add_cart_icon)->setWishlistIcon($whishlist_icon)->setCompareIcon($compare_icon)->setQuickviewIcon($quick_view_icon)->toHtml(); ?>
+						<!--End Buttons Hover Styles-->
+                    <?php endif; ?>
+				</div>
+			
+				<div class="product details product-item-details">	
+					<div class="detail-left">
+						<?php if($show_product_category): 
+								echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setProduct($_product) ->setStoreId($storeId)->setTemplate("Magento_Catalog::product/category-link.phtml")->toHtml();; 
+						endif; ?>
+
+						<?php if($show_product_brand_name): ?>
+							
+							<?php echo $this->getLayout()
+							->createBlock("Magento\Framework\View\Element\Template") 
+							->setProduct($_product) ->setStoreId($storeId) 
+							->setBrandCode($brand_attribute_code) 
+							->setBrandUrlKey($brand_url_key) 
+							->setBaseUrl($webUrl) 
+							->setTemplate ("Magento_Catalog::product/brand-link.phtml")
+							->toHtml(); ?>
+						<?php endif; ?>
+
+						<strong class="product-item-name">
+							<a title="<?php echo $block->escapeHtml($_product->getName()) ?>" href="<?php /* @escapeNotVerified */ echo $block->getProductUrl($_product) ?>" class="product-item-link">
+								<?php echo $block->escapeHtml($_product->getName()) ?>
+							</a>
+						</strong>
+
+						<?php if(($display_product_short_description)&&($_product->getShortDescription())): $productShortDescription = $this->getProductShortDescription($_product->getShortDescription(),$product_short_description_length); ?>
+							<div class="product-item-shortdesc"><?php echo $productShortDescription; ?></div>
+						<?php endif; ?>
+
+						<?php if($show_product_rating): ?>
+							<?php echo $block->getReviewsSummaryHtml($_product, $templateType, true); ?>
+						<?php endif; ?>
+
+						<?php if($show_product_sku): ?>
+							<?php echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template") ->setProduct($_product) ->setProductSkuLabel($product_sku_label) ->setProductSkuSeparator($product_sku_separator) ->setTemplate("Magento_Catalog::product/product-sku.phtml") ->toHtml();?>
+							
+						<?php endif; ?>
+						<?php if(($hover_effects != 'button-hover-style10')&&($show_product_price)): ?>   
+							<?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
+						<?php endif; ?>
+
+						<?php if($buyNowEnabled): 
+							echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template") ->setProduct($_product) ->setButtonTitle($buyNowbuttonTitle) ->setBuyNowListProduct($buyNowListProduct) ->setTemplate("Magento_Catalog::product/buy-now.phtml") ->toHtml(); 
+						endif; ?>
+						
+						<?php if($_product->getTypeId() == \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE){
+							$swatchBlock = $this->getLayout()->createBlock("Magento\Swatches\Block\Product\Renderer\Listing\Configurable")->setTemplate("Magebees_Swatches::product/listing/renderer.phtml");
+						?>
+							<!--Show Configurable Product Swatches -->
+							<div class="swatches-listing">
+								<?php echo $swatchBlock->setProduct($_product)->toHtml(); ?>
+							</div>
+							<!--End Configurable Product Swatches -->
+						<?php } ?>
+						<?php echo $block->getProductDetailsHtml($_product); ?>
+						</div>
+						
+							
+						<?php if((($hover_effects == 'button-hover-style10')||($hover_effects == 'button-hover-style12'))&&($allow_add_to_cart)): ?>
+							<!-- Button Hover Style 10 Or 12 Start -->
+							<div class="d-flex alc <?php if($bottom_btn_hover_effects_class): echo $bottom_btn_hover_effects_class; endif; ?> hvr_dtl">
+							<?php if(($hover_effects == 'button-hover-style10')&&($show_product_price)): ?>  
+									<?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
+								<?php endif; ?>
+								<div class="actions-primary">
+									<?php if ($_product->isSaleable()): ?>
+										<?php $postParams = $block->getAddToCartPostParams($_product); ?>
+											<form data-role="tocart-form" data-product-sku="<?= $escaper->escapeHtml($_product->getSku()) ?>" action="<?= $escaper->escapeUrl($postParams['action']) ?>" method="post">
+												<input type="hidden" name="product" value="<?= /* @noEscape */ $postParams['data']['product'] ?>">
+												<input type="hidden" name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>" value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
+												<?= $block->getBlockHtml('formkey') ?>
+												<?php $isHasOptions = $_product->getTypeInstance()->hasOptions($_product);?>
+												<?php if($isHasOptions): $add_to_cart_btn_title = 'Select Option'; endif; ?>
+												<button type="submit" title="<?= $escaper->escapeHtmlAttr(__($add_to_cart_btn_title)) ?>" class="action tocart primary" disabled>
+													<?php echo $add_cart_icon; ?>
+													<span><?= $escaper->escapeHtml(__($add_to_cart_btn_title)) ?></span>
+												</button>
+											</form>
+										<?php else: ?>
+											<?php if ($_product->isAvailable()) :?>
+												<div class="stock available"><span><?= $block->escapeHtml(__('In stock')) ?></span></div>
+											<?php else :?>
+												<div class="stock unavailable"><span><?= $block->escapeHtml(__('Sold Out')) ?></span></div>
+											<?php endif; ?>
+									<?php endif; ?>
+								</div>
+							</div>	
+							<!-- Button Hover Style 10 Or 12 End -->
+						<?php endif; ?>
+										
+						<?php if(($hover_effects == 'button-hover-style7')||($hover_effects == 'button-hover-style11')): ?>
+                            <!--Buttons Hover Styles 7 OR 11 -->
+							<?php echo $this->getLayout()->createBlock('Magebees\PocoThemes\Block\AddToButtons') ->setProduct($_product) ->setDisplayTimer($show_deal_timer) ->setShowCart($show_cart) ->setShowWishlist($show_wishlist) ->setShowCompare($show_compare) ->setShowAjaxQuickView($ajaxquickview_enable) ->setCurrentAction($currentAction) ->
+							setAddCartIcon($add_cart_icon)->setWishlistIcon($whishlist_icon)->setCompareIcon($compare_icon)->setQuickviewIcon($quick_view_icon)->toHtml(); ?>
+							<!--End Buttons Hover Styles  7 OR 11 -->
+						<?php endif; ?>
+					</div>
+				</div>
+			<?php echo($iterator == count($_productCollection) + 1) ? '</div>' : '' ?>
+		<?php endforeach; ?>
+		
+	</div>
+	<?php if($slider): ?>		
+	
+		<?php if($pagination): ?>
+		<!-- Add Pagination -->
+		<div id="<?php echo "swiper-pagination-".$random_number;?>" class="swiper-pagination"></div>
+		<?php endif; ?>
+		<!-- Add Scrollbar -->
+		<?php if($scrollbar): ?>
+		<div id="<?php echo "swiper-scrollbar-".$random_number;?>" class="swiper-scrollbar"></div>	
+		<?php endif; ?>
+		<!--End div swiper-->
+	<?php endif; ?>
+</div>
+<?php if($home_style!='poco-themes-style-17'): ?>
+<?php if($slider): ?>
+<?php if($navarrow): ?>
+	<!-- Add Arrows -->
+	<div id="<?php echo "swiper-button-next-".$random_number;?>" class="swiper-button-next"></div>
+	<div id="<?php echo "swiper-button-prev-".$random_number;?>" class="swiper-button-prev"></div>
+<?php endif; ?>
+<?php endif; ?>
+<?php endif; ?>
+	

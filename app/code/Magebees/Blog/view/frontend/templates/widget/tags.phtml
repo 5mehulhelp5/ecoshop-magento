@@ -1,0 +1,29 @@
+<?php if( $this->configuration->isEnableBlogModule()):
+$recentPostTagsIds = $block->getRecentTagsIds();
+if(count($recentPostTagsIds)>0): ?>
+<div class="mb-block widget block mb-block-tags" data-bind="scope: 'tag'">
+	<div class="block-title">
+		<strong><?php echo $block->escapeHtml($block->getTitle());?></strong>
+	</div>
+	<div class="tags-content">
+		<div>
+			<?php 
+				$font_size = 1.5;
+				foreach ($recentPostTagsIds as $_tagId => $tagPostCount): ?>
+				<?php 	
+					$_tag = $block->getTagbyId($_tagId);
+					$_tagUrl = $block->getTagurl($_tag);
+					$_tagName = $block->escapeHtml($_tag->getTitle(), null, true);
+				
+				$tag_font_size = $font_size + (($tagPostCount)/4);
+				$style = 'font-size: '.$tag_font_size.'rem;';
+				?>
+			<div class="tags-title" id="tag-<?php echo $_tagId ?>">
+				<a class="tag-item-link" style="<?php echo $style?>"	href="<?php echo $_tagUrl ?>"><?php echo $_tagName; ?></a>
+			</div>
+			<?php endforeach; ?>
+		</div>
+	</div>
+</div>	
+<?php endif;?>
+<?php endif;?>

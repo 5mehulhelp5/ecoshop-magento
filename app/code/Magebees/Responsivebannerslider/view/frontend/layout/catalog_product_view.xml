@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content.top">
+		   <block class="Magebees\Responsivebannerslider\Block\View\Top" name="responsivebannerslider_top" ifconfig="responsivebannerslider/setting/enabled" before="product.info.main" template="slider.phtml" />
+        </referenceContainer>
+        <referenceContainer name="content.bottom">
+        	<block class="Magebees\Responsivebannerslider\Block\View\Bottom" after="-" name="responsivebannerslider_bottom" ifconfig="responsivebannerslider/setting/enabled" template="slider.phtml" />
+		</referenceContainer>
+    </body>
+</page>

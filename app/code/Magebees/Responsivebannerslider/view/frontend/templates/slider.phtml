@@ -1,0 +1,84 @@
+<?php
+$helper = $this->helper('Magebees\Responsivebannerslider\Helper\Data');
+if($helper->enabledModule()) {
+$current = $helper->getCurrentUrl();
+$res = strpos($current, 'checkout/cart/configure');
+if(!$res){ 
+?>
+<?php if ($block->getGroupscollection() != "") { ?>
+<?php $groupsdata = $block->getGroupscollection()->getData(); ?>
+<?php foreach ($groupsdata as $groups ) { ?>
+
+<?php $groupId = $groups['slidergroup_id'];  ?>
+<?php $csspath = $helper->getCssPath($groupId); ?>
+<link rel="stylesheet" type="text/css" href="<?php echo $csspath;?>" /> 
+
+	<?php 
+
+	if($helper->enabledDevmode()) {
+		$bannerhtml = $helper->generateStaticHtml($groups); 
+	}else{
+		$bannerhtml = $helper->generateStaticHtml($groups); 
+		$dir_for_dynamic_file = 'pub/media/responsivebannerslider/files';
+		$temp_dir = $helper->getStaticTemplateDirectoryPath($dir_for_dynamic_file);
+		$static_File = $temp_dir."banner-".$groupId.".html";	
+
+		if (!file_exists($static_File)) {	
+
+			if (!file_exists($temp_dir)) {
+			    mkdir($temp_dir, 0777, true);
+			}
+
+
+			
+			$fh = fopen($static_File, 'w+'); // or die("error");
+			$search = [
+			'/\>[^\S ]+/s',  // strip whitespaces after tags, except space
+			'/[^\S ]+\</s',  // strip whitespaces before tags, except space
+			'/(\s)+/s'       // shorten multiple whitespace sequences
+			];
+			$replace = [ '>', '<','\\1'];
+			$menu_compressedhtml = preg_replace($search, $replace, $bannerhtml);
+			fwrite($fh, $menu_compressedhtml);
+		} else {
+			$banner_file = fopen($static_File, 'r'); // or die("error");
+			$bannerhtml = fgets($banner_file);
+			fclose($banner_file);
+		}
+	}	
+	echo $bannerhtml;
+
+
+	$verticalSlider = "";
+	if ($groups ['animation_direction'] == "vertical") {
+			$verticalSlider = "verticalSlider";
+	}
+
+	if ($groups ['navigation_aposition'] == "inside") {
+		$navpos = "navArwInside";
+	} elseif ($groups ['navigation_aposition'] == "outside") {
+		$navpos = "navArwOutside";
+	} elseif ($groups ['navigation_aposition'] == "inside_left") {
+		$navpos = "navArwInLeft";
+	} else {
+		$navpos = "navArwInRight";
+	}
+	if ($groups ['navigation_arrow'] == "never") {
+			$navarrow = "noNavArw";
+		} elseif ($groups ['navigation_arrow'] == "always") {
+			$navarrow = "alwaysNavArw";
+		} else {
+			$navarrow = "NavArwOnHover";
+		}	
+
+	if ($groups ['show_pagination'] == "never") {
+		$showpage = "noPaging";
+	} elseif ($groups ['show_pagination'] == "always") {
+		$showpage = "alwaysPaging";
+	} else {
+		$showpage = "pagingOnHover";
+	}
+
+	?>
+<?php }  } ?>
+<?php } } ?> 

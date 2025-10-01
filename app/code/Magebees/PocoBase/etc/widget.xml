@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="fbfanboxwidget" class="Magebees\PocoBase\Block\Widget\Fbfanbox">
+        <label translate="true">Magebees_PocoBase::Facebook Fanbox Widget</label>
+        <description>Facebook Fanbox Widget</description>
+        <parameters>
+            <parameter name="title" xsi:type="text" visible="true" required="true" sort_order="10" >
+                <label translate="true">Title</label>
+            </parameter>
+            <parameter name="fb_width" xsi:type="text" visible="true" required="true" sort_order="20" >
+                <label translate="true">Width</label>
+				<description translate="true"><![CDATA[The pixel width of the plugin. Min. is 180 & Max. is 500]]></description>
+            </parameter>
+            <parameter name="fb_height" xsi:type="text" visible="true" required="true" sort_order="25" >
+                <label translate="true">Height</label>
+				<description translate="true"><![CDATA[The pixel height of the plugin. Min. is 70 & Max. is 500]]></description>
+            </parameter>
+            <parameter name="fb_tabs" xsi:type="multiselect" source_model="Magebees\PocoBase\Model\Config\Source\Tabs" visible="true" sort_order="30">
+                <label translate="true">Tabs</label>
+                <description translate="true"><![CDATA[]]></description>
+            </parameter>
+            <parameter name="fb_small_header" xsi:type="select" source_model="Magento\Config\Model\Config\Source\Yesno" visible="true" sort_order="35">
+                <label translate="true">Use Small Header</label>
+                <description translate="true"><![CDATA[]]></description>
+            </parameter>
+            <parameter name="fb_hide_cover" xsi:type="select" source_model="Magento\Config\Model\Config\Source\Yesno" visible="true" sort_order="40">
+                <label translate="true">Hide Cover Photo</label>
+                <description translate="true"><![CDATA[Hide cover photo in the header]]></description>
+            </parameter>
+            <parameter name="fb_show_faces" xsi:type="select" source_model="Magento\Config\Model\Config\Source\Yesno" visible="true" sort_order="45">
+                <label translate="true">Show Friends Faces</label>
+                <description translate="true"><![CDATA[Show profile photos when friends like this]]></description>
+            </parameter>
+        </parameters>
+    </widget> 
+	<widget id="contentwidget" class="Magebees\PocoBase\Block\Widget\Content">
+        <label translate="true">Magebees_PocoBase::Content Widget</label>
+        <description>Content Widget</description>
+        <parameters>
+			 <parameter name="wd_spacing" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="1">
+                <label translate="true">Spacing on Section</label>
+                <description translate="true">Select Yes for manage space on section.</description>
+            </parameter>
+            <parameter name="wd_bottom_spacing" xsi:type="select" visible="true"
+                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="2">
+                <label translate="true">Bottom Spacing on Section</label>
+                <description translate="true">Select Yes for manage space after section.</description>
+            </parameter>
+            <parameter name="wd_bgcolor" xsi:type="block" visible="true" sort_order="3">
+                <label translate="true">Background Color</label>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\Color" />
+            </parameter>
+            <parameter name="wd_bgimage" xsi:type="block" visible="true" sort_order="4">
+                <label translate="true">Background Image</label>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\ImageChooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string">Choose Image...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+            <parameter name="wd_content_position" xsi:type="select" visible="true" sort_order="6">
+                <label translate="true">Content Section Position</label>
+                <description translate="true">Select Content Position.</description>
+                <options>
+                    <option name="left" value="left" selected="true">
+                        <label translate="true">Left</label>
+                    </option>
+                    <option name="right" value="right">
+                        <label translate="true">Right</label>
+                    </option>
+                </options>
+            </parameter>
+
+            <parameter name="wd_content_type" xsi:type="select" visible="true" sort_order="7">
+                <label translate="true">Select Content Type</label>
+                <description translate="true">Select Content Type</description>
+                <options>
+                    <option name="custom" value="custom" selected="true">
+                        <label translate="true">Custom</label>
+                    </option>
+                    <option name="block" value="block">
+                        <label translate="true">Static Block</label>
+                    </option>
+                </options>
+            </parameter>
+
+            <parameter name="wd_title" xsi:type="text" visible="true" required="false" sort_order="8">
+                <label translate="true">Title</label>
+                <description translate="true"><![CDATA[]]></description>
+               
+				<depends>
+					<parameter name="wd_content_type" value="custom" />
+				</depends>
+            </parameter>
+            <parameter name="wd_short_desc" xsi:type="text" visible="true" required="false" sort_order="9">
+                <label translate="true">Short Description</label>
+                <description translate="true"><![CDATA[]]></description>
+                <depends>
+					<parameter name="wd_content_type" value="custom" />
+				</depends>
+            </parameter>
+            <parameter name="wd_description" xsi:type="block" required="false" visible="true" sort_order="10">
+                <label translate="true">Text</label>
+             
+				<description translate="true"><![CDATA[Display if content type custom. <br/>
+				Note : Applied Only When You are selecting Custom For Content Type.]]></description>
+				
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\TextField"/>
+            </parameter>
+            <parameter name="wd_block" xsi:type="text" required="true" visible="true" sort_order="11">
+                <label translate="true">Static Block</label>
+                <description translate="true"><![CDATA[Add Static Block Identifier]]></description>
+                <depends>
+                    <parameter name="wd_content_type" value="block" />                     
+                </depends>
+            </parameter>
+			<parameter name="wd_video_url" xsi:type="text" visible="true" sort_order="12">
+                <label translate="true">Add Link for Video</label>
+                <description translate="true">Add relative URL for View More Page.</description>
+                <depends>
+                    <parameter name="wd_video_on_popup" value="1" />                     
+                </depends>
+            </parameter>
+			<parameter name="wd_view_more" xsi:type="select" visible="true"
+                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="13">
+                <label translate="true">Display View More Button</label>
+                <description translate="true">Select Yes for display "View More" button.</description>
+            </parameter>
+            <parameter name="wd_view_more_text" xsi:type="text" required="true" visible="true" sort_order="14">
+                <label translate="true">Add View More Button Label</label>
+                <depends>
+                    <parameter name="wd_view_more" value="1" />                     
+                </depends>
+            </parameter>
+            <parameter name="wd_view_more_link" xsi:type="text" required="true" visible="true" sort_order="15">
+                <label translate="true">Add Link for View More Page</label>
+                <description translate="true">Add relative URL for View More Page.</description>
+                <depends>
+                    <parameter name="wd_view_more" value="1" />                     
+                </depends>
+            </parameter>
+			
+            <parameter name="wd_additional_content" xsi:type="select" visible="true" sort_order="16">
+                <label translate="true">Show Additional Content Type</label>
+                <description translate="true">Show Additional Content Type</description>
+                <options>
+                    <option name="0" value="0" selected="true">
+                        <label translate="true">No</label>
+                    </option>
+                    <option name="1" value="1">
+                        <label translate="true">Yes</label>
+                    </option>
+                </options>
+</parameter>
+			
+<parameter name="wd_additional_content_type" xsi:type="select" visible="true" sort_order="17">
+                <label translate="true">Select Additional Content Type</label>
+                <description translate="true">Select Content Type</description>
+				<depends>
+                    <parameter name="wd_additional_content" value="1" />                     
+                </depends>
+                <options>
+                    <option name="custom" value="custom" selected="true">
+                        <label translate="true">Custom</label>
+                    </option>
+                    <option name="block" value="block">
+                        <label translate="true">Static Block</label>
+                    </option>
+                </options>
+</parameter>
+
+<parameter name="wd_additional_title" xsi:type="text" visible="true" required="false" sort_order="18">
+                <label translate="true">Additional Content Title</label>
+                <description translate="true"><![CDATA[]]></description>
+					<depends>
+					<parameter name="wd_additional_content" value="1" />
+                    <parameter name="wd_additional_content_type" value="custom"/>
+					</depends>
+            </parameter>
+            <parameter name="wd_additional_short_desc" xsi:type="text" visible="true" required="false" sort_order="19">
+                <label translate="true">Additional Content Short Description</label>
+                <description translate="true"><![CDATA[]]></description>
+               <depends>
+					<parameter name="wd_additional_content" value="1" />
+                    <parameter name="wd_additional_content_type" value="custom"/>
+					</depends>
+            </parameter>
+            <parameter name="wd_additional_description" xsi:type="block" required="false" visible="true" sort_order="20">
+                <label translate="true">Additional Content Text</label>
+                <description translate="true"><![CDATA[Display if content type custom. <br/>
+				Note : Applied Only When You are selecting Custom For Additional Content Type.]]></description>
+				
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\TextField"/>
+            </parameter>
+			<parameter name="wd_additional_view_more" xsi:type="select" visible="true"
+                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="21">
+                <label translate="true">Display View More Button On Additional Content</label>
+                <description translate="true">Select Yes for display "View More" button On Additional Content.</description>
+				<depends>
+					<parameter name="wd_additional_content" value="1" />
+                    <parameter name="wd_additional_content_type" value="custom"/>
+					</depends>
+            </parameter>
+            <parameter name="wd_additional_view_more_text" xsi:type="text" required="true" visible="true" sort_order="22">
+                <label translate="true">Add View More Button Label On Additional Content</label>
+                
+				<depends>
+					<parameter name="wd_additional_content" value="1" />
+                    <parameter name="wd_additional_content_type" value="custom"/>
+					<parameter name="wd_additional_view_more" value="1" />
+					</depends>
+            </parameter>
+            <parameter name="wd_additional_view_more_link" xsi:type="text" required="true" visible="true" sort_order="23">
+                <label translate="true">Add Link for View More Page On Additional Content</label>
+                <description translate="true">Add relative URL for View More Page On Additional Content.</description>
+                <depends>
+					<parameter name="wd_additional_content" value="1" />
+                    <parameter name="wd_additional_content_type" value="custom"/>
+					<parameter name="wd_additional_view_more" value="1" />
+					</depends>
+            </parameter>
+			
+            <parameter name="wd_additional_block" xsi:type="text" required="true" visible="true" sort_order="24">
+                <label translate="true">Additional Content Static Block</label>
+                <description translate="true"><![CDATA[Add Static Block Identifier]]></description>
+                
+				<depends>
+					<parameter name="wd_additional_content" value="1" />
+                    <parameter name="wd_additional_content_type" value="block"/>
+					</depends>
+					
+            </parameter>
+
+            <parameter name="wd_image_section" xsi:type="block" visible="true" sort_order="25">
+                <label translate="true">Video Thumbanil Image Section</label>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\ImageChooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string">Choose Image...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+			<parameter name="wd_video_on_text" xsi:type="text" visible="true" sort_order="26">
+                <label translate="true">Video Block text</label>
+                <description translate="true">Display text on video block.</description>
+            </parameter>
+            <parameter name="wd_video_on_popup" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="27">
+                <label translate="true">Display Video on Popup</label>
+                <description translate="true">Video will display in popup on click of image.</description>
+            </parameter>
+            <parameter name="wd_video_url" xsi:type="text" visible="true" sort_order="28">
+                <label translate="true">Add Link for Video</label>
+                <description translate="true">Add relative URL for View More Page.</description>
+                <depends>
+                    <parameter name="wd_video_on_popup" value="1" />                     
+                </depends>
+            </parameter>
+			
+            
+           
+            
+        </parameters>
+    </widget>
+     
+    <widget id="magebees_blog_latestpost" class="Magebees\Blog\Block\Widget\LatestPosts"  >
+        <parameters>
+			<parameter name="wd_spacing" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="1">
+                <label translate="true">Spacing on Section</label>
+                <description translate="true">Select Yes for manage space on section.</description>
+            </parameter>
+            <parameter name="wd_bottom_spacing" xsi:type="select" visible="true"
+                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="2">
+                    <label translate="true">Bottom Spacing on Section</label>
+                    <description translate="true">Select Yes for manage space after section.</description>
+            </parameter>
+			<parameter name="wd_bgimage" xsi:type="block" visible="true" sort_order="3">
+                <label translate="true">Background Image</label>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\ImageChooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string">Choose Image...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+            <parameter name="wd_bgcolor" xsi:type="block" visible="true" sort_order="4">
+                <label translate="true">Background Color</label>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\Color" />
+            </parameter>
+			<parameter name="wd_post_view_all_text" xsi:type="text" visible="true" required="true" sort_order="39">
+					<label translate="true">View All Button Title</label>
+					<description translate="true">Here we can set View All Button Title.</description>
+					<depends>
+						<parameter name="wd_post_show_view_all" value="1" />
+					</depends>
+			</parameter>
+			<parameter name="wd_view_all_position" xsi:type="select" visible="true" sort_order="5">
+                <label translate="true">View All Position</label>
+                <description translate="true"><![CDATA[]]></description>
+					<depends>
+						<parameter name="wd_post_show_view_all" value="1" />
+					</depends>
+                <options>
+                    <option name="top" value="top" selected="true">
+                        <label translate="true">Top</label>
+                    </option>
+                    <option name="bottom" value="bottom">
+                        <label translate="true">Bottom</label>
+                    </option>
+                    
+                </options>
+				
+            </parameter>
+        </parameters>
+    </widget>
+<!-- Advertisement Block -->
+    <widget id="magebees_advertisementblock" class="Magebees\Advertisementblock\Block\Widget\Advertisementwidget">
+        <parameters>
+		<parameter name="template" xsi:type="select" required="true" visible="true" sort_order="-11">
+                <label translate="true">Template</label>
+                <options>
+                    <option name="default" value="widget/advertisement.phtml" selected="true">
+                        <label translate="true">Advertisement Block Template</label>
+                    </option>                               
+                </options>
+            </parameter>
+		<parameter name="wd_load_ajax" xsi:type="select" visible="true"                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="-10">                <label translate="true">Load using Ajax</label>                <description translate="true">Select Yes Load Advertisement Block using Ajax.</description> 
+			</parameter>
+        <parameter name="wd_spacing" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="1">
+            <label translate="true">Spacing on Section</label>
+            <description translate="true">Select Yes for manage space on section.</description>
+        </parameter>
+        <parameter name="wd_bottom_spacing" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="2">
+                <label translate="true">Bottom Spacing on Section</label>
+                <description translate="true">Select Yes for manage space after section.</description>
+        </parameter>
+		<parameter name="wd_custom_class" xsi:type="text" visible="true"
+                       sort_order="3">
+                <label translate="true">Custom Class</label>
+        </parameter>
+		<parameter name="wd_btn_icon" xsi:type="text" visible="true" required="false">
+                <label translate="true">Button Icon</label>
+                <description translate="true"></description>
+			</parameter>
+    </parameters>            
+    </widget>
+<!-- Advertisement Block -->
+<!-- Ajax Category Products -->
+    <widget id="magebees_ajax_category_products" class="Magebees\AjaxCategoryProducts\Block\Widget\CategoryProductsWidget">
+        <label translate="true">Magebees::Ajax Category Products Widget</label>
+        <description translate="true">List of products with load more and category list which can be filter with ajax</description>
+        <parameters>
+				 <parameter name="template" xsi:type="select" required="true" visible="true" sort_order="-1">
+                    <label translate="true">Template</label>
+                    <options>
+                        <option name="default" value="products.phtml" selected="true">
+                            <label translate="true">Products List with Load More and Category Template</label>
+                        </option>
+						<option name="productgrid" value="product_grid.phtml">
+                            <label translate="true">Products List and Category Template</label>
+                        </option>
+                        <option name="slider" value="products_slider.phtml">
+                            <label translate="true">Products List with Slider and Category Template</label>
+                        </option>
+                    </options>
+			</parameter> 
+
+				<parameter name="wd_spacing" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="1">
+                <label translate="true">Spacing on Section</label>
+                <description translate="true">Select Yes for manage space on section.</description>
+				</parameter>
+				<parameter name="wd_bottom_spacing" xsi:type="select" visible="true"
+                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="2">
+						<label translate="true">Bottom Spacing on Section</label>
+						<description translate="true">Select Yes for manage space after section.</description>
+                   
+				</parameter>
+				<parameter name="wd_bgimage" xsi:type="block" visible="true" sort_order="3">
+                <label translate="true">Background Image</label>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\ImageChooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string">Choose Image...</item>
+                        </item>
+                    </data>
+                </block>
+				</parameter>
+		
+				<parameter name="wd_bgcolor" xsi:type="block" visible="true" sort_order="4">
+					<label translate="true">Background Color</label>
+					<block class="Magebees\PocoBase\Block\Adminhtml\Widget\Color" />
+				</parameter>
+				<parameter name="wd_autoplay" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="19">
+                <label translate="true">Auto Play products</label>
+                <description translate="true"><![CDATA[Select Yes for Enable Auto Scroll on slider.<br/>
+Note: Works only with Products List with Slider Template.]]></description>
+<depends><parameter name="template" value="products_slider.phtml" /></depends>	
+            </parameter>
+			<parameter name="wd_autoplayTimeout" xsi:type="text" required="true" visible="true" sort_order="20">
+                <label translate="true">Auto Play Timeout</label>
+                <description translate="true"><![CDATA[Set Second in Milisecond for Auto Scroll on slider Ex:5000. <br/>
+Note: Works only with Products List with Slider Template.]]></description>
+<depends>
+<parameter name="wd_autoplay" value="1" />
+<parameter name="template" value="products_slider.phtml" />
+</depends>
+</parameter>
+			<parameter name="wd_shownav" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="21">
+                <label translate="true">Show Navigation Arrow</label>
+                <description translate="true"><![CDATA[Select Yes for Show  Navigation Arrow.<br/>
+Note: Works only with Products List with Slider Template.]]></description>
+<depends><parameter name="template" value="products_slider.phtml" /></depends>	
+            </parameter>
+			<parameter name="wd_showdots" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="22">
+                <label translate="true">Show Dots</label>
+                <description translate="true"><![CDATA[Select Yes for Show  Dots.<br/>
+Note: Works only with Products List with Slider Template.]]></description>
+            <depends><parameter name="template" value="products_slider.phtml" /></depends>	
+			</parameter>
+			<parameter name="wd_number_of_items_per_slide" xsi:type="select" visible="true"
+                   source_model="Magebees\PocoBase\Model\Config\Source\Rowselect" sort_order="23">
+                <label translate="true">Number of products per slide</label>
+				<description translate="true"><![CDATA[Show number of products per slide.<br/>
+Note: Works only with Products List with Slider Template.]]></description>
+				<depends><parameter name="template" value="products_slider.phtml" /></depends>	
+		</parameter>
+		
+			<parameter name="wd_short_desc" xsi:type="text" visible="true" sort_order="8">
+                <label translate="true">Short Description</label>
+                <description translate="true"></description>
+            </parameter>
+            </parameters>
+                     
+    </widget>
+<!-- Ajax Category Products -->
+<!-- Layerednavigation  Brand -->   
+    <widget id="layerednavigation_brand_widget" class="Magebees\Layerednavigation\Block\Widget\Brandwidget">
+        <parameters>
+            <parameter name="wd_spacing" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="1">
+                <label translate="true">Spacing on Section</label>
+                <description translate="true">Select Yes for manage space on section.</description>
+               
+            </parameter>
+            <parameter name="wd_bottom_spacing" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno"  sort_order="2">
+                <label translate="true">Bottom Spacing on Section</label>
+                <description translate="true">Select Yes for manage space after section.</description>
+               
+            </parameter>
+            <parameter name="wd_bgimage" xsi:type="block" visible="true" sort_order="3">
+                <label translate="true">Background Image</label>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\ImageChooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string">Choose Image...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+            <parameter name="wd_bgcolor" xsi:type="block" visible="true" sort_order="4">
+                <label translate="true">Background Color</label>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\Color" />
+            </parameter>
+			<parameter name="wd_show_heading" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="5">
+                <label translate="true">Display heading</label>
+                <description translate="true">Select Yes for display page heading.</description>
+            </parameter>
+            <parameter name="wd_heading" xsi:type="text" visible="true" required="true" sort_order="6">
+                <label translate="true">Heading</label>
+                <description translate="true">Here we can set heading.</description>
+                <depends>
+                    <parameter name="wd_show_heading" value="1" />
+                </depends>
+            </parameter>
+			
+			<parameter name="wd_short_desc" xsi:type="text" visible="true" sort_order="7">
+                <label translate="true">Short Description</label>
+                <description translate="true"></description>
+            </parameter>
+			<parameter name="wd_featured_brand" xsi:type="select" visible="true" sort_order="7">
+                <label translate="true">Featured Brand</label>
+                <description translate="true"></description>
+				<options>
+                    <option name="0" value="0" selected="true">
+                        <label translate="true">No</label>
+                    </option>
+                    <option name="1" value="1">
+                        <label translate="true">Yes</label>
+                    </option>
+                </options>
+            </parameter>
+            
+        </parameters>
+    </widget>
+	<!-- Layerednavigation  Brand -->   
+<!-- Customer  Testimonial -->
+     <widget id="customer_testimonials" class="Magebees\Testimonial\Block\Widget\Testimonialwidget">
+        <parameters>
+			
+			
+			<parameter name="wd_spacing" xsi:type="select" visible="true"
+                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="1">
+                <label translate="true">Spacing on Section</label>
+                <description translate="true">Select Yes for manage space on section.</description>
+            </parameter>
+            <parameter name="wd_bottom_spacing" xsi:type="select" visible="true"
+                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="2">
+                <label translate="true">Bottom Spacing on Section</label>
+                <description translate="true">Select Yes for manage space after section.</description>
+            </parameter>
+			<parameter name="wd_bgimage" xsi:type="block" visible="true" sort_order="3">
+                <label translate="true">Background Image</label>
+                <description translate="true"></description>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\ImageChooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string">Choose Image...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+			<parameter name="wd_bgcolor" xsi:type="block" visible="true" sort_order="4">
+                <label translate="true">Background Color</label>
+                <description translate="true"></description>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\Color" />
+            </parameter>
+            <parameter name="wd_short_desc" xsi:type="text" visible="true" sort_order="12">
+                <label translate="true">Short Description</label>
+                <description translate="true"><![CDATA[]]></description>
+            </parameter>
+            
+			
+            
+        </parameters>
+    </widget>
+  <!-- Customer  Testimonial --> 
+	
+	<!-- TodayDeal Products -->
+    <widget id="magebees_today_deal_products" class="Magebees\TodayDealProducts\Block\Widget\DealProductsWidget" >
+        <parameters>
+            <parameter name="wd_load_ajax" xsi:type="select" visible="true"                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="1"> 
+				
+				
+			<label translate="true">Load using Ajax</label>                <description translate="true">Select Yes Load TodayDealProducts Block using Ajax.</description> 
+			<depends>
+					<parameter name="template" value="today_deal_products_slider.phtml" />
+				</depends>
+			</parameter>
+			
+            
+			<parameter name="wd_spacing" xsi:type="select" visible="true"
+                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="1">
+                <label translate="true">Spacing on Section</label>
+                <description translate="true">Select Yes for manage space on section.</description>
+                   
+            </parameter>
+            <parameter name="wd_bottom_spacing" xsi:type="select" visible="true"
+                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="2">
+                <label translate="true">Bottom Spacing on Section</label>
+                <description translate="true">Select Yes for manage space after section.</description>
+                   
+            </parameter>
+            <parameter name="wd_bgimage" xsi:type="block" visible="true" sort_order="3">
+                <label translate="true">Background Image</label>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\ImageChooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string">Choose Image...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+			<parameter name="wd_bgcolor" xsi:type="block" visible="true" sort_order="4">
+                <label translate="true">Background Color</label>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\Color" />
+            </parameter>
+        </parameters>
+    </widget>
+	<!-- TodayDeal Products -->
+	<!-- Gallery Image  -->
+    <widget id="magebees_imagegallery" class="Magebees\Imagegallery\Block\Widget\Gallery" >
+        <parameters>
+            
+            
+			<parameter name="wd_spacing" xsi:type="select" visible="true"
+                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="1">
+                <label translate="true">Spacing on Section</label>
+                <description translate="true">Select Yes for manage space on section.</description>
+                   
+            </parameter>
+            <parameter name="wd_bottom_spacing" xsi:type="select" visible="true"
+                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="2">
+                <label translate="true">Bottom Spacing on Section</label>
+                <description translate="true">Select Yes for manage space after section.</description>
+                   
+            </parameter>
+            <parameter name="wd_bgimage" xsi:type="block" visible="true" sort_order="3">
+                <label translate="true">Background Image</label>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\ImageChooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string">Choose Image...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+			<parameter name="wd_bgcolor" xsi:type="block" visible="true" sort_order="4">
+                <label translate="true">Background Color</label>
+                <block class="Magebees\PocoBase\Block\Adminhtml\Widget\Color" />
+            </parameter>
+        </parameters>
+    </widget>
+	<!-- TodayDeal Products -->
+</widgets>

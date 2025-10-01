@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Magebees\Socialsharing\Block\Socialsharing" name="mb.SocialShare.Float" template="Magebees_Socialsharing::socialsharing.phtml" after="-">
+                <arguments>
+                    <argument name="page" xsi:type="string">contact_us</argument>
+                    <argument name="position" xsi:type="string">float_position</argument>
+                    <argument name="type" xsi:type="string">float</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

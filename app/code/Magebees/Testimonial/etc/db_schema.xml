@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="magebees_customer_testimonials" resource="default" engine="innodb" comment="magebees_customer_testimonials">
+    <column xsi:type="int" name="testimonial_id" padding="10" unsigned="true" nullable="false" identity="true" comment="id"/>
+    <column xsi:type="text" name="name" nullable="false" comment="name"/>
+    <column xsi:type="text" name="email" nullable="false" comment="email"/>
+    <column xsi:type="text" name="image" nullable="false" comment="image"/>
+    <column xsi:type="text" name="website" nullable="false" comment="website"/>
+    <column xsi:type="text" name="company" nullable="false" comment="company"/>
+    <column xsi:type="text" name="address" nullable="false" comment="address"/>
+    <column xsi:type="text" name="testimonial" nullable="false" comment="testimonial"/>
+    <column xsi:type="int" name="status" padding="10" unsigned="true" nullable="false" identity="false" comment="status"/>
+    <column xsi:type="text" name="stores" nullable="false" comment="stores"/>
+    <column xsi:type="int" name="ext_video" padding="10" unsigned="true" nullable="false" identity="false" comment="ext_video"/>
+    <column xsi:type="text" name="video_url" nullable="false" comment="video_url"/>
+    <column xsi:type="int" name="rating" padding="10" unsigned="true" nullable="false" identity="false" comment="rating"/>
+    <column xsi:type="int" name="enabled_home" padding="10" unsigned="true" nullable="false" identity="false" comment="enabled"/>
+    <column xsi:type="int" name="enabled_widget" padding="10" unsigned="true" nullable="false" identity="false" comment="enabled"/>
+    <column xsi:type="datetime" name="inserted_date" on_update="false" nullable="false" comment="inserted_date"/>
+    <column xsi:type="datetime" name="updated_date" on_update="false" nullable="false" comment="updated_date"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="testimonial_id"/>
+    </constraint>
+  </table>
+</schema>

@@ -1,0 +1,54 @@
+<?php
+/** @var $block \Magento\Framework\View\Element\Html\Link */
+?>
+<?php $_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); ?>
+<?php $_blogConfiguration = $this->helper('Magebees\Blog\Helper\Configuration'); ?>
+
+<ul id="user-links">
+	<?php if($_helper->isLoggedIn()) : ?>
+	<li class="logout">
+		<a href="<?php /* @escapeNotVerified */ echo $this->getUrl('customer/account/logout', ['_secure' => true]); ?>" >
+			<?php echo $block->escapeHtml("Sign out"); ?>
+		</a>
+	</li>
+	<li class="my_account_link">
+		<a href="<?php /* @escapeNotVerified */ echo $this->getUrl('customer/account', ['_secure' => true]); ?>" >
+			<?php echo $block->escapeHtml("My Account"); ?>
+		</a>
+	</li>
+	<?php else: ?>
+	<li class="login">
+		<a href="<?php /* @escapeNotVerified */ echo $this->getUrl('customer/account/login', ['_secure' => true]); ?>" >
+			<?php echo $block->escapeHtml("Sign in"); ?>
+		</a>
+	</li>
+	
+
+	<li class="authorization-link">
+		<a href="<?php /* @escapeNotVerified */ echo $this->getUrl('customer/account/create', ['_secure' => true]); ?>" >
+			<?php echo $block->escapeHtml("Create an Account"); ?>
+		</a>
+	</li>
+	<?php endif;?>
+	<li class="link wishlist" data-bind="scope: 'wishlist'">
+		<a href="<?php /* @escapeNotVerified */ echo $this->getUrl('wishlist', ['_secure' => true]); ?>">
+		<?php echo __('My Wishlist')?>
+		        <!-- ko if: wishlist().counter --><!-- /ko -->
+		</a>
+	</li>
+	<?php if($_helper->isCmsPageExists('deal')):?>
+	<li class="deal_link">
+		<a href="<?php /* @escapeNotVerified */ echo $this->getUrl('deal', ['_secure' => true]); ?>" >
+			<?php echo $block->escapeHtml("Daily Deal"); ?>
+		</a>
+	</li>
+	<?php endif;?>
+	<?php if($_blogConfiguration->getEnableMenuLink()):?>
+	<li class="blog_link">
+		<a href="<?php /* @escapeNotVerified */ echo $this->getUrl('blog', ['_secure' => true]); ?>" >
+			<?php echo $block->escapeHtml("Blog"); ?>
+		</a>
+	</li>
+	<?php endif;?>
+</ul>
+  

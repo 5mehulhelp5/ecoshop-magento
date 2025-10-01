@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+   
+    <body>
+      <block class="Magento\Catalog\Block\Product\View" name="product.info" template="Magebees_Ajaxaddtocart::form.phtml" after="alert.urls">
+                    
+                        <block class="Magento\Catalog\Block\Product\View" name="product.info.addtocart" as="addtocart" template="Magebees_Ajaxaddtocart::addtocart.phtml"/>
+                        <block class="Magento\Framework\View\Element\Template" name="product.info.block.products" as="block_products">
+                    <block class="Magento\Catalog\Block\Product\ProductList\Related" name="catalog.product.related" template="Magebees_Ajaxaddtocart::product/list/items.phtml" ifconfig='ajaxaddtocart/dialogboxsetting/related'>
+            <arguments>
+                <argument name="type" xsi:type="string">related</argument>
+            </arguments>
+        </block>
+        <block class="Magento\Catalog\Block\Product\ProductList\Upsell" name="product.info.upsell" template="Magebees_Ajaxaddtocart::product/list/items.phtml" ifconfig='ajaxaddtocart/dialogboxsetting/upsell'>
+            <arguments>
+                <argument name="type" xsi:type="string">upsell</argument>
+            </arguments>
+        </block>
+        <block class="Magento\Catalog\Block\Product\ProductList\Crosssell"  template="Magebees_Ajaxaddtocart::product/list/crosssell.phtml" after="-" ifconfig='ajaxaddtocart/dialogboxsetting/crosssell'>
+            <arguments>
+                <argument name="type" xsi:type="string">crosssell</argument>
+            </arguments>
+        </block>
+    </block>
+                    
+                    <block class="Magento\Framework\View\Element\Template" name="product.info.form.options" as="options_container">
+                    
+        
+        
+        <block class="Magento\Catalog\Pricing\Render" name="product.price.final" after="product.info.sku">
+            <arguments>
+                <argument name="price_render" xsi:type="string">product.price.render.default</argument>
+                <argument name="price_type_code" xsi:type="string">final_price</argument>
+                <argument name="zone" xsi:type="string">item_view</argument>
+            </arguments>
+        </block>
+         <referenceBlock name="product.info.options.wrapper">
+          </referenceBlock>
+                  
+                        <block class="Magento\Catalog\Block\Product\View" name="product.info.options.wrapper.bottom" as="product_options_wrapper_bottom" template="product/view/options/wrapper/bottom.phtml">
+                            <block class="Magento\Catalog\Block\Product\View" name="product.info.addtocart.additional" as="product.info.addtocart" template="Magebees_Ajaxaddtocart::addtocart.phtml"/>
+                        </block>
+                    </block>
+                </block>
+    
+      
+    </body>
+</page>

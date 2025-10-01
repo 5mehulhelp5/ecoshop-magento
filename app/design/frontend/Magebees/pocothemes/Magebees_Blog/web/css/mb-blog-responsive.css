@@ -1,0 +1,65 @@
+@media (max-width: 767px) {
+    .mb-blog-toolbar .toolbar-amount { float: left; }
+
+    .mb-recent-post .mb-thumb { width: auto; }
+
+    .blog-post-view .page-title { font-size: 30px; line-height: normal; }
+
+    .mb-comment-form { padding: 20px; }
+    .mb-post-viewpage .mb-post-content h2 { font-size: 20px; line-height: normal; }
+
+    .mb-related-post .item { width: 32%; }
+    .mb-related-post .item:nth-of-type(3n) { margin-right: 0; }
+    .mb-related-post .item:nth-of-type(3n+1) { clear: left; }
+
+    .mb-related-products .products-grid .product-item { width: 32%; }
+    .mb-related-products .products-grid .product-item:nth-of-type(4n) { margin-left: 0; }
+    .mb-related-products .products-grid .product-item:nth-of-type(3n+1) { clear: left; }
+    
+    .mb-product-related-posts .item { width: 49%; }
+    .mb-product-related-posts .item:nth-of-type(2n) { margin-right: 0; }
+    .mb-product-related-posts .item:nth-of-type(2n+1) { clear: left; }
+
+}
+
+
+@media (max-width: 639px) {
+    .mb-blog-toolbar .toolbar-amount { display: none; }
+    .mb-blog-toolbar .pages { float: left; }
+    .mb-blog-toolbar .pages-item-next, .mb-blog-toolbar .pages-item-previous { position: static; }
+    .mb-blog-toolbar .pages .pages-items { padding: 0; }
+    .mb-blog-toolbar .limiter .limiter-label { display: none; }
+
+    .mb-post-listing .mb-post-listview .mb-post-title { min-height: inherit !important; }
+
+    .mb-post-listing .mb-post-meta .item-meta { display: block; margin-bottom: 5px; padding-right: 0; }
+    .mb-post-listing .mb-post-meta .mb-post-post-date { margin-bottom: 5px; }
+    .mb-post-listing .mb-post-meta .addthis_toolbox { float: none; }
+
+    .mb-comment-form .fieldset .fields .field { width: 100%; padding-right: 0; }
+    .mb-comment-form .fieldset .fields .field.last { padding-left: 0; margin-bottom: 15px; }
+
+    .mb-postview-footer .mgblog-post-vote { display: block; margin-bottom: 10px; }
+    .mb-postview-footer .item-meta { float: left; }
+
+    .mb-post-viewpage .mb-post-content img[style="float: left;"] { float: none !important; display: block; margin-right: 0; }
+    .mb-post-viewpage .mb-post-content img[style="float: right;"]  { float: none !important; display: block; margin-left: 0; }
+}
+
+@media (max-width: 480px) {
+    .mb-post-listing .mb-post-title { font-size: 20px; }
+    .mb-post-listing .mb-post-listview .mb-post-title { font-size: 23px; }
+
+    .mb-recent-post .mb-thumb { width: 18%; }
+
+    .blog-post-view .page-title { font-size: 26px; }
+
+    .mb-post-gallery .item { width: 49%; }
+    .mb-post-gallery .item:nth-of-type(2n) { margin-right: 0; }
+
+    .mb-post-title { font-size: 16px; }
+    .mb-product-related-posts .mb-post-excerpt { font-size: 13px; }
+
+    .mb-widget-post-grid .widget-heading .widget-title .title { font-size: 24px; }
+    .mb-widget-post-grid .item { width: 100%; margin-right: 0; }
+}

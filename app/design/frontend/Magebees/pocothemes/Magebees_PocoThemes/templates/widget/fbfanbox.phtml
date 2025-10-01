@@ -1,0 +1,49 @@
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); ?>
+<?php $enable = $poco_helper->getAdvanced('fbfanbox_enable',$poco_helper->getStoreId()); ?>
+<?php if ($enable) { ?>
+<div class="block block-fblikebox">
+    <?php 
+	$title = $this->getData('title');
+	$fb_href = $poco_helper->getAdvanced('fb_url',$poco_helper->getStoreId());
+        $fb_width = $this->getData('fb_width');
+        $fb_height = $this->getData('fb_height');
+        $fb_tabs = $this->getData('fb_tabs');
+        $fb_small_header = $this->getData('fb_small_header');
+        $fb_hide_cover = $this->getData('fb_hide_cover');
+        $fb_show_faces = $this->getData('fb_show_faces');
+		if($fb_small_header=="1")
+		{
+			$fb_small = 'true';
+		}else{
+			$fb_small = 'false';
+		}
+		if($fb_hide_cover=="1")
+		{
+			$fbhidecover = 'true';
+		}else{
+			$fbhidecover = 'false';
+		}
+		if($fb_show_faces=="1")
+		{
+			$fbshowfaces = 'true';
+		}else{
+			$fbshowfaces = 'false';
+		}
+		$animation = $poco_helper->getThemeLayout('animation',$poco_helper->getStoreId())? true:false; 
+		$animation_class = $animation?"wow animate__fadeIn":" ";
+	?>
+	<div class="container">
+	
+	<div class="section-title">
+            <?php if($this->getData('title')): ?>
+                <h2 class="title"><?php echo $this->getData('title'); ?></h2>
+            <?php endif; ?>
+	</div>
+	<div id='fbfanbox'>
+		<div id="fb-root"></div> 
+		<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v7.0" nonce="HcLLKU0g"></script>
+		<div class="fb-page" data-href="<?php echo $fb_href;?>" data-tabs="<?php echo $fb_tabs;?>" data-width="<?php echo $fb_height;?>" data-height="<?php echo $fb_height;?>" data-small-header="<?php echo $fb_small;?>"  data-adapt-container-width="true" data-lazy="true" data-hide-cover="<?php echo $fbhidecover;?>" data-show-facepile="<?php echo $fbshowfaces;?>"><blockquote cite="<?php echo $fb_href;?>" class="fb-xfbml-parse-ignore"><a href="<?php echo $fb_href;?>"><?php echo $title; ?></a></blockquote></div>
+	</div>
+</div>
+</div>
+<?php }?>

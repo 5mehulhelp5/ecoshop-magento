@@ -1,0 +1,7 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <move element="catalog.product.related" destination="columns" after="-"/>
+		<move element="product.info.upsell" destination="columns" after="catalog.product.related"/>
+		<move element="catalog.recently.viewed.bottom" destination="columns" after="product.info.upsell"/>
+    </body>
+</page>

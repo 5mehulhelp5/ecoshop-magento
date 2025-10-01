@@ -1,0 +1,109 @@
+<?php 
+	$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+	$storeId = $poco_helper->getStoreId();
+	$animation = $poco_helper->getThemeLayout('animation',$storeId)? true:false; 
+	$animation_class = $animation?"wow animate__fadeIn":" ";
+	$footerConfig =$poco_helper->getConfigGroup('footer',$storeId);
+	
+	$cartStyle = $poco_helper->getConfigValue('general','style','shoppingcart',$storeId);
+	$show_newsletter = array_key_exists('show_newsletter', $footerConfig) ? $footerConfig['show_newsletter'] : null;
+	$footer_column_1 = array_key_exists('footer_column_1', $footerConfig) ? $footerConfig['footer_column_1'] : null;
+	$footer_column_2 = array_key_exists('footer_column_2', $footerConfig) ? $footerConfig['footer_column_2'] : null;
+	
+	$footer_content = array_key_exists('footer_content', $footerConfig) ? $footerConfig['footer_content'] : null;
+	$social_media_enable = array_key_exists('social_media_enable', $footerConfig) ? $footerConfig['social_media_enable'] : null;
+	$marquee_content_enable = array_key_exists('marquee_content_enable', $footerConfig) ? $footerConfig['marquee_content_enable'] : null;
+
+	$marquee_content = array_key_exists('marquee_content', $footerConfig) ? $footerConfig['marquee_content'] : null;
+	
+	
+	$payment_method_enable = array_key_exists('payment_method_enable', $footerConfig) ? $footerConfig['payment_method_enable'] : null;
+	$payment_method_block = array_key_exists('payment_method_block', $footerConfig) ? $footerConfig['payment_method_block'] : null;
+	
+	$copyright = array_key_exists('copyright', $footerConfig) ? $footerConfig['copyright'] : null;
+	$copyright_text = array_key_exists('copyright_text', $footerConfig) ? $footerConfig['copyright_text'] : null;
+?>
+
+<div class="footer footer-15 <?php if($cartStyle==2):echo ' flyout_on '; endif; echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.1s" <?php endif;?>>
+	<div class="footer-top">
+		<div class="container">
+			<?php //Footer links ?>
+				<div class="d-flex align-item-start">
+				<div class="footer-col ftr_abt_col <?php echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.2s" <?php endif;?>>
+					<div class="footer-logo mb-3"><?php echo $block->getChildHtml('footer_logo'); ?></div>
+					
+					<?php if($footer_content): ?>
+					<?php 
+					$footer_content_block = $poco_helper->getBlockContentByIdentifier($footer_content); 
+					if($footer_content_block): ?> 
+						<div class="block html-block"><?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($footer_content)->toHtml(); ?></div>
+					<?php endif; ?>
+					
+					<?php endif; ?>
+					<!-- Social Icon Footer -->
+					<?php if($social_media_enable): ?>
+						<div class="footer-social mt-1">
+							<?php echo $block->getLayout()->createBlock('Magento\Framework\View\Element\Template')->setTemplate('Magento_Theme::html/social.phtml')->toHtml(); ?>
+						</div>
+					<?php endif; ?>
+					<!-- End Social Icon Footer -->
+				</div>
+				
+				<?php if($footer_column_1): ?>
+					<div class="footer-col footer-links <?php echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.4s" <?php endif;?>>
+						<?php 
+					echo $this->getLayout()->createBlock("Magebees\Navigationmenu\Block\Menucreator")->setUniqueCode($footer_column_1)->setTemplate("Magebees_Navigationmenu::menucreator.phtml")->toHtml(); 
+					?>
+					</div>
+					<?php endif; ?>
+				<?php if($footer_column_2): ?>
+				
+				<div class="footer-col footer-links <?php echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.6s" <?php endif;?>>
+					<?php echo $this->getLayout()->createBlock("Magebees\Navigationmenu\Block\Menucreator")->setUniqueCode($footer_column_2)->setTemplate("Magebees_Navigationmenu::menucreator.phtml")->toHtml();?>
+				</div>
+				<?php endif; ?>
+				
+				<?php if($show_newsletter): ?>
+					<div class="footer-col ftr_nws <?php echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.8s" <?php endif;?>>
+						<?php echo $block->getChildHtml('form.subscribe.footer'); ?>
+					</div>
+				<?php endif; ?>
+			</div>
+		</div>
+	</div>
+	
+	<?php if($marquee_content_enable): ?>
+	<div class="ftr_marqee"><?php echo $marquee_content; ?></div>
+	<?php endif;?>
+	
+	<div class="footer-bottom">
+		<div class="container">
+			<div class="d-flex alc <?php if(($payment_method_enable)&&($payment_method_block)): ?>paymt_img<?php endif;?> <?php echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.4s" <?php endif;?>>
+				<?php 
+						if(($payment_method_enable)&&($payment_method_block)):
+						$payment_method_content_block = $poco_helper->getBlockContentByIdentifier($payment_method_block);
+						if($payment_method_content_block):
+						?>
+						<div class="payment-option order-2">
+							<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($payment_method_block)->toHtml(); ?>
+						</div>
+						<?php endif; ?>	
+					<?php endif; ?>
+
+				<!-- Store Switcher Code -->
+				<?php echo $block->getChildHtml('store_switcher'); ?>
+				<!-- End Store Switcher Code -->
+				<?php if($copyright): ?>
+					<div class="copytext order-1">
+						<?php echo $copyright_text; ?>
+					</div>
+				<?php else:?>
+					<div class="copytext order-1">
+						<?php /* @escapeNotVerified */ echo $block->getCopyright() ?>
+					</div>
+				<?php endif; ?>
+			</div>
+		</div>
+	</div>
+</div>
+

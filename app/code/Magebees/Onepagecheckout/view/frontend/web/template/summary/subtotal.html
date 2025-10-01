@@ -1,0 +1,10 @@
+
+<tr class="totals magebees-totals-wrapper">
+    <th class="mark" scope="row" data-bind="text: title"></th>
+    <td class="amount">
+        <span class="price magebees-item-price" data-bind ="text: getValue(), attr:{'data-label': title}"></span>
+        <!-- ko foreach: elems() -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        <!-- /ko -->
+    </td>
+</tr>

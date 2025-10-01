@@ -1,0 +1,37 @@
+<?php 
+$recentcommentsCollection = $block->getRecentComments();
+if($recentcommentsCollection->getSize()>0): ?>
+<div class="mb-block-recent-comments mb-block" data-bind="scope: 'recemt-comments'">
+	<div class="block-title"><strong><?php echo $block->escapeHtml('Recent Comments');?></strong></div>
+	<div class="mb-recent-post">
+		<ul class="items clearfix">
+			<?php foreach ($recentcommentsCollection as $comment): ?>
+			<?php 	
+				$post_id = $comment->getPostId();
+				$_post = $this->getPost($post_id);
+				$_postUrl =  $block->getPosturl($_post);
+				$comment_url = $_postUrl."#c-post-".$comment->getCommentId();
+				$_postName = $block->escapeHtml($_post->getTitle(), null, true);
+				$comment_Text = $block->getShortComment($comment->getText());			
+			?>
+			
+			<li class="item clearfix" id="post-<?php echo $_post->getId() ?>">
+				<a class="mb-title" href="<?php echo $comment_url;?>"><?php echo $_postName;?></a>
+				<?php $creationtime  = $block->getdateago($comment->getCreationTime()); 
+				if($creationtime):
+				?>
+				<p class="mb-time">
+				<?php echo $block->escapeHtml($creationtime);?></p>
+				<?php endif;?>
+				<div class="mb-comment">
+					<?php echo $block->escapeHtml($comment_Text);?>
+                </div>
+				<div class="mb-author">
+                	<?php echo $block->escapeHtml($comment->getAuthorNickname());?>
+				</div>
+			</li>    
+			<?php endforeach; ?>
+	    </ul>
+	</div>
+</div>
+<?php endif;?>

@@ -1,0 +1,28 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php $helper = $this->helper('Magebees\PocoThemes\Helper\Data'); $storeId = $helper->getStoreId();?>
+<?php 
+	$text = $helper->getConfigValue('cookie_policy','text','pocothemes',$storeId);
+	$read_more_btn_title = $helper->getConfigValue('cookie_policy','read_more_btn_title','pocothemes',$storeId);
+	$agree_btn_text = $helper->getConfigValue('cookie_policy','agree_btn_text','pocothemes',$storeId);
+	$cookie_policy_style = $helper->getConfigValue('cookie_policy','cookie_policy_style','pocothemes',$storeId);
+	
+?>
+<?php //echo \Magento\Cookie\Helper\Cookie::IS_USER_ALLOWED_SAVE_COOKIE; exit; ?>
+<?php if($text): ?>
+<div id="cookie_bar" class="cookie <?php echo $cookie_policy_style;?>" style="display:none;">
+	<span class="cookie-text"><?php /* @escapeNotVerified */ echo __($text) ?></span>
+	<?php /* @escapeNotVerified */ echo __('<a href="%1" class="action allow primary read-more-btn">%2</a>', $block->getPrivacyPolicyLink(),$read_more_btn_title) ?>
+	<button id="close_cookie_bar" class="action allow primary">
+		<span><?php /* @escapeNotVerified */ echo __($agree_btn_text);?> <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+	</button>
+</div>
+
+<?php endif; ?>

@@ -1,0 +1,16 @@
+<?php
+$mbhelper = $this->helper('Magebees\Onepagecheckout\Helper\Data');
+$order_details = $mbhelper->getObjectManager()->create('Magebees\Onepagecheckout\Block\Thankyou')->getOrder();
+$customernote = $order_details->getCustomerNote();
+$delivery_time_date = $order_details->getDeliveryDate();
+
+if($delivery_time_date == "0000-00-00 00:00:00"){
+	$delivery_time_date = "";
+}
+?>
+<?php if($delivery_time_date != ""){ ?>
+	<div class="mage-b-date"><strong><?php echo __("Delivery Date:") ?></strong> <?php echo $delivery_time_date; ?></div>
+<?php } ?>
+<?php if(isset($customernote)){ ?>
+	<div class="mage-b-comments"><strong><?php echo __("Comment:") ?></strong> <?php echo $customernote; ?></div>
+<?php } ?>

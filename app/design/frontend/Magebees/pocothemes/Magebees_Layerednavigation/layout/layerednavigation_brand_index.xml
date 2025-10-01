@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+	    <!-- <move element="page.main.title" destination="content" before="brandlogo"/>-->
+<attribute name="class" value="page-with-filter"/>
+		<attribute name="class" value="page-products"/>
+		<attribute name="class" value="catalog-category-view"/>
+		<referenceContainer name="sidebar.main">
+            <block class="Magento\LayeredNavigation\Block\Navigation\Category" name="catalog.leftnav" before="-" template="Magebees_Layerednavigation::layer/view.phtml" ifconfig="layerednavigation/setting/enable">
+                <block class="Magento\LayeredNavigation\Block\Navigation\State" name="catalog.navigation.state" as="state" />
+                <block class="Magento\LayeredNavigation\Block\Navigation\FilterRenderer" name="catalog.navigation.renderer" as="renderer" template="layer/filter.phtml">
+				<arguments>
+                        <argument name="product_layer_view_model" xsi:type="object">Magento\LayeredNavigation\ViewModel\Layer\Filter</argument>
+                    </arguments>
+                </block>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="content">
+		<block class="Magebees\Layerednavigation\Block\TopNavigation" name="catalog.leftnav1" before="-" template="Magebees_Layerednavigation::layer/view_top.phtml" ifconfig="layerednavigation/setting/enable">
+                <block class="Magento\LayeredNavigation\Block\Navigation\State" name="catalog.navigation.state1" as="state" />
+                <block class="Magento\LayeredNavigation\Block\Navigation\FilterRenderer" name="catalog.navigation.renderer1" as="renderer" template="Magento_LayeredNavigation::layer/filter.phtml">
+                    <arguments>
+                        <argument name="product_layer_view_model" xsi:type="object">Magento\LayeredNavigation\ViewModel\Layer\Filter</argument>
+                    </arguments>
+                </block>
+            </block> 
+		<block class="Magebees\Layerednavigation\Block\BrandProduct" name="brandlogo" template="brands/brandlogo.phtml" before="catalog.leftnav1" />
+		<block class="Magebees\Layerednavigation\Block\BrandProduct" name="brandinfo" template="brands/brandinfo.phtml" after="search_result_list">
+		<block class="Magento\Catalog\Block\Product\ProductList\Toolbar" name="product_list_toolbar" template="Magento_Catalog::product/list/toolbar.phtml">
+                        <block class="Magento\Theme\Block\Html\Pager" name="product_list_toolbar_pager"/>
+                       
+                    </block>
+                    <action method="setToolbarBlockName">
+                        <argument name="name" xsi:type="string">product_list_toolbar</argument>
+                    </action>
+					</block>
+			
+        </referenceContainer>
+    </body>
+</page>

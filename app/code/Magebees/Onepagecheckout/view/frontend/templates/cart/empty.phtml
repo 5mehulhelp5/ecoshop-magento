@@ -1,0 +1,31 @@
+<div class="cart-empty">
+    <?php echo $block->getChildHtml('checkout_cart_empty_widget'); ?>
+    <div class="magebees_empty_cart_wrapper">
+        <div class="magebees_Onepagecheckout_alternative_column magebees_empty_page_column">
+            <div class="magebees_empty_page_title">
+                <?php echo $block->escapeHtml(__('Your Cart Is Empty')); ?>
+            </div>
+            <div class="magebees_Onepagecheckout_section_delimiter"></div>
+            <div class="magebees_Onepagecheckout_universal_wrapper magebees_empty_cart_info">
+                <?php echo $block->escapeHtml(__('Looks like there\'s nothing here yet.')); ?>
+            </div>
+            <div class="magebees_Onepagecheckout_universal_wrapper">
+                <a href="<?php echo $block->escapeUrl($block->getContinueShoppingUrl()); ?>"
+                        class="magebees_Onepagecheckout_button active"
+                        title="<?php echo $block->escapeHtml(__('Continue Shopping')); ?>">
+                    <?php echo $block->escapeHtml(__('Continue Shopping')); ?>
+                </a>
+            </div>
+            <?php if ($block->getQuote()->getCustomer()->getId()) { ?>
+                <div class="magebees_Onepagecheckout_universal_wrapper">
+                    <a href="<?php echo $block->escapeUrl(
+                                $block->getUrl('customer/account')
+                            ); ?>" class="magebees_Onepagecheckout_button" title="<?php echo $block->escapeHtml(__('View Account')); ?>">
+                        <?php echo $block->escapeHtml(__('View Account')); ?>
+                    </a>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+    <?php echo $block->getChildHtml('shopping.cart.table.after'); ?>
+</div>

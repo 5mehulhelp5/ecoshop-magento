@@ -1,0 +1,70 @@
+<?php 
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $poco_helper->getStoreId(); 
+$EnabledSoldOutCount = (bool)$poco_helper->getProductDetail('show_soldout_count',$poco_helper->getStoreId()); 
+if($EnabledSoldOutCount):
+
+$objctManager = \Magento\Framework\App\ObjectManager::getInstance();
+$remote = $objctManager->get('Magento\Framework\HTTP\PhpEnvironment\RemoteAddress');
+$remote_address = $remote->getRemoteAddress();
+$_product = $block->getProduct();
+$productId = $_product->getId();
+$remoteAddressint = (int) filter_var($remote_address, FILTER_SANITIZE_NUMBER_INT).$_product->getId();  
+
+
+$SoldOutLabel = $poco_helper->getProductDetail('soldout_count_text',$poco_helper->getStoreId()); 
+$ShowSoldOutIcon = $poco_helper->getProductDetail('show_soldout_icon',$poco_helper->getStoreId()); 
+$SoldOutIcon = $poco_helper->getProductDetail('soldout_icon',$poco_helper->getStoreId()); 
+?>
+
+		
+<div class="ordercounts <?php echo 'ordercounts_'.$remoteAddressint;?> block-icon-text" style="display: none;">
+<?php if($ShowSoldOutIcon): echo $SoldOutIcon; endif; ?> <span class="text"><span class="order-items"></span><?php echo __($SoldOutLabel); ?> <span class="order-time"></span> <?php echo __('hours'); ?></span></div>
+<script>
+require(['jquery','jquery/jquery.cookie'], function(jQuery){
+	
+	/* Select the ordercounts	 elements*/
+  const ordercounts = document.querySelector('.ordercounts');
+  const orderItems = ordercounts.querySelector('.order-items');
+  const orderTime = ordercounts.querySelector('.order-time');
+  /* Generate a random product object, number of sales, and location*/
+  var min = 1;
+  var max = 20;
+  var min_hours = 1;
+  var max_hours = 23;
+  var OrderCountLocalStorageId = '<?php echo 'ordercounts_'.$remoteAddressint; ?>';
+  var OrderTimeLocalStorageId = '<?php echo 'ordertimes_'.$remoteAddressint; ?>';
+  var ordercountsRemoteAddressElement = '<?php echo '.ordercounts_'.$remoteAddressint; ?>';
+  var ordercountElement = document.querySelector(ordercountsRemoteAddressElement);
+ 
+  
+
+	if(!jQuery.cookie(OrderCountLocalStorageId)){
+	var orderItemsCount = Math.floor(Math.random() * (max - min + 1)) + min;
+	var now = new Date();
+	now.setTime(now.getTime() + (1 *  60 * 60 * 1000));
+	jQuery.cookie(OrderCountLocalStorageId, orderItemsCount, {expires : now,SameSite : 'Strict',path    : '/',secure  : true});
+    }else{ 
+	var orderItemsCount = jQuery.cookie(OrderCountLocalStorageId);
+	}
+	
+if(!jQuery.cookie(OrderTimeLocalStorageId)){
+	var orderTimeCount = Math.floor(Math.random() * (max_hours - min_hours + 1)) + min_hours;
+	var now = new Date();
+	now.setTime(now.getTime() + (1 *  60 * 60 * 1000));
+	jQuery.cookie(OrderTimeLocalStorageId, orderTimeCount, {expires : now,SameSite : 'Strict',path    : '/',secure  : true});
+    }else{ 
+	var orderTimeCount = jQuery.cookie(OrderTimeLocalStorageId);
+	}
+	
+	if(document.querySelector('.order-items')){
+    orderItems.innerHTML = orderItemsCount;
+	jQuery(ordercountElement).show();
+	}
+	if(document.querySelector('.order-time')){
+    orderTime.innerHTML = orderTimeCount;
+	jQuery(ordercountElement).show();
+	}
+}); 
+</script>
+<?php endif;?>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magebees_CacheWarmer::Heading" title="MageBees Full Page Cache Warmer" sortOrder="150">
+                    <resource id="Magebees_CacheWarmer::queue" title="FPC Warmer Queue" sortOrder="10"/>
+                    <resource id="Magebees_CacheWarmer::log" title="FPC Warmer Log" sortOrder="20"/>
+                    <resource id="Magebees_CacheWarmer::reports" title="FPC Warmer Performance Reports" sortOrder="30"/>
+                </resource>
+                
+				<resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Magebees_CacheWarmer::config" title="Magebees Full Page Cache Warmer Configuration" sortOrder="123"/>
+						</resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

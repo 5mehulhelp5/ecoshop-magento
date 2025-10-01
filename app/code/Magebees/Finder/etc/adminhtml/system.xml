@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magebees" translate="label" sortOrder="100">
+            <label>MageBees</label>
+        </tab>
+        <section id="finder" translate="label" type="text" sortOrder="220" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>YMM Products Parts Finder</label>
+            <tab>magebees</tab>
+            <resource>Magebees_Finder::configuration_settings</resource>
+			<group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>General</label>
+				<field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enable YMM Products Parts Finder</label> 
+					<comment><![CDATA[Select Yes for display Finder in frontend.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="autosearch" translate="label comment" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Start search when last drop down value is selected</label> 
+					<comment><![CDATA[It's start the search process when last drop down value is selected.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="enable_drpdwn_search" translate="label comment" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enable Search Text from the Dropdown</label> 
+					<comment><![CDATA[You can search option from the dropdown list and select]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<!-- <field id="enable_find_btn" translate="label comment" type="select" sortOrder="18" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enable Find and Reset button</label> 
+					<comment><![CDATA[Add set of products to any search result.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+       					<field id="autosearch">1</field>
+    				</depends>					
+				</field> -->
+				<field id="universal_enable" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Use universal products in search</label> 
+					<comment><![CDATA[Add set of products to any search result.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="sort_order" translate="label comment" type="select" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Display products by</label> 
+					<comment><![CDATA[Search Products >> Show result products first in result.<br>
+					Universal Products >> Show universal products first in result.<br>
+					Default Sort Order >> Show products by default sort orders like position, name and price.]]></comment> 
+					<source_model>Magebees\Finder\Model\Sortorder</source_model> 
+					<depends>
+       					<field id="universal_enable">1</field>
+    				</depends>
+				</field>
+				<field id="find_btn_text" translate="label comment" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Text for Find Button</label> 
+					<comment><![CDATA[You can set custom text for find button.]]></comment>
+				</field>
+				<field id="reset_btn_text" translate="label comment" type="text" sortOrder="26" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Text for Reset Button</label> 
+					<comment><![CDATA[You can set custom text for reset button.]]></comment>
+				</field>
+				<field id="finderpage_title" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Title for Finder Page</label> 
+					<comment><![CDATA[You can set title for finder page.]]></comment> 
+				</field>
+				<field id="categorypage_enabled" translate="label comment" type="select" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enable Finder for Category page</label> 
+					<comment><![CDATA[Select Yes for display Finder on Category page.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+			</group>
+			
+		</section>
+    </system>
+</config>

@@ -1,0 +1,86 @@
+<!--
+/**
+ * Copyright © Magebees 2018, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div class="poco_ctm_cart_popup">
+    <if args="getCartParam('summary_count')">
+        <div class="poco_ctm_cart_popup_in">
+             <div class="fitem latest_item">
+                <strong class="subtitle" translate="'Latest updated item'"></strong>
+                <div id="minicartpro-newest" class="latest-added-item section-content minicart-items" data-bind="foreach: { data: getNewestItem(), as: 'item' }">
+                  
+					<each args="$parent.getRegion($parent.getItemRenderer(item.product_type))"
+                          render="{name: 'Magebees_CustomCartStyle/minicart/newest-added-item.html', data: item, afterRender: function() {$parents[1].initSidebar()}}"
+                    ></each>
+                </div>
+
+            </div>
+            <div class="fitem cart_items">
+                <strong class="subtitle items-total">
+                    <span>
+                        <span class="count" if="maxItemsToDisplay < getCartLineItemsCount()" text="maxItemsToDisplay"></span>
+                        <translate args="'of'" if="maxItemsToDisplay < getCartLineItemsCount()"></translate>
+                        <span class="count" text="getCartLineItemsCount()"></span>
+                        <translate args="'Item in Cart'" if="getCartLineItemsCount() === 1"></translate>                    
+                        <translate args="'Items in Cart'" if="getCartLineItemsCount() > 1"></translate>
+                    </span>
+                    <a class="action viewcart" data-bind="attr: {href: shoppingCartUrl, title: $t('View and Edit Cart')}">
+                        <span translate="'View and Edit Cart'"></span>
+                    </a>
+                </strong>
+                <div class="minicart-items-wrapper section-content">
+                    <div data-action="scroll" class="section-content-inner">
+                        <ol id="minicartpro" data-role="cart-items-list" class="minicart-items" data-bind="foreach: { data: getCartItems(), as: 'item' }">
+							   <!-- ko foreach: $parent.getRegion($parent.getItemRenderer(item.product_type)) -->
+						<!-- ko template: {name: 'Magebees_CustomCartStyle/minicart/item/default.html', data: item, afterRender: function() {$parents[1].initSidebar()}} --><!-- /ko -->
+					<!-- /ko -->
+					
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="fitem mcart_summary">
+                <strong class="subtitle" translate="'Cart Summary'"></strong>
+                <div class="section-content">
+                    <div class="total-qty">
+                        <span class="label"><span translate="'Total Quantity'"></span></span>
+                        <span class="amount"><span text="getCartParam('summary_count')"></span></span>
+                    </div>
+                    <each args="getRegion('subtotalContainer')" render=""></each>
+                    <each args="getRegion('extraInfo')" render=""></each>
+                    <div class="poco-cart-validation-message" data-bind="html: getCrosssellParam('validation_message')"></div>
+                    <div class="actions" if="getCartParam('possible_onepage_checkout')">
+                        <div class="primary">
+                            <button type="button" class="action close" data-action="closeInformedPopup" data-bind="attr: { title: $t('Continue Shopping') }">
+                                <span translate="'Continue Shopping'" id="autoClose"></span>
+                            </button>
+                            <button id="minicartpro-btn-checkout" type="button" class="action primary checkout" data-action="close"
+                                    data-bind="
+                                        attr: {
+                                            title: $t('Proceed to Checkout')
+                                        },
+                                        click: closeMinicart()
+                                    "
+                                    translate="'Proceed to Checkout'"
+                            ></button>
+                            <div data-bind="html: getCartParam('extra_actions')"></div>
+                        </div>
+                    </div>
+                    <div id="poco-minicart-widgets" class="minicart-widgets">
+                        <each args="getRegion('promotion')" render=""></each>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </if>
+    <ifnot args="getCartParam('summary_count')">
+    <div class="cart-empty">
+        <i class="feather-shopping-cart"></i>
+        <p translate="'You have no items in your shopping cart'"></p>
+    </div>
+    </ifnot>
+</div>

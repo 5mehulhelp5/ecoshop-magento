@@ -1,0 +1,182 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+   
+   <body>
+    	<container name="footerContainer" htmlTag="div" htmlId="cart-container-id" htmlClass="cart-container" before="-"></container>
+		<!-- Custom scripts configurator -->
+        <referenceContainer name="before.body.end">
+            <block class="Magento\Framework\View\Element\Template" name="theme.js" before="-" template="Magento_Theme::js/configurator.phtml">
+			 <arguments><argument name="cache_lifetime" xsi:type="number">7200</argument></arguments>
+			</block>
+			 <block class="Magento\Framework\View\Element\Template" name="exitintentpopup" before="-" template="Magento_Theme::html/exitintentPopup.phtml">
+			 <arguments><argument name="cache_lifetime" xsi:type="number">7200</argument></arguments>
+			</block>
+        </referenceContainer>
+		<referenceBlock name="logo">
+            <arguments>
+                <argument name="logo_file" xsi:type="string">images/logo.png</argument>
+				<argument name="logo_img_width" xsi:type="number">109</argument>
+                <argument name="logo_img_height" xsi:type="number">39</argument>
+			</arguments>
+        </referenceBlock>
+
+        <referenceBlock name="head.additional">	
+		
+			<block class="Magento\Framework\View\Element\Template" name="config.theme.settings" template="Magento_Theme::html/config.phtml">
+				 <arguments><argument name="cache_lifetime" xsi:type="number">7200</argument></arguments>
+			</block>
+		
+			<block name="theme_critical_css_block" before="-" as="theme_critical_css" template="Magento_Theme::html/theme_criticalCss.phtml" >                
+				<arguments>  
+				   <argument name="criticalCssViewModel" xsi:type="object">Magento\Theme\Block\Html\Header\CriticalCss</argument> <argument name="cache_lifetime" xsi:type="number">7200</argument>         
+				</arguments>    
+			</block>
+			
+			<block name="css_rel_preload_script" template="Magento_Theme::js/css_rel_preload.phtml"/><!-- default magento -->
+			
+		</referenceBlock>
+		<referenceContainer name="header.container" remove="1"/>
+        <referenceContainer name="header.panel" remove="1"/>
+		<referenceContainer name="header-wrapper" remove="1"/>
+		<referenceBlock name="top.links">
+			<!-- you can easly Remove links with following code -->
+            <!-- <referenceBlock name="register-link" remove="true" /> -->     <!--for Create Account Link-->
+            <!-- <referenceBlock name="authorization-link" remove="true" /> -->     <!--for Sign In Link  -->
+            <!-- <referenceBlock name="wish-list-link" remove="true" /> -->          <!--for WishList Link-->
+            <!-- <referenceBlock name="my-account-link" remove="true" /> -->      <!--for My Account Link-->
+           	<referenceBlock name="header" remove="true" /> <!-- for welcome message -->
+		</referenceBlock>
+		<referenceContainer name="page.wrapper">
+			<block class="Magebees\PocoThemes\Block\Html\Header" name="header.content" before="main.content" template="Magento_Theme::html/header/header-1.phtml">
+				<block class="Magento\Directory\Block\Currency" name="currency_ver_2" before="store_language" template="Magento_Directory::currency_ver_2.phtml">
+				</block>
+				<block class="Magento\Store\Block\Switcher" name="store_language_ver_2" as="store_language_ver_2" template="Magento_Store::switch/languages_ver_2.phtml">
+                    <arguments>
+                        <argument name="view_model" xsi:type="object">Magento\Store\ViewModel\SwitcherUrlProvider</argument>
+				    </arguments>
+                </block> 
+			</block>
+		</referenceContainer>
+
+		<move element="navigation.sections" destination="header.content"/>
+        <move element="top.search" destination="header.content"/>
+        <move element="minicart" destination="header.content"/>
+        <move element="store_language" destination="header.content"/>
+        <move element="currency" destination="header.content"/>
+        <move element="logo" destination="header.content"/>
+        <move element="skip_to_content" destination="header.content"/>
+		<move element="top.links" destination="header.content"/>
+		<move element="page.top" destination="page.wrapper" after="header.content"/> 
+		<referenceContainer name="page.top">
+            <block class="Magento\Framework\View\Element\Template" name="navigation.sections" before="-" template="Magento_Theme::html/sections.phtml">
+                <arguments>
+                    <argument name="group_name" xsi:type="string">navigation-sections</argument>
+                    <argument name="group_css" xsi:type="string">nav-sections</argument>
+                </arguments>
+                <block class="Magento\Framework\View\Element\Template" name="store.menu" group="navigation-sections" template="Magento_Theme::html/container.phtml">
+                    <arguments>
+                        <argument name="title" translate="true" xsi:type="string">Menu</argument>
+                    </arguments>
+                    <block class="Magento\Theme\Block\Html\Topmenu" name="catalog.topnav" template="Magento_Theme::html/topmenu.phtml" before="-"/>
+                </block>
+                <block class="Magento\Framework\View\Element\Text" name="store.links" group="navigation-sections">
+                    <arguments>
+                        <argument name="title" translate="true" xsi:type="string">Account</argument>
+                        <argument name="use_force" xsi:type="boolean">true</argument>
+                        <argument name="text" xsi:type="string"><![CDATA[<!-- Account links -->]]></argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Framework\View\Element\Template" name="store.settings" group="navigation-sections" template="Magento_Theme::html/container.phtml">
+                    <arguments>
+                        <argument name="title" translate="true" xsi:type="string">Settings</argument>
+                    </arguments>
+                    <block class="Magento\Store\Block\Switcher" name="store.settings.language" template="Magento_Store::switch/languages.phtml">
+                        <arguments>
+                            <argument name="id_modifier" xsi:type="string">nav</argument>
+                            <argument name="view_model" xsi:type="object">Magento\Store\ViewModel\SwitcherUrlProvider</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Directory\Block\Currency" name="store.settings.currency" template="Magento_Directory::currency.phtml">
+                        <arguments>
+                            <argument name="id_modifier" xsi:type="string">nav</argument>
+							<argument name="cache_lifetime" xsi:type="number">7200</argument>
+                        </arguments>
+						
+				
+                    </block>
+                </block>
+            </block>
+            <container name="top.container" as="topContainer" label="After Page Header Top" htmlTag="div" htmlClass="top-container"/>
+            <block class="Magento\Theme\Block\Html\Breadcrumbs" name="breadcrumbs" as="breadcrumbs"/>
+        </referenceContainer>
+		
+		<referenceContainer name="sidebar.additional">
+
+				<block class="Magebees\Productlisting\Block\Productlisting" name="sidebar.productlisting">
+				<arguments>
+				<argument name="listing_id" xsi:type="string">3</argument>
+				<argument name="custom_class" xsi:type="string">block-ProductsListing</argument>
+				
+				</arguments>
+				</block>
+
+			<block class="Magento\Framework\View\Element\Template" name="poco.custom.sidebar.block"
+                   template="Magento_Theme::html/sidebar/sidebar-blocks.phtml" after="-">
+				   <arguments><argument name="cache_lifetime" xsi:type="number">7200</argument></arguments>
+			</block>
+		
+		</referenceContainer>
+
+
+		<referenceContainer name="footer-container">
+		    <container name="footer" as="footer" label="Page Footer">
+                <block class="Magebees\PocoThemes\Block\Html\Footer" name="footer.content" template="Magento_Theme::html/footer/footer-1.phtml">
+                	<block class="Magento\Theme\Block\Html\Header\Logo" name="footer_logo" template="Magento_Theme::html/footer/footer_logo.phtml">
+						<arguments><argument name="cache_lifetime" xsi:type="number">7200</argument></arguments>
+			
+	                    <!-- <arguments>
+	                    	<argument name="logo_file" xsi:type="string">images/logo.png</argument>
+	                        <argument name="logo_img_width" xsi:type="number">120</argument>
+	                        <argument name="logo_img_height" xsi:type="number">35</argument>
+	                    </arguments> -->
+                	</block>
+					<block class="Magento\Store\Block\Switcher" name="store_switcher" as="store_switcher" template="Magento_Store::switch/stores.phtml">
+					<arguments><argument name="cache_lifetime" xsi:type="number">7200</argument></arguments>
+					</block>
+					<block class="Magento\Newsletter\Block\Subscribe" name="form.subscribe.footer" as="form.subscribe.footer" before="-" template="footer_subscribe.phtml"/>
+				</block>
+            </container>
+		</referenceContainer>
+		<referenceBlock name="report.bugs" remove="true" />
+		<referenceBlock name="form.subscribe" remove="true" />
+		<referenceContainer name="before.body.end">
+		<block class="Magento\Framework\View\Element\Template" name=
+			 "pocothemes.mobilemenu" template="Magento_Theme::html/mobilemenu.phtml">
+				<arguments><argument name="cache_lifetime" xsi:type="number">7200</argument></arguments>
+			</block>
+			
+			<block class="Magento\Framework\View\Element\Template" name=
+			 "sales.noification" template="Magento_Theme::html/sales_noification.phtml">
+				<arguments><argument name="cache_lifetime" xsi:type="number">7200</argument></arguments>
+			</block>
+			<block class="Magento\Framework\View\Element\Template" name=
+			 "scroll.top" template="Magento_Theme::html/scroll_top.phtml">
+				<arguments><argument name="cache_lifetime" xsi:type="number">7200</argument></arguments>
+			</block>
+        	 <block class="Magebees\PocoThemes\Block\Html\Notices" name="cookie_notices" after="global_notices" 
+			 template="Magento_Cookie::html/poconotices.phtml">
+				<arguments><argument name="cache_lifetime" xsi:type="number">7200</argument></arguments>
+			 </block>
+        </referenceContainer>			
+		<referenceBlock name="store.links" remove="true"/> 
+		<referenceBlock name="navigation.sections">
+			<block class="Magento\Framework\View\Element\Template" name="store.information" group="navigation-sections" template="Magento_Theme::html/container.phtml">
+				<arguments>
+					<argument name="title" translate="true" xsi:type="string">Account</argument>
+				</arguments>
+				<block class="Magento\Framework\View\Element\Template" name="mobile.link" group="navigation-sections" template="Magento_Theme::html/linkmobile.phtml" />
+			</block>
+		</referenceBlock>
+		<referenceBlock name="ajaxsearch.css" remove="true"/>
+		
+	</body>
+</page>		

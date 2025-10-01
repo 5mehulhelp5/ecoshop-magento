@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="magebees_products_listing" class="Magebees\Productlisting\Block\Widget\ProductlistingWidget" is_email_compatible="true" >
+        <label translate="true">MageBees::Products Listing Widget</label>
+        <description translate="true">List of products </description>
+		<parameters>
+			<parameter name="wd_list" xsi:type="select" visible="true"
+					   source_model="Magebees\Productlisting\Model\Source\CreatedList" required="true" sort_order="0">				   
+				<label translate="true">Select List</label>
+			</parameter>			<parameter name="wd_load_ajax" xsi:type="select" visible="true"                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="2">                <label translate="true">Load Products using Ajax</label>                <description translate="true">Select Yes Load Products using Ajax. Feature not avaible if ajax scroll enabled.</description>            </parameter>
+			<parameter name="wd_bgimage" xsi:type="block" visible="true" sort_order="0">
+                <label translate="true">Background Image</label>
+                <description translate="true">Background Image</description>
+                <block class="Magebees\Productlisting\Block\Adminhtml\Widget\ImageChooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string">Choose Image...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+            <parameter name="wd_bgcolor" xsi:type="block" visible="true" sort_order="1">
+                <label translate="true">Background Color</label>
+                <description translate="true">Background Color</description>
+                <block class="Magebees\Productlisting\Block\Adminhtml\Widget\Color" />
+            </parameter>
+			<parameter name="wd_spacing" xsi:type="select" visible="true"
+                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="2">
+                <label translate="true">Spacing on Section</label>
+                <description translate="true">Select Yes for manage space on section.</description>
+            </parameter>
+            <parameter name="wd_bottom_spacing" xsi:type="select" visible="true"
+                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="3">
+                <label translate="true">Bottom Spacing on Section</label>
+                <description translate="true">Select Yes for manage space after section.</description>
+            </parameter>						
+			<parameter name="wd_view_more_position" xsi:type="select" visible="true" sort_order="4">
+                <label translate="true">View More Button Position</label>
+                <description translate="true"><![CDATA[]]></description>
+                <options>
+                    
+                    <option name="bottom" value="bottom" selected="true">
+                        <label translate="true">Bottom</label>
+                    </option>
+                    <option name="top" value="top">
+                        <label translate="true">Top</label>
+                    </option>
+                </options>
+            </parameter>
+		</parameters>
+		
+    </widget>
+</widgets>

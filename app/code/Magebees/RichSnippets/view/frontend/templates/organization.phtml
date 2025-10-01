@@ -1,0 +1,69 @@
+<?php if ($organizaton = $block->canShowContent()) : ?>
+<?php $description=$organizaton['description'];
+$desc_length=$organizaton['desc_length'];
+  if (str_word_count((string)$description, 0) > $desc_length) {
+            $words = str_word_count((string)$description, 2);
+            $pos = array_keys($words);
+            $description = substr($description, 0, $pos[$desc_length]);
+        }
+$social_profile_enabled=$organizaton['social_profile_enabled'];
+
+?>
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",        
+        <?php if($organizaton['logo_url']):?>
+        "logo" :  "<?php echo $organizaton['logo_url']; ?>",
+        <?php endif;?>
+        "url" :  "<?php echo $organizaton['url']; ?>",
+        <?php if($organizaton['description']):?>
+        "Description" :  "<?php echo $description; ?>",
+        <?php endif;?>
+        <?php if($contactContent=$block->getContactNumbers()):?>
+        <?php 
+        $countContact=count($contactContent);
+        $iContact=0;?>
+        "contactPoint":[[],
+          <?php foreach($contactContent as $key=>$value): ?>
+            <?php $iContact++;?>
+            {
+            "@type": "ContactPoint",           
+            "telephone": "<?php /* @escapeNotVerified */ echo $value; ?>",
+            "contactType":"<?php /* @escapeNotVerified */ echo $key; ?>" 
+            }<?php   if($iContact!=$countContact) {echo ',';}?>
+        <?php endforeach;?>
+        ],
+
+        <?php endif;?>
+        <?php if(($organizaton['city'])&&($organizaton['region'])&&($organizaton['zipcode'])&&($organizaton['country'])):?>
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "<?php echo $organizaton['city']; ?>",
+            "addressRegion": "<?php echo $organizaton['region']; ?>",            
+            "postalCode": "<?php echo $organizaton['zipcode']; ?>",
+            <?php if($organizaton['country']):?>
+            "addressCountry": {
+            "@type":"Country",
+            "name": "<?php echo $organizaton['country']; ?>"
+            }
+            <?php endif;?>
+        },
+        <?php endif;?>       
+        <?php if($social_profile_enabled): ?>
+        <?php if($socialContent=$block->getSocialMediaContent()):?>
+        "sameAs": [
+        <?php foreach($socialContent as $key=>$value): ?>
+           <?php            
+           $sociallastElement = end($socialContent);?>
+            "<?php echo $value; ?>"
+           <?php   if($value != $sociallastElement) {echo ',';}?> 
+        <?php endforeach;?>       
+            
+       ],
+        <?php endif; ?>
+       <?php endif; ?>
+       "name": "<?php echo $organizaton['name']; ?>"
+    }
+</script>
+<?php endif; ?>

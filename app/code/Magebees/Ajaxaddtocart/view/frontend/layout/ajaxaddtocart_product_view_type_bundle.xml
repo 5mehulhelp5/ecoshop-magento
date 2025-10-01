@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <attribute name="class" value="page-product-bundle"/>
+        <block class="Magento\Catalog\Block\Product\View" name="product.info" template="Magebees_Ajaxaddtocart::form.phtml" after="alert.urls">
+        <referenceBlock name="product.info.options.wrapper">
+            <block class="Magento\Bundle\Block\Catalog\Product\View\Type\Bundle" name="product.info.bundle.options" as="type_bundle_options" template="Magebees_Ajaxaddtocart::bundle/options.phtml" before="-">
+               
+                <block class="Magento\Bundle\Block\Catalog\Product\View\Type\Bundle\Option\Select" name="product.info.bundle.options.select" as="select">
+                    <arguments>
+                        <argument name="tier_price_renderer" xsi:type="object">\Magento\Bundle\Block\DataProviders\OptionPriceRenderer</argument>
+                        <argument name="validateQuantityViewModel" xsi:type="object">Magento\Bundle\ViewModel\ValidateQuantity</argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Bundle\Block\Catalog\Product\View\Type\Bundle\Option\Multi" name="product.info.bundle.options.multi" as="multi"/>
+                <block class="Magento\Bundle\Block\Catalog\Product\View\Type\Bundle\Option\Radio" name="product.info.bundle.options.radio" as="radio">
+                    <arguments>
+                        <argument name="tier_price_renderer" xsi:type="object">\Magento\Bundle\Block\DataProviders\OptionPriceRenderer</argument>
+                        <argument name="validateQuantityViewModel" xsi:type="object">Magento\Bundle\ViewModel\ValidateQuantity</argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Bundle\Block\Catalog\Product\View\Type\Bundle\Option\Checkbox" name="product.info.bundle.options.checkbox" as="checkbox"/>
+            </block>
+        </referenceBlock>
+        <block class="Magento\Framework\View\Element\Template" name="product.info.block.products" as="block_products">
+                    <block class="Magento\Catalog\Block\Product\ProductList\Related" name="catalog.product.related" template="Magebees_Ajaxaddtocart::product/list/items.phtml" ifconfig='ajaxaddtocart/dialogboxsetting/related'>
+            <arguments>
+                <argument name="type" xsi:type="string">related</argument>
+            </arguments>
+        </block>
+        <block class="Magento\Catalog\Block\Product\ProductList\Upsell" name="product.info.upsell" template="Magebees_Ajaxaddtocart::product/list/items.phtml" ifconfig='ajaxaddtocart/dialogboxsetting/upsell'>
+            <arguments>
+                <argument name="type" xsi:type="string">upsell</argument>
+            </arguments>
+        </block>
+        <block class="Magento\Catalog\Block\Product\ProductList\Crosssell"  template="Magebees_Ajaxaddtocart::product/list/crosssell.phtml" after="-" ifconfig='ajaxaddtocart/dialogboxsetting/crosssell'>
+            <arguments>
+                <argument name="type" xsi:type="string">crosssell</argument>
+            </arguments>
+        </block>
+        </block>
+        <referenceBlock name="product.info.options.wrapper.bottom">
+         <block class="Magento\Catalog\Pricing\Render" name="product.price.render.bundle.customization">
+                    <arguments>
+                        <argument name="price_render" xsi:type="string">product.price.render.default</argument>
+                        <argument name="price_type_code" xsi:type="string">configured_price</argument>
+                        <argument name="zone" xsi:type="string">item_view</argument>
+                    </arguments>
+             </block>
+            <action method="unsetChild">
+                <argument name="block" xsi:type="string">product.info.addtocart</argument>
+            </action>
+            <block class="Magento\Catalog\Block\Product\View" name="bundle.summary" as="form_bottom" template="Magebees_Ajaxaddtocart::bundle/summary.phtml"/>
+                
+             <block class="Magento\Catalog\Block\Product\View" name="magebees.product.info.addtocart.bundle" as="addtocart" template="Magebees_Ajaxaddtocart::addtocart.phtml"/>
+            
+        </referenceBlock>
+         </block>
+    </body>
+</page>

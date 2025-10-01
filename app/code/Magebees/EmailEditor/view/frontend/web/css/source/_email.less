@@ -1,0 +1,161 @@
+@import 'editor.less';
+@email_header_background-color:#D3D3D3;
+@th_header_bgcolor:#D3D3D3;
+@email_footer_background-color:#D3D3D3;
+@topmenu_color:#eb5202 !important;
+@topmenu_bgcolor:#FFFFFF;
+@topmenu_padding:10px;
+@topmenu_item_padding:10px;
+@body_wrapper_bgcolor:#FFFFFF;
+@body_content_bgcolor:#f1f1f1;
+@body_text_color:#000000;
+@body_link_color:#006bb4;
+@body_total_section_color:#FFFFFF;
+@h1_font_weight:600;
+@h1_font_size:18px;
+@h1_font_style:normal;
+@h1_color:#000000;
+@h1_line_height:1.5;
+@h1_letter_spacing:0.3px;
+@h1_font_family:"Open Sans";
+@h2_font_weight:600;
+@h2_font_size:18px;
+@h2_font_style:normal;
+@h2_color:#2c5be8;
+@h2_line_height:1.5;
+@h2_letter_spacing:0.3px;
+@h2_font_family:"Open Sans";
+@h3_font_weight:600;
+@h3_font_size:18px;
+@h3_font_style:normal;
+@h3_color:#2c5be8;
+@h3_line_height:1.5;
+@h3_letter_spacing:0.3px;
+@h3_font_family:"Open Sans";
+@p_font_style:normal;
+@p_font_family:"arial";
+@btn_bgcolor:#0d6eb5;
+@btn_color:#fff;
+@btn_border_color:#0d6eb5;
+@btn_hover_color:#000;
+@comment_text_color:#007bdb;
+@comment_bgcolor:#ccd3e8;
+@logo_width:100;
+@logo_height:100;
+@model_full_border:#0d6eb5;
+.header {
+            background-color: @email_header_background-color;    
+            }
+.footer {
+            background-color: @email_footer_background-color;   
+            }
+.navigation{ text-align: center;
+    li{ margin:0 @topmenu_item_padding;
+        a{ 
+            color: @topmenu_color;
+            padding: @topmenu_padding; 
+            display: block;
+            font-weight: 600 !important;
+            text-decoration: none !important;
+        }
+    }
+}
+.button tr td{ padding-bottom:0; }
+.button{
+    a{  
+        color: @btn_color;
+        border: 1px @btn_border_color;
+        display:block; padding:10px;
+        text-transform: uppercase;
+        font-weight: 600;
+        width: 100%;
+    }
+}
+.button a:active, 
+.button a:hover, 
+.button a:visited { background-color: @btn_hover_color !important; border-color:@btn_hover_color !important; }
+.order-totals{
+    th,td{
+        background-color: @body_total_section_color !important; 
+    }
+}
+.main {
+    box-shadow: 0 0 5px #ddd; border:10px solid @model_full_border;
+    margin: 20px auto !important;
+}
+.wrapper {
+              background-color: @body_wrapper_bgcolor;  
+            }
+body {
+              min-height: 100%;
+              min-width: 100%; 
+            }
+.main-content {
+              background-color: @body_content_bgcolor;
+              color: @body_text_color;  
+            }
+a {  
+              color: @body_link_color;  
+            }
+.total{  
+             background-color: @body_total_section_color;
+            }
+h1
+            {
+                font-weight: @h1_font_weight;
+                font-size: @h1_font_size;
+                font-style: @h1_font_style;
+                color: @h1_color;
+                line-height: @h1_line_height;
+                letter-spacing: @h1_letter_spacing; 
+                font-family: @h1_font_family; 
+                 
+            }
+h2
+            {
+                font-weight: @h2_font_weight;
+                font-size: @h2_font_size;
+                font-style: @h2_font_style;
+                color: @h2_color;
+                line-height: @h2_line_height;
+                letter-spacing: @h2_letter_spacing; 
+                font-family: @h2_font_family;
+            }
+h3 
+            {
+             font-weight: @h3_font_weight;
+                font-size: @h3_font_size;
+                font-style: @h3_font_style;
+                color: @h3_color;
+                line-height: @h3_line_height;
+                letter-spacing: @h3_letter_spacing; 
+                font-family: @h3_font_family;
+            }
+p
+            {
+                font-style: @p_font_style;
+                font-family: @p_font_family;
+            }
+.button {
+              background-color: @btn_bgcolor;
+              color: @btn_color;
+              border-color: @btn_border_color; 
+            }
+.button:hover {
+              background-color: @btn_hover_color;  
+            }
+.message-info {
+                td{
+                background-color: @comment_bgcolor;
+                color: @comment_text_color; 
+                }   
+            }
+.logo {
+                img{
+                width: @logo_width;
+                height: @logo_height; 
+                }   
+            }
+th {
+              background: @th_header_bgcolor;  
+            }

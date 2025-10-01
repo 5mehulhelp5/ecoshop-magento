@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="responsivebannerslider_group" resource="default" engine="innodb" comment="responsivebannerslider_group">
+    <column xsi:type="int" name="slidergroup_id" padding="10" unsigned="true" nullable="false" identity="true" comment="slidergroup_id"/>
+    <column xsi:type="varchar" name="title" nullable="false" length="255" comment="title"/>
+    <column xsi:type="varchar" name="position" nullable="false" length="255" comment="position"/>
+    <column xsi:type="smallint" name="sort_order" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="sort_order"/>
+    <column xsi:type="smallint" name="status" padding="6" unsigned="false" nullable="false" identity="false" comment="status"/>
+    <column xsi:type="varchar" name="start_animation" nullable="false" length="50" comment="start_animation"/>
+    <column xsi:type="smallint" name="loop_slider" padding="6" unsigned="false" nullable="false" identity="false" comment="loop_slider"/>
+    <column xsi:type="smallint" name="pause_snavigation" padding="6" unsigned="false" nullable="false" identity="false" comment="pause_snavigation"/>
+    <column xsi:type="smallint" name="pause_shover" padding="6" unsigned="false" nullable="false" identity="false" comment="pause_shover"/>
+    <column xsi:type="varchar" name="animation_type" nullable="false" length="50" comment="animation_type"/>
+    <column xsi:type="varchar" name="animation_duration" nullable="false" length="50" default="600" comment="animation_duration"/>
+    <column xsi:type="varchar" name="animation_direction" nullable="false" length="50" comment="animation_direction"/>
+    <column xsi:type="varchar" name="slide_duration" nullable="false" length="50" default="7000" comment="slide_duration"/>
+    <column xsi:type="varchar" name="random_order" nullable="false" length="50" comment="random_order"/>
+    <column xsi:type="varchar" name="smooth_height" nullable="false" length="50" default="1" comment="smooth_height"/>
+    <column xsi:type="varchar" name="max_width" nullable="false" length="50" comment="max_width"/>
+	<column xsi:type="varchar" name="slider_theme" nullable="false" length="50" comment="slider_theme"/>
+	<column xsi:type="varchar" name="slider_type" nullable="false" length="50" comment="slider_type"/>
+	<column xsi:type="varchar" name="content_background" nullable="false" length="50" comment="content_background"/>
+    <column xsi:type="varchar" name="content_opacity" nullable="false" length="50" comment="content_opacity"/>
+    <column xsi:type="varchar" name="thumbnail_size" nullable="false" length="50" default="200" comment="thumbnail_size"/>
+    <column xsi:type="varchar" name="navigation_arrow" nullable="false" length="50" comment="navigation_arrow"/>
+    <column xsi:type="varchar" name="navigation_style" nullable="false" length="50" comment="navigation_style"/>
+	<column xsi:type="varchar" name="navigation_aposition" nullable="false" length="50" comment="navigation_aposition"/>
+	<column xsi:type="varchar" name="navigation_acolor" nullable="false" length="50" comment="navigation_acolor"/>
+    <column xsi:type="varchar" name="show_pagination" nullable="false" length="50" comment="show_pagination"/>
+    <column xsi:type="varchar" name="pagination_style" nullable="false" length="50" comment="pagination_style"/>
+    <column xsi:type="varchar" name="pagination_position" nullable="false" length="50" comment="pagination_position"/>
+    <column xsi:type="varchar" name="pagination_color" nullable="false" length="50" comment="pagination_color"/>
+    <column xsi:type="varchar" name="pagination_active" nullable="false" length="50" comment="pagination_active"/>
+    <column xsi:type="varchar" name="pagination_bar" nullable="false" length="50" comment="pagination_bar"/>
+    <column xsi:type="varchar" name="unique_code" nullable="true" length="255" comment="Unique_code"/>
+	<column xsi:type="varchar" name="scrollbar" nullable="false" length="50" default="1" comment="scrollbar"/>
+    <column xsi:type="varchar" name="keyboard" nullable="false" length="50" default="1" comment="keyboard"/>
+    <column xsi:type="varchar" name="mousewheel" nullable="false" length="50" default="1" comment="mousewheel"/>
+    <column xsi:type="varchar" name="grab" nullable="false" length="50" default="1" comment="grab"/>
+    <column xsi:type="varchar" name="banner_content_tcolor" nullable="false" length="50" comment="Banner content text color"/>
+	<column xsi:type="varchar" name="pagination_bocolor" nullable="false" length="50" comment="pagination_bocolor"/>
+    <column xsi:type="varchar" name="space_between" nullable="true" length="255" comment="space_between"/>
+    <column xsi:type="varchar" name="slides_per_view" nullable="true" length="255" comment="slides_per_view"/>
+    <column xsi:type="varchar" name="grid_view" nullable="true" length="255" comment="grid_view"/>
+    <column xsi:type="varchar" name="grid_per_view" nullable="true" length="255" comment="grid_per_view"/>
+    <column xsi:type="varchar" name="lazy_load" nullable="true" length="255" comment="lazy_load"/>
+	<constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="slidergroup_id"/>
+    </constraint>
+  </table>
+  <table name="responsivebannerslider_page" resource="default" engine="innodb" comment="responsivebannerslider_page">
+    <column xsi:type="int" name="page_id" padding="10" unsigned="true" nullable="false" identity="true" comment="page_id"/>
+    <column xsi:type="smallint" name="slidergroup_id" padding="5" unsigned="true" nullable="false" identity="false" comment="slidergroup_id"/>
+    <column xsi:type="smallint" name="pages" padding="5" unsigned="true" nullable="false" identity="false" comment="pages"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="page_id"/>
+    </constraint>
+  </table>
+  <table name="responsivebannerslider_category" resource="default" engine="innodb" comment="responsivebannerslider_category">
+    <column xsi:type="int" name="category_id" padding="10" unsigned="true" nullable="false" identity="true" comment="category_id"/>
+    <column xsi:type="smallint" name="slidergroup_id" padding="5" unsigned="true" nullable="false" identity="false" comment="slidergroup_id"/>
+    <column xsi:type="smallint" name="category_ids" padding="5" unsigned="true" nullable="false" identity="false" comment="category_ids"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="category_id"/>
+    </constraint>
+  </table>
+  <table name="responsivebannerslider_product" resource="default" engine="innodb" comment="responsivebannerslider_product">
+    <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" identity="true" comment="product_id"/>
+    <column xsi:type="smallint" name="slidergroup_id" padding="5" unsigned="true" nullable="false" identity="false" comment="slidergroup_id"/>
+    <column xsi:type="smallint" name="product_sku" padding="5" unsigned="true" nullable="false" identity="false" comment="product_sku"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="product_id"/>
+    </constraint>
+  </table>
+  <table name="responsivebannerslider_store" resource="default" engine="innodb" comment="responsivebannerslider_store">
+    <column xsi:type="int" name="store_ids" padding="10" unsigned="true" nullable="false" identity="true" comment="store_ids"/>
+    <column xsi:type="smallint" name="slidergroup_id" padding="5" unsigned="true" nullable="false" identity="false" comment="slidergroup_id"/>
+    <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" comment="store_id"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="store_ids"/>
+    </constraint>
+  </table>
+  <table name="responsivebannerslider_slide" resource="default" engine="innodb" comment="responsivebannerslider_slide">
+    <column xsi:type="int" name="slide_id" padding="10" unsigned="true" nullable="false" identity="true" comment="slide_id"/>
+    <column xsi:type="varchar" name="group_names" nullable="false" length="255" comment="group_names"/>
+    <column xsi:type="varchar" name="titles" nullable="false" length="255" comment="titles"/>
+    <column xsi:type="varchar" name="img_video" nullable="false" length="255" comment="img_video"/>
+    <column xsi:type="smallint" name="img_hosting" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="img_hosting"/>
+    <column xsi:type="varchar" name="video_id" nullable="false" length="255" comment="video_id"/>
+    <column xsi:type="text" name="hosted_url" nullable="false" comment="hosted_url"/>
+    <column xsi:type="text" name="hosted_thumb" nullable="false" comment="hosted_thumb"/>
+    <column xsi:type="varchar" name="filename" nullable="false" length="255" comment="filename"/>
+    <column xsi:type="varchar" name="alt_text" nullable="false" length="255" comment="alt_text"/>
+    <column xsi:type="varchar" name="url" nullable="false" length="255" comment="url"/>
+    <column xsi:type="varchar" name="url_target" nullable="false" length="255" comment="url_target"/>
+      <column xsi:type="varchar" name="content_position" nullable="false" length="255" comment="content_position"/>
+    <column xsi:type="text" name="description" nullable="false" comment="description"/>
+    <column xsi:type="smallint" name="date_enabled" padding="5" unsigned="true" nullable="false" identity="false" comment="date_enabled"/>
+    <column xsi:type="datetime" name="from_date" on_update="false" nullable="true" comment="from_date"/>
+    <column xsi:type="datetime" name="to_date" on_update="false" nullable="true" comment="to_date"/>
+    <column xsi:type="smallint" name="sort_order" padding="5" unsigned="true" nullable="false" identity="false" default="1" comment="sort_order"/>
+    <column xsi:type="smallint" name="statuss" padding="5" unsigned="true" nullable="false" identity="false" default="1" comment="statuss"/>
+    <column xsi:type="text" name="filename_mobile" nullable="true" comment="image for mobile"/>
+     <column xsi:type="text" name="btnone_text" nullable="false" comment="btnone_text"/>
+    <column xsi:type="varchar" name="btnone_url" nullable="false" length="255" comment="btnone_url"/>
+    <column xsi:type="text" name="btntwo_text" nullable="false" comment="btntwo_text"/>
+    <column xsi:type="varchar" name="btntwo_url" nullable="false" length="255" comment="btntwo_url"/>
+    <column xsi:type="varchar" name="image_height" nullable="false" length="255" comment="Image Height"/>
+    <column xsi:type="varchar" name="image_width" nullable="false" length="255" comment="Image Width"/> 
+    <column xsi:type="varchar" name="mobile_image_height" nullable="false" length="255" comment="Mobile Image Height"/>
+    <column xsi:type="varchar" name="mobile_image_width" nullable="false" length="255" comment="Mobile Image Width"/>
+	<column xsi:type="smallint" name="show_offer_text" padding="5" unsigned="true" nullable="false" identity="false" comment="show_offer_text"/>
+    <column xsi:type="text" name="offer_text" nullable="true" comment="Offer Text"/>
+	<constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="slide_id"/>
+    </constraint>
+  </table>
+</schema>

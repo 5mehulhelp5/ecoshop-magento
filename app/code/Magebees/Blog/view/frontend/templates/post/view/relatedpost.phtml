@@ -1,0 +1,38 @@
+<?php 
+if($block->enableRelatedPost()):
+$post = $block->getPost();
+$related_post_ids_arr = explode(",",(string)$post->getRelatedPostIds());
+if(count($related_post_ids_arr)>0){
+$relatedPosts = $block->getRelatedPosts($post->getRelatedPostIds());
+if($relatedPosts->getSize()>0) {
+?>
+<div class="block mb-related-post">
+    <div class="block-title title">
+        <strong id="block-relatedposts-heading" role="heading" aria-level="2">
+            <?php echo __('Related posts') ?>
+        </strong>
+    </div>
+    <ol class="items clearfix">
+		<?php foreach($relatedPosts as $_post):?>
+			<?php 	
+				$featuredImage = $block->getFeaturedImage($_post,250,180);
+				$_postUrl =  $block->getPosturl($_post);
+				$_postName = $block->escapeHtml($_post->getTitle(), null, true);
+			?>
+			<li class="item">
+				<a href="<?php echo $block->getRelatedPosturl($_post);?>">
+					<?php if($featuredImage): ?>
+						<img src="<?php echo $featuredImage;?>" alt="<?php echo $block->escapeHtml($_postName);?>" title="<?php echo $block->escapeHtml($_postName);?>" class="featured-img">
+					<?php endif;?>
+					<span class="title"><?php echo $block->escapeHtml($_post->getTitle()); ?></span>
+				</a>
+			</li>
+		<?php endforeach;?>
+	</ol>
+    </div>
+<?php
+	}
+	
+}
+endif;
+?>

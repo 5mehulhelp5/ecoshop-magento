@@ -1,0 +1,49 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php $_item = $block->getItem() ?>
+<?php $_order = $block->getItem()->getOrder(); ?>
+<?php $mail_helper = $this->helper('Magebees\EmailEditor\Helper\Data');
+$is_ext_enabled=$mail_helper->getConfig('emaileditor/setting/enable');
+$is_show_img=$mail_helper->getConfig('emaileditor/setting/show_img');?>
+<tr>
+    <?php if (($is_show_img)&&($is_ext_enabled)): ?>      
+    <td>
+        <?php
+        $productId = $_item->getProductId();       
+        $product = $mail_helper->loadProduct($productId);
+        $productImage = $this->helper('Magento\Catalog\Helper\Image')->init($product, 'category_page_list', array('height' => '100' , 'width'=> '100'))->getUrl();
+        ?>
+        <img height="100" width="100" src="<?= $productImage ?>" alt="<?= $block->escapeHtml($product->getName()) ?>">
+    </td>
+    <?php endif; ?>
+    <td class="item-info<?php if ($block->getItemOptions()): ?> has-extra<?php endif; ?>">
+        <p class="product-name"><?= $block->escapeHtml($_item->getName()) ?></p>
+        <p class="sku"><?= /* @escapeNotVerified */  __('SKU') ?>: <?= $block->escapeHtml($block->getSku($_item)) ?></p>
+        <?php if ($block->getItemOptions()): ?>
+            <dl>
+                <?php foreach ($block->getItemOptions() as $option): ?>
+                    <dt><strong><em><?= /* @escapeNotVerified */  $option['label'] ?></em></strong></dt>
+                    <dd>
+                        <?= /* @escapeNotVerified */  nl2br($option['value']) ?>
+                    </dd>
+                <?php endforeach; ?>
+            </dl>
+        <?php endif; ?>
+        <?php $addInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+        <?php if ($addInfoBlock) :?>
+            <?= $addInfoBlock->setItem($_item->getOrderItem())->toHtml() ?>
+        <?php endif; ?>
+        <?= $block->escapeHtml($_item->getDescription()) ?>
+    </td>
+    <td class="item-qty"><?= /* @escapeNotVerified */  $_item->getQty() * 1 ?></td>
+    <td class="item-price">
+        <?= /* @escapeNotVerified */  $block->getItemPrice($_item->getOrderItem()) ?>
+    </td>
+</tr>

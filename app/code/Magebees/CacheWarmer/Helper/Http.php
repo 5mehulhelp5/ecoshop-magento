@@ -1,0 +1,97 @@
+<?php
+namespace Magebees\CacheWarmer\Helper;
+
+use Magento\Framework\App\Helper\AbstractHelper;
+
+class Http extends AbstractHelper
+{
+    public const STATUS_ALREADY_CACHED = 199;
+
+    public const STATUS_HEADER = 'X-Magebees-Crawler-Status';
+
+    public const CUSTOMER_GROUP_HEADER = 'X-Magebees-Crawler-Customer-Group';
+    public const CURRENCY_HEADER = 'X-Magebees-Crawler-Currency';
+
+    /**
+     * @var string[]
+     */
+    private $_statusCodes = [
+        self::STATUS_ALREADY_CACHED => 'Already cached',
+        100 => '100 Continue',
+        101 => '101 Switching Protocols',
+        102 => '102 Processing',
+        200 => '200 OK',
+        201 => '201 Created',
+        202 => '202 Accepted',
+        203 => '203 Non-Authoritative Information',
+        204 => '204 No Content',
+        205 => '205 Reset Content',
+        206 => '206 Partial Content',
+        207 => '207 Multi-Status',
+        300 => '300 Multiple Choices',
+        301 => '301 Moved Permanently',
+        302 => '302 Found',
+        303 => '303 See Other',
+        304 => '304 Not Modified',
+        305 => '305 Use Proxy',
+        306 => '306 Switch Proxy',
+        307 => '307 Temporary Redirect',
+        400 => '400 Bad Request',
+        401 => '401 Unauthorized',
+        402 => '402 Payment Required',
+        403 => '403 Forbidden',
+        404 => '404 Not Found',
+        405 => '405 Method Not Allowed',
+        406 => '406 Not Acceptable',
+        407 => '407 Proxy Authentication Required',
+        408 => '408 Request Timeout',
+        409 => '409 Conflict',
+        410 => '410 Gone',
+        411 => '411 Length Required',
+        412 => '412 Precondition Failed',
+        413 => '413 Request Entity Too Large',
+        414 => '414 Request-URI Too Long',
+        415 => '415 Unsupported Media Type',
+        416 => '416 Requested Range Not Satisfiable',
+        417 => '417 Expectation Failed',
+        418 => '418 I\'m a teapot',
+        422 => '422 Unprocessable Entity',
+        423 => '423 Locked',
+        424 => '424 Failed Dependency',
+        425 => '425 Unordered Collection',
+        426 => '426 Upgrade Required',
+        449 => '449 Retry With',
+        450 => '450 Blocked by Windows Parental Controls',
+        500 => '500 Internal Server Error',
+        501 => '501 Not Implemented',
+        502 => '502 Bad Gateway',
+        503 => '503 Service Unavailable',
+        504 => '504 Gateway Timeout',
+        505 => '505 HTTP Version Not Supported',
+        506 => '506 Variant Also Negotiates',
+        507 => '507 Insufficient Storage',
+        509 => '509 Bandwidth Limit Exceeded',
+        510 => '510 Not Extended'
+    ];
+
+    public function getStatusCodes()
+    {
+        return $this->_statusCodes;
+    }
+
+    public function getStatusCodeDescription($code)
+    {
+        if (isset($this->_statusCodes[$code])) {
+            $res = $this->_statusCodes[$code];
+        } else {
+            $res = __('Unknown status code');
+        }
+
+        return $res;
+    }
+
+    public function isCrawlerRequest()
+    {
+        return (bool)$this->_request->getHeader(self::STATUS_HEADER);
+    }
+}

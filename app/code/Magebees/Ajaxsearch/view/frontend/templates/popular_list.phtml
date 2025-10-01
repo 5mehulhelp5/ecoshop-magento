@@ -1,0 +1,63 @@
+<?php
+$_productCollection = $block->getPopularSearchCollection()->getData();
+$current_version=$block->getMagentoVersion();
+$search_block=$block->getLayout()->createBlock('\Magebees\Ajaxsearch\Block\Searchbox');
+$popular_config=$search_block->getPopularConfig();
+$order=$popular_config['position'];
+?>
+<?php if(count($_productCollection)){
+	?>
+	<ul id="ajax_popular" class="searchTags">
+		<li class="titleRow">
+			<span class="order" style="display:none;"><?php echo $order;?></span>
+			<h6 class="mbSecTitle popular_title">
+				<?php if($popular_config['title']){
+						echo __($popular_config['title']);
+					} else {
+						echo __('Popular Search');						
+					}
+				?>
+			</h6>
+		</li>
+		<?php
+			foreach ($_productCollection as $_product):	
+/*if($current_version>='2.1.0')
+{
+	$query_text=str_replace(' ', '+', $_product['query_text']);
+}	
+else{
+	$query_text=str_replace(' ', '+', $_product['name']);
+}*/
+	
+	if(isset($_product['query_text']))
+	{
+		$query_text=str_replace(' ', '+', $_product['query_text']);
+	}
+	else
+	{
+		$query_text=str_replace(' ', '+', $_product['name']);
+	}
+			
+		?>
+		<li class="searchTag popular_item"><a href="<?php echo $searchresult_url =$block->getCatalogSearchUrl().'?q='.$query_text;?>">
+		<?php
+			/*if($current_version>='2.1.0')
+			{
+				echo $_product['query_text'];
+			}	
+			else{
+				echo $_product['name'];
+			}*/
+	
+	if(isset($_product['query_text']))
+	{
+		echo $_product['query_text'];
+	}
+	else
+	{
+		echo $_product['name'];
+	}
+		 ?></a></li>
+		<?php  endforeach; ?>
+	</ul>
+<?php } ?>

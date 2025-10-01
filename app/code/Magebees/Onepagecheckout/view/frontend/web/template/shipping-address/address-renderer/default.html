@@ -1,0 +1,28 @@
+<div class="magebees-shipping-address-item shipping-address-item mageb-address"
+     data-bind="css: isSelected() ? 'magebees-selected-item' : 'magebees-not-selected-item'">
+     <ul>
+     	<li>
+     	<input type="radio" id="magebees-select-shipping-address" data-bind="click: selectAddress"/>
+    	<label data-bind="click: selectAddress">
+        <span>
+        <!-- ko text: address().firstname --><!-- /ko --> <!-- ko text: address().lastname --><!-- /ko -->
+        <!-- ko text: address().street --><!-- /ko -->
+        <!-- ko text: address().city --><!-- /ko -->, <!-- ko text: address().region --><!-- /ko -->
+        <!-- ko text: address().postcode --><!-- /ko -->
+        <!-- ko text: getCountryName(address().countryId) --><!-- /ko -->
+        <!-- ko text: address().telephone --><!-- /ko -->
+        </span>
+    </label>
+    	</li>
+	</ul>
+    <!-- ko if: (address().isEditable()) -->
+    <button type="button"
+            class="action mageb-button"
+            data-bind="click: editAddress, visible: address().isEditable()">
+        <span data-bind="i18n: 'Edit'"></span>
+    </button>
+    <!-- /ko -->
+    <!--<button type="button" class="action mageb-button" data-bind="click: selectAddress" class="action action-select-shipping-item">-->
+    <!--<span data-bind="i18n: 'Ship Here'"></span>-->
+    <!--</button>-->
+</div>

@@ -1,0 +1,218 @@
+<?php
+$addImage = $this->getUrl( '*/*/addfeatureimage' );
+$deleteImage = $this->getUrl( '*/*/deletefeaturedimage' );
+?>
+    <div class="admin__field field field-gallery">
+    	<label class="label admin__field-label"><span><?php echo $block->escapeHtml('Featured Image');?> </span></label>
+        <div class="admin__field-control control">
+            <button type="button" class="scalable action-show-hide" id="uploadFeatured"><span><span><span><?php echo $block->escapeHtml('Upload');?> </span></span></span></button>
+            <input type="file" id="featured" name="featured" style="display: none;"/>
+        </div>
+    </div> 
+
+<div id="featuredImage" class="admin__field field">
+<?php 
+$post_id = $this->getRequest()->getParam( 'post_id' );
+$helper = $this->helper('Magebees\Blog\Helper\Data');
+$featuredImage = $helper->getPostFeaturedImage($post_id);
+
+if(isset($featuredImage['name']) && isset($featuredImage['mediaurl']) && isset($featuredImage['targetpath']))
+{
+ $featureImageHtml = '<label class="label admin__field-label"><span></span></label> <div class="image item base-image admin__field-control control" data-role="image" id="'. uniqid().'">
+                            <div class="product-image-wrapper">
+                                <div style="display:block;"><img class="product-image" data-role="image-element" src="'.$featuredImage['mediaurl'].'" alt=""></div>
+                                <div class="image-fade"><span>Hidden</span></div>
+                            </div>
+                            <div class="item-description">
+                                <div class="item-title" data-role="img-title"></div>
+                                <div class="item-size">
+                                    <a href="'.$featuredImage['mediaurl'].'" target="_blank"><span data-role="image-dimens">'.$featuredImage['name'].'</span></a>
+                                </div>
+                            </div>
+                            <div class="actions">
+                                    <button type="button" class="action-featured-remove" data-role="delete-button" data-post-id="'.$post_id.'" data-image="'.$featuredImage['name'].'" title="Delete image"><span>Delete image</span></button>
+                                </div>
+                        </div>';
+echo $featureImageHtml;
+} ?>
+</div>
+<?php
+$addPostGalleryImage = $this->getUrl( '*/*/addgalleryimage' );
+$deletePostGalleryImage = $this->getUrl( '*/*/removegalleryimage' );
+$form_key = $block->getFormKey();
+?>
+  <div class="admin__field field field-gallery">
+    <label class="label admin__field-label"><span><?php echo $block->escapeHtml('Gallery Images');?>  </span></label>
+    <div class="admin__field-control control">
+        <button type="button" class="scalable action-show-hide" id="uploadAttachment"><span><span><span><?php echo $block->escapeHtml('Upload');?>  </span></span></span></button>
+        <input type="file" id="attachment" name="attachment[]" style="display: none;" multiple="multiple"/>
+    </div>
+  </div>
+
+<?php
+if($post_id){
+$postGalleryImages = $helper->getPostGalleryImages($post_id);	
+	if(count($postGalleryImages)>0) {
+	$galleryImages = null;
+		$count=0;
+		foreach($postGalleryImages as $image):
+		$count++;
+		$galleryImages .= '<div class="image item base-image " data-role="image" id="'. uniqid().'">
+                            <div class="product-image-wrapper">
+                                <img class="product-image" data-role="image-element" src="'.$image['mediaurl'].'" alt="">
+                                <div class="image-fade"><span>Hidden</span></div>
+                                <div class="actions">
+                                    <button type="button" class="action-remove" data-role="delete-button" data-post-id="'.$post_id.'" data-image="'.$image['name'].'" title="Delete image"><span>Delete image</span></button>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <div class="item-title" data-role="img-title"></div>
+                                <div class="item-size">
+                                    <a href="'.$image['mediaurl'].'" target="_blank"><span data-role="image-dimens">'.$image['name'].'</span></a>
+                                </div>
+                            </div>
+                        </div>';
+	endforeach;
+	echo '<div id="postGalleryImages"><div  class="admin__field field"><label class="label admin__field-label"><span></span></label><div class="admin__field-control control">'.$galleryImages.'</div></div></div>';	
+	}else{
+	?>
+<div id="postGalleryImages" class="admin__field field"><div  class="admin__field field"><label class="label admin__field-label"><span></span></label></div></div>
+<?php }
+
+}else{ ?>
+<div id="postGalleryImages" class="admin__field field"><div  class="admin__field field"><label class="label admin__field-label"><span></span></label></div></div>
+<?php 
+
+}
+
+?>
+<script>
+    require(['jquery'], function ($) {
+        $(document).ready(function ($) {
+            
+			
+			$("#postGalleryImages .action-remove").click(function(event){
+			   if (window.confirm("Are you sure you want to delete?")) {
+							   var attachmentPath = $(this).attr("data-image");
+							   var divID = $(this).parents(".base-image").attr("id");
+							   var imageID = $(this).parents(".base-image").find(".hiddneattachID").val();
+							   var postId = $(this).attr("data-post-id");
+							   var page_media_gallery = $("#page_media_gallery").val();
+							   jQuery.ajax({
+									url: "<?php echo $deletePostGalleryImage; ?>",
+									type: "POST",
+									data: {filename: attachmentPath, form_key: window.FORM_KEY, imageID:imageID,postID:postId,imageList:page_media_gallery},
+									showLoader: true,
+									success: function (response) {
+										
+										if(response.success == true){
+											$(".base-image#"+divID).remove();
+											$("#page_media_gallery").val(response.remainingGalleryList);
+										}
+									},
+								   error: function (response) {
+										alert(response.message);
+								   }
+								});
+						   } 
+			  });
+			
+			 
+			
+			
+        
+            
+            $('#uploadAttachment').click(function(){ $('#attachment').trigger('click'); });
+            
+            $("#attachment").change(function(){
+                var data = $("#edit_form").get(0);
+                
+                jQuery.ajax({
+                     url: "<?php echo $addPostGalleryImage; ?>",
+                     type: "POST",
+                     data: new FormData(data),
+                     processData: false,
+                     contentType: false,
+                     showLoader: true,
+                     success: function (response) {
+                        console.log(response.data.uploadedFiles);
+						 
+						 var CurrentGalleryList = $("#page_media_gallery").val();
+						 var allGalleryImagesList = CurrentGalleryList +','+response.data.uploadedFiles;
+						 
+						 
+						 $("#page_media_gallery").val(allGalleryImagesList);
+                         $("#postGalleryImages").append(response.data.html);
+                         
+                     },
+                    error: function (response) {
+                         alert(response.message);
+                         
+                    }
+                 });
+            });
+        });
+    });
+</script>
+
+<script>
+    require(['jquery'], function ($) {
+        $(document).ready(function ($) {
+            
+            $(document).on('click', '#featuredImage .action-featured-remove', function(){
+                   var attachmentPath = $(this).attr("data-image");
+					var postId = $(this).attr("data-post-id");
+                   var divID = $(this).parents(".base-image").attr("id");
+                   var imageID = $(this).parents(".base-image").find(".hiddneattachID").val();
+                   
+                   jQuery.ajax({
+                        url: "<?php echo $deleteImage; ?>",
+                        type: "POST",
+                        data: {filename: attachmentPath, form_key: window.FORM_KEY, imageID:imageID,postID:postId},
+                        showLoader: true,
+                        success: function (response) {
+                            if(response.success == true){
+                                $(".base-image#"+divID).remove();
+								$("#page_featured_img").val(null);
+                            } 
+                            
+                        },
+                       error: function (response) {
+                            alert(response.message);
+                       }
+                    });
+            });
+            
+            $('#uploadFeatured').click(function(){
+				
+				
+				$('.action-featured-remove').trigger('click'); 
+			
+			
+				$('#featured').trigger('click'); });
+            
+            $("#featured").change(function(){
+				console.log('featured');
+                var data = $("#edit_form").get(0);
+                
+                jQuery.ajax({
+                     url: "<?php echo $addImage; ?>",
+                     type: "POST",
+                     data: new FormData(data),
+                     processData: false,
+                     contentType: false,
+                     showLoader: true,
+                     success: function (response) {
+                         $("#page_featured_img").val(response.data.uploadedFiles);
+                         $("#featuredImage").append(response.data.html);
+                        
+                     },
+                    error: function (response) {
+                         alert(response.message);
+                        
+                    }
+                 });
+            });
+        });
+    });
+</script>

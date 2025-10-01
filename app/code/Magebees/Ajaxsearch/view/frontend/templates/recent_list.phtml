@@ -1,0 +1,31 @@
+<?php
+$_productCollection = $block->getRecentSearchCollection();
+$search_block=$block->getLayout()->createBlock('\Magebees\Ajaxsearch\Block\Searchbox');
+$recent_config=$search_block->getRecentConfig();
+$order=$recent_config['position'];
+?>
+<?php if(count($_productCollection)){ ?>
+	<ul id="ajax_recent" class="searchTags">
+		<li class="titleRow">
+			<span class="order" style="display:none;"><?php echo $order;?></span>
+			<h6 class="mbSecTitle">
+				<?php if($recent_config['title']){
+						echo __($recent_config['title']);
+					} else {
+						echo __('Recent Search');
+						
+					}
+				?>
+			</h6>
+		</li>
+		<?php foreach ($_productCollection as $_product):
+		$query_text=str_replace(' ', '+', $_product['query_text']);
+		?>
+		<li class="searchTag recent_item">
+			<a href="<?php 
+			echo $searchresult_url =$block->getCatalogSearchUrl().'?q='.htmlentities($query_text);?>">
+			<?php echo htmlentities($_product['query_text']); ?></a>
+		</li>
+		<?php  endforeach; ?>
+	</ul>
+<?php } ?>

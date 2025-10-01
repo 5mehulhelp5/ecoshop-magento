@@ -1,0 +1,19 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+
+<div id="quickview-product-review-container" data-role="quickview-product-review"></div>
+<?php echo $block->getChildHtml(); ?>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "ajaxProcessReviews": {
+                "productReviewUrl": "<?php /* @escapeNotVerified */ echo $block->getProductReviewUrl();?>"
+            }
+        }
+    }
+</script>

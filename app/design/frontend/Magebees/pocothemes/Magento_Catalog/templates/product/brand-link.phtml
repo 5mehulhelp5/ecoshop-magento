@@ -1,0 +1,29 @@
+<?php 
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$_product = $block->getProduct();
+$brandId = null;
+$brand_page_url = null;
+$brand_attribute_code = $block->getBrandCode();
+if(($_product)&&($brand_attribute_code)):
+$storeId = $block->getStoreId();
+$baseURL = $block->getBaseUrl();
+$brand_url_key = $block->getBrandUrlKey();
+if($poco_helper->isProductAttributeExists($brand_attribute_code)):
+$product_brand = $_product->getResource()->getAttribute($brand_attribute_code)->getFrontend()->getValue($_product);	
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$brands = $objectManager->create('Magebees\Layerednavigation\Model\Brands');
+$brandcollection = $brands->getCollection();
+$brandcollection->addFieldToFilter('status', '1')->addFieldToFilter('brand_name', $product_brand);
+$brandId = $brandcollection->getFirstItem()->getBrandId();
+
+if (($product_brand != '')&&($brandId)){
+$seo_url = $brandcollection->getFirstItem()->getSeoUrl();
+$brandLink = $baseURL.$brand_url_key.'/'.$seo_url;
+?>
+<div class="product-brand">
+<a class="product-brand-link" href="<?php echo $brandLink; ?>" title="<?php echo __($product_brand) ?>" target="_blank;"><?php echo __($product_brand) ?></a></div>
+<?php
+}
+endif;
+endif;
+?>

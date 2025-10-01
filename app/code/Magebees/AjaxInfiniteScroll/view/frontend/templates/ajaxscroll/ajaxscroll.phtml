@@ -1,0 +1,50 @@
+<?php
+$config=$block->getConfig();
+$enable=$config['enable'];
+if(!$enable)
+{
+	return;
+}
+if(isset($config['loading_img'])) {
+		$image=$config['loading_img'];
+		$image_url=$block->getImageUrl($image);
+		
+	} else {
+		$image_url=$block->getViewFileUrl('Magebees_AjaxInfiniteScroll::images/ajax_loader.gif');
+	}
+
+$image_html='<img src='.$image_url.' alt=Loading.../>';
+
+?> 	
+<div id="scroll_loading" style="display:none;"><img src="<?php echo $image_url; ?>" alt="Loading..." /></div>
+<?php 
+if($config['enabled_top'])
+{
+	if(isset($config['top_icon']))
+	{
+$top_image=$config['top_icon'];
+$top_icon_url=$block->getImageUrl($top_image);?>		
+			
+<a href="#" class="back-to-top back-to-top-img"><img src="<?php echo $top_icon_url; ?>" width="50px" height="50px"/></a>
+<?php	}
+	else
+	{?>
+		<a href="#" class="back-to-top">Back to Top</a>
+	<?php }
+}
+?>
+<script type="text/x-magento-init">
+    {
+        "<?php /* @escapeNotVerified */ echo $config['product_container']; ?>": {
+            "magebeesInfiniteScroll": {"loading_type":<?php /* @escapeNotVerified */ echo $config['loading_type']; ?>,
+		"product_container":"<?php /* @escapeNotVerified */ echo $config['product_container']; ?>",			
+		"page_number":"<?php /* @escapeNotVerified */ echo $config['show_page_no']; ?>",			
+		"load_next_text":"<?php /* @escapeNotVerified */ echo $config['label_next_button']; ?>",
+		"load_prev_text":"<?php /* @escapeNotVerified */ echo $config['label_prev_button']; ?>",	
+		"load_button_style":"<?php /* @escapeNotVerified */ echo $config['button_style']; ?>",
+		"threshold":"<?php /* @escapeNotVerified */ echo $config['threshold']; ?>",		
+		"loading_image_src":"<?php echo $image_html;?>",
+		"text_no_more":"<?php /* @escapeNotVerified */ echo $config['text_no_more']; ?>"}
+        }
+    }
+</script>

@@ -1,0 +1,57 @@
+<?php $helper = $this->helper('Magebees\Ajaxcomparewishlist\Helper\Data'); ?>
+<?php if (!$block->customerIsAlreadyLoggedIn()): ?>
+    <div id="customer-popup-login" class="customer-popup-login _disabled">
+        <div class="image-system-wishlist">
+	<?php 
+$headerLogo = $block->getLayout()->createBlock('Magento\Theme\Block\Html\Header\Logo')->setTemplate('Magento_Theme::html/header/logo.phtml');
+echo $headerLogo->toHtml();
+		?>	
+		</div>
+	    <div class="block block-customer-login">
+            <div class="block-content" aria-labelledby="block-customer-popup-login-heading">
+                <form class="form form-login"
+                      action="<?php /* @escapeNotVerified */ echo $block->getPostActionUrl() ?>"
+                      method="post"
+                      id="customer-popup-login-form"
+                      data-mage-init='{"validation":{}}'>
+                    <?php echo $block->getBlockHtml('formkey'); ?>
+					<input type="hidden" name="redirect_url" value="<?php echo $helper->getWishListUrl(); ?>" />
+					<input type="hidden" name="mbwishcomparelogin" value="1" />
+                    <fieldset class="fieldset login" data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>">
+                        <div class="field note"><?php /* @escapeNotVerified */ echo __('Sign in to continue') ?></div>
+                        <div class="messages"></div>
+                        <div class="field email required">
+                            <label class="label" for="email"><span><?php /* @escapeNotVerified */ echo __('Email') ?></span></label>
+                            <div class="control">
+                                <input name="username" value="" <?php if ($block->isAutocompleteDisabled()) :?> autocomplete="off"<?php endif; ?> id="email-login" type="email" class="input-text" title="<?php /* @escapeNotVerified */ echo __('Email') ?>" data-validate="{required:true, 'validate-email':true}">
+                            </div>
+                        </div>
+                        <div class="field password required">
+                            <label for="pass" class="label"><span><?php /* @escapeNotVerified */ echo __('Password') ?></span></label>
+                            <div class="control">
+                                <input name="password" type="password" <?php if ($block->isAutocompleteDisabled()) :?> autocomplete="off"<?php endif; ?> class="input-text" id="pass-login" title="<?php /* @escapeNotVerified */ echo __('Password') ?>" data-validate="{required:true}" >
+                            </div>
+                            <div class="secondary"><a href="<?php echo $this->getUrl('customer/account/forgotpassword/') ?>"><?= __("Forgot Your Password")?>?</a></div>
+                        </div>
+                         
+                        <div class="actions-toolbar">
+                            <div class="primary"><button type="submit" class="action login primary" name="send" id="send2-login"><span><?php /* @escapeNotVerified */ echo __('Sign In') ?></span></button></div>
+                            <?php if ($block->getRegistration()->isAllowed()): ?>
+                                <div class="secondary"><a class="action remind" href="<?php /* @escapeNotVerified */ echo $block->getCustomerRegistrationUrl() ?>" id="customer-popup-registration"><span><?php /* @escapeNotVerified */ echo __('Create an Account?') ?></span></a></div>
+                            <?php endif; ?>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <script type="text/x-magento-init">
+            {
+                "#customer-popup-login": {
+                    "Magebees_Ajaxcomparewishlist/js/action/customer-authentication-popup": {
+                        "innerWidth": "200"
+                    }
+                }
+            }
+        </script>
+    </div>
+<?php endif; ?>

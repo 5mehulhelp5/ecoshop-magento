@@ -1,0 +1,201 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magebees\PocoThemes\Block\Html\Header $block */
+
+$pocoHelper = $this->helper(\Magebees\PocoThemes\Helper\Data::class);
+$storeId = $pocoHelper->getStoreId();
+
+$headerConfig = $pocoHelper->getConfigGroup('header', $storeId);
+$fontIcons = $pocoHelper->getConfigGroup('font_icons', $storeId);
+
+$topHeader = $headerConfig['top_header'] ?? false;
+$socialMediaEnable = $headerConfig['social_media_enable'] ?? false;
+$phoneEnable = $headerConfig['phone_enable'] ?? false;
+$topHeaderText = $headerConfig['top_header_text'] ?? false;
+$language = $headerConfig['language'] ?? false;
+$currency = $headerConfig['currency'] ?? false;
+
+$userIcon = $fontIcons['user'] ?? '';
+$settingIcon = $fontIcons['setting'] ?? '';
+$wishlistIcon = $fontIcons['whishlist'] ?? '';
+$phoneIcon = $fontIcons['contact'] ?? '';
+$searchIcon = $fontIcons['search'] ?? '';
+
+$show_best_seller = array_key_exists('show_best_seller', $headerConfig) ? $headerConfig['show_best_seller'] : false;
+$best_seller_title = array_key_exists('best_seller_title', $headerConfig) ? $headerConfig['best_seller_title'] : false;
+$best_seller_link = array_key_exists('best_seller_link', $headerConfig) ? $headerConfig['best_seller_link'] : false;
+$best_seller_url = $pocoHelper->getUrlByKey($best_seller_link);
+
+$show_gift_ideas = array_key_exists('show_gift_ideas', $headerConfig) ? $headerConfig['show_gift_ideas'] : false;
+$gift_ideas_title = array_key_exists('gift_ideas_title', $headerConfig) ? $headerConfig['gift_ideas_title'] : false;
+$gift_ideas_link = array_key_exists('gift_ideas_link', $headerConfig) ? $headerConfig['gift_ideas_link'] : false;
+$gift_ideas_url = $pocoHelper->getUrlByKey($gift_ideas_link);
+
+$show_sell_link = array_key_exists('show_sell_link', $headerConfig) ? $headerConfig['show_sell_link'] : false;
+$sell_link_title = array_key_exists('sell_link_title', $headerConfig) ? $headerConfig['sell_link_title'] : false;
+$sell_link = array_key_exists('sell_link', $headerConfig) ? $headerConfig['sell_link'] : false;
+$sell_link_url = $pocoHelper->getUrlByKey($sell_link);
+
+
+?>
+
+<div class="search-drawer">
+    <div class="container">
+        <div class="title"><?= __('What are you looking for?') ?></div>
+        <?= $this->getChildHtml("topSearch") ?>
+        <span class="close icon" id="mbsearch-close">
+            <svg xmlns="https://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </span>
+    </div>
+</div>
+
+<header class="page-header header-19">
+    <?php if ($topHeader): ?>
+        <div class="top-header">
+            <div class="container-fluid">
+                <div class="d-flex align-item-center justify-space-between">
+                    <div class="flex-1 leftTop">
+                        <?php if ($socialMediaEnable): ?>
+                            <div class="social-header">
+                                <?= $block->getLayout()->createBlock(\Magento\Framework\View\Element\Template::class)
+                                    ->setCacheLifetime(7200)
+                                    ->setTemplate('Magento_Theme::html/social.phtml')
+                                    ->toHtml(); ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="flex-1 middleTop">
+                        <div class="user-links panel header"><?= $this->getChildHtml("top.links") ?></div>
+
+                        <?php if ($topHeaderText): ?>
+                            <?php
+                            preg_match_all('/\)[^\d]*(\d+(\.\d+)?)/', $topHeaderText, $matches);
+                            if (!empty($matches[1])) {
+                                foreach ($matches[1] as $value) {
+                                    $converted = $pocoHelper->getFreeShippingCurrentPrice($value, $storeId);
+                                    $formatted = $pocoHelper->getFormattedPrice($converted);
+                                    $topHeaderText = str_replace("(%s)$value", $formatted, $topHeaderText);
+                                }
+                            }
+                            ?>
+                            <div class="shipping-msg"><?= $topHeaderText ?></div>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="flex-1 rightTop">
+                        <?php $contactNo = $pocoHelper->getContactus('contact', $storeId); ?>
+                        <?php if ($phoneEnable && $contactNo): ?>
+                            <div class="phone-no">
+                                <a href="tel:<?= $contactNo ?>" title="<?= __('Contact No') ?>">
+                                    <span class="icon"><?= $phoneIcon ?></span>
+                                    <span class="number"><?= $contactNo ?></span>
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <div class="container">
+        <div id="header-content" class="header d-flex align-item-center justify-space-between">
+
+            <!-- Mobile Toggle -->
+            <span data-action="toggle-nav" class="action nav-toggle">
+                    <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon bar_icon"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+					<svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon close_icon"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+					 <span><?=/* @escapeNotVerified */ __('Toggle Nav') ?></span>
+            </span>
+
+            <!-- Logo -->
+            <div class="logo flex-1 col-2 pr-1 d-flex-small justify-content-center-small">
+                <?= $this->getChildHtml("logo") ?>
+            </div>
+
+            <!-- Navigation -->
+            <div class="main-nav flex-1 col-8">
+                <?= $block->getChildHtml('navigation.sections') ?>
+            </div>
+
+            <!-- Right Icons -->
+            <div class="icon-right flex-1 col-2 pl-1">
+                <div class="minicart"><?= $this->getChildHtml("minicart") ?></div>
+
+                <div class="whilist-link" data-bind="scope: 'wishlist'">
+                    <a href="<?= $this->getUrl('wishlist', ['_secure' => true]) ?>" title="<?= __('My Wishlist') ?>" aria-label="Wishlist">
+                        <span class="icon"><?= $wishlistIcon ?></span>
+                        <!-- ko if: wishlist().counter -->
+                        <span data-bind="text: wishlist().counter" class="wishlist-counter counter qty"></span>
+                        <!-- /ko -->
+                    </a>
+                </div>
+
+                <!-- Setting Dropdown -->
+                <div class="setting-links <?= $topHeader ? 'stg_dd' : '' ?>">
+                    <div class="setting-icon"><span class="icon"><?= $topHeader ? $settingIcon : $userIcon ?></span></div>
+                    <div class="setting-dropdown">
+                        <?php if (!$topHeader): ?>
+                            <div class="user-account links-cols">
+                                <div class="top-links"><?= $this->getChildHtml("top.links") ?></div>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if ($language && $pocoHelper->isStoreMultiStoreView($storeId)): ?>
+                            <?= $this->getChildHtml("store_language_ver_2") ?>
+                        <?php endif; ?>
+
+                        <?php if ($currency && $pocoHelper->isMultipleCurrency($storeId)): ?>
+                            <?= $this->getChildHtml("currency_ver_2") ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <!-- Search Toggle -->
+                <div class="search-toggle">
+                    <div class="topSearch f-right">
+                        <span class="icon"><?= $searchIcon ?></span>
+                        <span class="label"><?= __('Search') ?></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="header-offer-bar">
+	<div class="container">
+        <div class="d-flex  jcb ">
+            
+		<?php echo  $this->getLayout()->createBlock("Magebees\Promotionsnotification\Block\View\Bar")->setTemplate("bike_head_notification.phtml")->toHtml() ?>
+        
+
+		<div class="flex-1  rightTop   d-flex jce ">
+		
+		<?php if($show_best_seller): ?>
+			<div class="btn_link bst_link"><a href="<?php echo $best_seller_url ;?>" title="<?php echo __($best_seller_title) ;?>"><span><?php echo __($best_seller_title) ;?></span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg> </a></div> 
+		<?php endif;?>
+		<?php if($show_gift_ideas): ?>
+				
+				<div class="btn_link bst_link"><a href="<?php echo $gift_ideas_url ;?>" title="<?php echo __($gift_ideas_title) ;?>"><span><?php echo __($gift_ideas_title) ;?></span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></a></div>
+			<?php endif;?>
+			<?php if($show_sell_link): ?>
+				
+				<div class="btn_link ofr_links"><a href="<?php echo $sell_link_url ;?>" title="<?php echo __($sell_link_title) ;?>"><span><?php echo __($sell_link_title) ;?></span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg> </a></div>
+			<?php endif;?>
+		
+         
+		
+		
+        </div>
+	</div>
+    </div>
+    </div>
+</header>

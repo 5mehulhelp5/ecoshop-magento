@@ -1,0 +1,148 @@
+<?php
+$helper = $this->helper('Magebees\Layerednavigation\Helper\Data');
+$brandConfig=$helper->getBrandConfigData();
+$brand_url_key=$brandConfig['brand_url_key'];
+?>
+<?php  	
+	$brandId = $helper->generateRandomId();
+?>
+<?php $collection = $block->getBrandCollection()->getData(); 
+if(count($collection) > 0 )  {  ?>
+<h3>Featured Brands</h3>
+<div class="brandlogoSliderLayer">	
+	<div class="container">
+		<div class="logoSliderLayer" id="brandslider-<?php echo $brandId; ?>">
+			<div class="swiper-wrapper">
+			<?php
+				foreach($collection as $branddetail){ 
+				if(isset($branddetail) && $branddetail['filename'] != null){
+						$img = $helper->getThumbnailsImage($branddetail['filename']);
+						$link_url = $helper->getBaseUrl();
+						if($brand_url_key)
+						{
+							$link_url .= $brand_url_key.'/';
+						}						
+						$link_url .= $branddetail['seo_url'];						
+						$brand_desc = $branddetail['brand_description'];
+						
+			?>
+				<div class="swiper-slide">
+
+					<a href="<?php echo $link_url; ?>" <?php if($branddetail['brand_description'] != "") { ?> class="tooltipcws tooltip" <?php } ?>  target="_blank">
+                    	
+                        <img src="<?php echo $img; ?>" alt="<?php echo $branddetail['brand_name']; ?>" title="<?php echo $brand_desc;?>"/>
+                    </a>
+				</div>
+			<?php }
+					else if(isset($branddetail)){					
+						$link_url = $helper->getBaseUrl();
+						if($brand_url_key)
+						{
+							$link_url .= $brand_url_key.'/';
+						}						
+						$link_url .= $branddetail['seo_url'];
+						$brand_desc = $branddetail['brand_description'];
+						
+			?>
+				<div class="swiper-slide">
+
+					<a href="<?php echo $link_url; ?>" <?php if($branddetail['brand_description'] != "") { ?> class="tooltipcws tooltip" <?php } ?> title="<?php echo $brand_desc;?>">
+                    	<?php 
+						echo $branddetail['brand_name'];?>                      
+                    </a>
+				</div>
+			<?php } } ?>
+			</div>
+		</div>
+		<?php //if($helper->enableNavigation()){ ?>
+		<?php $enableNavigation=1;?>
+		<?php if($enableNavigation){ ?>
+			<div class="swiper-button-next"></div>
+      		<div class="swiper-button-prev"></div>
+		<?php } ?>
+	</div>
+</div>
+<div class="clear"></div>
+
+<!--/* Tooltip Script */-->
+
+<script type="text/javascript">
+	var tooltips = document.querySelectorAll('.tooltip');
+	window.onmousemove = function (e) {
+		var x = (e.clientX + 20) + 'px',
+			y = (e.clientY + 20) + 'px';
+		for (var i = 0; i < tooltips.length; i++) {
+			tooltips[i].style.top = y;
+			tooltips[i].style.left = x;
+		}
+	};
+</script>
+
+<!--/* Tooltip Script */-->
+
+
+<script>	
+ requirejs(['jquery','domReady!','Magebees_Layerednavigation/js/swiper-bundle.min'],
+ function($,domReady,Swiper){		
+ 
+ 	var swiper = new Swiper('#brandslider-<?php echo $brandId; ?>', {
+        slidesPerView: 6,
+        spaceBetween: 30,
+        slidesPerGroup: 3,
+        loop: true,
+        loopFillGroupWithBlank: true,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        breakpoints: {
+			 // when window width is >= 0px
+			 0: {
+		      slidesPerView: 1,
+		      spaceBetween: 20,
+		      slidesPerGroup: 1
+		    },
+		    // when window width is >= 320px
+		    320: {
+		      slidesPerView: 2,
+		      spaceBetween: 20,
+		      slidesPerGroup: 1
+		    },
+		    // when window width is >= 480px
+		    480: {
+		      slidesPerView: 3,
+		      spaceBetween: 30,
+		      slidesPerGroup: 1
+		    },
+		    // when window width is >= 640px
+		    640: {
+		      slidesPerView: 3,
+		      spaceBetween: 30,
+		      slidesPerGroup: 3
+		    },
+			// when window width is >= 768px
+		    768: {
+		      slidesPerView: 4,
+		      spaceBetween: 30,
+		      slidesPerGroup: 3
+		    },
+			// when window width is >= 999px
+		    999: {
+		      slidesPerView: 5,
+		      spaceBetween: 30,
+		      slidesPerGroup: 3
+		    },
+			// when window width is >= 1200px
+		    1200: {
+		      slidesPerView: 6,
+		      spaceBetween: 30,
+		      slidesPerGroup: 3
+		    }
+		  }
+
+
+      });
+		
+	
+	});	</script>
+<?php } ?>

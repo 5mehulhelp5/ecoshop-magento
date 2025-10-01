@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <!--<head>
+       <css src="Magebees_Ajaxcomparewishlist::css/mbajaxcompare.css"/>
+	</head>-->
+	<body>
+	<referenceBlock name="head.additional">
+            <block class="Magento\Framework\View\Element\Template" name="ajax.compare.js" as="ajaxCompareJs" ifconfig="magebees_ajaxcomparewishlist/general/enabledcompare" template="Magebees_Ajaxcomparewishlist::comparejs.phtml"/>
+        </referenceBlock>
+		<referenceContainer name="before.body.end">			
+			<block class="Magento\Framework\View\Element\Template" name="ajax.wishlist.js" as="wishlistOption" template="Magebees_Ajaxcomparewishlist::wishlistoption.phtml" ifconfig="magebees_ajaxcomparewishlist/ajaxwishgeneral/enabledwish" />
+            
+			<block class="Magebees\Ajaxcomparewishlist\Block\Form\Login" ifconfig="magebees_ajaxcomparewishlist/ajaxwishgeneral/enabledwish" name="ajaxwishlist-popup-login" template="Magebees_Ajaxcomparewishlist::login.phtml" /> 
+        </referenceContainer>
+	</body>
+</page>

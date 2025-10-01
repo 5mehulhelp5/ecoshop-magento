@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/Acl/etc/acl.xsd">
+    <acl>
+		<resources>
+            <resource id="Magento_Backend::admin">
+				<resource id="Magebees_PocoBase::title" title="Poco Themes ">
+				<resource id="Magebees_PocoThemes::pocothemes_content" title="Poco Themes" sortOrder="0">
+				<resource id="Magebees_PocoThemes::config" title="Configuration" sortOrder="10" />
+                <resource id="Magebees_PocoThemes::install" title="Install Theme Demo Data" sortOrder="20" />
+				</resource>
+				
+				
+				<resource id="Magebees_Blog::pocoHeading" title="Blog" sortOrder="5">
+				<resource id="Magebees_Blog::pocopost" title="Posts" sortOrder="10" />
+                <resource id="Magebees_Blog::pococategory" title="Categories" sortOrder="15" />
+				<resource id="Magebees_Blog::pocotag" title="Tags" sortOrder="20" />
+                <resource id="Magebees_Blog::pococomment" title="Comments" sortOrder="25" />
+				<resource id="Magebees_Blog::pocoimport" title="Import" sortOrder="30" />
+                <resource id="Magebees_Blog::pocourlrewrite" title="URL ReWrite" sortOrder="35" />
+				</resource>
+				<resource id="Magebees_PocoBase::extension" title="MageBees Extension" sortOrder="10">
+				<resource id="Magebees_Advertisementblock::pocoadvertisementblock" title="Manage Advertising Blocks" sortOrder="1" />
+                <resource id="Magebees_Testimonial::pocotestimonial" title="Manage Customer Testimonials" sortOrder="2" />
+				<resource id="Magebees_Promotionsnotification::promotionsgrid" title="Promotions Notifications" sortOrder="3" />
+                <resource id="Magebees_Productlabel::pocolabelgrid" title="Product Labels" sortOrder="4" />
+				<resource id="Magebees_Finder::pocofindergrid" title="Manage Finders" sortOrder="5" />
+                <resource id="Magebees_Pagebanner::pocopagebanner" title="Manage Page Banner" sortOrder="6" />
+				<resource id="Magebees_TodayDealProducts::todaydealprogrid" title="Manage Deal Products" sortOrder="7" />
+				<resource id="Magebees_Productlisting::productlistinggrid" title="Manage Product Listing" sortOrder="8" />
+                <resource id="Magebees_Imagegallery::imagegallerygrid" title="Manage Image Gallery" sortOrder="9" />
+				</resource>
+				
+				<resource id="Magebees_Responsivebannerslider::pocoHeading" title="Responsive Banner Slider" sortOrder="10">
+				<resource id="Magebees_Responsivebannerslider::pocogrid" title="Manage Groups" sortOrder="10" />
+                <resource id="Magebees_Responsivebannerslider::pocoslide" title="Manage Slides" sortOrder="20" />
+				</resource>
+				
+				<resource id="Magebees_Layerednavigation::pocotitle" title="Layered Navigation" sortOrder="10">
+				<resource id="Magebees_Layerednavigation::pocolayerednavigation" title="Manage Attribute Filters" sortOrder="10" />
+                <resource id="Magebees_Layerednavigation::pocobrand" title="Manage Brands" sortOrder="20" />
+				</resource>
+				
+				<resource id="Magebees_Navigationmenu::pocoHeading" title="Navigationmenu Menu" sortOrder="10">
+				<resource id="Magebees_Navigationmenu::pocomenugroup" title="Manage Menu Groups" sortOrder="10" />
+                <resource id="Magebees_Navigationmenu::pocomanageitems" title="Manage Menu Items" sortOrder="20" />
+				</resource>
+				<resource id="Magebees_CacheWarmer::pocoHeading" title="Full Page Cache Warmer" sortOrder="15">
+				<resource id="Magebees_CacheWarmer::pocoqueue" title="FPC Warmer Queue" sortOrder="10" />
+                <resource id="Magebees_CacheWarmer::pocolog" title="FPC Warmer Log" sortOrder="20" />
+				</resource>
+				
+				<resource id="Magebees_PocoBase::pocoConfiguration" title="MageBees Extension Configuration" sortOrder="200">
+				<!--<resource id="Magebees_Advertisementblock::pocoadvertisementblock" title="Advertisement Block" sortOrder="1" />-->
+                <resource id="Magebees_Ajaxaddtocart::pocoajaxaddtocart" title="Ajax Add To Cart" sortOrder="2" />
+				
+				
+				<resource id="Magebees_AjaxCategoryProducts::pocoajaxcategoryproducts" title="Ajax Category Products" sortOrder="3" />	 	
+				<resource id="Magebees_Ajaxcomparewishlist::pocoajaxcomparewishlist" title="Ajax Compare/Wishlist"  sortOrder="4" />	 	
+				<resource id="Magebees_AjaxInfiniteScroll::pocoajaxinfinitescroll" title="Ajax Infinite Scroll" sortOrder="3" />
+				<resource id="Magebees_Ajaxquickview::pocoajaxquickview" title="Ajax Quick View"  sortOrder="4" />
+				<resource id="Magebees_Ajaxsearch::pocoajaxsearch" title="Ajax Quick Search " sortOrder="5" />
+				<resource id="Magebees_Blog::pococonfig_blog" title="Blog" sortOrder="6" />
+				<resource id="Magebees_Buynow::pococonfig_buynow" title="Buy Now" sortOrder="7" />
+				<resource id="Magebees_CustomCartStyle::pococonfig_customcartstyle" title="Custom Cart Style" sortOrder="8" />
+				<resource id="Magebees_Testimonial::pococonfig_testimonial" title="Customer Testimonial" sortOrder="8" />
+				<resource id="Magebees_EmailEditor::emailedit" title="Email Template Editor" sortOrder="10"/>
+				<resource id="Magebees_CacheWarmer::pocofpc" title="Full Page Cache Warmer" sortOrder="11" />
+				<resource id="Magebees_RichSnippets::pocorichsnippets" title="Google Rich Snippets" sortOrder="12"/>
+				<resource id="Magebees_Imagegallery::pocoimagegalleryconfig" title="Image Gallery" sortOrder="13"/>
+				<resource id="Magebees_Layerednavigation::layered" title="Improved Layered Navigation" sortOrder="14"/>
+				<resource id="Magebees_MPM::pocompm" title="Messages Popup Modal" sortOrder="15"/>
+				<resource id="Magebees_Navigationmenu::navigationmenu" title="Navigation Menu" sortOrder="16"/>
+				<resource id="Magebees_Onepagecheckout::pocoonepagecheckout" title="Onepage Checkout" sortOrder="17"/>
+				<resource id="Magebees_Pagebanner::pocopagebannerconfig" title="Page Banner" sortOrder="18"/>
+				<resource id="Magebees_ImageFlipper::pocoimageflipper" title="Product Image Flipper" sortOrder="19"/>
+				<resource id="Magebees_Productlabel::pocolabelconfig" title="Product Labels" sortOrder="20"/>
+				<resource id="Magebees_Productlisting::pocoproductlistingconfig" title="Product Listing" sortOrder="21"/>
+				<resource id="Magebees_Promotionsnotification::pocopromotions" title="Promotions Notification" sortOrder="22" />
+				<resource id="Magebees_Responsivebannerslider::responsivebannerslider" title="Responsivebannerslider" sortOrder="23" />
+				<resource id="Magebees_Socialsharing::socialsharing" title="Social Sharing" sortOrder="24" />
+				<resource id="Magebees_Finder::pocofinder" title="YMM Products Parts Finder" sortOrder="25" />
+						</resource>
+				
+				</resource>
+			    <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Magebees_PocoThemes::configuration_settings" title="Poco Themes Settings"  />
+							
+                        </resource>
+                    </resource>
+                </resource>
+             </resource>
+        </resources>
+    </acl>
+</config>
+

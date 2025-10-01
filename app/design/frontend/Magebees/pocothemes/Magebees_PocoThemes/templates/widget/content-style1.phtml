@@ -1,0 +1,197 @@
+<?php //use Magento\Framework\App\Action\Action; ?>
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); 
+$pubPath = $poco_helper->getPubAbsolutePath();
+?>
+
+<?php 
+	if($this->getData('wd_bgimage')){
+    	$bg_image_url = $poco_helper->getMediaUrl().$this->getData('wd_bgimage');
+    	$bg_image = 'background-image: url('.$bg_image_url.'); background-repeat: no-repeat; background-size: cover;';
+	}else{
+		$bg_image = '';
+	}
+	$content_position = $this->getData('wd_content_position');
+	$pos_class = ($content_position == "left") ? "left" : "right" ;
+
+	if($content_position == "left"){
+		$pos_class = "left";
+		$image_pos_class = "right";
+	}elseif($content_position == "right"){
+		$pos_class = "right";
+		$image_pos_class = "left";
+	}elseif($content_position == "bottom"){
+		$pos_class = "bottom";
+		$image_pos_class = "top";
+	}
+
+	$bg_color = $this->getData('wd_bgcolor');
+	$title = $this->getData('wd_title');
+	$short_desc = $this->getData('wd_short_desc');
+	$description = $this->getData('wd_description');
+	$content_type = $this->getData('wd_content_type');
+	$block = $this->getData('wd_block');
+	$read_more = $this->getData('wd_view_more');
+	$read_more_text = '';
+	$read_more_link = '';
+   	if($read_more){
+   		$read_more_text = $this->getData('wd_view_more_text');
+   		$read_more_link = $poco_helper->getUrl().$this->getData('wd_view_more_link');
+	}
+	$additional_content = $this->getData('wd_additional_content')?$this->getData('wd_additional_content'):false;
+	
+	$additional_content_type = $this->getData('wd_additional_content_type');
+	$additional_title = $this->getData('wd_additional_title')?$this->getData('wd_additional_title'):false;
+	
+	$additional_block = $this->getData('wd_additional_block');
+	$additional_short_desc = $this->getData('wd_additional_short_desc')?$this->getData('wd_additional_short_desc'):false;
+	$additional_description = $this->getData('wd_additional_description');
+	$additional_read_more = $this->getData('wd_additional_view_more');
+	
+	if($additional_read_more){
+   		$additional_read_more_text = $this->getData('wd_additional_view_more_text');
+   		$additional_read_more_link = $poco_helper->getUrl().$this->getData('wd_additional_view_more_link');
+	}
+	
+	$spacing_class = '';
+	$spacing_class .= $this->getData('wd_spacing')?'sections-spacing ':'';
+	$spacing_class .= $this->getData('wd_bottom_spacing')?'section-bottom-spacing':'';
+	
+	$section_class = $this->getData('wd_additional_content')?' column-3 ':' column-2 ';
+	$image_section = $poco_helper->getMediaUrl().$this->getData('wd_image_section');
+	$image_path = $pubPath.'media/'.$this->getData('wd_image_section');
+	if($this->getData('wd_image_section')):
+	list($width, $height) = getimagesize($image_path);
+	endif;
+	$wd_video_on_text = $this->getData('wd_video_on_text'); 
+	$video_on_popup = $this->getData('wd_video_on_popup'); 
+	$animation = $poco_helper->getThemeLayout('animation',$poco_helper->getStoreId())? true:false; 
+	$animation_class = $animation?"wow animate__fadeIn":" ";
+	$randomId = rand();
+?>
+<?php if(($bg_image)||($bg_color)): ?>
+<style type="text/css">
+	<?php echo '#welcome-content-'.$randomId. " { ".$bg_image."; background-color: ".$bg_color."; } " ?>
+</style>
+ <?php endif;?>
+<div id="<?php echo "welcome-content-".$randomId; ?>" class="welcome-content <?php echo $spacing_class ?><?php echo $section_class ?> <?php echo $animation_class ?>" <?php if($animation): ?> data-wow-delay="0.2s" <?php endif;?>>
+	<div class="container">
+		<div class="image_section col-item <?php echo $image_pos_class ?>">
+			<?php if($video_on_popup): ?>
+				<?php $video_url = $this->getData('wd_video_url'); ?>
+				<a href="<?php echo $video_url ?>" class="video-popup-onclick">
+					<?php if($this->getData('wd_image_section')):?>
+					<img loading="lazy" src="<?php echo $image_section; ?>" alt="<?php echo __(html_entity_decode((string)$title)); ?>" width="<?php echo $width; ?>" height="<?php echo $height; ?>"/>
+					<?php endif;?>
+					<?php if($wd_video_on_text): ?>
+						<span class="caption"><?php echo __(html_entity_decode((string)$wd_video_on_text)); ?></span>
+					<?php endif; ?>
+				</a>
+				<?php else: ?>
+				<?php if($this->getData('wd_image_section')):?>
+					<img loading="lazy" src="<?php echo $image_section; ?>"  alt="<?php echo __(html_entity_decode((string)$title)); ?>" width="<?php echo $width; ?>" height="<?php echo $height; ?>"/>
+				<?php endif; ?>
+			<?php endif; ?>
+		</div>
+
+		<div class="content_section col-item <?php echo $pos_class ?>">
+			<div class="d-flex justify-content-center flex-direction-col">
+				<?php if(($title)||($short_desc)): ?>
+				<div class="section-title">
+					<?php if($title): ?>
+						<h2 class="title"><?php echo __(html_entity_decode((string)$title)); ?></h2>
+					<?php endif; ?>
+					<?php if($short_desc): ?>
+						<div class="sort-details">
+							<p class="sort-detail">
+							<?php echo __(html_entity_decode((string)$short_desc)); ?>
+							</p>
+						</div>
+					<?php endif; ?>
+				</div>
+				<?php endif; ?>
+				<?php if($content_type == "custom"): ?>
+					<div class="w-description">
+					<?php echo __(html_entity_decode((string)$description)); ?>
+					</div>
+				<?php else: ?>
+					<?php 
+						echo $this->getLayout()
+							->createBlock('Magento\Cms\Block\Block')
+							->setBlockId($block)
+							->toHtml();
+					?>
+				<?php endif; ?>
+				<?php if($read_more): ?>
+					<div class="read-more-btn">
+						<a href="<?php echo __($read_more_link); ?>" class="button action primary" rel="nofollow">
+							<span><?php echo __(html_entity_decode((string)$read_more_text)); ?> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
+						</a>
+					</div>
+				<?php endif; ?>
+			</div>
+		</div>
+
+		<?php 
+		if($additional_content): ?>
+		<div class="content_section col-item justify-content-end <?php echo $pos_class ?>">
+			<div class="d-flex justify-content-end">
+				<?php if(($additional_title)||($additional_short_desc)): ?>
+				<div class="section-title">
+					<?php if($additional_title): ?>
+						<h2 class="title">
+						<?php echo __(html_entity_decode((string)$additional_title)); ?>
+						</h2>
+					<?php endif; ?>
+					<?php if($additional_short_desc): ?>
+						<div class="sort-details">
+							<p class="sort-detail">
+							<?php echo __(html_entity_decode((string)$additional_short_desc)); ?>
+							</p>
+						</div>
+					<?php endif; ?>
+				</div>
+				<?php endif; ?>
+				<?php if($additional_content_type == "custom"): ?>
+					<div class="w-description">
+					<?php echo __(html_entity_decode((string)$additional_description)); ?>
+					</div>
+				<?php else: ?>
+					<?php 
+						echo $this->getLayout()
+							->createBlock('Magento\Cms\Block\Block')
+							->setBlockId($additional_block)
+							->toHtml();
+					?>
+				<?php endif; ?>
+				<?php if($additional_read_more): ?>
+					<div class="read-more-btn"><a href="<?php echo __($additional_read_more_link); ?>" class="button action primary">
+					<?php echo __(html_entity_decode((string)$additional_read_more_text)); ?>
+			
+					
+					</a></div>
+				<?php endif; ?>
+			</div>
+		</div>
+		<?php endif; ?>
+	</div>
+</div>
+<?php if($video_on_popup): ?>
+<script>
+    require(
+    [
+        'jquery',
+        'magebees.magnific.min'
+    ],
+    function($) {
+        $(document).ready(function() {
+            $('.video-popup-onclick').magnificPopup({
+                type: 'iframe',
+                mainClass: 'mfp-fade',
+                preloader: true,
+                midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+            });
+        }); 
+        
+    });
+</script>
+<?php endif; ?>

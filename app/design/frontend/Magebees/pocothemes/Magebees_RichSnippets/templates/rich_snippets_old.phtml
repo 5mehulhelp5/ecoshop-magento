@@ -1,0 +1,140 @@
+<?php 
+$productRichSnippetsBlock = $block->getProductRichSnippetsBlock();
+//$productBlk=$block->getLayout()->createBlock('Magebees\RichSnippets\Block\Product');
+//if($productContent =$productRichSnippetsBlock->canShowContent()):?>
+<?php if($productContent = $block->getProductContent()):
+$show_availability=$productContent['show_availability'];
+$show_condition=$productContent['show_condition'];
+$_product = $this->getProduct();
+$review_arr=$productRichSnippetsBlock->getReviewCollection($_product);
+$brand_attr=$productContent['brand'];
+$_brand = $productRichSnippetsBlock->getAttributeDetail($_product,$brand_attr);
+$manufacture_attr=$productContent['manufacture'];
+$manufacture = $productRichSnippetsBlock->getAttributeDetail($_product,$manufacture_attr);
+$_sku=$_product->getSku();
+$summaryModel = $productRichSnippetsBlock->getReviewSummary($_product);
+$reviewCount = $summaryModel->getReviewsCount();
+$show_rating=$productContent['show_rating'];
+if (!$reviewCount) {
+    $reviewCount = 0;
+}
+$ratingSummary = ($summaryModel->getRatingSummary()) ? $summaryModel->getRatingSummary() : 20;
+//$customProperties=$productRichSnippetsBlock->getCustomProperties();
+$customProperties=$block->getCustomProperties();
+$offerDetail=$productRichSnippetsBlock->getOfferDetail($_product);
+
+?>
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        <?php if((!empty($review_arr))&&($show_rating)): ?>
+        <?php $lastElement = end($review_arr);?>
+        "review":[[],
+          <?php foreach($review_arr as $key=>$value): ?>
+            {
+            "@type": "Review",
+            <?php if(isset($value['datePublished'])): ?>
+            "datePublished": "<?php /* @escapeNotVerified */ echo $value['datePublished']; ?>",
+            <?php endif;?>
+
+            <?php if(isset($value['reviewBody'])): ?>
+            "reviewBody":"<?php /* @escapeNotVerified */ echo $value['reviewBody']; ?>",
+            <?php endif;?>
+
+            <?php if(isset($value['name'])): ?>
+            "name":"<?php /* @escapeNotVerified */ echo $value['name']; ?>",
+            <?php endif;?>
+
+            "author":{
+                "@type": "Thing",
+                <?php if(isset($value['author_name'])): ?>
+                "name":"<?php /* @escapeNotVerified */ echo $value['author_name']; ?>"
+                <?php endif;?>
+            },
+            "reviewRating":{
+                "@type": "Rating",
+                <?php if(isset($value['percent'])): ?>
+                "ratingValue":"<?php /* @escapeNotVerified */ echo $value['percent']; ?>",
+                <?php endif;?>
+                "bestRating":"100"
+            }
+        }<?php   if($value != $lastElement) {echo ',';}?>
+        <?php endforeach;?>
+        ],
+   
+        <?php endif;?>
+        "name": "<?php /* @escapeNotVerified */ echo $productRichSnippetsBlock->escapeQuote($productRichSnippetsBlock->stripTags($_product->getName())); ?>",
+        "image": "<?php /* @escapeNotVerified */ echo $productRichSnippetsBlock->stripTags($productRichSnippetsBlock->getImage($_product, 'product_base_image')->getImageUrl()); ?>",
+        <?php if($productRichSnippetsBlock->getDescription($_product)):?>
+        "description": "<?php /* @escapeNotVerified */ echo $productRichSnippetsBlock->escapeQuote($productRichSnippetsBlock->stripTags($productRichSnippetsBlock->getDescription($_product))); ?>",
+        <?php endif;?>
+        <?php if (strlen(trim($_brand))): ?>
+        "brand": {
+            "@type": "Thing",
+            "name": "<?php echo $productRichSnippetsBlock->stripTags($_brand); ?>"
+        },
+        <?php endif; ?>
+        <?php if (strlen(trim($manufacture))): ?>
+        "manufacturer": {
+            "@type": "Organization",
+            "name": "<?php echo $productRichSnippetsBlock->stripTags($manufacture); ?>"
+        },
+        <?php endif; ?>
+        <?php if ($customProperties): ?>
+        <?php foreach($customProperties as $key=>$value): ?>                            
+            "<?php echo $key; ?>":"<?php echo $productRichSnippetsBlock->getAttributeDetail($_product,$value);?>",            
+        <?php endforeach; ?>
+        <?php endif; ?>
+        <?php if ($reviewCount && $show_rating) : ?>
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "bestRating": 5,
+                    "worstRating": 1,
+                    "ratingValue": "<?php echo $ratingSummary / 20 ; ?>",
+                    "reviewCount": "<?php echo $reviewCount ?>"
+                },
+        <?php endif; ?>
+       <?php $offerlastElement = end($offerDetail);?>
+        "offers":[[],
+          <?php foreach($offerDetail as $key=>$value): ?>
+            {
+                <?php if ($show_condition): ?>
+                    "itemCondition":"http://schema.org/NewCondition",
+                <?php endif; ?>  
+                <?php if($value['type']=='AggregateOffer'):?>
+                "@type": "AggregateOffer", 
+                <?php if(isset($value['offerCount'])): ?>
+                "offerCount":"<?php echo $value['offerCount']; ?>",
+                <?php endif; ?>  
+                "lowPrice": "<?php echo $value['minPrice']; ?>",
+                "highPrice": "<?php echo $value['maxPrice']; ?>", 
+                <?php else: ?>
+                "@type": "Offer", 
+                "price": "<?php echo $value['price']; ?>",
+                <?php endif; ?>
+			    "priceCurrency": "<?php echo $block->getCurrencyCode() ?>", 
+                 <?php if($value['validuntil']): ?>
+                "priceValidUntil":"<?php echo $value['validuntil']; ?>",
+                 <?php endif;?>             
+                <?php if ($show_availability): ?>
+                    <?php if ($_product->isAvailable()): ?>
+                    "availability": "https://schema.org/InStock",
+                    <?php else : ?>
+                    "availability": "https://schema.org/OutOfStock",
+                    <?php endif; ?>
+                <?php endif; ?>
+                "url": "<?php echo $value['url']; ?>",
+                "seller":{
+                "@type": "Organization", 
+                 "name":"<?php echo $block->getStoreName(); ?>"
+				}
+               
+            
+            }<?php   if($value != $offerlastElement) {echo ',';}?>
+        <?php endforeach;?>
+        ] 
+    }
+</script>
+<?php endif; ?>

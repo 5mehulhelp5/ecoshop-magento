@@ -1,0 +1,298 @@
+<?php $enabled = $this->getData('wd_enable')?$this->getData('wd_enable'):0; ?>
+
+<?php if($enabled): /* Enabled Conditions */ 
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); 
+$storeId = $poco_helper->getStoreId();
+$mediaURL = $poco_helper->getStoreMediaUrl($storeId);
+$pubPath = $poco_helper->getPubAbsolutePath();
+$show_heading = $this->getData('wd_show_heading')?$this->getData('wd_show_heading'):0;
+$heading = $this->getData('wd_heading')?$this->getData('wd_heading'):null;
+$heading_logo = $this->getData('wd_heading_logo')?$this->getData('wd_heading_logo'):null;
+$short_desc = $this->getData('wd_short_desc')?$this->getData('wd_short_desc'):null;
+$show_viewall = $this->getData('wd_show_viewall')?$this->getData('wd_show_viewall'):0;
+$viewall_txt = $this->getData('wd_viewall_txt')?$this->getData('wd_viewall_txt'):0;
+$viewall_url = $this->getData('wd_viewall_url')?$this->getData('wd_viewall_url'):0;
+$no_of_items = $this->getData('wd_no_of_items')?$this->getData('wd_no_of_items'):10;
+$bgimage = $this->getData('wd_bgimage')?$this->getData('wd_bgimage'):null;
+$category_description = $this->getData('wd_description')?$this->getData('wd_description'):0;
+$slider = $this->getData('wd_slider')?$this->getData('wd_slider'):0;
+$rtl = $poco_helper->getThemeLayout('rtl',$storeId)? true:false; 
+$animation = $poco_helper->getThemeLayout('animation',$storeId)? true:false; 
+$animation_class = $animation?"wow animate__fadeIn":" ";
+$slider_class = $slider?" swiper":" ";
+$item_class =   $slider?"category-item swiper-slide":"category-item";
+
+$autoscroll = $this->getData('wd_autoscroll')=='1' ? true:false;
+$navarrow = $this->getData('wd_navarrow')=='1' ? true:false;
+$pagination = $this->getData('wd_pagination')=='1' ? true:false;
+$paginationtype = $this->getData('wd_pagination_type');
+$infinite_loop = $this->getData('wd_infinite_loop')=='1' ? true:false;
+$scrollbar = $this->getData('wd_scrollbar')=='1' ? true:false;
+$grap_cursor = $this->getData('wd_grap_cursor')=='1' ? true:false;
+$auto_height = $this->getData('wd_slide_auto_height')=='1' ? true:false;
+$centered = $this->getData('wd_centered')=='1' ? true:false;
+$items = $this->getData('wd_items_per_slide');
+$auto_play_delaytime = $this->getData('wd_auto_play_delaytime') ? $this->getData('wd_auto_play_delaytime'):3000;
+$autoplayoff = $this->getData('wd_autoplayoff')=='1' ? true:false;
+$items_per_row = 'category-simple-img category-items-'.$this->getData('wd_items_per_row');
+$bg_color = $this->getData('wd_bgcolor');
+	
+	if($heading_logo){
+		$heading_logo_url = $poco_helper->getMediaUrl().$heading_logo;
+		$heading_logo_path = $pubPath.'media/'.$heading_logo;
+	}else{
+		$heading_logo_url = '';
+		$heading_logo_path = '';
+	}
+	if($bgimage){
+		$bg_image_url = $poco_helper->getMediaUrl().$bgimage;
+		$bg_image = 'background-image: url('.$bg_image_url.'); background-repeat: no-repeat; background-size: cover;';
+	}else{
+		$bg_image = '';
+	}
+   	$spacing_class = '';
+	$spacing_class .= $this->getData('wd_spacing')?'sections-spacing ':'';
+	$spacing_class .= $this->getData('wd_bottom_spacing')?'section-bottom-spacing':'';
+    $_imagehelper = $this->helper('Magento\Catalog\Helper\Image');
+    $random_number = rand();
+	$slider_id = "magebees-category-image-slider-style7-".$random_number;
+	$shop_now = $this->getData('wd_shopnow')?$this->getData('wd_shopnow'):0;
+	$shop_now_txt = $this->getData('wd_shopnow_text')?$this->getData('wd_shopnow_text'):'Shop Now';
+	$swiper_data_init = array();
+			$swiper_data_init['slider_id'] = $slider_id;
+			$swiper_data_init['autoHeight'] = $auto_height;
+			$swiper_data_init['slidesPerView'] = 1;
+			$swiper_data_init['spaceBetween'] = 15;
+			$swiper_data_init['lazy']['loadPrevNext'] = true;
+			$swiper_data_init['lazy']['loadPrevNextAmount'] = $no_of_items;
+			$swiper_data_init['a11y'] = false;
+			$swiper_data_init['speed'] = 600;
+			$swiper_data_init['loop'] = $infinite_loop;
+			$swiper_data_init['grabCursor'] = $grap_cursor;
+			$swiper_data_init['centeredSlides'] = $centered;
+		 if($autoscroll):
+			$swiper_data_init['autoplay']['delay'] = $auto_play_delaytime;
+			$swiper_data_init['autoplay']['disableOnInteraction'] = false;
+			$swiper_data_init['autoplay']['pauseOnMouseEnter'] = $autoplayoff;
+		endif;
+		if($scrollbar):
+		$swiper_data_init['scrollbar']['el'] = "#swiper-scrollbar-".$random_number;
+		$swiper_data_init['scrollbar']['hide'] = false;
+		endif;
+		if($paginationtype=='default'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		elseif($paginationtype=='dynamic'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		elseif($paginationtype=='progress'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		elseif($paginationtype=='fraction'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		elseif($paginationtype=='custom'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		endif;
+		if($navarrow):
+		$swiper_data_init['navigation']['nextEl'] = "#swiper-button-next-".$random_number;
+		$swiper_data_init['navigation']['prevEl'] = "#swiper-button-prev-".$random_number;
+		endif;	
+		$swiper_data_init['breakpoints']['0']['slidesPerView'] = 1;
+		$swiper_data_init['breakpoints']['0']['spaceBetween'] = 10;
+		$swiper_data_init['breakpoints']['480']['slidesPerView'] = 2;
+		$swiper_data_init['breakpoints']['480']['spaceBetween'] = 20;
+		$swiper_data_init['breakpoints']['639']['slidesPerView'] = 3;
+		$swiper_data_init['breakpoints']['639']['spaceBetween'] = 20;
+		$swiper_data_init['breakpoints']['768']['slidesPerView'] = 4;
+		$swiper_data_init['breakpoints']['768']['spaceBetween'] = 30;
+		$swiper_data_init['breakpoints']['1200']['slidesPerView'] = $items;
+		$swiper_data_init['breakpoints']['1200']['spaceBetween'] = 30;
+	
+?>
+
+ 
+<?php if(($bg_image)||($bg_color)): ?>
+<style type="text/css">
+	<?php echo '#category-images-'.$random_number. " { ".$bg_image."; background-color: ".$bg_color."; } " ?>
+</style>
+ <?php endif;?>
+<div id="<?php echo "category-images-".$random_number; ?>" class="category-images <?php echo $spacing_class ?> category-images-style7">
+	<div class="container">
+		<?php if($show_heading): /* Show heading Conditions*/ ?>
+			<div class="section-title <?php echo $animation_class ?>" <?php if($animation): ?> data-wow-delay="0.2s" <?php endif;?>>
+				<?php if(($show_heading)&&($heading)):?>
+					<h2 class="title"><?php echo __(html_entity_decode($heading)); ?> </h2>
+				<?php endif; ?>
+				<?php if(($heading_logo)||($short_desc)):  ?>
+				
+				<div class="sort-details">
+					<?php if($heading_logo):  ?>
+					<?php list($heading_logo_width, $heading_logo_height) = getimagesize($heading_logo_path);?>
+						<div class="icon"><img loading="lazy" src="<?php echo $heading_logo_url;?>" alt="<?php echo __($heading); ?>" title="<?php echo __($heading); ?>" width="<?php echo $heading_logo_width; ?>" height="<?php echo $heading_logo_height; ?>"/></div>
+					<?php endif; ?>
+					<?php if($short_desc): ?>
+						<p class="sort-detail"><?php echo __(html_entity_decode($short_desc)); ?></p>
+					<?php endif; ?>
+				</div>
+				<?php endif; ?>
+			</div>
+		<?php endif; /* Show heading Conditions*/ ?>
+		<div class="position-relative">
+		<div id="<?php echo $slider_id; ?>" <?php if($slider): ?> data-swiper='<?php echo json_encode($swiper_data_init);?>' <?php endif;?> class="<?php if($slider): echo 'swiper-container'; endif; ?> category-image-list <?php echo $animation_class ?> <?php echo $items_per_row; echo $slider_class; if($pagination): echo ' show-pagination '; endif; ?>" <?php if($animation): ?> data-wow-delay="0.4s" <?php endif;?>>
+			<?php if($slider): ?>
+			<div class="swiper-wrapper <?php if($grap_cursor): ?>grab-cursor<?php endif;?>"  <?php if($rtl): ?> dir="rtl" <?php endif;?>>
+			<?php endif;?>
+			
+			<?php $count = 1;  $isCategoryExist = false;?>
+			<?php $_helper = $this->helper('Magebees\CategoryImage\Helper\Category');
+			$category_ids = array_filter(explode(",",(string)$this->getData('wd_categories')));
+			?>
+			<?php foreach ($category_ids as $categoryId): ?>
+				<?php $_category = $_helper->getCategoriesCollection($categoryId); ?>
+				<?php if($_category->getId()):
+				$isCategoryExist = true;
+				$_categoryUrl = $_category->getUrl();
+				?>
+				<?php if($count > $no_of_items): ?>
+					<?php break; ?>
+				<?php endif; ?>
+				<?php $count++; ?>
+				<?php 
+				$circle_animation_class = null;
+				if(($_category->getDiscountCode())&&($_category->getCircleTitle()))
+				{
+				$circle_animation_class = 'category-offers-banners';	
+				}
+				if($_category->getShowProductCounter()){
+					$align_class = 'justify-space-between';
+				}else{
+					$align_class = 'justify-content-center';
+				}
+				
+				?>
+				<div class="<?php echo $item_class ?> <?php echo $animation_class ?> <?php echo $circle_animation_class; ?>" <?php if($animation): ?> data-wow-delay="0.6s" <?php endif;?>>
+					<div class="category_inner">
+						<div class="category-thumbnail">
+						
+							<?php if($_category->getThumbnail()): ?>
+							<?php $_imgUrl = $_helper->getThumbnailImageUrl($_category);?>
+							<?php //$_imgPath = $pubPath.$_category->getThumbnail();?>
+							<?php $_imgPath = $pubPath.$_helper->getThumbnailImagePath($_category);?>
+						<?php else: ?>
+							<?php $_imgUrl= $mediaURL.'poco/catthumbanil/dummy-image-style-7.png';	?>
+							<?php $_imgPath= $pubPath.'media/poco/catthumbanil/dummy-image-style-7.png';	?>
+						<?php endif; ?>
+						
+						<?php list($width, $height) = getimagesize($_imgPath);?>
+							<a href="<?php echo $_categoryUrl;?>">
+								<img <?php if($slider): ?> class="swiper-lazy" <?php endif; ?> loading="lazy"  src="<?php echo $_imgUrl ?>" alt="<?php echo $block->escapeHtml($_category->getName()) ?>" title="<?php echo $block->escapeHtml($_category->getName()) ?>" width="<?php echo $width;?>" height="<?php echo $height;?>" />
+								<?php if($slider): ?>
+								<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+								<?php endif; ?>
+								<div class="round_anm"></div>
+							</a>
+
+							<?php if($_category->getDiscountCode()): ?>
+								<div class="offer-text">
+									<div class="category-discount-code"><?php echo $block->escapeHtml($_category->getDiscountCodeLabel()) ?> <span><?php echo $block->escapeHtml($_category->getDiscountCode()) ?></span></div>
+								</div>
+							<?php endif; ?>
+						</div>
+						
+						<?php if($_category->getCircleTitle()): ?>
+							<div class="collection-circle-text">
+								<div class="category-circle-title">
+									<svg class="circle-text" viewBox="0 0 100 100">
+									<defs>
+										<path id="circle" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"></path>
+									</defs>
+									<text><textPath xlink:href="#circle"><?php echo $block->escapeHtml($_category->getCircleTitle()) ?></textPath></text></svg>
+								</div>
+								<?php if($_category->getcircleDiscount()): ?>
+									<span class="category-circle-discount"><?php echo $block->escapeHtml($_category->getcircleDiscount()) ?></span>
+								<?php endif; ?>
+							</div>
+						<?php endif; ?>
+
+						<div class="category-details text-center">
+							<div class="category-title d-flex align-item-center flex-direction-col justify-content-center">
+								<?php if((!$shop_now)||(!$shop_now_txt)): ?>
+									<a href="<?php echo $_categoryUrl;?>" id="cat_<?php echo $categoryId ?>">
+										<h3 class="title"><?php echo $block->escapeHtml($_category->getName()) ?></h3>
+										<?php if(($_category->getShowProductCounter())&&($_category->getShowProductCounter()!="0")&&($_category->getProductCount()>0)): ?>
+											<div class="cat-product-count"><?php echo __($_category->getProductCount().'+ Items');?></div>
+										<?php endif; ?>
+									</a>
+								<?php else: ?>
+									<h3 class="title"><?php echo $block->escapeHtml($_category->getName()) ?></h3>
+									<?php if(($_category->getShowProductCounter())&&($_category->getShowProductCounter()!="0")&&($_category->getProductCount()>0)): ?>
+										<div class="cat-product-count"><?php echo __($_category->getProductCount().'+ Items');?></div>
+									<?php endif; ?>
+								<?php endif; ?>
+
+								<?php if(($shop_now)&&($shop_now_txt)): ?>
+									<a href="<?php echo $_categoryUrl;?>" id="cat_<?php echo $categoryId ?>" class="action secondary btn-small ct_btn">
+										<span><?php echo __(html_entity_decode($shop_now_txt)); ?></span>
+									</a>
+								<?php endif; ?>
+							</div>
+
+							<?php if(($category_description)&&($_category->getDescription())): ?>
+								<div class="sort-detail"><?php echo __($_category->getDescription());?></div>
+							<?php endif; ?>
+						</div>
+					</div>
+				</div>
+				<?php endif; ?>
+			<?php endforeach; ?>
+			<?php 
+						/* Set Condition for Sample Data Start */
+						if((count($category_ids)<0)||(!$isCategoryExist)):
+						echo $this->getLayout()
+								  ->createBlock('Magento\Framework\View\Element\Template')
+								  ->setSlider($slider)
+								  ->setDescription($category_description)
+								  ->setAnimation($animation)
+								  ->setShopnow($shop_now)
+								  ->setShopnowtext($shop_now_txt)
+								  ->setTemplate('Magebees_CategoryImage::dummy-category-style-7.phtml')
+								  ->toHtml();
+					  
+						endif;
+						/* Set Condition for Sample Data End */
+						?>
+			 <?php if($slider): ?>		
+			 </div>
+			 <?php if($pagination): ?>
+			<!-- Add Pagination -->
+			<div id="<?php echo "swiper-pagination-".$random_number;?>" class="swiper-pagination"></div>
+			<?php endif; ?>
+			<!-- Add Scrollbar -->
+			<?php if($scrollbar): ?>
+			<div id="<?php echo "swiper-scrollbar-".$random_number;?>" class="swiper-scrollbar"></div>	
+			<?php endif; ?>
+			 <?php endif; ?>
+			
+		</div>
+		<!-- Slider Arrow -->
+		<?php if($navarrow): ?>
+			<div id="<?php echo "swiper-button-next-".$random_number;?>" class="swiper-button-next"></div>
+			<div id="<?php echo "swiper-button-prev-".$random_number;?>" class="swiper-button-prev"></div>
+		<?php endif; ?>
+		<!-- End Slider Arrow -->
+		</div>
+		<!--End div swiper-->
+
+		<?php if($show_viewall): ?>
+			<div class="view-all-btn text-center <?php echo $animation_class ?>" <?php if($animation): ?> data-wow-delay="0.6s" <?php endif;?>>
+				<a href="<?php echo $viewall_url?>" class="action primary">
+				<?php echo __(html_entity_decode($block->escapeHtml($viewall_txt))); ?>
+				</a>
+			</div>
+		<?php endif; ?>
+		
+	</div>
+</div>
+<?php endif; /* Enabled Conditions */ ?>

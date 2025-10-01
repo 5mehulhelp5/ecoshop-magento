@@ -1,0 +1,14 @@
+<?php $_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); $storeId = $_helper->getStoreId(); ?>
+<?php $slider_group_code = $_helper->getHome('home_slider',$storeId); ?>
+<?php $home_style = $_helper->getHome('home_style',$storeId); ?>
+<?php if($slider_group_code): ?>
+<div class="slider-style1 style1">
+<?php 
+$group_code = $_helper->getSliderIdFromUniqueCode($slider_group_code);
+echo $this->getLayout()->createBlock("Magebees\Responsivebannerslider\Block\View")->setTemplate("slider.phtml")->setCode($group_code)->toHtml(); 
+?>
+<?php if($home_style=='poco-themes-style-14'): ?>
+<?php echo $_helper->getStaticBlockDetails('game-shape-animation-after-slider');?>
+<?php endif; ?>
+ </div>
+<?php endif; ?>

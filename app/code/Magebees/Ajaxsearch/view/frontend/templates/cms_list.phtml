@@ -1,0 +1,35 @@
+<?php
+$_cmsCollection = $block->getCmsSearchCollection();
+$search_block=$block->getLayout()->createBlock('\Magebees\Ajaxsearch\Block\Searchbox');
+$cms_config=$search_block->getCmsConfig();
+$order=$cms_config['position'];
+
+?>
+<?php if(count($_cmsCollection)){
+	?>
+	<ul id="ajax_cms" class="searchTags">
+		<li class="titleRow cms_title">
+			<span class="order" style="display:none;"><?php echo $order;?></span>
+			<h6 class="mbSecTitle">
+				<?php
+					if($cms_config['title']){
+						echo __($cms_config['title']);
+					} else {
+						echo __('CMS Pages');
+					}
+				?>
+			</h6>
+		</li>
+		<?php
+			foreach ($_cmsCollection as $_cms):
+				$pageId=$_cms['page_id'];
+				$identifier=$_cms['identifier'];					
+				$base_url=$search_block->getBaseUrl();	
+				$cms_page_url=$base_url.$identifier;
+		?>
+			<li class="searchTag cms_item"><a href="<?php if($identifier=='home') { echo $base_url; }else
+		{ echo $cms_page_url;
+		}?>"><?php echo $_cms['title']; ?></a></li>
+		<?php  endforeach; ?>
+	</ul>
+<?php } ?>

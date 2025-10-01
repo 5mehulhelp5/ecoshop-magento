@@ -1,0 +1,110 @@
+<?php
+$dialog_config=$block->getDialogConfig();
+if (isset($dialog_config['livetime'])) {
+    $livetime=$dialog_config['livetime'];
+} else {
+    $livetime= 4;
+}
+$action=$block->identifyAction();
+?> 
+ 
+
+<script>
+    requirejs(['jquery','ajaxToCart'],
+        function($) {
+            $(document).ready(function() {
+
+            
+                   $("body").on("click", function (e) {        
+                    if (!$(e.target).closest('.cartDetails .action-close').length){
+                           $("#shopcontinue").trigger('click');
+ 
+                    }
+                }); 
+
+
+
+
+                $( "#loadingImage" ).insertBefore(".page-header");    
+                var livetime=<?= $livetime ;?>;
+                
+                     $('body').on('click','.tocart',function(e){                                
+                    var widget = $(this).ajaxToCart({});    
+                    
+                    if ($(this).data('post')) {
+                         
+                          var actionUrl = $(this).data('post').action;                
+                          var params = $(this).data('post').data;
+                          params.form_key = $('input[name=form_key]').val();         
+                          widget.ajaxToCart('ajaxSubmit',actionUrl,params,livetime);
+                          
+                    }
+                    else
+                    {
+                        var form = $(this).closest('form');
+                        var productId = $(this).closest('li.product-item').find('div.price-box').data('product-id');                    
+                            var url = $(this).closest('li.product-item').find('a.product-item-link').attr('href');
+                            var customurl=url+"?options=ajax";                    
+                            if(customurl)
+                            {
+                                var params = form.serialize();
+                                if(params)
+                                {
+
+                                    var actionUrl=form.attr('action');    
+                                    var form_id = $(this).closest('form').attr('id');
+                                    if(form_id)
+                                    {
+                                     $('#'+form_id).mage('validation', {        
+            
+                                    radioCheckboxClosest: '.nested',
+                                    submitHandler: function (form) {
+                                        var widget = $(form).ajaxToCart({
+                                            bindSubmit: false
+                                        });
+                                        document.getElementById('loadingImage').style['display']='block';
+                                        widget.ajaxToCart('ajaxSubmitForm', $(form),livetime);
+
+                                        return false;
+                                        }
+                                        });    
+                                    }    
+                                    else{
+                                        widget.ajaxToCart('ajaxSubmit',actionUrl,params,livetime);
+                                    }    
+                                                                                                
+                                }
+                                else
+                                {
+                                    widget.ajaxToCart('ajaxPopup',customurl,livetime);
+                                }                                                    
+                            }                 
+                              
+                    }
+                    return false;
+                  
+                });
+            
+                 $('body').on('click','.cart .action-delete',function(){
+                    
+                    var widget = $(this).ajaxToCart({});
+                    if ($(this).data('item')) 
+                    {
+                        
+                         var actionUrl = $(this).data('item').action;                
+                          var params = $(this).data('item').data;                    
+                          params.form_key = $('input[name=form_key]').val();                         
+                          widget.ajaxToCart('ajaxSubmit',actionUrl,params,livetime);
+                          
+                    }
+                });
+                
+                 $('body').on('click','#shopcontinue',function(){
+                    var widget = $(this).ajaxToCart({});                     
+                    widget.ajaxToCart('shopContinue');
+                    });
+    
+            });
+                  
+        });
+</script>

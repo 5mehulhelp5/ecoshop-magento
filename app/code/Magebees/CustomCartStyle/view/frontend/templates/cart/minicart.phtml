@@ -1,0 +1,19 @@
+<?php
+/**
+ * Copyright © 2018 Magebees, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/* @block Magebees\CustomCartStyle\Block\MiniCart */
+?>
+<?php
+$helper = $this->getHelper();
+if ($helper->enableCustomCart()) : 
+$style = $helper->getMiniCartStyle();
+
+if ($style === '1') : /* popup */ 
+	echo $this->setTemplate('cart/popup.phtml')->toHtml();
+elseif ($style === '2') : /* footer cart */ 
+	echo $this->setTemplate('cart/footer-panel.phtml')->toHtml(); 
+endif;
+endif; ?>

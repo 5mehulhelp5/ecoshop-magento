@@ -1,0 +1,20 @@
+.contentBlock { float:left; }
+.contentBlock:before, .contentBlock:after { content:''; clear:both; display:block; }
+
+.mocklist { background-color:#ffead0; border:1px solid #edd7ba; }
+.mockitem-row:before, .mockitem-row:after { content:''; clear:both; display:block; }
+.mockitems { list-style-type:none; width:885px; float:left; min-height:150px; background-color:#ffffff; border:1px solid #cccccc; padding:10px; }
+.mockitem-row #mockLeft { float:left; width:420px; margin-right:10px; }
+.mockitem-row #mockRight { float:left; width:420px; }
+.mockitems .ui-selected { background:red; color:white; font-weight:bold; }
+.mockitems li { margin:3px !important; padding:10px; cursor:pointer; float:left; cursor:grabbing; }
+
+.g { background-color:lightgreen; }
+.o { background-color:orange; }
+.highlight { border:2px solid red; width:100%; padding:10px; }
+
+.mainBlock { clear:both; width:100%; }
+.titleBlock { float:left; width:230px; padding-bottom:15px;}
+.successPreview { clear:both; padding:10px 0px 10px 0px; }
+.successPreview a { background-color:#eb5202; border-color: #ed6502 #a04300 #a04300 #ed6502; color:white; font:bold 14px arial, helvetica, sans-serif; padding:5px; text-decoration:none; }
+

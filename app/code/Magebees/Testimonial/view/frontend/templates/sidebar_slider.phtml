@@ -1,0 +1,263 @@
+<?php use Magento\Framework\App\Action\Action; ?>
+<?php
+$helper = $this->helper('\Magebees\Testimonial\Helper\Data');
+$testimonial_config=$block->getTestimonialConfig();
+$enabled=$block->getEnabled();
+$collection=$block->getTestimonialCollection();
+if($collection) {
+	$testimonialCollection=$collection->getData(); 
+} 
+else
+{
+    $testimonialCollection='';
+}
+$width=$block->getImageWidth()?$block->getImageWidth():'100'; 
+$height=$block->getImageHeight()?$block->getImageHeight():'100';
+$auto_play_slider=$block->getAutoplaySlider(); 
+
+if(!$auto_play_slider){
+	$auto_play_slider = 'false';
+} else {
+	$auto_play_slider = $block->getSliderSpeed()?$block->getSliderSpeed():"5000";	$auto_play_dealytime = $block->getSliderSpeed()?$block->getSliderSpeed():"5000";	
+}
+$display_arrow=$block->getShowNavArrow()?true:false;
+ $pagination=$block->getShowPagination()?'true':'false';
+ $pagination_type=$block->getPaginationType();
+ $pagination=$block->getShowPagination()?'true':'false';
+ $auto_play_off=$block->getAutoplayoff()?'true':'false';
+ $auto_height=$block->getSlideAutoHeight()?'true':'false';
+ $auto_slide=$block->getAutoplaySlider()?'true':'false';
+ $loop=$block->getInfiniteLoop()?'true':'false';
+ $scrollbar=$block->getScrollbar()?true:false;
+ $grabCursor=$block->getGrabCursor()?'true':'false';
+ $slide_mode = null;
+ $sliderClass = $pagination?'swiper-wrapper pagination-on':'swiper-wrapper';
+ if($this->getSlidemode()=="1"){
+	 $slide_mode = 'vertical';
+	 $auto_height= 'false';
+	 $scrollbar=false;
+	 $display_arrow=false;
+	}else if($this->getSlidemode()=="2") {
+		 $slide_mode = 'fade';
+	}
+	
+$randomId = rand();
+$sliderId = 'magebees_testimonial_sidebar-'.$randomId;
+ ?>
+
+<?php if($testimonialCollection && $enabled):?>
+<div class="block mageTestimonials">
+	<div class="block-title">
+    	<strong><?php 
+		$title=$block->getTestimonialTitle();
+		if($title!='0')
+		{
+			echo $block->getTestimonialTitle();
+		}
+		else{
+			echo('Customer Testimonial');
+		} ?></strong>
+    </div>
+    <div class="block-content">        
+	<?php $default_image=$this->getViewFileUrl("Magebees_Testimonial::images/no_profile.png");?>
+        <div id="<?php echo $sliderId;?>" class="swiper">
+			<div class="<?php echo $sliderClass; ?>">
+        		<?php foreach($testimonialCollection as $testimonial):?>           
+				<div class="swiper-slide">
+					<?php if($this->getShowVideo()):?>
+						<?php if($testimonial['video_url']):?>
+							<div id="video" class="mageTmVideo">
+								<div class="videoWraper">
+									<?php $link = $testimonial['video_url'];				
+										$video = explode("?v=", $link);
+									$video_id = '';
+									if(isset($video[1])){
+										$video_id = $video[1];
+									}
+									$autoplay = 0;
+									if($this->getAutoplayVideo()){
+										$autoplay = 1;
+									}
+											
+									?>
+									<?php if (stripos($link,"embed") !== false) {	?>
+											<iframe src="<?php echo $link."?autoplay=".$autoplay; ?>&rel=0&modestbranding=1&autohide=1&showinfo=0&controls=0" frameborder="0" width="100%" height="400" allowFullScreen></iframe>
+										<?php } else { ?>
+											<iframe src="https://www.youtube.com/embed/<?php echo $video_id."?autoplay=".$autoplay; ?>&rel=0&modestbranding=1&autohide=1&showinfo=0&controls=0" frameborder="0" width="100%" height="400" allowFullScreen></iframe>
+										<?php } ?>
+								</div>
+							</div>
+						<?php endif; ?>
+					<?php endif;?>	
+					
+					<div class="magetmQuotes">				
+						<?php $length=$this->getContentLength(); $testimonialcontent=$testimonial['testimonial']; echo $this->limit_word($testimonialcontent,$length);?>
+					</div>
+					
+					<div class="mageTmClient">
+						<?php if($this->getShowProfile()):?>
+						<?php if($testimonial['image']){
+						$img_path=$helper->checkImgExist($testimonial['image'],$width,$height); }?>
+							<div class="clientPic"><img src="<?php if($testimonial['image']){ echo $img_path;} else { echo $default_image; }?>" width="<?php echo $width."px" ?>" height="<?php echo $height."px" ?>" alt="" /></div>
+						<?php endif;?>
+						<div class="clientDetails">
+							<div class="clientname">
+								<b><?php echo $testimonial['name']; ?>, </b>
+								<span class="mageTmComp">
+									<?php if($this->getShowWebsite()):?>
+										<a href="<?php echo $testimonial['website']; ?>" target="_blank"><?php echo $testimonial['company']; ?></a>
+										<?php else:?>
+										<?php if($this->getShowCompany()):?>
+											<?php echo $testimonial['company']; ?>
+										<?php endif;?>
+									<?php endif;?>
+								</span>
+							</div>
+							
+							<?php if($this->getShowEmail()):?>
+								<div class="mageTmEmail"><i title="Email"></i> <?php echo $testimonial['email']; ?></div>
+							<?php endif;?>
+							
+						<?php if(($this->getShowAddress())&&($testimonial['address'])):?>
+								<div class="mageTmAddress"><i title="Address"></i> <?php echo $testimonial['address']; ?></div>
+							<?php endif;?>
+							
+							<?php if($this->getShowCreatedate()):?>
+								<div class="mageTmDate"><i title="Posted on"></i> <?php echo $testimonial['inserted_date']; ?></div>
+							<?php endif;?>
+							
+							<?php if($this->getShowRating()):?>
+								<?php if($testimonial['rating']) { ?>	
+									<div id="ratings" class="mageTmRating">
+									<?php $rating =$testimonial['rating'];
+									$src=$this->getViewFileUrl("Magebees_Testimonial::images/rating.png");
+									$src_empty=$this->getViewFileUrl("Magebees_Testimonial::images/empty_rating.png");
+									$i=0;
+									while($i<5){
+										if($i<$rating){
+											?>
+											<img src="<?php echo $src ?>" height="15" width="15" alt="" />	
+										<?php } else { ?>
+											<img src="<?php echo $src_empty ?>" height="15" width="15" alt="" />	
+										<?php }
+										$i++;
+									} ?>
+								</div>
+								<?php }	?>
+							<?php endif;?>
+						</div>
+					</div>
+				</div><!--item-->           
+			<?php  endforeach; ?>
+		</div><!--#swiper-container-->
+		
+		<?php if($display_arrow): ?>
+			<div class="swiper-button-next"></div>
+			<div class="swiper-button-prev"></div>
+		<?php endif; ?>
+		<?php if($block->getShowPagination()): ?>
+			<!-- Add Pagination -->
+			<div class="swiper-pagination"></div>
+		<?php endif; ?>
+		<?php if($scrollbar): ?>
+			<div class="swiper-scrollbar"></div>
+		<?php endif; ?>
+        </div><!--#magebees_testimonial_sidebar-->
+        
+        <div class="button-set"><a href="<?php /* @escapeNotVerified */ echo $this->getUrl('testimonial/'); ?>" id="view_all" class="action primary"><span><?php echo('View all'); ?></span></a></div>
+    </div>
+ 
+<script>	
+ requirejs(['jquery','domReady!','cwstestimonial'],
+ function($,domReady,Swiper){		
+ var slidemode=<?php echo $this->getSlidemode();?>;	
+ var slider_id='<?php echo $sliderId;?>';
+
+
+ var swiper = new Swiper("#"+slider_id, {	
+	autoHeight: <?php echo $auto_height ?>, 
+	slidesPerView: 1,	
+	spaceBetween: 10,
+	loop: <?php echo $loop ?>,
+	grabCursor: <?php echo $grabCursor ?>,	
+		<?php if($slide_mode == 'fade'):?>
+			effect: 'fade',
+		<?php elseif($slide_mode == 'vertical'):?>	
+			direction: "vertical",
+			mousewheel: true,
+		on:{
+		init:function(){
+			setSlideHeight(this);
+		},
+		slideChangeTransitionEnd:function(){
+			setSlideHeight(this);
+		}
+		},
+		<?php endif;?>
+		<?php if($block->getAutoplaySlider()):?>
+		autoplay: {		
+		delay: <?php echo $auto_play_dealytime ?>,
+		disableOnInteraction: false,	
+		pauseOnMouseEnter:<?php echo $auto_play_off ?>
+		},		
+		<?php endif;?>		
+		<?php if($scrollbar): ?>
+		scrollbar: {	
+		el: '.swiper-scrollbar',
+		hide: false,		
+		},		
+		
+		<?php if($display_arrow): ?>	
+		navigation: {		
+		nextEl: '.swiper-button-next',		
+		prevEl: '.swiper-button-prev',	
+		},		
+		<?php endif; ?>	
+		<?php endif; ?>	
+		<?php if($pagination_type=='default'): ?>
+		pagination: {	
+		el: '.swiper-pagination',
+		clickable: true,		
+		},		
+		<?php elseif($pagination_type=='dynamic'): ?>
+		pagination: {	
+		el: '.swiper-pagination',
+		clickable: true,		
+		dynamicBullets: true,
+		},		
+		<?php elseif($pagination_type=='progress'): ?>
+		pagination: {		
+		el: '.swiper-pagination',
+		clickable: true,
+		type: 'progressbar',	
+		},		
+		<?php elseif($pagination_type=='fraction'): ?>
+		pagination: {		
+		el: '.swiper-pagination',	
+		type: 'fraction',		
+		},		
+		<?php elseif($pagination_type=='custom'): ?>	
+		pagination: {
+			el: '.swiper-pagination',	
+			clickable: true,	
+			renderBullet: function (index, className) {	
+			return '<span class="' + className + '">' + (index + 1) + '</span>';	
+			},		
+			},
+		<?php endif;?>	
+	    
+		});	
+		
+		function setSlideHeight(slide){
+			$('.swiper-slide').css({height:'auto'});
+				var currentSlide = slide.activeIndex;
+				var newHeight = $(slide.slides[currentSlide]).height();
+
+				$('.swiper-wrapper,.swiper-slide').css({ height : newHeight })
+				slide.update();
+		}
+		
+	
+	});	</script>
+</div><!--mageTestimonials-->
+<?php endif; ?>

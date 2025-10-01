@@ -1,0 +1,72 @@
+.header-4 {
+	.header { padding: 30px 0; }
+	.nav-sections { margin-bottom: 0; }
+	.logo { margin: 0; text-align: center; }
+	.logo a { max-width: 100%; float: none; }
+	.logo img { margin: 0 auto; }
+
+	.icon-right { position: relative; }
+	.icon { display: none; }
+	.icon-right > .item { float: right; padding-left: 20px; }
+	.icon-right > .item .setting-icon .text, .icon-right > .item a .text, .currency.switcher strong, .f_str_lnk a { font-size: 15px; font-weight: bold; text-transform: uppercase; cursor: pointer; line-height: normal; }
+	.minicart-wrapper .action.showcart .text { border: 0; clip: inherit; height: auto; margin: 0; overflow: inherit; padding: 0; position: static; width: auto; }
+	.minicart-wrapper .minicartPrice { display: none; }
+	.minicart .minicart-wrapper .action.showcart .counter.qty, .minicart .minicart-wrapper .action.showcart .counter.qty.empty { display: inline-flex; }
+    .minicart .minicart-wrapper .action.showcart .counter.qty:before,
+    .minicart .minicart-wrapper .action.showcart .counter.qty.empty:before { content: '('; display: inline; }
+    .minicart .minicart-wrapper .action.showcart .counter.qty:after,
+    .minicart .minicart-wrapper .action.showcart .counter.qty.empty:after { content: ')'; display: inline; }
+	#switcher-language { float: left; margin-right: 20px; }
+	#switcher-language .switcher-trigger strong { font-weight: 700; }
+	.currency-grid { min-height: inherit; float: left; }
+	.currency-grid.links-cols { margin: 0; }
+	.currency-grid .title { display: none; }
+	.switcher .options ul.dropdown { margin-top: 30px !important; }
+	.switcher .options ul.dropdown li a, .currency.switcher strong { font-size: 15px !important; font-weight: bold; }
+	.switcher .options ul.dropdown li a { display: block; }
+	.switcher .options ul.dropdown { right: auto; left: 0; }
+	.switcher .options .action.toggle { display: inline-block; }
+	.main-nav .nav-sections { border-top: 1px solid #ebebeb; }
+	.cwsMenuOuter { text-align: center; padding: 0 !important; }
+	.cwsMenu.horizontal > li { float: none !important; display: inline-block !important; }
+	.f_str_lnk { float: left; padding-right: 30px; }
+	.f_str_lnk .st-icon { margin-right: 8px; }
+	.icon-right .st-icon { width: 18px; height: 18px; }
+	@media (min-width: 1201px) {
+		.cwsMenu li>a .menulbl { top: 0; }
+	}
+}
+
+@media (max-width: 1201px) {
+    .header-4 .header { padding: 20px 0; }
+	.header-4 .nav-toggle { float: left; margin-right: 20px; width: 25px; }
+	.header-4 .switcher .options ul.dropdown { margin-top: 5px !important; }
+	.header-4 .setting-links { display: none; }
+    .header-4 .currency.switcher strong { line-height: inherit; }
+	.header-4 .switcher .options .action.toggle { display: block; }
+	.header-4 .switcher .options ul.dropdown li a, .header-4 .currency.switcher strong { font-size: 14px !important; font-weight: 400; }
+}
+
+@media (max-width: 768px) {
+    .header-4 .icon-right .item .text, .header-4 .f_str_lnk span { display: none; }
+	.header-4 .icon { display: inline-block; }
+	.header-4 .minicart .icon { margin-right: 0; }
+	.header-4 .icon-right .icon { margin-top: -4px; }
+	.header-4 .minicart .minicart-wrapper .action.showcart .counter.qty, .header-4 .minicart .minicart-wrapper .action.showcart .counter.qty.empty { font-size: 11px; display: inline-block; top: -7px; left: 10px; min-width: 16px; min-height: 16px; border-radius: 100px; text-align: center; padding: 0; height: auto; line-height: normal; margin: 0; }
+	.header-4 .minicart .minicart-wrapper .action.showcart .counter.qty:after, .header-4 .minicart .minicart-wrapper .action.showcart .counter.qty.empty:after,
+    .header-4 .minicart .minicart-wrapper .action.showcart .counter.qty:before, .header-4 .minicart .minicart-wrapper .action.showcart .counter.qty.empty:before { display: none !important; }
+    .header-4 .minicart .minicart-wrapper .counter { padding-left: 0; }
+}
+
+@media (max-width: 639px) {
+    .header-4 .minicart .minicart-wrapper .action.showcart .counter.qty, .header-4 .minicart .minicart-wrapper .action.showcart .counter.qty.empty { font-size: 10px; }
+}
+
+@media (max-width: 480px) {
+    .header-4 .col-3 { max-width: 25%; }
+	.header-4 .col-3.logo { max-width: 50%; }
+	.header-4 .f_str_lnk { padding-right: 0; }
+	.header-4 .icon-right .item { padding-left: 15px; }
+	.header-4 .nav-toggle { margin-right: 10px }
+	.header-4 .icon-right.pl-1 { padding-left: 0 !important; }
+}

@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Magebees Team
+ * @copyright Copyright (c) Magebees (https://www.magebees.com)
+ * @package Full Page Cache Warmer for Magento 2
+ */-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magebees\CacheWarmer\Api\QueuePageRepositoryInterface" type="Magebees\CacheWarmer\Model\QueuePageRepository" />
+    <preference for="Magebees\CacheWarmer\Api\Data\ActivityInterface" type="Magebees\CacheWarmer\Model\Activity" />
+    <preference for="Magebees\CacheWarmer\Api\Data\BackgroundJobInterface" type="Magebees\CacheWarmer\Model\BackgroundJob\Job" />
+    <preference for="Magebees\CacheWarmer\Api\ActivityRepositoryInterface" type="Magebees\CacheWarmer\Model\Repository\ActivityRepository" />
+    <preference for="Magento\Framework\Cache\Frontend\Decorator\TagScope" type="Magebees\CacheWarmer\Logger\FlushesCache"/>
+
+
+<!--    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="magebees_cachewarmer_queue_listing_data_source" xsi:type="string">MagebeesCacheWarmerQueueDataSource</item>
+                <item name="magebees_cachewarmer_activity_listing_data_source" xsi:type="string">MagebeesCacheWarmerActivityDataSource</item>
+                <item name="magebees_cachewarmer_report_listing_data_source" xsi:type="string">MagebeesCacheWarmerReportDataSource</item>
+                <item name="magebees_cachewarmer_flushes_log_listing_data_source" xsi:type="string">MagebeesCacheWarmerFlushesLogDataSource</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="MagebeesCacheWarmerFlushesLogDataSource" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">magebees_cachewarmer_flushes_log</argument>
+            <argument name="resourceModel" xsi:type="string">Magebees\CacheWarmer\Model\ResourceModel\FlushesLog</argument>
+        </arguments>
+    </virtualType> 
+
+    <virtualType name="MagebeesCacheWarmerReportDataSource" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">magebees_cachewarmer_log</argument>
+            <argument name="resourceModel" xsi:type="string">Magebees\CacheWarmer\Model\ResourceModel\Log</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="MagebeesCacheWarmerGirdFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="MagebeesCacheWarmerLogGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Magebees\CacheWarmer\Model\ResourceModel\Log\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">MagebeesCacheWarmerGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="MagebeesCacheWarmerQueueGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Magebees\CacheWarmer\Model\ResourceModel\Queue\Page\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">MagebeesCacheWarmerGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="MagebeesCacheWarmerQueueDataSource" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">magebees_cachewarmer_queue_page</argument>
+            <argument name="resourceModel" xsi:type="string">Magebees\CacheWarmer\Model\ResourceModel\Queue\Page</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="MagebeesCacheWarmerActivityDataSource" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">magebees_cachewarmer_activity</argument>
+            <argument name="resourceModel" xsi:type="string">Magebees\CacheWarmer\Model\ResourceModel\Activity</argument>
+        </arguments>
+    </virtualType> -->
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="generateQueue" xsi:type="object">Magebees\CacheWarmer\Console\Command\GenerateQueue</item>
+                <item name="processQueue" xsi:type="object">Magebees\CacheWarmer\Console\Command\ProcessQueue</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\UrlRewrite\Model\StorageInterface">
+        <plugin name="magebees_cachewarmer_storage_plugin" type="Magebees\CacheWarmer\Plugin\UrlRewrite\Storage"/>
+    </type>
+    <type name="Magento\CacheInvalidate\Model\PurgeCache">
+        <plugin name="magebees_cachewarmer_track_varnish_clean" type="Magebees\CacheWarmer\Plugin\CacheInvalidate\Model\PurgeCachePlugin"/>
+    </type>
+    <type name="Magento\Setup\Model\FixtureGenerator\EntityGeneratorFactory">
+        <plugin name="MagebeesCacheWarmer::update_custom_table_map" type="Magebees\CacheWarmer\Plugin\Setup\Model\FixtureGenerator\EntityGeneratorFactory\UpdateCustomTableMapPlugin"/>
+    </type>
+
+    <virtualType name="MagebeesCacheWarmerSitemapAndFileSource" type="Magebees\CacheWarmer\Model\Source\Provider\CompositeSource">
+        <arguments>
+            <argument name="sourceTypeIds" xsi:type="array">
+                <item name="sitemap" xsi:type="const">Magebees\CacheWarmer\Model\Config\Source\QuerySource::SOURCE_SITE_MAP</item>
+                <item name="text_file" xsi:type="const">Magebees\CacheWarmer\Model\Config\Source\QuerySource::SOURCE_TEXT_FILE</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="MagebeesCacheWarmerPageTypesAndFileSource" type="Magebees\CacheWarmer\Model\Source\Provider\CompositeSource">
+        <arguments>
+            <argument name="sourceTypeIds" xsi:type="array">
+                <item name="page_types" xsi:type="const">Magebees\CacheWarmer\Model\Config\Source\QuerySource::SOURCE_ALL_PAGES</item>
+                <item name="text_file" xsi:type="const">Magebees\CacheWarmer\Model\Config\Source\QuerySource::SOURCE_TEXT_FILE</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magebees\CacheWarmer\Model\Source\PagesProvider">
+        <arguments>
+            <argument name="sourceTypeProviders" xsi:type="array">
+                <item name="3" xsi:type="object">MagebeesCacheWarmerSitemapAndFileSource</item>
+                <item name="5" xsi:type="object">MagebeesCacheWarmerPageTypesAndFileSource</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magebees\CacheWarmer\Model\Queue\RegenerateHandler">
+        <arguments>
+            <argument name="queue" xsi:type="object">Magebees\CacheWarmer\Model\Queue\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magebees\CacheWarmer\Console\Command\ProcessQueue">
+        <arguments>
+            <argument name="queue" xsi:type="object">Magebees\CacheWarmer\Model\Queue\Proxy</argument>
+            <argument name="config" xsi:type="object">Magebees\CacheWarmer\Model\Config\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magebees\CacheWarmer\Model\Queue\Combination\Provider">
+        <arguments>
+            <argument name="combinationSources" xsi:type="array">
+                <item name="store" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">0</item>
+                    <item name="processor" xsi:type="object">Magebees\CacheWarmer\Model\Queue\Combination\Context\StoreCombination</item>
+                </item>
+                <item name="customer_group" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="processor" xsi:type="object">Magebees\CacheWarmer\Model\Queue\Combination\Context\CustomerGroupCombination</item>
+                </item>
+                <item name="currency" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="processor" xsi:type="object">Magebees\CacheWarmer\Model\Queue\Combination\Context\CurrencyCombination</item>
+                </item>
+                <item name="mobile" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="processor" xsi:type="object">Magebees\CacheWarmer\Model\Queue\Combination\Context\MobileCombination</item>
+                </item>
+                <item name="debug" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">999999</item>
+                    <item name="processor" xsi:type="object">Magebees\CacheWarmer\Model\Queue\Combination\Context\DebugCombination</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magebees\CacheWarmer\Cron\ConsumerAdapter">
+        <arguments>
+            <argument name="consumers" xsi:type="array">
+                <item name="generate_queue" xsi:type="object">Magebees\CacheWarmer\Cron\Consumer\GenerateQueue\Proxy</item>
+            </argument>
+        </arguments>
+    </type>
+   <!--  <type name="Magebees\Base\Plugin\Setup\Model\DeclarationInstaller\ApplyPatchesBeforeDeclarativeSchema">
+        <arguments>
+            <argument name="moduleNames" xsi:type="array">
+                <item name="magebees_cachewarmer" xsi:type="string">Magebees_CacheWarmer</item>
+            </argument>
+        </arguments>
+    </type> -->
+</config>

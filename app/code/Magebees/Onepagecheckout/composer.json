@@ -1,0 +1,33 @@
+{
+  "name": "magebees/module-onepagecheckout-theme",
+  "description": "One Page Checkout For Magento 2",
+  "type": "magento2-module",
+  "version": "1.3.10",
+  "license": [
+		"OSL-3.0",
+		"AFL-3.0"
+	],
+  "authors": [
+    {
+      "name": "MageBees",
+      "email": "support@magebees.com",
+      "homepage": "https://www.magebees.com",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Magebees\\Onepagecheckout\\": ""
+    }
+  },
+	"config": {
+        "allow-plugins": {
+            "magento/*": true,
+            "laminas/*": true,
+            "cweagans/composer-patches": true
+        }
+    }
+}

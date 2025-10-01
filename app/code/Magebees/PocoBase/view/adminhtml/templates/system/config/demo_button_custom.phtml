@@ -1,0 +1,106 @@
+<?php 
+$layoutList = array();
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $poco_helper->getStoreId();
+$mediaPath = $poco_helper->getMediaUrl().'pocothemes/home';
+
+$layoutList[] = array('layout'=>'furniture','label'=> 'Furniture Layout','image'=>$mediaPath.'/03-furniture.png');
+$layoutList[] = array('layout'=>'fashion','label'=> 'Fashion Layout','image'=>$mediaPath.'/01-fashion.png');
+$layoutList[] = array('layout'=>'fashion2','label'=> 'Fashion 2 Layout','image'=>$mediaPath.'/02-fashion.png');
+$layoutList[] = array('layout'=>'cosmetic','label'=> 'Cosmetic Layout','image'=>$mediaPath.'/04-cosmetics.png');
+$layoutList[] = array('layout'=>'electronic','label'=> 'Electronic Layout','image'=>$mediaPath.'/05-electronic.png');
+$layoutList[] = array('layout'=>'autoparts','label'=> 'Autoparts Layout','image'=>$mediaPath.'/06-autoparts.png');
+$layoutList[] = array('layout'=>'medical','label'=> 'Medical Layout','image'=>$mediaPath.'/07-medical.png');
+$layoutList[] = array('layout'=>'kids','label'=> 'Kids Layout','image'=>$mediaPath.'/08-kids.png');
+$layoutList[] = array('layout'=>'decor','label'=> 'Decor Layout','image'=>$mediaPath.'/09-decor.png');
+$layoutList[] = array('layout'=>'footwear','label'=> 'Footwear Layout','image'=>$mediaPath.'/10-footwear.png');
+$layoutList[] = array('layout'=>'jewellery','label'=> 'Jewellery Layout','image'=>$mediaPath.'/11-jewellery.png');
+$layoutList[] = array('layout'=>'vitamin','label'=> 'Vitamin Layout','image'=>$mediaPath.'/12-vitamin.png');
+$layoutList[] = array('layout'=>'guns','label'=> 'Guns Layout','image'=>$mediaPath.'/13-gun.png');
+$layoutList[] = array('layout'=>'gaming','label'=> 'Gaming Layout','image'=>$mediaPath.'/14-gaming.png');
+$layoutList[] = array('layout'=>'bakery','label'=> 'Bakery Layout','image'=>$mediaPath.'/15-bakery.png');
+$layoutList[] = array('layout'=>'wine','label'=> 'Wine Layout','image'=>$mediaPath.'/16-wine.png');
+$layoutList[] = array('layout'=>'megastore','label'=> 'Mega Store Layout','image'=>$mediaPath.'/17-megastore.png');
+$layoutList[] = array('layout'=>'pet','label'=> 'Pet Layout','image'=>$mediaPath.'/18-pet.png');
+$layoutList[] = array('layout'=>'bike','label'=> 'Bike Layout','image'=>$mediaPath.'/19-bike.png');
+foreach($layoutList as $key => $layoutVersion):
+?>
+<script>
+
+require(['Magento_Ui/js/modal/confirm','prototype'], function(confirmation){
+
+//<![CDATA[
+    function import<?php echo $layoutVersion['layout']; ?>() {
+		confirmation({
+        title: 'Import <?php echo $layoutVersion['label']; ?> Data',
+        content: 'If you import you will loss your configuration settings. Do you really want to import?',
+        actions: {
+				confirm: function(){
+					var resultMessage = $('import_result<?php echo $layoutVersion['layout']; ?>');
+					params = {
+						demo_version: '<?php echo $layoutVersion['layout']; ?>',
+						current_store: ($('store_switcher'))?$('store_switcher').value:'',
+						current_website: ($('website_switcher'))?$('website_switcher').value:''
+					};
+
+					new Ajax.Request('<?php echo $block->getAjaxUrl() ?>', {
+						parameters: params,
+						onSuccess: function(response) {
+							var validationMessage = document.getElementById("import_result<?php echo $layoutVersion['layout']; ?>");
+							var result = '<?php echo __('Error during Import '.$layoutVersion['label'].'.') ?>';
+							try {
+								if (response.responseText.isJSON()) {
+									response = response.responseText.evalJSON();
+									result = response.message;
+								}
+								if (response.valid == 1) {
+									validationMessage.removeClassName('hidden').addClassName('success').addClassName('message-success');
+								} else {
+									validationMessage.removeClassName('hidden').addClassName('error').addClassName('message-error');
+								}
+							} catch (e) {
+								validationMessage.removeClassName('hidden').addClassName('error').addClassName('message-error')
+							}
+							validationMessage.update(result);
+							
+						}
+					});
+				},
+				cancel: function(){},
+				always: function(){}
+			}
+		}); 
+        
+    }
+
+    window.import<?php echo $layoutVersion['layout']; ?> = import<?php echo $layoutVersion['layout']; ?>;
+//]]>
+
+});
+</script>
+<style type="text/css">
+#import_result<?php echo $layoutVersion['layout']; ?>:before{
+    top: 20px;
+    margin: 0;
+}
+#row_pocothemesinstall_install_import_demo_Custom .value { display: flex; flex-wrap: wrap; width: 100%; box-sizing: border-box; padding-right: 0; }
+#row_pocothemesinstall_install_import_demo_Custom .item { max-width: 33.33%; flex: 0 0 33.33%; }
+#row_pocothemesinstall_install_import_demo_Custom .item .in { margin: 5px 10px 5px 0; }
+#row_pocothemesinstall_install_import_demo_Custom .item .in button { display: block; width: 100%; background-color: #eb5202; border-color: #eb5202; color: #fff; text-shadow: 0px 1px 0 rgba(0,0,0,.3); padding: 10px 5px; }
+#row_pocothemesinstall_install_import_demo_Custom .item .in button:hover { background-color: #ff6b1e; border-color: #ff6b1e; }
+#row_pocothemesinstall_install_import_demo_Custom .item img { display: block; padding: 5px; border: 1px solid #ddd; border-bottom: 0; }
+@media (max-width: 1500px) {
+	#row_pocothemesinstall_install_import_demo_Custom .item .in button { font-size: 13px; }	
+}
+</style>
+<div class="actions actions-import-data item">
+	<div class="in">
+		<img src="<?php echo $layoutVersion['image']; ?>" title="<?php echo $block->escapeHtml($layoutVersion['label']) ?>" alt="<?php echo $block->escapeHtml($layoutVersion['label']) ?>" />
+		<button onclick="javascript:import<?php echo $layoutVersion['layout']; ?>(); return false;" class="action-import-data" type="button" id="<?php echo $block->getHtmlId() ?>">
+			<span><?php echo $block->escapeHtml($layoutVersion['label']) ?></span>
+		</button>
+		<div id="import_result<?php echo $layoutVersion['layout']; ?>" class="message-validation hidden message"></div>
+	</div>
+</div>
+
+<?php endforeach;?>

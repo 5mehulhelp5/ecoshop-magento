@@ -1,0 +1,150 @@
+<?php
+$displaymode=$block->getDisplayMode();
+$enable_multiselect=$block->IsMultiselectCategory();
+$show_product_count=$block->getShowProductCount();
+$helper = $this->helper('Magebees\Layerednavigation\Helper\Data');
+$enableAjax = $helper->getAjaxConfig();
+if($displaymode=='1')
+{ /*dropdown mode */ ?>
+	<select class="magebees_select_cat" data-cat="category">
+	<option value=""><?php /* @escapeNotVerified */ echo __('----Select Filter Options----'); ?></option>
+		<?php foreach ($block->getFilterItems() as $filterItem): ?> 	
+			<option value="<?php echo $block->escapeUrl($filterItem->getUrl()) ?>">
+			<?php /* @escapeNotVerified */ echo $filterItem->getLabel() ?>	
+			</option>
+		<?php endforeach ?>
+	</select>
+<script>
+require([
+    'jquery',   
+    'domReady!',
+	"Magebees_Layerednavigation/js/magebees-layer"
+], function($,layeredNav){
+
+    $(".magebees_select_cat").on('change', function() {		
+		window.location.href=this.value;						
+	
+});
+});
+</script>
+<?php } else if(($enable_multiselect==1)&&($displaymode==0)) { ?>
+<?php $helper=$this->helper('\Magebees\Layerednavigation\Helper\Data'); ?>
+<ol class="items category-filter <?php if($displaymode==4) echo("advanced") ?>">
+    <?php foreach ($block->getFilterItems() as $filterItem): ?>
+        <li class="item">
+            <?php if ($helper->isFilterItemActive($filterItem)): ?>
+			 <input type="checkbox" value="<?php echo $block->escapeUrl($block->getFilterRemoveUrl($filterItem)) ?>" checked aria-label="<?php /* @escapeNotVerified */ echo $filterItem->getLabel() ?>">
+                <a href="<?php echo $block->escapeUrl($block->getFilterRemoveUrl($filterItem)) ?>">
+                   
+                    <span class="name-label">
+					<?php /* @escapeNotVerified */ echo $filterItem->getLabel() ?>
+					</span>
+					<?php if ($show_product_count): ?>
+					<span class="counter">
+					<?php /* @escapeNotVerified */ echo $filterItem->getCount()?>
+					</span>
+					<?php endif; ?>
+                </a>
+            <?php else: ?>
+				<input type="checkbox" value="<?php echo $block->escapeUrl($block->getDefaultFilterItemUrl($filterItem)) ?>" aria-label="<?php /* @escapeNotVerified */ echo $filterItem->getLabel() ?>">
+                <a href="<?php echo $block->escapeUrl($block->getDefaultFilterItemUrl($filterItem)) ?>">
+                    
+                    <span class="name-label">
+					<?php /* @escapeNotVerified */ echo $filterItem->getLabel() ?>
+					</span>
+					<?php if ($show_product_count): ?>
+					<span class="counter">
+					<?php /* @escapeNotVerified */ echo $filterItem->getCount()?>
+					</span>
+					<?php endif; ?>
+                </a>
+            <?php endif ?>
+        </li>
+    <?php endforeach ?>
+</ol>	
+<?php } else { ?>
+	<ol class="items category-filter <?php if($displaymode==4) echo("advanced") ?>">
+    <?php foreach ($block->getFilterItems() as $filterItem): 
+		$cat_id=$filterItem->getValueString();
+		$cat_level=$block->getCatLevel($cat_id);
+			$is_parent=$block->CheckParentCategory($cat_id);
+			$shuffle_name=str_shuffle($filterItem->getLabel());
+			$shuffled_cat_name=preg_replace('/[^a-zA-Z0-9]/s', '',$shuffle_name);
+		$child_count=$block->getChildCount($cat_id);?>
+        <li class="item level_<?php echo $cat_level;?> vkc-<?php echo $cat_id ?> <?php if($displaymode==4) echo("advanced") ?>" data-level="<?php echo $cat_level;?>" style="<?php if($displaymode==3)
+		{if($is_parent):?>display:block;<?php else:?>display:none; <?php endif; }elseif($displaymode==4){if($child_count):?>display:block;<?php else:?>display:none; <?php endif;}?>">
+            <?php if ($filterItem->getCount() > 0): ?>	
+		<?php if($displaymode==3){ 	
+			if($is_parent){
+			?>
+			<button class='expand_cat vk-<?php echo $cat_id ?>' id='expand_<?php echo $shuffled_cat_name;?>' data-collapse='<?php echo $child_count;?>'>+</button>
+			<?php }
+		}
+			  if($displaymode==4){ 	
+			if($child_count){
+			?>
+			<button class='expand_cat vk-<?php echo $cat_id ?>' id='expand_<?php echo $shuffled_cat_name;?>' data-collapse='<?php echo $child_count;?>'>+</button>
+			<?php }
+		}
+		?>		
+                <a href="<?php echo $block->escapeUrl($filterItem->getUrl()) ?>" data-cat="category">
+                    <span class="name-label">
+					<?php 
+					/* @escapeNotVerified */ echo $filterItem->getLabel() ?>
+                    <?php if ($show_product_count): ?>
+					</span>
+					<span class="counter">
+                       <?php /* @escapeNotVerified */ echo $filterItem->getCount()?>
+					   </span>
+                    <?php endif; ?>
+                </a>
+				
+            <?php else:?>
+                <span class="name-label">
+				<?php /* @escapeNotVerified */ echo $filterItem->getLabel() ?>
+				</span>
+                <?php if ($show_product_count): ?>
+                   <span class="counter">
+				   <?php /* @escapeNotVerified */ echo $filterItem->getCount()?>
+				   </span>
+                <?php endif; ?>
+            <?php endif; ?>
+        </li>
+    <?php endforeach ?>
+</ol>
+<?php }?>
+
+<?php 
+	$current_category_id = '';
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $C_Category = $objectManager->get('Magento\Framework\Registry')->registry('current_category');
+if($C_Category)
+{
+    $current_category_id = $C_Category->getId();
+	$categoryFactory = $objectManager->get('\Magento\Catalog\Model\CategoryFactory');
+	$category = $categoryFactory->create()->load($current_category_id);
+	$parentCategories = $category->getParentCategories();
+	$Parent_name = '';
+
+foreach($parentCategories as $p_category){
+	$Parent_cat_id = $p_category->getId();
+	break;
+}
+}
+?>
+<?php if($C_Category):?>
+<script>
+	require(['jquery'], function($){
+	$(document).ready(function(){
+		$(".vkc-<?php echo $current_category_id ?> a").css({"font-weight": "700", "color": "#1979c3"});
+	}); 	
+	
+	$(window).bind("load", function() {
+	   setTimeout(function(){ 
+			$('.vk-<?php echo $Parent_cat_id ?>').click();
+		}, 1000);
+	});
+});
+					
+</script>
+<?php endif; ?>

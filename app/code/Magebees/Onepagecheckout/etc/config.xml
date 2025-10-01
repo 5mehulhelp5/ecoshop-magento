@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <magebees_Onepagecheckout>
+            <general>			
+				<enable_in_frontend>0</enable_in_frontend>
+				<billing_different_address>1</billing_different_address>
+                <suggest_address>0</suggest_address>
+				<redirect_checkout>0</redirect_checkout>
+				<country_id>US</country_id>
+				<region_id>New York</region_id>
+				<default_postal_code>10001</default_postal_code>
+				<checkout_title>One Page Checkout</checkout_title>
+				<checkout_description>Please fill in the fields below and click Place order to complete your purchase.</checkout_description>
+				<add_comment>1</add_comment>
+				<enabled_newsletter>1</enabled_newsletter>
+				<default_newsletter>1</default_newsletter>
+				<label_newsletter>Sign Up for Our Newsletter</label_newsletter>
+				<show_discount>1</show_discount>
+				<checkout_page_layout>2columns</checkout_page_layout>
+				<remove_header_footer>0</remove_header_footer>
+				<product_image_enabled>1</product_image_enabled>
+				<product_image_width>75</product_image_width>
+				<product_image_height>75</product_image_height>
+            </general>
+			<field_position_management>
+                <row_0>firstname</row_0>
+                <row_1>lastname</row_1>
+                <row_2>street</row_2>
+                <row_3>0</row_3>
+                <row_4>country_id</row_4>
+                <row_5>city</row_5>
+                <row_6>postcode</row_6>
+                <row_7>region_id</row_7>
+                <row_8>telephone</row_8>
+                <row_9>company</row_9>
+            </field_position_management>
+			<osp_checkout_mode>
+				<show_login_link>1</show_login_link>
+				<login_link_title>Click Here For Login</login_link_title>
+			</osp_checkout_mode>
+			<osp_terms_conditions>
+				<enable_terms>0</enable_terms>
+				<term_checkboxtitle>I agree</term_checkboxtitle>
+				<term_title>Terms and Condtion</term_title>
+			</osp_terms_conditions>
+			<style_management>
+				<title_bg_colors>#F18200</title_bg_colors>
+				<button_bg_colors>#0077a6</button_bg_colors>
+				<title_font_colors>#FFFFFF</title_font_colors>
+				<button_font_colors>#FFFFFF</button_font_colors>
+			</style_management>
+            <opc_deliverydate>
+                <enable_delivery_date>0</enable_delivery_date>
+                <deldate_label>Delivery Date</deldate_label>
+                <format>yy-mm-dd</format>
+                <disabled>0</disabled>
+				<delivery_date_required>0</delivery_date_required>
+                <deldate_available_from>3</deldate_available_from>
+                <deldate_available_to>7</deldate_available_to>
+				<show_del_time>0</show_del_time>
+                <hourMin>10</hourMin>
+                <hourMax>22</hourMax>
+            </opc_deliverydate>
+            <vat_validator>
+            	<enable_vat_validator>0</enable_vat_validator>
+            </vat_validator>
+            <trust_seals>
+            	<enabled>0</enabled>
+            </trust_seals>
+            <block_configuration>
+                <is_enabled_block>0</is_enabled_block>
+            </block_configuration>
+			<orderattachment>
+				<enabled>0</enabled>
+				<order_comment_title>Order Attachment and Comments</order_comment_title>
+				<order_comments>1</order_comments>
+				<order_comment_text_title>Order Attachment Comment</order_comment_text_title>
+				<order_comment_file_title>Order Attachment</order_comment_file_title>
+				<order_comments_file_type>jpg,jpeg,gif,png,txt,csv,pdf,doc,docx</order_comments_file_type>
+				<numberofattachment>5</numberofattachment>
+			</orderattachment>
+    </magebees_Onepagecheckout>
+    </default>
+</config>

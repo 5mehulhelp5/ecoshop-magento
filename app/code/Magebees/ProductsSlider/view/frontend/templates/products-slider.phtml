@@ -1,0 +1,212 @@
+<?php use Magento\Framework\App\Action\Action; ?>
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); ?>
+<?php 
+
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+	$imageBlock = $block->getLayout()->createBlock('Magento\Catalog\Block\Product\Image');
+    /* POCO THEME CUSTOMIZATION ADD CODE Start */ 
+	include ($block->getTemplateFile('Magento_Catalog::product/product-list-theme-options.phtml'));
+	/* POCO THEME CUSTOMIZATION ADD CODE End */ 
+	$bg_image = '';
+    if($this->getData('wd_bgimage')){
+    	$bg_image_url = $poco_helper->getMediaUrl().$this->getData('wd_bgimage');
+    	$bg_image .= 'background-image: url('.$bg_image_url.'); background-repeat: no-repeat; background-size: cover;';
+	}else{
+		$bg_image .= '';
+	} 
+	
+	$image_position = $this->getData('wd_position');
+	$pos_class = ($image_position == "left") ? "order-1" : "order-2" ;
+	$product_class = ($image_position == "left") ? "order-2" : "order-1" ;
+	$text_class = ($image_position == "left") ? "order-2" : "order-1" ;
+	
+	$heading_color = $this->getData('wd_headingcolor') ? $this->getData('wd_headingcolor'):false;
+	$details_color = $this->getData('wd_detailscolor') ? $this->getData('wd_detailscolor'):false;
+	$bg_color = $this->getData('wd_bgcolor') ? $this->getData('wd_bgcolor'):false;
+	
+	$title = $this->getData('wd_title');
+	$subtitle = $this->getData('wd_subtitle');
+	$description = $this->getData('wd_description');
+	$shopnow = $this->getData('wd_shopnow');
+	$shopnow_text = null;
+	$shopnow_url = null;
+	if($shopnow):
+	$shopnow_text = $this->getData('wd_shopnow_text');
+	$shopnow_url = $poco_helper->getUrl().$this->getData('wd_shopnow_url');
+	endif;
+	
+	$products_per_slide = $this->getData('wd_products_per_slide');
+	$navarrow = $this->getData('wd_navarrow');
+	$pagination = $this->getData('wd_pagination');
+	$paginationtype = $this->getData('wd_pagination_type');
+	$shownav = $this->getData('wd_navarrow') ? true:false;
+	$autoplay = $this->getData('wd_autoscroll') ? true:false;
+	$autoplayTimeout = $this->getData('wd_auto_play_delaytime') ? $this->getData('wd_auto_play_delaytime') : 5000;
+	$autoplayoff = $this->getData('wd_autoplayoff') ? true:false;
+	$unique_slider_key =  uniqid();
+	
+	$products_slider_id = "magebees-products-slider-".$unique_slider_key;
+	$swiper_data_init = array();
+			$swiper_data_init['slider_id'] = $products_slider_id;
+			$swiper_data_init['spaceBetween'] = 10;
+			$swiper_data_init['speed'] = 600;
+			$swiper_data_init['a11y'] = false;
+			$swiper_data_init['lazy']['loadPrevNext'] = true;
+			$swiper_data_init['lazy']['loadPrevNextAmount'] = $products_per_slide;
+			$swiper_data_init['grabCursor'] = true;
+		if($autoplay):
+			$swiper_data_init['autoplay']['delay'] = $autoplayTimeout;
+			$swiper_data_init['autoplay']['disableOnInteraction'] = false;
+			$swiper_data_init['autoplay']['pauseOnMouseEnter'] = true;
+		endif;
+		if($pagination):
+		if($paginationtype=='default'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		elseif($paginationtype=='dynamic'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		elseif($paginationtype=='progress'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		elseif($paginationtype=='fraction'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		elseif($paginationtype=='custom'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		endif;
+		endif;
+		
+		if($shownav):
+		$swiper_data_init['navigation']['nextEl'] = "#swiper-button-next-".$random_number;
+		$swiper_data_init['navigation']['prevEl'] = "#swiper-button-prev-".$random_number;
+		endif;
+		$swiper_data_init['breakpoints']['0']['slidesPerView'] = 1;
+		$swiper_data_init['breakpoints']['0']['spaceBetween'] = 20;
+		$swiper_data_init['breakpoints']['480']['slidesPerView'] = 1;
+		$swiper_data_init['breakpoints']['480']['spaceBetween'] = 20;
+		$swiper_data_init['breakpoints']['639']['slidesPerView'] = 2;
+		$swiper_data_init['breakpoints']['639']['spaceBetween'] = 30;
+		$swiper_data_init['breakpoints']['768']['slidesPerView'] = 2;
+		$swiper_data_init['breakpoints']['768']['spaceBetween'] = 30;
+		$swiper_data_init['breakpoints']['1200']['slidesPerView'] = $products_per_slide;
+		$swiper_data_init['breakpoints']['1200']['spaceBetween'] = 30;
+		
+	$slider_class = "swiper swiper-container";
+	$item_class =   "swiper-slide";
+	$spacing_class = '';
+	$spacing_class .= $this->getData('wd_spacing')?'sections-spacing ':'';
+	$spacing_class .= $this->getData('wd_bottom_spacing')?'section-bottom-spacing':'';
+	$_productCollection = $block->getLoadedProductCollection();
+	$_helper = $this->helper('Magento\Catalog\Helper\Output');
+	$productsCount = count($_productCollection->getData());
+	$slider=true;
+?>
+<?php if(($bg_image)||($bg_color)||($bg_color)||($details_color)): ?>
+<style type="text/css">
+	<?php echo '#products-slider-'.$random_number. " { ".$bg_image."; background-color: ".$bg_color."; } " ?>
+	<?php echo ".pro_sldr_sct .section-title .title, .prd_slider .swiper-button-next:after, .prd_slider .swiper-button-prev:after { color: ".$heading_color."; } " ?>
+	<?php echo ".prd_slider .item .product-item-name a { color: ".$heading_color." !important; } " ?>
+	<?php echo ".prd_slider .item .product-item-name a:hover { color: ".$details_color." !important; } " ?>
+	<?php echo ".pro_sldr_sct .section-title .sort-detail { color: ".$details_color."; } " ?>
+	<?php echo ".pro_sldr_sct .section-title .dtl { color: ".$details_color."; } " ?>
+	<?php echo ".pro_sldr_sct .section-title .sort-detail:before { background-color: ".$details_color."; } " ?>
+	<?php echo ".prd_slider .product-item .price-box .price-wrapper .price, .prd_slider .product-item .special-price, .prd_slider .price-box .old.price .price, .prd_slider .item .dtl_link, .prd_slider .swiper-pagination-fraction { color: ".$heading_color." !important; opacity: 0.5; } " ?>
+</style>
+ <?php endif;?>
+<div class="pro_sldr_sct <?php echo $spacing_class ?>" id="<?php echo 'products-slider-'.$random_number; ?>" >
+	<div class="container">
+		<div class="d_fl alc">
+			<!-- Title/Details -->
+			<div class="flex-1 dtls <?php echo $pos_class ?>">
+				<div class="section-title">
+					<?php if(($title)):?>
+						<h2 class="title"><?php echo __($title) ?></h2>
+					<?php endif; ?>
+					<?php if(($subtitle)):?>
+						<p class="sort-detail"><?php echo __($subtitle) ?></p>
+					<?php endif; ?>
+					<?php if(($description)):?>
+						<p class="dtl"><?php echo $description ?></p>
+					<?php endif; ?>
+					<?php if(($shopnow)&&($shopnow_url)&&($shopnow_text)):?>
+						<div class="bttn"><a href="<?php echo $shopnow_url ?>" class="btn btn-large"><span><?php echo __($shopnow_text) ?></span> <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span></a></div>
+					<?php endif; ?>
+				</div>
+			</div>
+			<!-- End Title/Details -->
+			
+			<!--Products Slider-->
+			<div class="flex-1 prd_slider <?php echo $product_class; ?>">
+			
+				<?php
+					$viewMode = 'grid';
+					$imageDisplayArea = 'category_page_grid';
+					$image = 'category_page_grid';
+					$showDescription = false;
+					$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+				?>
+				
+				<div class="psr items-<?php echo $products_per_slide ?>">
+					<div id="<?php echo $products_slider_id; ?>" data-swiper='<?php echo json_encode($swiper_data_init);?>' class="<?php echo $slider_class; ?> <?php if($pagination): ?>show-pagination <?php echo $swiper_btn_hover_effects_class; ?><?php endif;?>" <?php if($rtl): ?> dir="rtl" <?php endif;?>>
+						<div class="swiper-wrapper">
+							<?php /* Set Condition for Sample Data Start */
+								if(!$productsCount): $slider = true; echo $this->getLayout() ->createBlock('Magento\Framework\View\Element\Template') ->setProductCount($productsCount) ->setSlider($slider) ->setImageWidth($image_width) ->setImageHeight($image_height) ->setTemplate('Magebees_Productlisting::dummy-products-grid.phtml') ->toHtml(); endif;
+								/* Set Condition for Sample Data End */
+							?>
+				
+							<?php foreach ($_productCollection as $_product): ?>
+							<div class="item product product-item swiper-slide">
+								<div class="product-item-info" data-container="product-grid">
+									<div class="pro-hover">
+										<div class="product-item-photo">
+											<a href="<?php echo $_product->getProductUrl() ?>" tabindex="-1">
+												<?php echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template") ->setProduct($_product) 
+												->setAspectRatio($aspect_ratio) 
+												->setDisableLazyload(1) 
+												->setImageWidth(480) 
+												->setImageHeight(530) 
+												->setDisplayArea($imageDisplayArea) 
+												->setTemplate("Magento_Catalog::product/image.phtml") ->toHtml();?>
+											</a>
+										</div>
+									</div>
+
+									<div class="product details product-item-details">
+										<div class="detail-left">
+											<?php $_productNameStripped = $block->stripTags($_product->getName(), null, true); ?>
+											<strong class="product name product-item-name">
+												<a class="product-item-link" href="<?php echo $_product->getProductUrl() ?>">
+													<?php echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
+												</a>
+											</strong>
+											<div class="d_fl alc jcc fdc hvr_dtl">
+												<div class="hvr"><a class="dtl_link" href="<?php echo $_product->getProductUrl() ?>"><?php echo __('View Details') ?> </a></div>
+												<?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
+											</div>
+										</div>
+									</div>
+							</div>
+						</div>	
+					<?php endforeach; ?>
+					</div>
+					</div>
+					<?php if($pagination): ?>
+						<!-- Add Pagination -->
+						<div id="<?php echo "swiper-pagination-".$random_number;?>" class="swiper-pagination"></div>
+					<?php endif; ?>
+
+					<?php if($shownav): ?>
+						<!-- Add Arrows -->
+						<div id="<?php echo "swiper-button-next-".$random_number;?>" class="swiper-button-next arrw"></div>
+						<div id="<?php echo "swiper-button-prev-".$random_number;?>" class="swiper-button-prev arrw"></div>
+					<?php endif; ?>
+				</div><!--psr-->
+				<?php //endif; ?>
+				
+			</div>
+			<!--End Products Slider--> 
+		</div>
+	</div>
+</div>

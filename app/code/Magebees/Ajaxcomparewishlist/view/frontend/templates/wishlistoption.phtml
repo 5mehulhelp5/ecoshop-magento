@@ -1,0 +1,11 @@
+<?php 
+$helper = $this->helper('Magebees\Ajaxcomparewishlist\Helper\Data');
+if(!$helper->isAjaxWishEnabled()) return;
+?>
+<script type="text/x-magento-init">
+    {
+        "body": {
+            "ajaxWishlist": <?php echo $helper->getWidgetConfigurationOptions() ?>
+        }
+    }
+</script>

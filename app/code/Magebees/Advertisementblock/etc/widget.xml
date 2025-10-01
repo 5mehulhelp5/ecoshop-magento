@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="magebees_advertisementblock" class="Magebees\Advertisementblock\Block\Widget\Advertisementwidget" is_email_compatible="true"
+            placeholder_image="Magebees_Advertisementblock::images/advertise.png" ttl="86400">
+        <label translate="true">Magebees::Advertisement Block Widget</label>
+        <description translate="true">Advertising- Advertisement Block Widget</description>
+		<parameters>		
+		<parameter name="wd_title" xsi:type="text" visible="true">
+                <label translate="true">Title</label>
+				<description translate="true">Set title For Advertisement</description>
+        </parameter>
+		<parameter name="wd_subtitle" xsi:type="text" visible="true">
+                <label translate="true">Sub Title</label>
+				<description translate="true">Set Sub-title For Advertisement</description>
+        </parameter>				
+		<parameter name="wd_advertisement" xsi:type="select" visible="true"
+                       source_model="Magebees\Advertisementblock\Model\Widget\Config\Advertisementblock">
+                <label translate="true">Select Advertising</label>				
+        </parameter>
+		<parameter name="wd_style" xsi:type="select" visible="true"
+                       source_model="Magebees\Advertisementblock\Model\Widget\Config\Style">
+                <label translate="true">Select Style</label>	
+			<!--<depends>
+                    <parameter name="wd_advertisement" value="1" />
+                </depends>-->
+			<description translate="true">Note: Applicable If Pattern 1 is applied to Advertisement Block</description>
+        </parameter>
+		
+	
+		 <parameter name="template" xsi:type="select" required="true" visible="true">
+                <label translate="true">Template</label>
+                <options>
+                    <option name="default" value="widget/advertisement.phtml" selected="true">
+                        <label translate="true">Advertisement Block Template</label>
+                    </option>                               
+                </options>
+            </parameter>
+		 </parameters>
+        <containers>
+            <container name="sidebar.main">
+                <template name="default" value="default" />
+            </container>
+            <container name="content">
+                <template name="grid" value="default" />            
+            </container>
+            <container name="sidebar.additional">
+                <template name="default" value="default" />
+            </container>
+        </containers>
+    </widget>
+</widgets>

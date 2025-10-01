@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="category_thumbnail" class="Magebees\CategoryImage\Block\Widget\CategoryImagewidget" is_email_compatible="true">
+        <label translate="true">Magebees::Category List Thumbnail Widget</label>
+        <description translate="true">List of Categopries with thumnail Image</description>
+		<parameters>
+			<parameter name="wd_show_heading" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="5">
+				<label translate="true">Display Heading</label>
+				<description translate="true">Select Yes for display page heading.</description>
+				
+			</parameter>
+			<parameter name="wd_heading" xsi:type="text" visible="true" required="true" sort_order="6">
+				<label translate="true">Heading</label>
+				<description translate="true">Here we can set heading.</description>
+				<depends>
+					<parameter name="wd_show_heading" value="1" />
+				</depends>
+				<value>Trending Collections</value>
+			</parameter>
+			<parameter name="wd_short_desc" xsi:type="text" visible="true" required="true" sort_order="7">
+                <label translate="true">Short Description</label>
+                <description translate="true"></description>
+        	</parameter>
+			<parameter name="wd_categories" xsi:type="multiselect" visible="true"
+						   source_model="Magebees\Featuredproduct\Model\Categories" required="true" sort_order="8">   
+				<label translate="true">Categories</label>				
+			</parameter>
+			<parameter name="wd_description" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="9">
+                <label translate="true">Display Category Short Description</label>
+				<description translate="true">Select Yes for display Short Description.</description>
+	        </parameter>
+	        <parameter name="content_letters" xsi:type="text" visible="true" required="true" sort_order="10">
+                <label translate="true">Number of Letters for Short Description</label>
+                <depends>
+					<parameter name="wd_description" value="1" />
+				</depends>
+				<value>100</value>
+            </parameter>
+			<parameter name="wd_spacing" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="3">
+				<label translate="true">Spacing on Section</label>
+				<description translate="true">Select Yes for manage space on section.</description>
+			</parameter>
+			<parameter name="wd_bottom_spacing" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="4">
+				<label translate="true">Bottom Spacing on Section</label>
+				<description translate="true">Select Yes for manage space after section.</description>
+			</parameter>
+			<parameter name="wd_bgimage" xsi:type="block" visible="true" sort_order="1">
+				<label translate="true">Background Image</label>
+				<block class="Magebees\PoshBase\Block\Adminhtml\Widget\ImageChooser">
+					<data>
+						<item name="button" xsi:type="array">
+							<item name="open" xsi:type="string">Choose Image...</item>
+						</item>
+					</data>
+				</block>
+			</parameter>
+			<parameter name="wd_bgcolor" xsi:type="block" visible="true" sort_order="2">
+				<label translate="true">Background Color</label>
+				<block class="Magebees\PoshBase\Block\Adminhtml\Widget\Color" />
+			</parameter>
+			<parameter name="wd_no_of_items" xsi:type="text" visible="true" required="true" sort_order="11">
+				<label translate="true">Number of Categories to Display</label>
+				<description translate="true">Show number of categories in main block</description>
+				<value>10</value>
+			</parameter>
+			<parameter name="wd_slider" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="12">
+				<label translate="true">Enable Slider</label>
+			</parameter>
+			<parameter name="wd_items_per_row" xsi:type="select" visible="true"
+					   source_model="Magebees\CategoryImage\Model\Rowselect" sort_order="13">
+				<label translate="true">Number of items per row in Main Block</label>
+				<description translate="true">Show number of items per row in main block.</description>					
+				<depends>                  
+					 <parameter name="wd_slider" value="0" />   
+				</depends>            
+			</parameter>		
+			<parameter name="wd_items_per_slide" xsi:type="select" visible="true"
+						   source_model="Magebees\Featuredproduct\Model\Rowselect" sort_order="13">
+				<label translate="true">Number of items per slide.</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                    
+				</depends>
+			</parameter>
+			<parameter name="wd_autoscroll" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="14">
+				<label translate="true">Auto scroll items</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                    
+				</depends>
+			</parameter>
+			<parameter name="wd_navarrow" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="15">
+				<label translate="true">Show navigation arrow</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                   
+				</depends>
+			</parameter>
+			<parameter name="wd_shopnow" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno"  sort_order="16">
+				<label translate="true">Show Shop Now button</label>
+			</parameter>
+			<parameter name="wd_shopnow_text" xsi:type="text" visible="true"  sort_order="17">
+				<label translate="true">Shop Now button Text</label>
+				<depends>
+					<parameter name="wd_shopnow" value="1" />                   
+				</depends>
+				<value>Buy Now</value>
+			</parameter>
+			<parameter name="template" xsi:type="select" required="true" visible="true"  sort_order="18">
+                <label translate="true">Template</label>
+                <options>
+                    <option name="default" value="categories_list.phtml" selected="true">
+                        <label translate="true">Category List Template</label>
+                    </option>
+                </options>
+            </parameter>
+		</parameters>
+    </widget>
+</widgets>

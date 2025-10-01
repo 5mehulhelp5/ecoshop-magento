@@ -1,0 +1,36 @@
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); ?>
+<?php 
+$storeId = $poco_helper->getStoreId();
+$sidebarConfig = $poco_helper->getConfigGroup('sidebar',$storeId);
+
+$show_html_text_block = array_key_exists('show_html_text_block', $sidebarConfig) ? $sidebarConfig['show_html_text_block'] : null;
+$html_text_block = array_key_exists('html_text_block', $sidebarConfig) ? $sidebarConfig['html_text_block'] : null;
+
+$show_banner_block = array_key_exists('show_banner_block', $sidebarConfig) ? $sidebarConfig['show_banner_block'] : null;
+$banner_block = array_key_exists('banner_block', $sidebarConfig) ? $sidebarConfig['banner_block'] : null;
+?>
+<?php if(($show_html_text_block)&&($html_text_block)): ?>
+<!-- Html Static Block -->
+<?php $cms_block = $poco_helper->getBlockContentByIdentifier($html_text_block);?>
+	<?php if($cms_block): ?> 
+		<div class="block html-block">
+			<div class="block-content">
+				<?php //echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($html_text_block)->toHtml(); ?>
+				<?php echo $cms_block; ?>
+			</div>
+		</div>
+		<?php endif; ?>
+<?php endif; ?>
+
+<?php 
+if(($show_banner_block)&&($banner_block)):
+$banner_block_html = $poco_helper->getBlockContentByIdentifier($banner_block);
+?>
+<!-- Banner Static Block -->
+<?php if($banner_block_html): ?> 
+	<div class="block banner-block">
+		<?php //echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($banner_block)->toHtml(); ?>
+		<?php echo $banner_block_html; ?>
+	</div>
+<?php endif; ?>
+<?php endif; ?>

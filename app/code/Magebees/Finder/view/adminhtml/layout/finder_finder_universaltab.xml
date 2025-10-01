@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+    <container name="root" label="Root">
+        <block class="Magebees\Finder\Block\Adminhtml\Finder\Edit\Tab\UniversalProduct" name="finder_edit_tab_finder_universalproduct" />
+        <block class="Magento\Backend\Block\Widget\Grid\Serializer" name="universalproduct_grid_serializer">
+            <arguments>
+			    <argument name="grid_block" xsi:type="string">finder_edit_tab_finder_universalproduct</argument>
+                <argument name="callback" xsi:type="string">getSelectedProducts</argument>
+                <argument name="input_element_name" xsi:type="string">links[universal]</argument>
+                <argument name="reload_param_name" xsi:type="string">universal_products</argument>
+            </arguments>
+        </block>
+    </container>
+</layout>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+<body>
+<referenceContainer name="content.aside">
+<block class="Magebees\Blog\Block\Post\ProductRelatedPost" name="blog.post.related.products" as="blog.post.related.products"  before='-'
+template="Magebees_Blog::post/product/relatedposts.phtml">
+    	</block>
+   </referenceContainer>
+
+</body>
+</page>

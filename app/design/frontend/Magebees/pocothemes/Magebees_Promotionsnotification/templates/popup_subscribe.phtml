@@ -1,0 +1,37 @@
+<?php $_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); ?>
+<div class="block newsletter">
+    <h3 class="title"><?php echo __($_helper->getThemeLayout('newsletter_popup_title_text',$_helper->getStoreId())) ?></h3>
+    <div class="content">
+    	<!-- Sort Details Code-->
+        <p class="detail"><?php echo __($_helper->getThemeLayout('newsletter_popup_content_text',$_helper->getStoreId())) ?></p>
+        <!-- End Sort Details Code-->
+		<form 
+            novalidate
+            action="<?php /* @escapeNotVerified */ echo $block->getFormActionUrl() ?>"
+            method="post"
+            data-mage-init='{"validation": {"errorClass": "mage-error"}}'
+            id="newsletter-validate-detail-popup">
+            <div class="field">
+                <label class="label" for="newsletter"><span><?php /* @escapeNotVerified */ echo __('Sign Up for Our Newsletter:') ?></span></label>
+                <div class="control">
+                    <input name="email" type="email" id="newsletter-popup"
+                                placeholder="<?php /* @escapeNotVerified */ echo __('Enter your email') ?>"
+                                data-validate="{required:true, 'validate-email':true}"/>
+                </div>
+            </div>
+            <div class="actions">
+                <button id="popup_subscribe" class="action subscribe primary" title="<?php /* @escapeNotVerified */ echo __('Send') ?>" type="submit">
+                    <?php /* @escapeNotVerified */ echo __('Send') ?>
+                </button>
+            </div>
+		</form>
+  
+        <!-- Social Icons Code--> 
+        <div class="social-icons">
+			<h6><?php echo __('We Promise to Only Send you Good Things!')?></h6>
+            <?php echo $block->getLayout()->createBlock('Magento\Framework\View\Element\Template')->setTemplate('Magento_Theme::html/social.phtml')->toHtml(); ?>
+        </div>
+        <!-- End Social Icons Code--> 
+    </div>
+</div>
+

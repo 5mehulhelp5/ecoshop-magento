@@ -1,0 +1,90 @@
+<?php 
+	
+	$_post = $block->getPost(); 
+	$_postUrl = $block->getPosturl(); 
+	$_postName = $block->escapeHtml($_post->getTitle(), null, true);
+	if($_post): ?>
+
+<div class="mb-post-viewpage mb-post-viewpage-<?php echo $_post->getPostId();?>">
+<div class="mb-featured-thumb"><?php echo $block->getChildHtml('post_featureimage'); ?></div>
+    <div class="mb-post-header clearfix">
+		<div class="mb-metadata">
+			<?php echo $block->getChildHtml('post_info'); ?>
+		</div>
+	</div>
+	<div class="mb-post-content clearfix">
+		<?php $content = $block->getDescription();
+		echo __($content);
+		?>
+		
+	</div>
+    <?php echo $block->getChildHtml('post_gallery'); ?>
+	
+	<?php 
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();	
+$postInfo= $block->getLayout()->createBlock('Magebees\Blog\Block\Post\Info');
+
+$posttags = $postInfo->getPostTags(); ?>
+
+<?php 
+if($block->IsPostAddThisEnable() || $block->enablePostLikeDislikes() || ($posttags->getSize()>0)):?>
+	<div class="mb-postview-footer">
+		
+<?php 
+
+if ($_tagsTotalCount = $posttags->getSize()) { ?>
+<div class="item-meta mb-post-tags">
+<!--<span class="label"><?php //echo __('Tags:') ?></span>-->
+<?php $tag_count = 0; foreach($posttags as $tag) { $tag_count++; ?>
+   
+	
+	<?php if($tag_count > 2){ ?>	
+	<a class="hide-tag-more" title="<?php echo $block->escapeHtml($tag->getTitle()) ?>" href="<?php echo $postInfo->getTagurl($tag); ?>">
+        <?php echo $block->escapeHtml($tag->getTitle()) ?>
+     <?php if ($tag_count != $_tagsTotalCount) { ?>, <?php } ?>
+	</a>
+	<?php }else{ ?>
+	<a class="show-tag" title="<?php echo $block->escapeHtml($tag->getTitle()) ?>" href="<?php echo $postInfo->getTagurl($tag); ?>">
+        <?php echo $block->escapeHtml($tag->getTitle()) ?>
+     <?php if ($tag_count != $_tagsTotalCount) { ?>, <?php } ?>
+	</a>
+	<?php } ?>
+	  
+<?php } ?>
+	<?php if($tag_count > 2):?>
+	<a class="show-more-tag showmoretag"><?php echo __(' More'); ?></a>
+	<?php endif;?>
+</div>
+<?php } ?>
+
+<?php if($block->enablePostLikeDislikes()):?>
+		<?php echo $block->getChildHtml('post_like_dislike_link'); ?>
+		<?php endif;?>
+		<?php if($block->IsPostAddThisEnable()):?>
+		<?php 
+		echo  $this->getLayout()->createBlock("Magebees\Socialsharing\Block\Socialsharing")
+		->setName('blogsocialshare')
+		->setPage('under_cart')
+		->setPosition('under_cart')
+		->setType('inline')
+		->setTemplate("Magebees_Socialsharing::socialsharing.phtml")
+		->toHtml(); ?>
+		<?php endif;?>
+	</div>
+	<?php endif;?>
+	<div class="mb-postview-pagination"><?php echo $block->getChildHtml('post_next_prev_link'); ?></div>
+	<?php echo $block->getChildHtml('related_post'); ?>
+	<?php echo $block->getChildHtml('post_related_products'); ?>
+	<?php if($block->IsPostCommentEnable()):?>
+	<?php echo $block->getChildHtml('post_comment'); ?>
+	<?php endif;?>
+	<?php echo $block->getChildHtml('post_add_this'); ?>
+	
+</div>	
+<?php if (!$_post->getPostId()): ?>
+	<div class="message info empty"><div><?php echo __('We can not find post matching the selection.') ?></div></div>
+<?php else: ?>
+	
+<?php endif;?>
+<?php endif;?>
+

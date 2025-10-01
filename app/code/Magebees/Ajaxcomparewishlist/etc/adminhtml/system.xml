@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magebees" translate="label" sortOrder="9000">
+            <label>Magebees</label>
+        </tab>
+        <section id="magebees_ajaxcomparewishlist" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Ajax Compare/Wishlist</label>
+            <tab>magebees</tab>
+            <resource>Magebees_Ajaxcomparewishlist::config_ajaxcomparewishlist</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                   showInStore="1" >
+                <label>Ajax Compare Configuration</label>
+                <field id="enabledcompare" translate="label" type="select" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Ajax Compare</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="comparemsg" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Success Message Text</label>
+					<comment><![CDATA[Change the message that appears after adding to comparelist.]]></comment>
+                </field>
+                <field id="popuptime" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Popup Close Time (sec)</label>
+                    <validate>validate-digits validate-digits-range digits-range-0-</validate>
+					<comment><![CDATA[Example: 10]]></comment> 
+                </field>
+            </group>
+			<group id="ajaxwishgeneral" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Ajax Wishlist Configuration</label>
+                <field id="enabledwish" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enabled</label>
+                    <comment>Turn on to enable AjaxWishlist.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="wishmessage" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Success Message Text</label>
+                    <comment><![CDATA[Change the message that appears after adding to wishlist.]]></comment>
+                </field>
+                 <field id="popupwishtime" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Popup Close Time (sec)</label>
+                    <validate>validate-digits validate-digits-range digits-range-0-</validate>
+					<comment><![CDATA[Example: 10]]></comment> 
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

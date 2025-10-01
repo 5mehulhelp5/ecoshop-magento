@@ -1,0 +1,84 @@
+<?php 
+$mbhelper = $this->helper('Magebees\Onepagecheckout\Helper\Data');
+$mockdata = $mbhelper->getObjectManager()->create('Magebees\Onepagecheckout\Model\Successcustom')->getCollection()->getData();
+?>
+<div class="mainBlock">
+	<div class="titleBlock"><?php echo __("Blocks available on Success Page"); ?></div>
+	<div class="contentBlock">
+	<ul id="mockAll" class="mockitems">
+		<?php foreach($mockdata as $items){ ?>
+			<?php if($items['oscsection'] == "mockAll"){ ?>
+				<li class="mocklist" id="<?php echo $items['oscfieldname'] ?>"><?php echo $items['oscfieldvalue'] ?></li>
+			<?php }?>
+		<?php }?>
+	</ul>
+	<p><?php echo __("Grab one of blocks and drag it to 'Mockup of Success Page' field."); ?></p>
+	</div>
+</div>
+
+<div class="mainBlock">
+	<div class="titleBlock"><?php echo __("Mockup of Success Page"); ?></div>
+	<div class="contentBlock">
+    	<div class="mockitem-row">
+            <ul id="mockTop" class="mockitems">
+                <?php foreach($mockdata as $items){ ?>
+                    <?php if($items['oscsection'] == "mockTop"){ ?>
+                        <li class="mocklist" id="<?php echo $items['oscfieldname'] ?>"><?php echo $items['oscfieldvalue'] ?></li>
+                    <?php }?>
+                <?php }?>
+            </ul>
+        </div>
+        <div class="mockitem-row">
+            <ul id="mockLeft" class="mockitems">
+                <?php foreach($mockdata as $items){ ?>
+                    <?php if($items['oscsection'] == "mockLeft"){ ?>
+                        <li class="mocklist" id="<?php echo $items['oscfieldname'] ?>"><?php echo $items['oscfieldvalue'] ?></li>
+                    <?php }?>
+                <?php }?>
+            </ul>
+            <ul id="mockRight" class="mockitems">
+                <?php foreach($mockdata as $items){ ?>
+                    <?php if($items['oscsection'] == "mockRight"){ ?>
+                        <li class="mocklist" id="<?php echo $items['oscfieldname'] ?>"><?php echo $items['oscfieldvalue'] ?></li>
+                    <?php }?>
+                <?php }?>
+            </ul>
+        </div>
+        <div class="mockitem-row">
+            <ul id="mockBottom" class="mockitems">
+                <?php foreach($mockdata as $items){ ?>
+                    <?php if($items['oscsection'] == "mockBottom"){ ?>
+                        <li class="mocklist" id="<?php echo $items['oscfieldname'] ?>"><?php echo $items['oscfieldvalue'] ?></li>
+                    <?php }?>
+                <?php }?>
+            </ul>
+        	<p><?php echo __("Drop one of available blocks here. It is mockup of Success Page Content and it consists of four sections: top, bottom, middle left and middle right."); ?></p>
+        </div>
+	</div>
+</div>
+<!-- Javascript -->
+<script>
+require(['jquery','jquerytouch','jquery/ui'],
+function(jQuery){
+    jQuery(document).ready(function () {
+        jQuery(".mockitems").sortable({
+            connectWith: ".mockitems",
+            update: function (event, ui) {
+                    jQuery(ui.item).appendTo(this);
+                    if(ui.sender){
+                        mockdata = jQuery(this).sortable('toArray');
+                        var elid = jQuery(this).closest('ul').attr('id');
+                        new Ajax.Request('<?php echo $block->getUrl('onepagecheckout/savemock/savemockdata'); ?>',{
+                        method:'POST',
+                        parameters:{'id':elid,'mockdata':mockdata,'form_key':FORM_KEY},
+                        requestHeaders: {Accept: 'application/json'},
+                        onSuccess:function(transport){
+                            var response=transport.responseText.evalJSON(true);
+                        }
+                        });
+                }
+            }
+        }).disableSelection();
+    });
+});
+</script>

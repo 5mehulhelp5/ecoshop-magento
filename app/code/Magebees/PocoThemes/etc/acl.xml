@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/Acl/etc/acl.xsd">
+    <acl>
+		<resources>
+            <resource id="Magento_Backend::admin">
+				<resource id="Magebees_PocoBase::title" title="Poco Themes ">
+				<resource id="Magebees_PocoThemes::pocothemes_content" title="Poco Themes" sortOrder="0">
+				<resource id="Magebees_PocoThemes::config" title="Configuration" sortOrder="10" />
+                <resource id="Magebees_PocoThemes::install" title="Install Theme Demo Data" sortOrder="20" />
+				</resource>
+				</resource>
+			    <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Magebees_PocoThemes::configuration_settings" title="Poco Themes Settings"  />
+							
+                        </resource>
+                    </resource>
+                </resource>
+             </resource>
+        </resources>
+    </acl>
+</config>
+

@@ -1,0 +1,18 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php /** @var $block \Magento\Swatches\Block\Product\Renderer\Configurable */ ?>
+<div class="magebees_swatch-opt"></div>
+<script>
+    require(["jquery", "jquery-ui-modules/core","jquery-ui-modules/widget", "ajaxSwatchRenderer"], function ($) {
+        $('.magebees_swatch-opt').ajaxSwatchRenderer({
+            jsonConfig: <?= /* @escapeNotVerified */ $swatchOptions = $block->getJsonConfig(); ?>,
+            jsonSwatchConfig: <?= /* @escapeNotVerified */ $swatchOptions = $block->getJsonSwatchConfig(); ?>,
+            mediaCallback: '<?= /* @escapeNotVerified */ $block->getMediaCallback() ?>',
+            productId:'<?= /* @escapeNotVerified */ $block->getProductId()?>'
+        });
+    });
+</script>

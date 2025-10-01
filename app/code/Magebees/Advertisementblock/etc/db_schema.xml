@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="magebees_advertisement_information" resource="default" engine="innodb" comment="magebees_advertisement_information">
+    <column xsi:type="int" name="advertisement_id" padding="10" unsigned="true" nullable="false" identity="true" comment="advertisement_id"/>
+    <column xsi:type="text" name="block_name" nullable="false" comment="block_name"/>
+    <column xsi:type="int" name="pattern" padding="10" unsigned="true" nullable="false" identity="false" comment="pattern"/>
+    <column xsi:type="text" name="status" nullable="false" comment="status"/>
+    <column xsi:type="varchar" name="unique_code" nullable="true" length="255" comment="Unique_code"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="advertisement_id"/>
+    </constraint>
+  </table>
+  <table name="magebees_advertisement_images" resource="default" engine="innodb" comment="magebees_advertisement_images">
+    <column xsi:type="int" name="image_id" padding="10" unsigned="true" nullable="false" identity="true" comment="image_id"/>
+    <column xsi:type="int" name="advertisement_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Advertisement_id"/>
+    <column xsi:type="text" name="filename" nullable="false" comment="filename"/>
+    <column xsi:type="int" name="display_text_mode" padding="10" unsigned="true" nullable="false" identity="false" comment="display_text_mode"/>
+    <column xsi:type="int" name="show_image" padding="10" unsigned="true" nullable="false" identity="false" comment="show_image"/>
+    <column xsi:type="text" name="bg_color" nullable="false" comment="bg_color"/>
+    <column xsi:type="text" name="heading_text_color" nullable="false" comment="heading_text_color"/>
+    <column xsi:type="text" name="heading_text_size" nullable="false" comment="heading_text_size"/>
+    <column xsi:type="text" name="hover_heading_text" nullable="false" comment="hover_heading_text"/>
+    <column xsi:type="int" name="show_hover_heading_text" padding="10" unsigned="true" nullable="false" identity="false" comment="show_hover_heading_text"/>
+    <column xsi:type="text" name="short_text_color" nullable="false" comment="short_text_color"/>
+    <column xsi:type="text" name="short_text_size" nullable="false" comment="short_text_size"/>
+    <column xsi:type="text" name="hover_short_text" nullable="false" comment="hover_short_text"/>
+    <column xsi:type="int" name="show_hover_short_text" padding="10" unsigned="true" nullable="false" identity="false" comment="show_hover_short_text"/>
+    <column xsi:type="text" name="button_text" nullable="false" comment="button_text"/>
+    <column xsi:type="text" name="button_text_size" nullable="false" comment="button_text_size"/>
+    <column xsi:type="text" name="button_bg_color" nullable="false" comment="button_bg_color"/>
+    <column xsi:type="text" name="button_text_color" nullable="false" comment="button_text_colorbutton_text_color"/>
+    <column xsi:type="int" name="show_button_text" padding="10" unsigned="true" nullable="false" identity="false" comment="show_button_text"/>
+    <column xsi:type="text" name="image_effect" nullable="false" comment="image_effect"/>
+    <column xsi:type="int" name="external_url" padding="10" unsigned="true" nullable="false" identity="false" comment="external_url"/>
+    <column xsi:type="text" name="advertise_url" nullable="false" comment="advertise_url"/>
+    <column xsi:type="int" name="text_position" padding="10" unsigned="true" nullable="false" identity="false" comment="text_position"/>
+    <column xsi:type="varchar" name="unique_code" nullable="true" length="255" comment="Unique_code"/>	<column xsi:type="varchar" name="image_height" nullable="false" length="255" comment="Image Height"/>	<column xsi:type="varchar" name="image_width" nullable="false" length="255" comment="Image Width"/>		
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="image_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="FK_D2E5191688947C675B23969C2AA010FC" table="magebees_advertisement_images" column="advertisement_id" referenceTable="magebees_advertisement_information" referenceColumn="advertisement_id" onDelete="CASCADE"/>
+    <index referenceId="IDX_A0F9EF9F5163CDE82299D72890D27655" indexType="btree">
+      <column name="advertisement_id"/>
+    </index>
+  </table>
+</schema>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="layerednavigation_brand_widget" class="Magebees\Layerednavigation\Block\Widget\Brandwidget" is_email_compatible="true"
+            placeholder_image="Magebees_Layerednavigation::images/Brandwidget.png" ttl="86400">
+        <label translate="true">Magebees::Improved Layer Navigation Brands Widget</label>
+        <description translate="true">List of Brands</description>
+		<parameters>
+		 <parameter name="template" xsi:type="select" required="true" visible="true">
+                <label translate="true">Template</label>
+                <options>
+                    <option name="list" value="widget/brands/brand_list.phtml" selected="true">
+                        <label translate="true">List of Brand Template</label>
+                    </option>
+                    <option name="slider"
+                            value="widget/brands/brand_slider.phtml">
+                        <label translate="true">Brand Slider Template</label>
+                    </option>             
+                </options>
+            </parameter>
+             <parameter name="brand_attribute_code" required="true" sort_order="10" visible="true" xsi:type="text">
+                <label>Brand Attribute Code</label>
+            </parameter>
+		 </parameters>
+        <containers>           
+            <container name="content">
+                <template name="list" value="list" />            
+                <template name="slider" value="slider" />            
+            </container>            
+        </containers>
+    </widget>
+</widgets>

@@ -1,0 +1,15 @@
+<?php $block_quickview=$block->getLayout()->createBlock('\Magebees\Ajaxquickview\Block\QuickView');
+$quickview_popup_config=$block_quickview->getPopupConfig();
+$_product=$block->getProduct();
+ if ($quickview_popup_config['enable_go_to_product']) : ?>
+<?php $productPageButtonTitle = __('Go To Product');?>
+<div class="box-gotoproduct">
+    <div class="fieldset">
+        <div class="actions">
+            <a target="_parent" href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" title="<?php /* @escapeNotVerified */ echo $productPageButtonTitle ?>" class="action btn-link" id="product-gotoproduct-button">
+                <span><?php /* @escapeNotVerified */ echo $productPageButtonTitle ?></span>
+            </a>
+        </div>
+    </div>
+</div>
+<?php endif; ?>

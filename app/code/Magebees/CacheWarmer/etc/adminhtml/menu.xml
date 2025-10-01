@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Magebees Team
+ * @copyright Copyright (c) Magebees (https://www.magebees.com)
+ * @package Full Page Cache Warmer for Magento 2
+ */-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Magebees_CacheWarmer::Heading" title="MageBees Full Page Cache Warmer" module="Magebees_CacheWarmer" sortOrder="150" parent="Magento_Backend::system" resource="Magebees_CacheWarmer::Heading"/>
+        <add id="Magebees_CacheWarmer::queue" title="FPC Warmer Queue" module="Magebees_CacheWarmer" sortOrder="10" parent="Magebees_CacheWarmer::Heading" action="magebees_cachewarmer/queue" resource="Magebees_CacheWarmer::queue"/>
+        <add id="Magebees_CacheWarmer::log" title="FPC Warmer Log" module="Magebees_CacheWarmer" sortOrder="20" parent="Magebees_CacheWarmer::Heading" action="magebees_cachewarmer/log" resource="Magebees_CacheWarmer::log"/>
+        <add id="Magebees_CacheWarmer::reports" title="FPC Warmer Performance Reports" module="Magebees_CacheWarmer" sortOrder="30" parent="Magebees_CacheWarmer::Heading" action="magebees_cachewarmer/report" resource="Magebees_CacheWarmer::reports"/>
+        <!-- <add id="Magebees_CacheWarmer::flushes_log" title="Cache Flushes Log" module="Magebees_CacheWarmer" sortOrder="35" parent="Magebees_CacheWarmer::Heading" action="magebees_cachewarmer/flushes" resource="Magebees_CacheWarmer::flushes_log"/>
+        <add id="Magebees_CacheWarmer::activity" title="Activity Log" module="Magebees_CacheWarmer" sortOrder="40" parent="Magebees_CacheWarmer::Heading" action="magebees_cachewarmer/activity" resource="Magebees_CacheWarmer::activity"/> -->
+    </menu>
+</config>

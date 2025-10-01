@@ -1,0 +1,62 @@
+<?php
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ */
+?>
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+	$store_Id = $poco_helper->getStoreId();
+	$currentPriceFormat = $poco_helper->getCurrentPriceFormat($store_Id);
+	$freeShippingEnabled = $poco_helper->getConfigValue('freeshipping','active','carriers',$store_Id);
+	$free_shipping_subtotal = $poco_helper->getConfigValue('freeshipping','free_shipping_subtotal','carriers',$store_Id);
+	$tax_including = $poco_helper->getConfigValue('freeshipping','tax_including','carriers',$store_Id);
+	$free_shipping_subtotal_current_price = $poco_helper->getFreeShippingCurrentPrice($free_shipping_subtotal,$store_Id);
+	$freeShippingBarEnabled = $poco_helper->getThemeLayout('free_shipping_bar',$store_Id);
+	
+	$section = $block->getSection();
+	
+	$free_shipping_success_msg = $poco_helper->getThemeLayout('free_shipping_success_msg',$store_Id);
+	$free_shipping_remain_msg = $poco_helper->getThemeLayout('free_shipping_remain_msg',$store_Id);
+	$visible_free_shipping_bar = $poco_helper->getThemeLayout('visible_free_shipping_bar',$store_Id);
+	$visible_free_shipping_bar_arr = array();
+	if($visible_free_shipping_bar)
+	{
+	$visible_free_shipping_bar_arr = explode(",",(string)$visible_free_shipping_bar);	
+	}
+	$freeShippingBarVisible = in_array($section, $visible_free_shipping_bar_arr) ? true : false; 
+	$free_shipping_subtotal_current_price = $free_shipping_subtotal_current_price ? $free_shipping_subtotal_current_price : 0;
+	$currentPriceFormat = $currentPriceFormat ? $currentPriceFormat : false;
+	$tax_including = $tax_including ? $tax_including : 0;
+	$free_shipping_remain_msg = $free_shipping_remain_msg ? $free_shipping_remain_msg : false;
+	$free_shipping_success_msg = $free_shipping_success_msg ? $free_shipping_success_msg : false;
+	
+if(($freeShippingEnabled)&&($freeShippingBarEnabled)&&($freeShippingBarVisible)):
+?>
+<?php
+$scriptString = "
+    var   maxpriceShipping = $free_shipping_subtotal_current_price;
+	var   currentpriceFormat = $currentPriceFormat;
+	var   tax_including = $tax_including;
+	var   successmessage = '$free_shipping_success_msg';
+	var   remainmessage = '$free_shipping_remain_msg'";
+?>
+
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
+
+<div id="freeshipping-bar-section" data-bind="scope: 'free-shippingbar'" >
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+{
+    "#freeshipping-bar-section": {
+        "Magento_Ui/js/core/app": {
+            "components": {
+                "free-shippingbar": {
+                    "component": "Magebees_PocoThemes/js/freeshippingbar",
+                    "template": "Magebees_PocoThemes/free-shippingbar"
+                }
+            }
+        }
+    }
+}
+</script>
+<?php endif;?>

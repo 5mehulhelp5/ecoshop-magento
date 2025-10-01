@@ -1,0 +1,83 @@
+<?php $swatchData = $block->getSwatchData();
+$helper=$this->helper('\Magebees\Layerednavigation\Helper\Data');
+$url_helper=$this->helper('\Magebees\Layerednavigation\Helper\Url');
+$attribute_id=$swatchData['attribute_id'];
+$attribute_code=$swatchData['attribute_code'];
+$shuffle_code=str_shuffle($attribute_code);
+$shuffled_attr_code=preg_replace('/[^a-zA-Z0-9]/s', '',$shuffle_code);
+$display_type=$block->getSwatchDisplayType($attribute_id);
+$unfold=$helper->getUnfoldedOption($attribute_id);
+$enable_searchbox=$helper->isEnableSearchbox($attribute_id);
+$count=0;
+$show_product_count=$helper->isDisplayProductCount($attribute_id);
+$rel_nofollow=$helper->getRelNoFollow($attribute_id);
+$option_img_dir=$url_helper->getOptionImageMediaDir();
+$option_hover_img_dir=$url_helper->getOptionHoverMediaDir();
+$display_type_arr=array('0','2','4','5','6');
+?>
+<?php if($enable_searchbox):?>	
+<div class="searchList"><input class="searchbox" type="text" id="searchattribute_<?php echo $shuffled_attr_code;?>"/></div>
+<?php endif; ?>
+		<ol class="items">
+        	<?php foreach ($swatchData['options'] as $option => $label): ?>
+			<?php $count++; 
+			$swatch_active=$block->isSwatchActive($option,$swatchData['attribute_code'] );?>				
+			<li id="item_<?php echo $shuffled_attr_code;?>" style="<?php if($count>$unfold):?>display:none;<?php else:?>display:block; <?php endif; ?> " <?php if(($display_type=='2')||($display_type=='5'))	{ ?> class="magebees_filter_item" <?php } ?>> 
+			 <?php if (in_array($display_type,$display_type_arr)) { ?>	
+				<?php if(($display_type==4)||($display_type==5)){
+						$filterItem=$label['filterItem'];
+						$multiselect_block=$block->getLayout()->createBlock('\Magebees\Layerednavigation\Block\Navigation\MultiSelect');
+						if($swatch_active)	{
+							$link_url=$multiselect_block->getFilterItemRemoveUrl($filterItem);
+						}else{
+							$link_url=$multiselect_block->getFilterItemUrl($filterItem);
+						}					
+				 }?>
+			 <?php if ($label['count'] > 0):?>
+			 <?php $radio_mode=$helper->isApplyRadioButton($attribute_id);
+			 if($radio_mode){ ?>
+				<input type="radio"  value="<?php echo $label['link'] ?>" <?php if($swatch_active):?>checked<?php endif; ?> >
+			<?php }?>
+			<?php if(($display_type==4)||($display_type==5)){?>
+				 	<input type="checkbox" value="<?php echo $link_url; ?>" <?php if($swatch_active):?>checked<?php endif; ?>>
+				<?php }?>
+            <a class="ajax_<?php echo $shuffled_attr_code;?> <?php if ($swatch_active):?>active<?php endif; ?>" href="<?php if(($display_type==4)||($display_type==5)){echo $link_url;}else{ echo $label['link'];}?>" <?php if($rel_nofollow){?>rel="nofollow"<?php } ?> >
+              <?php if(($display_type=='2')||($display_type=='5'))	{
+					$option_id=$label['option_id'];
+					$option_image=$url_helper->getOptionImage($option_id);	
+					$option_hover_image=$url_helper->getOptionHoverImage($option_id);
+					if($option_image){
+				?>
+					<img src="<?php echo $option_img_dir.$option_image;?>" width="25px" height="25px" onmouseover="this.src='<?php if($option_hover_image){ echo $option_hover_img_dir.$option_hover_image; }?>'" onmouseout="this.src='<?php echo $option_img_dir.$option_image;?>'"/>
+				<?php }	}	echo $label['label'];
+				if ($show_product_count): ?>				
+				(<?php 	echo $label['count'];?>)
+				<?php endif;?>
+		
+				 </a>
+		<?php endif; 
+				}elseif($display_type=='1')	{ ?>
+					<a class="ajax_<?php echo $shuffled_attr_code;?> <?php if ($swatch_active):?>active<?php endif; ?>" href="<?php /* @escapeNotVerified */ echo $label['link'] ?>" <?php if($rel_nofollow){?>rel="nofollow"<?php } ?> >
+             <?php
+					$option_id=$label['option_id'];
+					$option_image=$url_helper->getOptionImage($option_id);	
+					$option_hover_image=$url_helper->getOptionHoverImage($option_id);
+					if($option_image){
+				?>
+					<img src="<?php echo $option_img_dir.$option_image;?>" width="25px" height="25px" onmouseover="this.src='<?php if($option_hover_image){ echo $option_hover_img_dir.$option_hover_image; }?>'" onmouseout="this.src='<?php echo $option_img_dir.$option_image;?>'"/>
+				<?php }	 else{	echo $label['label'];
+				if ($show_product_count): ?>				
+				(<?php 	echo $label['count'];?>)
+				<?php endif;?>
+				<?php }?>		
+				 </a>
+				<?php }	?>
+		</li>				
+			<?php  endforeach; ?>			
+			</ol>
+		<input id="unfold_<?php echo $shuffled_attr_code;?>" class="unfold" value="<?php echo $unfold; ?>" type="hidden"/>
+<?php
+$total_item=count($swatchData['options']);
+if($total_item>$unfold):?>
+<button id="more_<?php echo $shuffled_attr_code;?>" class="more" value="<?php echo $unfold; ?>"><?php /* @escapeNotVerified */ echo __('More') ?></button>
+		<?php endif; ?>	

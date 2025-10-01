@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <ajaxaddtocart>
+            <setting>
+                <enable>1</enable>
+                <enable_home>1</enable_home>        
+            </setting>
+            <confirmaddtocart>
+            <addblock>
+            {{block class="Magebees\Ajaxaddtocart\Block\Success\Checkout"}} 
+            {{block class="Magebees\Ajaxaddtocart\Block\Success\Shopcontinue"}}
+            </addblock>
+            </confirmaddtocart>
+            
+            <confirmremovecart>
+            <removeblock>
+            {{block class="Magebees\Ajaxaddtocart\Block\Success\Shopcontinue"}}
+            </removeblock>
+            </confirmremovecart>
+            
+            
+            <dialogboxsetting>
+                <livetime>60</livetime>
+                <productimage>1</productimage>
+                <related>1</related>
+                <crosssell>1</crosssell>
+                <upsell>1</upsell>
+            </dialogboxsetting>
+        </ajaxaddtocart>
+    </default>
+</config>

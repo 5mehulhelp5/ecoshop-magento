@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd" layout="1column">
+    <body>
+        <referenceBlock name="sidebar.blog.tags.pocotheme" remove="true"/>
+		<referenceBlock name="quickview" remove="true" />
+		<referenceBlock name="mpm" remove="true" />
+		<referenceBlock name="magebeesLayNav" remove="true" />
+		<referenceBlock name="ajax.compare.js" remove="true" />
+		<referenceBlock name="ajax.wishlist.js" remove="true" />
+		<referenceBlock name="ajaxwishlist-popup-login" remove="true" />
+	</body>
+</page>

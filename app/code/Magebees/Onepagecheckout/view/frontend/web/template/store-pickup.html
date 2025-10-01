@@ -1,0 +1,9 @@
+<li id="store-pickup" css="'selected-shipping': !isStorePickupSelected(), 'selected-store-pickup': isStorePickupSelected()">
+    <render args="deliveryMethodSelectorTemplate"></render>
+    <if args="isStorePickupSelected">
+        <each args="getRegion('store-selector')">
+            <div template=" {name: getTemplate()}"></div>
+        </each>
+		<input id="mbselectedpickupstore" type="hidden" data-bind="value: getStorePickupSource()" />
+    </if>	
+</li>

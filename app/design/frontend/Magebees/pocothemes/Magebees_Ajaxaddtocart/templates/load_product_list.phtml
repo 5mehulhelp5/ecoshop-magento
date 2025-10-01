@@ -1,0 +1,60 @@
+<?php
+	$listing_id = $this->getData('wd_list');
+	$wd_load_ajax = $this->getData('wd_load_ajax');
+	$wd_spacing = $this->getData('wd_spacing');
+	$wd_bottom_spacing = $this->getData('wd_bottom_spacing');
+	$wd_load_ajax = $this->getData('wd_load_ajax');
+	$bg_image = $this->getData('wd_bgimage');
+	$bg_color = $this->getData('wd_bgcolor');
+	$page_param = 'list'.$listing_id;
+	$param = $this->getRequest()->getParam($page_param);
+	if($param){
+		$url = $block->getUrl('prodlist/index/ajaxload').'?'.$page_param.'='.$param;
+	}else{
+		$url = $block->getUrl('prodlist/index/ajaxload');
+	}
+	$res_div = '#productListingMain'.$listing_id;
+	$loading_div = '#loadingImage'.$listing_id;
+	$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+	$loaderUrl = $poco_helper->getLoadingIcon();  
+
+	
+?>
+<div id="productListingMain<?php echo $listing_id; ?>" class="ajx_loader">
+<div id="loadingImage<?php echo $listing_id; ?>"><div><img loading="lazy" src="<?php echo $loaderUrl; ?>" alt="Loading..." width="90" height="90" /></div></div>
+</div>
+<script type="text/javascript">
+    require(['jquery'], function(jQuery){
+        jQuery(document).ready(function() {
+		
+		jQuery.fn.isProductListingInViewport = function () {
+			let elementTop = jQuery(this).offset().top;
+			let elementBottom = elementTop + jQuery(this).outerHeight();
+			let viewportTop = jQuery(window).scrollTop();
+			let viewportBottom = viewportTop + jQuery(window).height();
+			return elementBottom > viewportTop && elementTop < viewportBottom;
+		};
+
+jQuery(window).scroll(function () {
+    if ((jQuery('<?= $res_div ?>').isProductListingInViewport())&&(!jQuery('<?= $res_div ?>').hasClass('ajax_send'))) {
+        jQuery('<?= $res_div ?>').addClass('ajax_send');
+        jQuery('<?= $loading_div ?>').show();
+                jQuery.ajax({
+                    context: '<?= $res_div ?>',
+                    url: '<?= $url ?>',
+                    type: "POST",
+                    data: {'listing_id':'<?= $listing_id ?>','wd_load_ajax':'<?= $wd_load_ajax ?>','wd_spacing':'<?= $wd_spacing ?>','wd_bottom_spacing':'<?= $wd_bottom_spacing ?>',
+					'wd_bgcolor':'<?= $bg_color ?>','wd_bgimage':'<?= $bg_image ?>'},
+                }).done(function (data) {
+					jQuery('<?= $loading_div ?>').hide();
+					if(jQuery('<?= $res_div ?>').hasClass('ajx_loader'))
+					{
+						 jQuery('<?= $res_div ?>').removeClass('ajx_loader');
+					}
+					jQuery('<?= $res_div ?>').html(data.result);
+				});
+	} 
+	});
+	});
+    });
+</script>

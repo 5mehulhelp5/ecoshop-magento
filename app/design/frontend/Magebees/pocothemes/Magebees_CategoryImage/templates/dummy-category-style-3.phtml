@@ -1,0 +1,81 @@
+<?php  
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); 
+$storeId = $poco_helper->getStoreId();
+$mediaURL = $poco_helper->getStoreMediaUrl($storeId);
+$pubPath = $poco_helper->getPubAbsolutePath();
+$_imgUrl= $mediaURL.'poco/catthumbanil/dummy-image-style-3.jpg';
+$_imgPath= $pubPath.'media/poco/catthumbanil/dummy-image-style-3.jpg';
+list($width, $height) = getimagesize($_imgPath);
+
+$slider = $block->getSlider();
+$category_description = $block->getDescription();
+$animation = $block->getAnimation();
+$animation_class = $animation?"wow animate__fadeIn":" ";
+$slider_class = $slider?" swiper":" ";
+$item_class =   $slider?"category-item swiper-slide":"category-item";
+$shop_now = $block->getShopnow();
+$shop_now_txt = $block->getShopnowtext();
+$categories =  array(
+array('name'=>'Category 1','url'=>"#",'productcount'=>5,'circletitle'=>null,'circlediscount'=>null,'description'=>null,'discountcodelabel'=>null,'discountcode'=>null,'description'=>null),
+array('name'=>'Category 2','url'=>"#",'productcount'=>0,'circletitle'=>'•  BLAZERS • SHIRTS • TOPS •  T-SHIRTS •  JEANS','circlediscount'=>'20% OFF','description'=>null,'discountcodelabel'=>'USE CODE : ','discountcode'=>'20% OFF','description'=>null),
+array('name'=>'Category 3','url'=>"#",'productcount'=>15,'circletitle'=>null,'circlediscount'=>null,'description'=>null,'discountcodelabel'=>null,'discountcode'=>null,'description'=>null));;
+?> 
+<?php $categoryId = 1; ?>
+<?php foreach ($categories as $category): ?>
+<?php $categoryId++; ?>
+<?php 
+	$circle_animation_class = null;
+	if((isset($category['circlediscount'])&&($category['circlediscount']))&&
+	(isset($category['circletitle'])&&($category['circletitle'])))
+	{
+		$circle_animation_class = 'category-offers-banners';	
+	}
+				
+	if(isset($category['productcount'])&&($category['productcount'] > 0)){
+	$align_class = 'justify-space-between';
+	}else{
+	$align_class = 'justify-content-center';
+	}
+?>
+	
+	<div class="<?php echo $item_class ?> <?php echo $animation_class ?> <?php echo $circle_animation_class; ?>" <?php if($animation): ?> data-wow-delay="0.4s" <?php endif;?>>
+			<div class="d-flex align-item-center align-items-stretch">
+				<div class="category-thumbnail flex-1 w-50">
+				<a href="<?php echo $category['url'];?>">
+					<img loading="lazy" src="<?php echo $_imgUrl; ?>" alt="<?php echo $block->escapeHtml($category['name']) ?>" width="<?php echo $width;?>" height="<?php echo $height;?>" title="<?php echo $block->escapeHtml($category['name']); ?>" /><div class="round_anm"></div>
+				</a>
+				</div>
+				<div class="category-details flex-1 d-flex align-item-center justify-content-center w-50">
+					<div class="w-100 p-2">
+						<div class="category-title">
+						<?php if((!$shop_now)||(!$shop_now_txt)): ?>
+									<?php if(isset($category['productcount'])&&($category['productcount'] > 0 )): ?>
+										<div class="cat-product-count"><?php echo __($category['productcount'].'+ Items');?></div>
+									<?php endif; ?>
+									<h3 class="title">
+										<a href="<?php echo $category['url'];?>" id="cat_<?php echo $categoryId ?>"><?php echo $block->escapeHtml($category['name']) ?></a>
+									</h3>
+								<?php else: ?>
+									
+									<?php if(isset($category['productcount'])&&($category['productcount'] > 0 )): ?>
+										<div class="cat-product-count"><?php echo __($category['productcount'].'+ Items');?></div>
+									<?php endif; ?>
+									<h3 class="title"><?php echo $block->escapeHtml($category['name']) ?></h3>
+								<?php endif; ?>
+						</div>
+					</div>
+					<?php if(($shop_now)&&($shop_now_txt)): ?>
+								<div class="category-btn">
+									<a href="<?php echo $category['url'];?>" id="cat_<?php echo $categoryId ?>" class="action btn-link">
+									<?php echo __(html_entity_decode($shop_now_txt)); ?>
+									</a>
+								</div>
+							<?php endif; ?>
+							
+				</div>
+			</div>
+	</div>
+<?php endforeach;?>
+			
+			
+		

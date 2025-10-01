@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+     <head>
+        <remove src="css/print.css"/>
+		<remove src="mage/gallery/gallery.css"/>
+		 <remove src="Magebees_Blog::css/mb-blog-styles.css"/>
+		  <remove src="Magebees_Blog::css/mb-blog-responsive.css"/>
+    </head>
+ <body>
+		<referenceBlock name="quickview" remove="true" />
+		<referenceBlock name="mpm" remove="true" />
+		<referenceBlock name="magebeesLayNav" remove="true" />
+		<referenceBlock name="ajax.compare.js" remove="true" />
+		<referenceBlock name="ajax.wishlist.js" remove="true" />
+		<referenceBlock name="ajaxwishlist-popup-login" remove="true" />
+		<referenceBlock name="blog.script" remove="true" />
+	</body>
+</page>

@@ -1,0 +1,119 @@
+/*-- Add New Custom Varible --*/
+
+
+
+/* Table */
+@even-row-color: #eaeaea;
+@odd-row-color: #f9f9f9;
+
+table{
+    width: 100%;
+}
+ul{ list-style: none; padding:0; 
+    li{ display:inline-block; margin-right:20px; margin-left:0; }
+}
+
+.button a{
+    padding:10px 0; 
+}	
+
+.logo { display:block; text-align: center; }
+
+td.footer{ text-align: center;
+           ul,li { margin-bottom:0; 
+                   img:hover {
+                       opacity: 0.88;
+                   }
+           }
+}	
+.order-details {
+    margin-top: 10px;
+}
+.mail-banner img {
+    width: 100%;
+}
+.email-items{
+    .CToWUd{ border:1px solid #ddd; display:block; }
+
+    .item-options{ margin-bottom:0;
+                   li{ display:block; }
+    }
+
+    .sku,.item-options li{
+        font-size: 13px; margin-right:0; margin-bottom:2px !important;
+    }
+
+    /*tbody:nth-child(even){
+            background-color: @even-row-color;
+    }
+
+    tbody:nth-child(odd){
+            background-color: @odd-row-color;
+    }*/
+}
+
+/* Product Grid */
+.products-grid{ 
+    margin: 20px 0;
+    .product-items{ 
+        list-style: none; display:inline-block; clear:both; margin:-10px; padding: 0;
+        .product-item{ 
+            width: 25%; float: left; padding: 10px; margin: 0;
+            .product-item-link{ font-size:13px; font-weight:600; }
+            .product-image-container { display: block; width: 100% !important; }
+            .product-image-wrapper{ padding: 0 !important; display: block; }
+            .product-image-photo{ width:100%; }
+            .product-item-details { 
+                text-align: center; margin-top:10px;
+                .price-box { margin-top: 5px; font-weight: bold; }
+            }
+        }	
+    }
+}
+
+/*
+.products-grid .product-items .product-item:nth-child(4n+1){ clear: left; }
+*/
+
+.pro-info,.ac-mail{ 
+    list-style: inside;
+    li{ display:list-item; }
+}
+
+
+/* Responsive CSS */
+@media only screen and (max-width: 767px) {
+    ul{ 
+        li{ margin-right:10px !important; }
+    }
+    h1,h2,h3{
+        font-size: 18px !important;
+    }
+    p{
+        font-size: 14px !important;
+    }
+    .logo img {
+        width: 65% !important;
+        height: 100% !important;
+    }
+    .main{
+        max-width: 90% !important;
+        min-width: 90%;
+        width: auto !important;
+    }
+    .navigation{
+        li{ margin:0 2px 5px !important; font-size: 13px; }
+    }
+
+}
+
+@media only screen and (max-width: 480px) {
+    .products-grid{
+        .product-items{
+            .product-item{ width:50% !important; }
+        }
+    }
+}
+
+
+

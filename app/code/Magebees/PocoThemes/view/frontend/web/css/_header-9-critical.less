@@ -1,0 +1,73 @@
+/* Header Styles */
+.header-9 {
+	.header { padding: 0; }
+	.nav-sections { margin-bottom: 0; }
+	.icon .st-icon { width: 18px; height: 18px; }
+	.logo { margin: 0; }
+	.logo a { max-width: 100%; }
+	.icon-right { position: relative; }
+	.whilist-link a .counter.qty,
+	.whilist-link a .counter.qty.empty { top: -5px; left: 12px; }
+	.search-toggle .label { text-transform: uppercase; padding-left: 5px; font-weight: 500; display: none; }
+	.minicart .icon { margin-right: 5px; }
+	.minicart-wrapper .action.showcart .text { position: static; clip: inherit; margin: 0; text-transform: uppercase; font-weight: 600; vertical-align: middle; line-height: normal; }
+	.minicart .minicartPrice { display: none !important; }
+	.cwsMenuOuter { text-align: center; }
+	.nav-sections .cwsMenuOuter { padding:0 !important; }
+	.cwsMenu a { line-height: normal !important; }
+	.cwsMenu.horizontal > li { float: none !important; display: inline-block !important; }
+	.cwsMenu.horizontal.mega-menu > li > a { line-height: 60px !important; }
+	.setting-links, .whilist-link, .search-toggle { float: right; margin-right: 25px; cursor: pointer; }
+	&.page-header .setting-links .switcher ul.dropdown { padding: 0; box-shadow: none; -webkit-box-shadow:none; display: flex; flex-wrap: wrap; }
+	&.page-header .setting-links .switcher ul.dropdown li { border: 0 !important; display: block; margin-right: 15px !important; margin-bottom: 5px !important; }
+	&.page-header .setting-links .switcher ul.dropdown li:last-of-type { margin-right: 0 !important;  }
+	&.page-header .setting-links .switcher ul.dropdown li b { text-decoration: underline !important; }
+	&.page-header .setting-links .switcher ul.dropdown li a { padding: 0; }
+	&.page-header .setting-links .switcher { display: block; }
+	&.page-header .setting-links .switcher .action.toggle:after { display: none !important; }
+	.currency-grid.links-cols .title { display: block !important; }
+	.currency-grid.links-cols ul > li { margin-right: 0 !important; display: block !important; }
+	.currency-grid.links-cols b { text-decoration: none !important; }
+ }
+
+.header-9 .minicart .minicart-wrapper .action.showcart .counter.qty.empty, .header-9 .minicart-wrapper .action.showcart .text,
+.header-9 .minicart .minicart-wrapper .action.showcart .counter.qty:after,  .header-9 .minicart .minicart-wrapper .action.showcart .counter.qty.empty:after,
+.header-9 .minicart .minicart-wrapper .action.showcart .counter.qty:before, .header-9 .minicart .minicart-wrapper .action.showcart .counter.qty.empty:before,
+.header-9 .minicart .minicart-wrapper .action.showcart .counter.qty, .header-9 .minicart .minicart-wrapper .action.showcart .counter.qty.empty { font-size: 11px; min-width: 18px; height: 18px; text-align: center; display: block; line-height: 16px; border-radius: 50%; -webkit-border-radius: 50%; position: absolute; top: -3px; left: 12px; padding: 0; }
+/* End Header Styles */
+
+@media (max-width: 1350px) {
+	.header-9 .setting-links, .header-9 .search-toggle { margin-right: 20px; }
+}
+
+@media (max-width: 1201px) {
+    .header-9 .cwsMenu.horizontal.mega-menu > li > a { line-height: normal !important; }
+    .header-9 {	
+		.header-logo { display: none !important; }
+		.logo-small { display: block; flex:1; -webkit-flex:1; -ms-flex:1; }
+		.icon-left, .icon-right { flex:1; -webkit-flex:1; -ms-flex:1; }
+		.search-toggle { margin-left: 20px; }
+	}
+	.header-9 { 
+		.header { padding: 15px 0; }
+		.whilist-link, .setting-links { display: none; }
+		.cwsMenu.horizontal > li { display: block !important; margin-right: 0 !important; }
+		.nav-toggle { flex: 1 !important; -webkit-flex: 1 !important; -ms-flex: 1 !important; max-width: 33.33%; margin-right: 0; }
+		.main-nav { flex: 0 !important; -webkit-flex: 0 !important; -ms-flex: 0 !important; }
+		.icon-right, .logo { max-width: 33.33%; padding-right: 0 !important; }
+		.main-nav .cwsMenu.mega-menu { padding: 0; }
+	}
+}
+
+@media (max-width: 768px) {
+    .header-9 .minicart-wrapper .action.showcart .text { display: none; }
+}
+
+@media (max-width: 639px) {
+    .header-9 .icon { font-size: 18px; }
+    .header-9 .search-toggle { margin-right: 15px; }
+}
+
+@media (max-width: 480px) {
+    .header-9 .logo { max-width: 130px; }
+}

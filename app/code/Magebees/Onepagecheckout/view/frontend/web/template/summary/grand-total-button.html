@@ -1,0 +1,8 @@
+<!-- ko if: isDisplayed() -->
+<div class="magebees-summary-cart">
+    <span class="magebees-grand-total-button magebees-arrow-down" data-bind ="text: getValue(), attr:{'data-label': title}, click:showDetails"></span>
+    <!-- ko foreach: elems() -->
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <!-- /ko -->
+</div>
+<!-- /ko -->

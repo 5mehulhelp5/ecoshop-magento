@@ -1,0 +1,70 @@
+<?php
+$count=0;
+$attr_code=$block->getAttributeCode();
+$attr_id=$block->getAttributeId();
+$shuffle_code=str_shuffle($attr_code);
+$shuffled_attr_code=preg_replace('/[^a-zA-Z0-9]/s', '',$shuffle_code);	
+$show_product_count=$block->getShowProductCount();
+$unfold=$block->getUnfoldOption();
+$enable_searchbox=$block->getSearchbox();
+$url_helper=$this->helper('\Magebees\Layerednavigation\Helper\Url');
+$helper=$this->helper('\Magebees\Layerednavigation\Helper\Data');
+$rel_nofollow=$helper->getRelNoFollow($attr_id);
+$option_img_dir=$url_helper->getOptionImageMediaDir();
+$option_hover_img_dir=$url_helper->getOptionHoverMediaDir();
+$display_type=$helper->isApplyMultiSelectWithImages($attr_id);
+?>
+<?php if($enable_searchbox):?>	
+<div class="searchList"><input class="searchbox" type="text" id="searchattribute_<?php echo $shuffled_attr_code;?>" /></div>
+<?php endif; ?>
+<ol class="items">
+    <?php foreach ($block->getFilterItems() as $filterItem): ?>
+	<?php $count++;
+		$option_id=$filterItem->getValue();
+		$option_image=$url_helper->getOptionImage($option_id);
+		$option_hover_image=$url_helper->getOptionHoverImage($option_id);
+	?>
+        <li id="item_<?php echo $shuffled_attr_code;?>" <?php if($display_type)	{ ?> class="magebees_filter_item" <?php } ?>
+			style="<?php if($count>$unfold):?>display:none;<?php else:?>display:block; <?php endif; ?>">
+            <?php if ($helper->isFilterItemActive($filterItem)): ?>
+				<input type="checkbox" value="<?php echo $block->escapeUrl($block->getFilterItemRemoveUrl($filterItem)) ?>" checked>
+                <a class="ajax_<?php echo $shuffled_attr_code;?> <?php if ($helper->isFilterItemActive($filterItem)):?>active<?php endif; ?>" href="<?php echo $block->escapeUrl($block->getFilterItemRemoveUrl($filterItem)) ?>"<?php if($rel_nofollow){?>rel="nofollow"<?php } ?>>
+                  	<?php
+						if($display_type){	// display with image and label
+						if($option_image){
+					?>
+						<span class="img"><img src="<?php echo $option_img_dir.$option_image;?>" onmouseover="this.src='<?php if($option_hover_image){ echo $option_hover_img_dir.$option_hover_image; }?>'" onmouseout="this.src='<?php echo $option_img_dir.$option_image;?>'"/></span>
+					<?php } } ?>                   
+                    <?php /* @escapeNotVerified */ echo $filterItem->getLabel() ?>
+					 <?php if ($show_product_count): ?>
+					(<?php /* @escapeNotVerified */ echo $filterItem->getCount()?>)
+					<?php endif; ?>
+                </a>
+				<input id="layer_attribute_value" value="<?php echo $filterItem->getValue();?>" type="hidden"/> 
+            <?php else: ?>
+				<input type="checkbox" value="<?php echo $block->escapeUrl($block->getFilterItemUrl($filterItem)) ?>">
+                <a class="ajax_<?php echo $shuffled_attr_code;?>" href="<?php echo $block->escapeUrl($block->getFilterItemUrl($filterItem)) ?>" <?php if($rel_nofollow){?>rel="nofollow"<?php } ?>>
+                   <?php
+						if($display_type) {
+						// display with image and label
+							if($option_image){
+					?>
+					<span class="img"><img src="<?php echo $option_img_dir.$option_image;?>" onmouseover="this.src='<?php if($option_hover_image){ echo $option_hover_img_dir.$option_hover_image; }?>'" onmouseout="this.src='<?php echo $option_img_dir.$option_image;?>'"/></span>
+					<?php } } ?>
+                   
+                    <?php /* @escapeNotVerified */ echo $filterItem->getLabel() ?>
+					  <?php if ($show_product_count): ?>
+					(<?php /* @escapeNotVerified */ echo $filterItem->getCount()?>)
+					<?php endif; ?>
+                </a>
+				<input id="layer_attribute_value" value="<?php echo $filterItem->getValue();?>" type="hidden"/> 
+            <?php endif ?>
+        </li>
+    <?php endforeach ?>
+</ol>
+<input id="unfold_<?php echo $shuffled_attr_code;?>" class="unfold" value="<?php echo $unfold; ?>" type="hidden"/>
+<?php 
+$total_item=count($block->getFilterItems());
+if($total_item>$unfold):?>
+<button id="more_<?php echo $shuffled_attr_code;?>" class="more" value="<?php echo $unfold; ?>"><?php /* @escapeNotVerified */ echo __('More') ?></button>
+<?php endif; ?>

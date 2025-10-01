@@ -1,0 +1,44 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/**
+ * Product list toolbar
+ *
+ * @var $block \Magento\Catalog\Block\Product\ProductList\Toolbar
+ */
+?>
+<?php if ($block->isEnabledViewSwitcher()) :?>
+    <div class="modes">
+        <?php $_modes = $block->getModes(); ?>
+        <?php if ($_modes && count($_modes) > 1) :?>
+            <strong class="modes-label" id="modes-label"><?= $block->escapeHtml(__('View as')) ?></strong>
+            <?php foreach ($block->getModes() as $_code => $_label) :?>
+                <?php if ($block->isModeActive($_code)) :?>
+                    <strong title="<?= $block->escapeHtmlAttr($_label) ?>"
+                            class="modes-mode active mode-<?= $block->escapeHtmlAttr(strtolower($_code)) ?>"
+                            data-value="<?= $block->escapeHtmlAttr(strtolower($_code)) ?>">
+                        <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon grd_icon"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon list_v_icon"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                        <span><?= $block->escapeHtml($_label) ?></span>
+                    </strong>
+                <?php else :?>
+                    <a class="modes-mode mode-<?= $block->escapeHtmlAttr(strtolower($_code)) ?>"
+                       title="<?= $block->escapeHtmlAttr($_label) ?>"
+                       href="#"
+                       data-role="mode-switcher"
+                       data-value="<?= $block->escapeHtmlAttr(strtolower($_code)) ?>"
+                       id="mode-<?= $block->escapeHtmlAttr(strtolower($_code)) ?>"
+                       aria-labelledby="modes-label mode-<?= $block->escapeHtmlAttr(strtolower($_code)) ?>">
+                       <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon list_icon"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                       <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon grd_view"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        <span><?= $block->escapeHtml($_label) ?></span>
+                    </a>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>

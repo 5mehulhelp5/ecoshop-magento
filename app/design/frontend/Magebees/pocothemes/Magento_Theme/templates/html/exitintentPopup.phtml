@@ -1,0 +1,180 @@
+
+<?php 
+use Magento\Framework\App\Action\Action;
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $poco_helper->getStoreId();
+$exitIntentPopupConfig = $poco_helper->getConfigGroup('exit_intent_popup',$storeId);
+$enable_exit_intent_popup = array_key_exists('enable_exit_intent_popup', $exitIntentPopupConfig) ? $exitIntentPopupConfig['enable_exit_intent_popup'] : null;
+$show_title = array_key_exists('show_title', $exitIntentPopupConfig) ? $exitIntentPopupConfig['show_title'] : null;
+$title = array_key_exists('title', $exitIntentPopupConfig) ? $exitIntentPopupConfig['title'] : null;
+$show_description = array_key_exists('show_description', $exitIntentPopupConfig) ? $exitIntentPopupConfig['show_description'] : null;
+$description = array_key_exists('description', $exitIntentPopupConfig) ? $exitIntentPopupConfig['description'] : null;
+$show_btn = array_key_exists('show_btn', $exitIntentPopupConfig) ? $exitIntentPopupConfig['show_btn'] : null;
+$btn_title = array_key_exists('btn_title', $exitIntentPopupConfig) ? $exitIntentPopupConfig['btn_title'] : null;
+$btn_url = array_key_exists('btn_url', $exitIntentPopupConfig) ? $exitIntentPopupConfig['btn_url'] : null;
+$product_skus = array_key_exists('product_skus', $exitIntentPopupConfig) ? $exitIntentPopupConfig['product_skus'] : null;
+$show_image = array_key_exists('show_image', $exitIntentPopupConfig) ? $exitIntentPopupConfig['show_image'] : null;
+$exit_intent_popup_image = array_key_exists('exit_intent_popup_image', $exitIntentPopupConfig) ? $exitIntentPopupConfig['exit_intent_popup_image'] : null;
+$enable_autoplay = array_key_exists('enable_autoplay', $exitIntentPopupConfig) ? $exitIntentPopupConfig['enable_autoplay'] : null;
+$autoplay_dealytime = array_key_exists('autoplay_dealytime', $exitIntentPopupConfig) ? $exitIntentPopupConfig['autoplay_dealytime'] : null;
+
+$bg_color = array_key_exists('bg_color', $exitIntentPopupConfig) ? $exitIntentPopupConfig['bg_color'] : null;
+$slidesPerView = ($show_image) ? 2 : 3;
+$grid_rows = ($show_image) ? 2 : 2;
+$baseURL = $poco_helper->getUrlWithoutStoreCode($storeId);
+
+$random_number = rand();
+$show_product_price = $poco_helper->getConfigValue('pro_list','enable_price','pocothemes',$storeId);
+$allow_add_to_cart = $poco_helper->getConfigValue('theme_layout','add_to_cart','pocothemes',$storeId);
+$slider_id = 'exitIntentPopup_'.$random_number;	
+$slider = true;
+$slider_class = $slider?"swiper swiper-container":" ";
+$slider_wrapper_class = $slider?"swiper-wrapper":" ";
+//$item_class =   $slider?"item product product-item swiper-slide":"item product product-item";	
+$item_class = 'swiper-slide exitIntentPopup-item';
+$_productCollection = array();
+$swiper_data_init = array();
+$swiper_data_init['slider_id'] = $slider_id;
+$swiper_data_init['slidesPerView'] = $slidesPerView;
+$swiper_data_init['slidesPerGroup'] = $slidesPerView;
+$swiper_data_init['spaceBetween'] = 20;
+$swiper_data_init['loopAddBlankSlides'] = false;
+$swiper_data_init['grabCursor'] = true;
+$swiper_data_init['allowTouchMove'] = true;
+$swiper_data_init['a11y'] = false;
+$swiper_data_init['lazy'] = true;
+$swiper_data_init['grid']['rows'] = $grid_rows;
+if($enable_autoplay):
+$swiper_data_init['autoplay']['delay'] = $autoplay_dealytime;
+$swiper_data_init['autoplay']['disableOnInteraction'] = false;
+$swiper_data_init['autoplay']['pauseOnMouseEnter'] = true;
+endif;
+$swiper_data_init['navigation']['nextEl'] = "#swiper-button-next-".$random_number;
+$swiper_data_init['navigation']['prevEl'] = "#swiper-button-prev-".$random_number;
+$modalClass = 'exitIntentPopup';			
+$imageDisplayArea = 'category_page_list';	
+if(!$show_image): 
+$modalClass = 'exitIntentPopup exitIntentPopupFull';
+endif;
+$_productCollection = $poco_helper->getExitIntentPopupProducts($product_skus,$storeId);	
+
+$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+$abstractProductBlock = $block->getLayout()->createBlock('\Magento\Catalog\Block\Product\AbstractProduct');
+?>
+<?php if(($_productCollection->getSize())>0):?>
+<?php if($bg_color): ?>
+<style type="text/css">
+	<?php echo '#exit-intent-products { background-color: '.$bg_color.'; }'; ?>
+</style>
+<?php endif;?>
+<div id="exit-intent-products" style="display:none;">
+	<div class="container">
+		<div class="d_fl">
+			<?php if($show_image):?>
+				<div class="f1 lft_img">
+					<?php if($exit_intent_popup_image): $baseURL = $poco_helper->getUrlWithoutStoreCode($storeId); $mediaURL = $poco_helper->getStoreMediaUrl($storeId); $ExitIntentPopupImageURL = $mediaURL.'poco/exitintentpopup/'.$exit_intent_popup_image; ?>
+						<img src="<?php echo $ExitIntentPopupImageURL;?>" alt="<?php echo $title;?>" loading="lazy" width="600" height="650">
+					<?php endif;  ?>
+				</div>
+			<?php endif;  ?>
+			<div class="f1">
+				<div class="pop_pro">
+					<?php if(($show_title)||($show_description)):?>
+						<div class="section-title">
+							<?php if($show_title):?><h2 class="title"><?php echo $title;?></h2>
+						<?php endif;?>
+						<?php if($show_description):?>
+							<div class="sort-details"><p class="sort-detail"><?php echo $description;?></p></div>
+						<?php endif;?>
+						</div>
+					<?php endif;?>
+					<div class="psr">
+						<div id="<?php echo $slider_id; ?>" <?php if($slider): ?> data-swiper='<?php echo json_encode($swiper_data_init);?>' <?php endif; ?> class="<?php echo $slider_class ?>">
+						
+						<div class="<?php echo $slider_wrapper_class;?>">
+							<?php foreach ($_productCollection as $_product): ?>
+							<?php $product_id = $_product->getId(); $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); $product = $objectManager->create('Magento\Catalog\Model\Product')->load($product_id); ?>
+							<div class="<?php echo $item_class;?>">	
+								<div class="d_fl w-100" data-container="product-grid">
+									<div class="pro-hover f1">		
+										<a href="<?php echo $product->getProductUrl() ?>" class="product photo product-item-photo" tabindex="-1">
+											<?php echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template") ->setProduct($product) ->setAspectRatio(true) ->setImageWidth(90) ->setImageHeight(90) ->setDisplayArea($imageDisplayArea) ->setTemplate("Magento_Catalog::product/image.phtml") ->toHtml();?>
+										</a>
+									</div>
+									<div class="dtls f1">
+										<strong class="ttl product-item-name">
+											<a title="<?php echo $block->escapeHtml($product->getName()) ?>" href="<?php echo $product->getProductUrl() ?>">
+												<?php echo $block->escapeHtml($product->getName()) ?>
+											</a>
+										</strong>
+								
+										<?php if(($show_product_price)): ?> 
+										<?php 
+											$objectManager = \Magento\Framework\App\ObjectManager::getInstance(); 
+											$priceHelper = $objectManager->create('Magento\Framework\Pricing\Helper\Data'); 
+											echo $priceHelper->currency($product->getFinalPrice(), true, false); ?>
+										<?php endif; ?>
+
+										<?php //if($show_product_rating): ?>
+											<?php echo $abstractProductBlock->getReviewsSummaryHtml($product, $templateType, true); ?>
+										<?php //endif; ?>
+									
+										<?php if(($allow_add_to_cart)): ?>
+											<div class="actions-primary">
+												<?php if ($product->isSaleable()): ?>
+												<?php $postParams = $poco_helper->getAddToCartPostParams($product); ?>
+												<form data-role="tocart-form" action="<?php echo $postParams['action']; ?>" method="post">
+													<input type="hidden" name="product" value="<?php echo $postParams['data']['product']; ?>">
+													<input type="hidden" name="<?php echo Action::PARAM_NAME_URL_ENCODED; ?>" value="<?php echo $postParams['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
+													<?php echo $block->getBlockHtml('formkey') ?>
+														<?php 
+														$has_option = $product->getTypeInstance()->hasOptions($product);
+														if($has_option)
+														{
+															$add_to_cart_btn_title = 'Select Option';
+														}else{
+															$add_to_cart_btn_title = 'Add to Cart';
+														}
+														?>
+														<button type="submit" title="<?= $escaper->escapeHtmlAttr(__($add_to_cart_btn_title)) ?>" class="action tocart primary" disabled>
+															<span><?= $escaper->escapeHtml(__($add_to_cart_btn_title)) ?></span>
+														</button>
+												</form>
+												<?php else: ?>
+
+												<?php if ($product->isAvailable()) :?>
+													<div class="stock available"><span><?= $block->escapeHtml(__('In stock')) ?></span></div>
+												<?php else :?>
+													<div class="stock unavailable"><span><?= $block->escapeHtml(__('Sold Out')) ?></span></div>
+												<?php endif; ?>
+											<?php endif; ?>
+									</div>	
+									<?php endif; ?>
+								</div>
+							</div>
+						</div>
+						<?php endforeach; ?>
+						</div>
+						</div>
+						<!-- Add Arrows -->
+						<div id="<?php echo "swiper-button-next-".$random_number;?>" class="swiper-button-next"></div>
+						<div id="<?php echo "swiper-button-prev-".$random_number;?>" class="swiper-button-prev"></div>
+					</div><!--End PR-->
+					
+						<?php if($show_btn):?>
+							<div class="view-more">
+								<a href="<?php echo $baseURL.$btn_url;?>" 
+								class="readMore action primary">
+								<?php echo $btn_title;?> </a>
+							</div>
+						<?php endif;?>
+					</div><!--End pop_pro -->
+				</div>
+			</div>
+		</div>
+	</div>
+<?php endif;?>
+
+
+
+

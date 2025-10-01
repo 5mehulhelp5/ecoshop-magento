@@ -1,0 +1,104 @@
+<div id="popup-login" style="display:none;">
+	<div id="Onepagecheckout-login-popup">
+		<h1><?php echo __('Login'); ?></h1>		
+		<div class="messages opcerrwrap" style="display:none;">
+			<div class="message-error error message">
+				<div class="opcerrormsg"></div>
+			</div>
+		</div>
+		<form class="form form-login" action="<?php /* @escapeNotVerified */ echo $block->getPostActionUrl() ?>" method="post" id="mg-login-form" data-mage-init='{"validation":{}}'>
+			<?php echo $block->getBlockHtml('formkey'); ?>
+			<input type="hidden" id="mbopcinfo" name="mbopcinfo" value="1" />
+			<fieldset class="fieldset login" data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>">
+				<div class="field note"><?php /* @escapeNotVerified */ echo __('If you have an account, sign in with your email address.') ?></div>
+				<div class="field email required">
+					<label class="label" for="email"><span><?php /* @escapeNotVerified */ echo __('Email') ?></span></label>
+					<div class="control">
+						<input name="login[username]" value="<?php echo $block->escapeHtml($block->getUsername()) ?>" <?php if ($block->isAutocompleteDisabled()) :?> autocomplete="off"<?php endif; ?> id="email" type="email" class="input-text" title="<?php /* @escapeNotVerified */ echo __('Email') ?>" data-validate="{required:true, 'validate-email':true}">
+					</div>
+				</div>
+				<input type="hidden" name="magebees_ocp" value="1"/>
+				<div class="field password required">
+					<label for="pass" class="label"><span><?php /* @escapeNotVerified */ echo __('Password') ?></span></label>
+					<div class="control">
+						<input name="login[password]" type="password" <?php if ($block->isAutocompleteDisabled()) :?> autocomplete="off"<?php endif; ?> class="input-text" id="pass" title="<?php /* @escapeNotVerified */ echo __('Password') ?>" data-validate="{required:true}">
+					</div>
+				</div>
+				<?php //echo $block->getChildHtml('form_additional_info'); ?>
+				<?php echo $block->getChildHtml('msp-recaptcha'); ?>
+				<?php echo $block->getChildHtml('recaptcha'); ?>
+				<?php echo $block->getChildHtml('form.additional.info'); ?>
+								
+				
+				<div class="actions-toolbar">
+					<div class="primary"><button type="submit" class="action login mageb-button" name="send" id="send2"><span><?php /* @escapeNotVerified */ echo __('Sign In') ?></span></button></div>
+				</div>
+				
+				<div class="secondary"><a id="forgotform" class="action forgotform remind" href="#"><span><?php /* @escapeNotVerified */ echo __('Forgot Your Password?') ?></span></a></div>
+			</fieldset>
+		</form>
+	</div>
+    <div id="Onepagecheckout-forgot-popup" style="display:none;">
+		<h1><?php echo __('Forgot Your Password'); ?></h1>
+		<div id="result"> </div>
+		<form class="forget" method="post" id="forgot_form">
+			<fieldset class="fieldset" data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>">
+				<div class="field note"><?php /* @escapeNotVerified */ echo __('Please enter your email address below to receive a password reset link.'); ?></div>
+				<div class="field email required">
+					<label for="osc_email_address" class="label"><span><?php /* @escapeNotVerified */ echo __('Email') ?></span></label>
+					<div class="control">
+						<input type="email" name="email" alt="email" id="osc_email_address" class="input-text">
+					</div>
+				</div>			
+			</fieldset>
+			<?php //echo $block->getChildHtml('form.additional.info'); ?>
+			<div class="actions-toolbar">
+				<div class="primary">
+					<button id="reset_password" type="button" class="action back mageb-button"><span><?php /* @escapeNotVerified */ echo __('Reset My Password') ?></span></button> &nbsp;&nbsp;
+					<button id="loginback" type="button" class="action button"><span><?php /* @escapeNotVerified */ echo __('Back to Login') ?></span></button>	
+				</div>
+			</div>
+			<input type="hidden" id="forgoturl" class="forgoturl" value="<?php echo $block->getUrl('onepage/index/forgotpassword'); ?>" />
+		</form>
+	</div>
+</div>
+
+<style>
+.modal-content .message.error {
+    margin: 0 0 10px;
+    padding: 12px 20px 12px 25px;
+        padding-left: 25px;
+    display: block;
+    font-size: 1.3rem;
+    background: #fae5e5;
+    color: #e02b27;
+    padding-left: 45px;
+    position: relative;
+}
+
+.modal-content .message.error {
+    font-size: 1.3rem;
+    color: #e02b27;
+}
+
+.modal-content .message.error > :first-child::before {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 24px;
+    line-height: 24px;
+    color: #b30000;
+    content: '\e61f';
+    font-family: 'luma-icons';
+    margin: -12px 0 0;
+    vertical-align: middle;
+    display: inline-block;
+    font-weight: normal;
+    overflow: hidden;
+    speak: none;
+    left: 0;
+    top: 22px;
+    width: 45px;
+    position: absolute;
+    text-align: center;
+}
+</style>

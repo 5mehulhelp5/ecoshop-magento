@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="magebees_imagegallery" resource="default" engine="innodb" comment="Magebees Gallery Details">
+    <column xsi:type="int" name="image_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Image ID"/>
+    <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Title"/>
+    <column xsi:type="varchar" name="stores" nullable="false" length="255" comment="Stores"/>
+    <column xsi:type="boolean" name="status" nullable="true" comment="Status"/>
+    <column xsi:type="boolean" name="isexternal" nullable="true" comment="Isexternal"/>
+    <column xsi:type="varchar" name="url" nullable="false" length="255" comment="Url"/>
+    <column xsi:type="varchar" name="sort_order" nullable="false" length="255" comment="Sort_order"/>
+    <column xsi:type="varchar" name="image" nullable="false" length="255" comment="Image"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="image_id"/>
+    </constraint>
+  </table>
+</schema>

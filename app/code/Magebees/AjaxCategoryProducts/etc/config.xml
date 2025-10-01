@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <ajaxcatpro>
+			<general>
+				<enabled>1</enabled>
+				<list_position>top</list_position>
+				<show_category_section_title>1</show_category_section_title>
+				<category_section_title>Shop By</category_section_title>
+				<number_of_products>5</number_of_products>
+				<sort_by>position</sort_by>
+				<sort_order>ASC</sort_order>
+				<loading_text>Loading...</loading_text>
+				<done_text>Congratulations! You have reached at the end.</done_text>
+				<load_more_text>Load More Items</load_more_text>
+			</general>
+		</ajaxcatpro>    
+    </default>
+</config>

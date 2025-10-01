@@ -1,0 +1,58 @@
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); ?>
+<?php $is_selected = $poco_helper->getThemeLayout('newsletter_popup',$poco_helper->getStoreId())?1:0 ?>
+
+<?php /* @var block \Magebees\Promotionsnotification\Block\View */
+
+if ($block->getPopupEnabled() && $is_selected) :
+    $popup_collection = $block->getNotificationCollection('popup');
+    $popup_height = 'height:'.$block->getPopupHeight().'px';
+    if ($block->getPopupHeight() == 0) {
+        $popup_height = "";
+    } else {
+        $popup_height = 'height:'.$block->getPopupHeight().'px';
+    }
+    if ($block->getPopupWidth() == 0) {
+        $popup_width = "";
+    } else {
+        $popup_width = 'max-width:'.$block->getPopupWidth().'px';
+    }
+    $count = $popup_collection->getSize();
+    ?>
+    <?php if ($count) : 
+	$notificationData = array();
+	$notificationinitData = array();
+	$notificationData['popupcount'] = $count;
+	$notificationData['popup_height'] = $block->getPopupHeight();
+	$notificationData['popup_after_time'] = $block->getPopupAfterTimer();
+	$notificationData['popup_auto_close'] = $block->getPopupAutoClose();
+	$notificationData['popup_auto_close_time'] = $block->getPopupAutoCloseTime();
+	$notificationData['popup_one_time_per_user'] = $block->getPopupOneTimePerUser();
+	$notificationData['popup_all_or_one'] = $block->getPopupAllOrOne();
+	$notificationData['id'] = "popup";
+	$notificationData['popup_show_in_mobile'] = $block->getPopupShowInMobile();
+	$notificationinitData['magebees.notification'] = $notificationData;
+	$helper = $this->helper('Magebees\Promotionsnotification\Helper\Data'); ?>
+	
+	<div id="popup" data-mage-init='<?php echo json_encode($notificationinitData);?>' class="modal-box prm_popup <?php if (!$block->getPopupShowInMobile()) {
+            echo 'hideInmobile'; }?>" style="display:none; <?php echo $popup_width; ?>">
+            <button class="js-modal-close close" title="ClosePopup" aria-label="ClosePopup" rel="nofollow"><svg xmlns="https://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            <div class="modal-body" style="<?php echo $popup_height; ?>"><?php if ($block->getBarAllOrOne()!="one") {				$swiper_data_init = array();								$swiper_data_init['slider_id'] = 'swiper_notification_popup';				$swiper_data_init['autoplay']['delay'] = 5000;				$swiper_data_init['spaceBetween'] = 30;				$swiper_data_init['effect'] = 'fade';												$swiper_data_init['a11y'] = false;				if ($count<=1) {					$swiper_data_init['loop'] = false;				}else{					$swiper_data_init['loop'] = true;				}				$swiper_data_init['grabCursor'] = true;				?><div id="swiper_notification_popup" class="swiper-container" data-swiper='<?php echo json_encode($swiper_data_init);?>'><?php			}else{				?><div id="swiper_notification_popup" class="swiper-container"><?php			} ?>			
+               
+					<div class="swiper-wrapper">
+                    <?php foreach ($popup_collection as $popup_collection) : ?>
+                        <div class="swiper-slide" style="background-color:<?php echo $popup_collection->getBackgroundColor() ?>">
+                            <?php echo $helper->getFilterProvider()->getPageFilter()->filter($popup_collection->getData('notification_content')); ?>
+                        </div>
+                        <?php if ($block->getPopupAllOrOne()=="one") : ?>
+                            <?php $count=1;
+                            break; ?>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+					</div>
+                </div>
+            </div>
+            <footer><label><input type="checkbox" name="notshow" id="dontShowPopup" /><?= $escaper->escapeHtml(__(' Do not show again notification')) ?></label></footer>
+        </div>
+       
+    <?php endif; ?>
+<?php endif; ?>

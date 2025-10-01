@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+		<add id="Magebees_PocoBase::title" title="Poco Themes" module="Magebees_PocoBase" sortOrder="10" dependsOnModule="Magebees_PocoBase" resource="Magebees_PocoBase::title"/>
+		<add id="Magebees_PocoBase::configuration" title="Poco Themes Configuration" module="Magebees_PocoBase" sortOrder="10" parent="Magebees_PocoBase::title" resource="Magebees_PocoBase::configuration" />	
+		
+		<add id="Magebees_CacheWarmer::pocoHeading" title="Full Page Cache Warmer" module="Magebees_CacheWarmer" sortOrder="15" parent="Magebees_PocoBase::title" resource="Magebees_CacheWarmer::pocoHeading" />	
+		<add id="Magebees_CacheWarmer::pocoqueue" title="FPC Warmer Queue"  action="magebees_cachewarmer/queue" module="Magebees_CacheWarmer" sortOrder="150" parent="Magebees_CacheWarmer::pocoHeading" resource="Magebees_CacheWarmer::pocowarmerqueue"/>	
+		<add id="Magebees_CacheWarmer::pocolog" title="FPC Warmer Log"  action="magebees_cachewarmer/log" module="Magebees_CacheWarmer" sortOrder="160" parent="Magebees_CacheWarmer::pocoHeading" resource="Magebees_CacheWarmer::pocowarmerlog"/>
+		<!--<add id="Magebees_CacheWarmer::pocoreports" title="FPC Warmer Report" action="cachewarmer/manage/report" module="Magebees_CacheWarmer" sortOrder="170" parent="Magebees_CacheWarmer::pocoHeading" resource="Magebees_CacheWarmer::pocowarmerreport"/>-->
+		
+		<add id="Magebees_PocoBase::extension" title="MageBees Extension" module="Magebees_PocoBase" sortOrder="10" parent="Magebees_PocoBase::title" resource="Magebees_PocoBase::extension" />	
+		
+		<add id="Magebees_Advertisementblock::pocoadvertisementblock" title="Manage Advertising Blocks" sortOrder="1" action="advertisementblock/manage" module="Magebees_Advertisementblock" parent="Magebees_PocoBase::extension" resource="Magebees_Advertisementblock::pocoadvertisementblock"/>
+		
+		<add id="Magebees_Testimonial::pocotestimonial" title="Manage Customer Testimonials"  action="testimonial/manage" module="Magebees_Testimonial" sortOrder="2" parent="Magebees_PocoBase::extension" resource="Magebees_Testimonial::pocotestimonial"/>
+		
+		<add id="Magebees_Promotionsnotification::promotionsgrid" title="Promotions Notifications"  action="promotions/notification" module="Magebees_Promotionsnotification" sortOrder="3" parent="Magebees_PocoBase::extension" resource="Magebees_Testimonial::promotionsgrid"/>
+		
+		<add id="Magebees_Productlabel::pocolabelgrid" title="Product Labels" module="Magebees_Productlabel" sortOrder="4" parent="Magebees_PocoBase::extension" action="productlabel/productlabel" resource="Magebees_Productlabel::pocolabelgrid"/>
+		
+		<add id="Magebees_Finder::pocofindergrid" title="Manage Finders" module="Magebees_Finder" sortOrder="5" parent="Magebees_PocoBase::extension" action="finder/finder" resource="Magebees_Finder::pocofindergrid"/>
+
+		<add id="Magebees_Pagebanner::pocopagebanner" title="Manage Page Banner"  action="pagebanner/manage" module="Magebees_Pagebanner" sortOrder="5" parent="Magebees_PocoBase::extension" resource="Magebees_Pagebanner::pocopagebanner"/>
+			
+		
+		<add id="Magebees_TodayDealProducts::todaydealprogrid" title="Manage Deal Products" module="Magebees_TodayDealProducts" sortOrder="6" parent="Magebees_PocoBase::extension" resource="Magebees_TodayDealProducts::todaydealprogrid"  action="todaydealpro/dealproducts" />
+		
+		<add id="Magebees_Productlisting::productlistinggrid" title="Manage Product Listing" module="Magebees_Productlisting" sortOrder="7" parent="Magebees_PocoBase::extension" resource="Magebees_Productlisting::productlistinggrid"  action="prodlist/manage" />
+		
+		<add id="Magebees_Imagegallery::imagegallerygrid" title="Manage Image Gallery" module="Magebees_Imagegallery" sortOrder="8" parent="Magebees_PocoBase::extension" resource="Magebees_Imagegallery::imagegallerygrid"  action="imagegallery/manage" />
+		
+		<add id="Magebees_Responsivebannerslider::pocoHeading" title="Responsive Banner Slider" module="Magebees_Responsivebannerslider" sortOrder="10" parent="Magebees_PocoBase::title" resource="Magebees_Responsivebannerslider::pocoHeading" />
+		<add id="Magebees_Responsivebannerslider::pocogrid" title="Manage Groups"  action="responsivebannerslider/slidergroup" module="Magebees_Responsivebannerslider" sortOrder="10" parent="Magebees_Responsivebannerslider::pocoHeading"  resource="Magebees_Responsivebannerslider::pocogrid"/>
+		<add id="Magebees_Responsivebannerslider::pocoslide" title="Manage Slides"  action="responsivebannerslider/slide" module="Magebees_Responsivebannerslider" sortOrder="20" parent="Magebees_Responsivebannerslider::pocoHeading"  resource="Magebees_Responsivebannerslider::pocoslide"/>
+		
+		<add id="Magebees_Layerednavigation::pocotitle" title="Layered Navigation"   module="Magebees_Layerednavigation" sortOrder="10" parent="Magebees_PocoBase::title" resource="Magebees_Layerednavigation::pocotitle"/>
+		
+		
+		<add id="Magebees_Layerednavigation::pocolayerednavigation" title="Manage Attribute Filters"  action="layerednavigation/manage" module="Magebees_Layerednavigation" sortOrder="10" parent="Magebees_Layerednavigation::pocotitle" resource="Magebees_Layerednavigation::pocolayerednavigation"/>
+		
+		<add id="Magebees_Layerednavigation::pocobrand" title="Manage Brands"  action="layerednavigation/brands" module="Magebees_Layerednavigation" sortOrder="20" parent="Magebees_Layerednavigation::pocotitle" resource="Magebees_Layerednavigation::pocobrand"/>
+		
+		<add id="Magebees_Navigationmenu::pocoHeading" title="Navigation Menu" module="Magebees_Navigationmenu"  sortOrder="10" parent="Magebees_PocoBase::title" resource="Magebees_Navigationmenu::pocoHeading" />
+		<add id="Magebees_Navigationmenu::pocomenugroup" title="Manage Menu Groups"  action="navigationmenu/menucreatorgroup/index" module="Magebees_Navigationmenu" sortOrder="10" parent="Magebees_Navigationmenu::pocoHeading" resource="Magebees_Navigationmenu::pocomenugroup"/>
+		<add id="Magebees_Navigationmenu::pocomanageitems" title="Manage Menu Items" action="navigationmenu/menucreator/index" module="Magebees_Navigationmenu" sortOrder="20" parent="Magebees_Navigationmenu::pocoHeading" resource="Magebees_Navigationmenu::pocomanageitems"/>		
+		
+		
+		
+		
+		
+		
+		
+	
+		
+		<add id="Magebees_Blog::pocoHeading" title="Blog" module="Magebees_Blog" parent="Magebees_PocoBase::title" sortOrder="5"  resource="Magebees_Blog::pocoHeading"/>
+        <add id="Magebees_Blog::pocopost" title="Posts" module="Magebees_Blog" parent="Magebees_Blog::pocoHeading" sortOrder="10" action="blog/post" resource="Magebees_Blog::pocopost"/>
+        <add id="Magebees_Blog::pococategory" title="Categories" module="Magebees_Blog" parent="Magebees_Blog::pocoHeading" sortOrder="20" action="blog/category" resource="Magebees_Blog::pococategory"/>
+		<add id="Magebees_Blog::pocotag" title="Tags" module="Magebees_Blog" parent="Magebees_Blog::pocoHeading" sortOrder="25" action="blog/tag" resource="Magebees_Blog::pocotag"/>
+		<add id="Magebees_Blog::pococomment" title="Comments" module="Magebees_Blog" parent="Magebees_Blog::pocoHeading" sortOrder="30" action="blog/comment" resource="Magebees_Blog::pococomment"/>
+		<add id="Magebees_Blog::pocoimport" title="Import" module="Magebees_Blog" parent="Magebees_Blog::pocoHeading" sortOrder="35" action="blog/import/new" resource="Magebees_Blog::pocoimport"/>
+		<add id="Magebees_Blog::pocourlrewrite" title="URL ReWrite" module="Magebees_Blog" parent="Magebees_Blog::pocoHeading" sortOrder="40" action="blog/urlrewrite" resource="Magebees_Blog::pocourlrewrite"/>
+		
+		
+		
+		<add id="Magebees_PocoBase::pocoConfiguration" title="MageBees Extension Configuration" module="Magebees_PocoBase" sortOrder="200" parent="Magebees_PocoBase::title" resource="Magebees_PocoBase::pocoConfiguration" />	
+		
+		<add id="Magebees_Advertisementblock::advertisementblock" title="Advertisement Block" action="adminhtml/system_config/edit/section/advertisementblock" module="Magebees_Advertisementblock" sortOrder="1" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_Advertisementblock::pocoadvertisementblock"/>
+		
+		
+		<add id="Magebees_Ajaxaddtocart::pocoajaxaddtocart" title="Ajax Add To Cart" action="adminhtml/system_config/edit/section/ajaxaddtocart" module="Magebees_Ajaxaddtocart" sortOrder="2" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_Ajaxaddtocart::pocoajaxaddtocart"/>	 	
+		<add id="Magebees_AjaxCategoryProducts::pocoajaxcategoryproducts" title="Ajax Category Products" action="adminhtml/system_config/edit/section/ajaxcatpro" module="Magebees_AjaxCategoryProducts" sortOrder="3" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_AjaxCategoryProducts::pocoajaxcategoryproducts"/>	 	
+		
+		<add id="Magebees_Ajaxcomparewishlist::pocoajaxcomparewishlist" title="Ajax Compare/Wishlist" action="adminhtml/system_config/edit/section/magebees_ajaxcomparewishlist" module="Magebees_Ajaxcomparewishlist" sortOrder="4" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_Ajaxcomparewishlist::pocoajaxcomparewishlist"/>	 	
+		
+		
+		<add id="Magebees_AjaxInfiniteScroll::pocoajaxinfinitescroll" title="Ajax Infinite Scroll" action="adminhtml/system_config/edit/section/ajaxinfinitescroll" module="Magebees_AjaxInfiniteScroll" sortOrder="3" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_AjaxInfiniteScroll::pocoajaxinfinitescroll"/>
+		<add id="Magebees_Ajaxquickview::pocoajaxquickview" title="Ajax Quick View" action="adminhtml/system_config/edit/section/ajaxquickview" module="Magebees_Ajaxquickview" sortOrder="4" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_Ajaxquickview::pocoajaxquickview"/>
+		
+		
+		<add id="Magebees_Ajaxsearch::pocoajaxsearch" title="Ajax Quick Search " action="adminhtml/system_config/edit/section/ajaxsearch" module="Magebees_Ajaxsearch" sortOrder="5" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_Ajaxsearch::pocoajaxsearch"/>
+		
+		<add id="Magebees_Blog::pococonfig_blog" title="Blog" module="Magebees_Blog" parent="Magebees_PocoBase::pocoConfiguration" sortOrder="6" action="adminhtml/system_config/edit/section/blog" resource="Magebees_Blog::blogsetting"/>
+		
+		<add id="Magebees_Buynow::pococonfig_buynow" title="Buy Now" module="Magebees_Buynow" parent="Magebees_PocoBase::pocoConfiguration" sortOrder="7" action="adminhtml/system_config/edit/section/buynow" resource="Magebees_Buynow::buynow"/>
+		
+		<add id="Magebees_CustomCartStyle::pococonfig_customcartstyle" title="Custom Cart Style" module="Magebees_CustomCartStyle" parent="Magebees_PocoBase::pocoConfiguration" sortOrder="8" action="adminhtml/system_config/edit/section/shoppingcart" resource="Magebees_CustomCartStyle::shoppingcart"/>
+		
+		<add id="Magebees_Testimonial::testimonial" title="Customer Testimonial" action="adminhtml/system_config/edit/section/testimonial" module="Magebees_Testimonial" sortOrder="8" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_Testimonial::testimonial"/>
+		<add id="Magebees_EmailEditor::emailedit" title="Email Template Editor" action="adminhtml/system_config/edit/section/emaileditor" module="Magebees_EmailEditor" sortOrder="8" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_EmailEditor::emailedit"/>
+		
+		<add id="Magebees_CacheWarmer::pocofpc" title="Full Page Cache Warmer" module="Magebees_CacheWarmer" sortOrder="9" parent="Magebees_PocoBase::pocoConfiguration" action="adminhtml/system_config/edit/section/cachewarmer" resource="Magebees_CacheWarmer::pocofpc"/>
+		
+		<add id="Magebees_RichSnippets::pocorichsnippets" title="Google Rich Snippets" module="Magebees_RichSnippets" sortOrder="10" parent="Magebees_PocoBase::pocoConfiguration" action="adminhtml/system_config/edit/section/richsnippets" resource="Magebees_RichSnippets::pocorichsnippets"/>
+		
+		<add id="Magebees_Imagegallery::pocoimagegalleryconfig" title="Image Gallery" module="Magebees_Imagegallery" sortOrder="10" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_PocoBase::pocoConfiguration"  action="adminhtml/system_config/edit/section/imagegallery" />
+		
+		<add id="Magebees_Layerednavigation::layered" title="Improved Layered Navigation" action="adminhtml/system_config/edit/section/layerednavigation" module="Magebees_Layerednavigation" sortOrder="11" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_Layerednavigation::layered"/>
+		
+		<add id="Magebees_MPM::pocompm" title="Messages Popup Modal" action="adminhtml/system_config/edit/section/mpm" module="Magebees_MPM" sortOrder="12" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_MPM::pocompm"/>
+		
+		<add id="Magebees_Navigationmenu::navigationmenu" title="Navigation Menu" action="adminhtml/system_config/edit/section/navigationmenu" module="Magebees_Navigationmenu" sortOrder="13" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_Navigationmenu::navigationmenu"/>
+		
+		
+		<add id="Magebees_Onepagecheckout::pocoonepagecheckout" title="Onepage Checkout" action="adminhtml/system_config/edit/section/magebees_Onepagecheckout" module="Magebees_Onepagecheckout" sortOrder="15" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_Onepagecheckout::pocoonepagecheckout"/>
+		
+		
+		<add id="Magebees_Pagebanner::pocopagebannerconfig" title="Page Banner" action="adminhtml/system_config/edit/section/pagebanner" module="Magebees_Pagebanner" sortOrder="16" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_Pagebanner::pocopagebannerconfig"/>
+		
+		
+		
+		
+		<add id="Magebees_ImageFlipper::pocoimageflipper" title="Product Image Flipper" action="adminhtml/system_config/edit/section/imageflipper" module="Magebees_ImageFlipper" sortOrder="17" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_PocoBase::pocoConfiguration"/>
+		
+		
+		<add id="Magebees_Productlabel::pocolabelconfig" title="Product Labels" module="Magebees_Productlabel" sortOrder="18" parent="Magebees_PocoBase::pocoConfiguration" action="adminhtml/system_config/edit/section/productlabel" resource="Magebees_Productlabel::pocolabelconfig"/>
+		
+		<add id="Magebees_Productlisting::pocoproductlistingconfig" title="Product Listing" module="Magebees_Productlisting" sortOrder="19" parent="Magebees_PocoBase::pocoConfiguration" action="adminhtml/system_config/edit/section/productlisting" resource="Magebees_Productlisting::pocoproductlistingconfig"/>
+		
+		<add id="Magebees_Promotionsnotification::pocopromotions" title="Promotions Notification" action="adminhtml/system_config/edit/section/promotions" module="Magebees_Promotionsnotification" sortOrder="19" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_Promotionsnotification::pocopromotions"/>
+		<add id="Magebees_Responsivebannerslider::responsivebannerslider" title="Responsivebannerslider" action="adminhtml/system_config/edit/section/responsivebannerslider" module="Magebees_Responsivebannerslider" sortOrder="20" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_Responsivebannerslider::responsivebannerslider"/>
+		
+		<add id="Magebees_Socialsharing::socialsharing" title="Social Sharing" action="adminhtml/system_config/edit/section/mbsocialsharing" module="Magebees_Socialsharing" sortOrder="21" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_Socialsharing::socialsharing"/>
+		
+		<add id="Magebees_Finder::pocofinder" title="YMM Products Parts Finder" action="adminhtml/system_config/edit/section/finder" module="Magebees_Finder" sortOrder="22" parent="Magebees_PocoBase::pocoConfiguration" resource="Magebees_Finder::pocofinder"/>
+		
+		
+	</menu>
+</config>

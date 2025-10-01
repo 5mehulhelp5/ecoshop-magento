@@ -1,0 +1,331 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magebees" translate="label" sortOrder="100">
+            <label>Magebees</label>
+        </tab>
+        <section id="ajaxsearch" translate="label" type="text" sortOrder="60" showInDefault="1" 
+				 showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Ajax Quick Search</label>
+            <tab>magebees</tab>
+            <resource>Magebees_Ajaxsearch::ajaxsearch_config</resource>
+
+            <group id="setting" translate="label" type="text" sortOrder="1" showInDefault="1" 
+				   showInWebsite="1" showInStore="1">
+				<label>Settings</label>
+
+				<field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enabled</label> 
+					<comment>Select Yes for display active ajax search in frontend.</comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>
+				 <field id="search_min_length" translate="label comment" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Minimum Characters</label>
+					<comment>Set minimum characters for ajax search.</comment>		
+					<validate>validate-number</validate>					
+				</field>
+				 <field id="search_type" translate="label comment" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Search Type</label> 
+					<comment>Select Search Type.</comment> 
+					<source_model>Magebees\Ajaxsearch\Model\Config\SearchType</source_model> 
+				 </field>
+				 <field id="exact_match" translate="label comment" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Exact Match Multiple Words</label> 
+					<depends>
+						<field id="search_type">0</field>
+					</depends>	
+					<comment><![CDATA[Select yes for exact match multiple words.<br>
+					Applied only if "Search Type" is set to Like.					
+					]]></comment> 
+ 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>	
+				<field id="right_to_left" translate="label comment" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Language Direction</label> 
+					<comment>Select Language Direction.</comment> 
+					<source_model>Magebees\Ajaxsearch\Model\Config\LangType</source_model> 
+					
+				</field>				 
+			</group>
+			<group id="recent_search_setting" translate="label" type="text" sortOrder="2" showInDefault="1" 
+				   showInWebsite="1" showInStore="1">
+				<label>Recent Searches</label>
+
+				<field id="enable" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enabled</label> 
+					<comment>Select Yes for display recent search result in search popup.</comment> 					
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="enable_first_click" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1"> 
+				<label>Show on First Click</label> 
+				<comment>Select Yes for display recent search result on first click of searchbox.</comment> 					
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="title" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Section Title</label>
+					<comment>Default Section Title::Recent Searches</comment> 					
+				</field>
+				<field id="position" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Sort Order</label>
+					<comment>Set sort order for display recent search section in search popup</comment> 										
+					<validate>validate-number</validate>					
+				</field>
+				<field id="limit" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Number Of Results</label>
+					<comment>Set number of result for display recent search </comment> 
+					<validate>validate-number</validate>					
+				</field>
+			</group>
+			<group id="popular_search_setting" translate="label" type="text" sortOrder="3" showInDefault="1" 
+				   showInWebsite="1" showInStore="1">
+				<label>Popular Searches</label>
+
+				<field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enabled</label> 	
+					<comment>Select Yes for display popular search result in search popup.</comment> 					
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="title" translate="label comment" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Section Title</label>	
+				<comment>Default Section Title::Popular Searches</comment> 										
+				</field>
+				<field id="position" translate="label comment" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Sort Order</label>	
+					<comment>Set sort order for display popular search section in search popup</comment> 										
+					
+					<validate>validate-number</validate>					
+				</field>
+				<field id="limit" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Number Of Results</label>	
+					<comment>Set number of result for display popular search </comment> 					
+					<validate>validate-number</validate>					
+				</field>
+			</group>
+			<group id="suggested_setting" translate="label" type="text" sortOrder="4" showInDefault="1" 
+				   showInWebsite="1" showInStore="1">
+				<label>Suggested Terms</label>
+
+				<field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enabled</label> 
+					<comment>Select Yes for display suggested terms in search popup.</comment> 										
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="title" translate="label comment" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Section Title</label>
+					<comment>Default Section Title::Suggested Terms</comment> 															
+				</field>
+				<field id="position" translate="label comment" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Sort Order</label>
+					<comment>Set sort order for display suggested terms section in search popup</comment> 															
+					<validate>validate-number</validate>					
+				</field>
+				<field id="limit" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Number Of Results</label>
+					<comment>Set number of result for display suggested term </comment> 					
+					<validate>validate-number</validate>					
+				</field>
+			</group>
+			<group id="category_setting" translate="label" type="text" sortOrder="5" showInDefault="1" 
+				   showInWebsite="1" showInStore="1">
+				<label>Categories</label>
+				<field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enabled</label> 	
+					<comment>Select Yes for display category search result in search popup.</comment> 										
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="title" translate="label comment" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Section Title</label>	
+					<comment>Default Section Title::Categories</comment>			
+				</field>
+				<field id="position" translate="label comment" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Sort Order</label>
+					<comment>Set sort order for display category search section in search popup</comment>											
+					<validate>validate-number</validate>					
+				</field>
+				<field id="limit" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Number Of Results</label>	
+					<comment>Set number of result for display category search </comment> 										
+					<validate>validate-number</validate>					
+				</field>
+				<field id="name_length" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Name Length</label>	
+					<comment>Set length for display category name</comment> 					
+					<validate>validate-number</validate>							
+				</field>				
+			</group>
+			<group id="cms_setting" translate="label" type="text" sortOrder="5" showInDefault="1" 
+				   showInWebsite="1" showInStore="1">
+				<label>CMS Pages</label>
+				<field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enabled</label> 
+					<comment>Select Yes for display CMS pages search result in search popup.</comment> 										
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="title" translate="label comment" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Section Title</label>	
+					<comment>Default Section Title::CMS Pages</comment>			
+				</field>
+				<field id="position" translate="label comment" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Sort Order</label>	
+					<comment>Set sort order for display CMS pages search section in search popup</comment>											
+					<validate>validate-number</validate>					
+				</field>
+				<field id="limit" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Number Of Results</label>	
+					<comment>Set number of result for display CMS pages search </comment> 															
+					<validate>validate-number</validate>					
+				</field>				
+			</group>
+			<group id="cat_filter" translate="label" type="text" sortOrder="5" showInDefault="1" 
+				   showInWebsite="1" showInStore="1">
+				<label>Category Filter</label>
+				<field id="enable_cat" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Add Category Filter</label>
+					<comment>Select Yes for enable category filter for search result.</comment> 															
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>	
+				<field id="categories" translate="label comment" type="multiselect" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Search in Categories</label> 
+					<depends>
+						<field id="enable_cat">1</field>
+					</depends>					
+					<validate>required-entry</validate>  					
+					<source_model>Magebees\Ajaxsearch\Model\Config\Categories</source_model> 
+				</field>	
+			</group>
+			
+			
+			<group id="product_setting" translate="label" type="text" sortOrder="7" showInDefault="1" 
+						   showInWebsite="1" showInStore="1">					   
+			<label>Products</label>	
+				<field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enabled</label> 	
+				<comment>Select Yes for display products search result in search popup.</comment> 										
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="title" translate="label comment" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Section Title</label>
+					<comment>Default Section Title::Products</comment>								
+				</field>
+				
+				<field id="product_limit" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Product Limit</label>
+					<validate>validate-number</validate>				
+					<comment>Set product limit display in popup</comment>			
+				</field>
+				<field id="name_length" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Name Length</label>	
+					<validate>validate-number</validate>
+					<comment>Set product name length</comment>				
+				</field>
+				<field id="desc_length" translate="label comment" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Description Length</label>	
+					<validate>validate-number</validate>
+					<comment>Set product description word length</comment>				
+				</field>
+				<field id="product_price" translate="label comment" type="select" sortOrder="7" showInDefault="1" showInWebsite="0" showInStore="0"> 
+						<label>Show Product Price</label>	
+						<comment>Select yes for show product price</comment>			
+						<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="product_sku" translate="label comment" type="select" sortOrder="8" showInDefault="1" showInWebsite="0" showInStore="0"> 
+						<label>Show Product Code(SKU)</label>	
+						<comment>Select yes for show product code(SKU)</comment>		
+						<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="product_cart" translate="label comment" type="select" sortOrder="9" showInDefault="1" showInWebsite="0" showInStore="0"> 
+						<label>Show Add to Cart Button</label>	
+						<comment>Select yes for show add to cart button</comment>		
+						<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="product_image" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0"> 
+						<label>Show Product Image</label>	
+						<comment>Select yes for show product image</comment>		
+						<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="product_review" translate="label comment" type="select" sortOrder="11" showInDefault="1" showInWebsite="0" showInStore="0"> 
+						<label>Show Reviews</label>	
+						<comment>Select yes for show review</comment>		
+						<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>				
+			</group>	
+			<group id="attributes" translate="label" type="text" sortOrder="8" showInDefault="1" 
+							   showInWebsite="0" showInStore="0">
+				<label>Attribute wise Search Priority</label>
+			<comment>** For any attribute, higher the dropdown value selected has higher priority than other attributes.
+			Ex: If you set dropdown value 10 for 'Name' attribute then it has high priority
+			</comment>	
+
+		
+			<frontend_model>Magebees\Ajaxsearch\Model\Config\AttributeField</frontend_model>		
+			</group>	
+			<group id="layout_setting" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Popup Layout Settings</label>	
+				<field id="cat_text_color" translate="label" type="text" sortOrder="2" showInWebsite="0" showInStore="1" showInDefault="1">
+					<label>Category Text Color</label>
+					<frontend_model>Magebees\Ajaxsearch\Block\Color</frontend_model> 	    
+				</field>
+				<field id="cat_box_bg_color" translate="label" type="text" sortOrder="1" showInWebsite="0" showInStore="1" showInDefault="1">
+					<label>Category Box Background Color</label>
+					<frontend_model>Magebees\Ajaxsearch\Block\Color</frontend_model> 		    
+				</field>
+
+				<field id="popup_bg_color" translate="label" type="text" sortOrder="3" showInWebsite="0" showInStore="1" showInDefault="1">
+					<label>Popup Background Color</label>
+					<frontend_model>Magebees\Ajaxsearch\Block\Color</frontend_model> 		    
+				</field>
+				<field id="popup_border_color" translate="label" type="text" sortOrder="4" showInWebsite="0" showInStore="1" showInDefault="1">
+					<label>Popup Border Color</label>
+					<frontend_model>Magebees\Ajaxsearch\Block\Color</frontend_model> 		    
+				</field>				
+				<field id="searchtag_highlight_color" translate="label" type="text" sortOrder="5" showInWebsite="0" showInStore="1" showInDefault="1">
+					<label>Search Text Highlight Color</label>
+					<frontend_model>Magebees\Ajaxsearch\Block\Color</frontend_model> 		    
+				</field>
+				
+				
+				<field id="section_title_color" translate="label" type="text" sortOrder="6" showInWebsite="0" showInStore="1" showInDefault="1">
+					<label>Section Title Color</label>
+					<frontend_model>Magebees\Ajaxsearch\Block\Color</frontend_model> 		    
+				</field>
+				<field id="section_title_link_color" translate="label" type="text" sortOrder="8" showInWebsite="0" showInStore="1" showInDefault="1">
+					<label>Section Title Link Color</label>
+					<frontend_model>Magebees\Ajaxsearch\Block\Color</frontend_model> 		    
+				</field>
+				<field id="section_title_bg_color" translate="label" type="text" sortOrder="7" showInWebsite="0" showInStore="1" showInDefault="1">
+					<label>Section Title Background Color</label>
+					<frontend_model>Magebees\Ajaxsearch\Block\Color</frontend_model> 		    
+				</field>
+				
+				<field id="searchtag_font_color" translate="label" type="text" sortOrder="9" showInWebsite="0" showInStore="1" showInDefault="1">
+					<label>Search Tags Font Color</label>
+					<frontend_model>Magebees\Ajaxsearch\Block\Color</frontend_model> 		    
+				</field>
+			<!--	<field id="searchtag_font_bg_color" translate="label" type="text" sortOrder="10" showInWebsite="0" showInStore="1" showInDefault="1">
+					<label>Search Tags Background Color</label>
+					<frontend_model>Magebees\Ajaxsearch\Block\Color</frontend_model> 		    
+				</field>-->
+				<field id="searchtag_font_hover_color" translate="label" type="text" sortOrder="11" showInWebsite="0" showInStore="1" showInDefault="1">
+					<label>Search Tags Background Color on Hover</label>
+					<frontend_model>Magebees\Ajaxsearch\Block\Color</frontend_model> 		    
+				</field>
+					 
+				
+				<field id="productlist_font_color" translate="label" type="text" sortOrder="12" showInWebsite="0" showInStore="1" showInDefault="1">
+					<label>Product List Font Color</label>
+					<frontend_model>Magebees\Ajaxsearch\Block\Color</frontend_model> 		    
+				</field>
+				<field id="productlist_bg_color" translate="label" type="text" sortOrder="13" showInWebsite="0" showInStore="1" showInDefault="1">
+					<label>Product List Background Color</label>
+					<frontend_model>Magebees\Ajaxsearch\Block\Color</frontend_model> 		    
+				</field>				
+				<field id="productlist_bg_hover_color" translate="label" type="text" sortOrder="14" showInWebsite="0" showInStore="1" showInDefault="1">
+					<label>Product List Background Color on Hover</label>
+					<frontend_model>Magebees\Ajaxsearch\Block\Color</frontend_model> 		    
+				</field>
+			</group>	
+            
+        </section>
+    </system>
+</config>

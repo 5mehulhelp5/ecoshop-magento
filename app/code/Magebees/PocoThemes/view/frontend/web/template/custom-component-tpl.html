@@ -1,0 +1,25 @@
+<div>
+    <span data-bind="text: message"></span>
+</div>
+
+<div class="component-wrapper" data-bind="if: getTotalCartItems() > 0">
+			
+	<!-- ko if: isFreeShipping() -->
+    <span class="text">Congrats! You are eligible for FREE Shipping<br></span>
+	<!-- /ko -->
+	<!-- ko ifnot: isFreeShipping() -->
+    <span class="text">
+			You are <span class="primary"><span class="money" data-bind="text: remainingAmount()"></span></span> away to enjoy <span class="secondary">FREE Shipping</span><br>
+			</span>
+	<!-- /ko -->
+			
+			
+			
+			
+          <h4 data-bind="text : getpercentage() < 100 ?'Free shipping' : 'Eligible for free shipping!'"></h4>
+                <span data-bind="html: cart().subtotal"></span><span> / </span><span data-bind="text: maxprice"></span>
+         <span data-bind="text: getFormattedPrice(maxprice)"></span>
+		 <div class="minprogress" id="progress">
+                  <div class="minprogress-active" id="child-progress" data-bind="style: { width: getpercentage() + '%' } ">                     </div>
+       </div>
+</div>

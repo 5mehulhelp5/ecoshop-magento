@@ -1,0 +1,249 @@
+<?php
+/**
+ * Template for displaying today deal products
+ *
+ * @var $block \Magebees\TodayDealProducts\Block\DealProducts
+ */
+if ($exist = ($block->getProductCollection() && $block->getProductCollection()->getSize() && (bool)$block->getConfigValues('enabled'))) {
+    $type = 'widget-new-grid';
+    $mode = 'grid';
+    $image = 'new_products_content_widget_grid';
+    $title = __($block->getDealData('title'));
+    $deal_description = __($block->getDealData('description'));
+    $items = $block->getProductCollection()->getItems();
+	$ItemCount = $block->getProductCollection()->getSize();
+    $showWishlist = (bool)$block->getWishlist();
+    $showCompare = (bool)$block->getCompare();
+    $showCart = (bool)$block->getCart();
+    //$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
+    $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::DEFAULT_VIEW;
+    $showPrice = (bool)$block->getPrice();
+    $timer = $block->getCountTimer();
+    $random_number = $block->getUniqueSliderKey();
+	$slider = true;
+	$slider_class = "swiper";
+	$item_class =   "swiper-slide";
+	
+	$slider_id = "magebees-todaydeal-slider-".$random_number;
+	
+	$autoscroll = array_key_exists('autoplay', $this->getDealData('layoutoptions'))? ($this->getDealData('layoutoptions')['autoplay']=='1' ? 'true':'false') : false;
+	
+	$navarrow = array_key_exists('nav_arr', $this->getDealData('layoutoptions')) ? ($this->getDealData('layoutoptions')['nav_arr']=='1' ? true:false) : false;
+	$pagination = array_key_exists('pagination', $this->getDealData('layoutoptions')) ? ($this->getDealData('layoutoptions')['pagination']=='1' ? true:false) : false;
+	$paginationtype = array_key_exists('pagi_type', $this->getDealData('layoutoptions')) ? $this->getDealData('layoutoptions')['pagi_type']: 0;
+	$infinite_loop = array_key_exists('loop', $this->getDealData('layoutoptions')) ? ($this->getDealData('layoutoptions')['loop']=='1' ? 'true':'false') : false;
+	$scrollbar = array_key_exists('scrollbar', $this->getDealData('layoutoptions')) ? ($this->getDealData('layoutoptions')['scrollbar']=='1' ? true:false) : false;
+	$grap_cursor = array_key_exists('grab_cur', $this->getDealData('layoutoptions')) ? ($this->getDealData('layoutoptions')['grab_cur']=='1' ? 'true':'false') : false;
+	$auto_height = array_key_exists('auto_height', $this->getDealData('layoutoptions')) ? ($this->getDealData('layoutoptions')['auto_height']=='1' ? 'true':'false') : false;
+	$items_per_slide = array_key_exists('items_per_slide', $this->getDealData('layoutoptions')) ? $this->getDealData('layoutoptions')['items_per_slide'] : 4;
+	$auto_play_dealytime = array_key_exists("delay_time",$this->getDealData('layoutoptions')) ? $this->getDealData('layoutoptions')['delay_time']:3000;
+	$autoplayoff = array_key_exists("mouse_enter",$this->getDealData('layoutoptions')) ? ($this->getDealData('layoutoptions')['mouse_enter']=='1' ? 'true':'false') : false;
+	$pagination_class = null;
+	if(($pagination)&&($ItemCount > $items_per_slide )):
+		$pagination_class = ' show-pagination ';
+	endif; 
+	
+	
+}
+?>
+<?php if ($exist) :?>
+    <div id="<?php echo "mage-deal-slider-".$random_number; ?>" class="block widget mage-products mage-deal-slider <?php /* @escapeNotVerified */ echo $mode; ?>">
+        <div class="block-title">
+            <strong role="heading" aria-level="2"><?php /* @escapeNotVerified */ echo $title; ?></strong>
+            <?php echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setData('count_time', $timer)->setTemplate("Magebees_TodayDealProducts::timer.phtml")->toHtml();?>
+        </div>
+    
+        <div class="block-content">
+            <p class="deal-description"><?php echo $block->escapeHtml($deal_description); ?></p>
+			<div class="products-<?php /* @escapeNotVerified */ echo $mode; ?> <?php /* @escapeNotVerified */ echo $mode; ?> product-items <?php /* @escapeNotVerified */ echo $type; ?>">
+				<div id="<?php echo $slider_id; ?>" class="<?php echo $slider_class; ?>">
+					<div class="swiper-wrapper <?php if($scrollbar): ?>show-scrollbar<?php endif; ?> <?php if($pagination): ?>show-pagination<?php endif; ?> <?php if($grap_cursor=='true'): ?>grab-cursor<?php endif;?>">
+						<?php foreach ($items as $_item) : ?>
+							<div class="item swiper-slide product-item  <?php echo $item_class;?>">
+								<div class="product-item-info">
+									<a href="<?php /* @escapeNotVerified */ echo $block->getProductUrl($_item) ?>" class="product-item-photo">
+										<?php echo $block->getImage($_item, $image)->toHtml(); ?>
+									</a>
+									<div class="product-item-details">
+										<strong class="product-item-name">
+											<a title="<?php echo $block->escapeHtml($_item->getName()) ?>"
+											   href="<?php /* @escapeNotVerified */ echo $block->getProductUrl($_item) ?>"
+											   class="product-item-link">
+												<?php echo $block->escapeHtml($_item->getName()) ?>
+											</a>
+										</strong>
+										<?php if ($showPrice) : ?>
+											<?php echo $block->getProductPriceHtml($_item, $type); ?>
+										<?php endif; ?>
+										
+										<?php if ($showWishlist || $showCompare || $showCart) : ?>
+											<div class="product-item-actions">
+												<?php if ($showCart) : ?>
+													<div class="actions-primary">
+														<?php if ($_item->isSaleable()) : ?>
+															<?php if ($_item->getTypeInstance()->hasRequiredOptions($_item)) : ?>
+																<button class="action tocart primary"
+																		data-mage-init='{"redirectUrl":{"url":"<?php /* @escapeNotVerified */ echo $block->getAddToCartUrl($_item) ?>"}}'
+																		type="button" title="<?php /* @escapeNotVerified */ echo __('Add to Cart') ?>">
+																	<span><?php /* @escapeNotVerified */ echo __('Add to Cart') ?></span>
+																</button>
+															<?php else : ?>
+																<?php
+																	$postDataHelper = $this->helper('Magento\Framework\Data\Helper\PostHelper');
+																	$postData = $postDataHelper->getPostData($block->getAddToCartUrl($_item), ['product' => $_item->getEntityId()])
+																?>
+																<button class="action tocart primary"
+																		data-post='<?php /* @escapeNotVerified */ echo $postData; ?>'
+																		type="button" title="<?php /* @escapeNotVerified */ echo __('Add to Cart') ?>">
+																	<span><?php /* @escapeNotVerified */ echo __('Add to Cart') ?></span>
+																</button>
+															<?php endif; ?>
+														<?php else : ?>
+															<?php if ($_item->getIsSalable()) : ?>
+																<div class="stock available"><span><?php /* @escapeNotVerified */ echo __('In stock') ?></span></div>
+															<?php else : ?>
+																<div class="stock unavailable"><span><?php /* @escapeNotVerified */ echo __('Out of stock') ?></span></div>
+															<?php endif; ?>
+														<?php endif; ?>
+													</div>
+												<?php endif; ?>
+												<?php if ($showWishlist || $showCompare) : ?>
+													<div class="actions-secondary" data-role="add-to-links">
+														<?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow() && $showWishlist) : ?>
+															<a href="#"
+															   data-post='<?php /* @escapeNotVerified */ echo $block->getAddToWishlistParams($_item); ?>'
+															   class="action towishlist" data-action="add-to-wishlist"
+															   title="<?php /* @escapeNotVerified */ echo __('Add to Wish List') ?>">
+																<span><?php /* @escapeNotVerified */ echo __('Add to Wish List') ?></span>
+															</a>
+														<?php endif; ?>
+														<?php if ($block->getAddToCompareUrl() && $showCompare) : ?>
+															<?php $compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare');?>
+															<a href="#" class="action tocompare"
+															   data-post='<?php /* @escapeNotVerified */ echo $compareHelper->getPostDataParams($_item);?>'
+															   title="<?php /* @escapeNotVerified */ echo __('Add to Compare') ?>">
+																<span><?php /* @escapeNotVerified */ echo __('Add to Compare') ?></span>
+															</a>
+														<?php endif; ?>
+													</div>
+												<?php endif; ?>
+											</div>
+										<?php endif; ?>
+									</div>
+								</div>
+							</div>
+						<?php endforeach; ?>
+					</div>
+					<?php if($pagination): ?>
+					<!-- Add Pagination -->
+					<div id="<?php echo "swiper-pagination-".$random_number;?>" class="swiper-pagination"></div>
+					<?php endif; ?>
+					<!-- Add Scrollbar -->
+					<?php if($scrollbar): ?>
+					<div id="<?php echo "swiper-scrollbar-".$random_number;?>" class="swiper-scrollbar"></div>	
+					<?php endif; ?>
+					<!--End div swiper-->
+					<?php if($navarrow): ?>
+						<!-- Add Arrows -->
+						<div id="<?php echo "swiper-button-next-".$random_number;?>" class="swiper-button-next"></div>
+						<div id="<?php echo "swiper-button-prev-".$random_number;?>"class="swiper-button-prev"></div>
+					<?php endif; ?>
+				</div>
+			</div>
+        </div>
+		<script>
+		requirejs(['jquery',"magebeesdealswiper"], function ($,Swiper) {
+		"use strict";
+		var slider_id="<?php echo $slider_id;?>";
+		var pagination = "<?php echo "#swiper-pagination-".$random_number;?>";
+		var scrollbar = "<?php echo "#swiper-scrollbar-".$random_number;?>";
+		var btn_next = "<?php echo "#swiper-button-next-".$random_number;?>";
+		var btn_prev = "<?php echo "#swiper-button-prev-".$random_number;?>";
+		var <?php echo "swiper_".$random_number;?> = new Swiper("#"+slider_id, {
+		
+			autoHeight: <?php echo $auto_height ?>, 
+			slidesPerView: 1,
+			spaceBetween: 10,
+			loop: <?php echo $infinite_loop ?>,
+			grabCursor: <?php echo $grap_cursor; ?>,
+			a11y: false,
+			//centeredSlides: <?php //echo $centered; ?>,
+			<?php if($autoscroll):?>
+				autoplay: {
+					delay: <?php echo $auto_play_dealytime ?>,
+					disableOnInteraction: false,
+					pauseOnMouseEnter:<?php echo $autoplayoff ?>
+				},
+			<?php endif;?>
+			<?php if($scrollbar): ?>
+				scrollbar: {
+					el: scrollbar,
+					hide: false,
+				},	
+			<?php endif; ?>
+			<?php if($paginationtype=='default'): ?>
+				pagination: {
+					el: pagination,
+					clickable: true,
+				},
+			<?php elseif($paginationtype=='dynamic'): ?>
+				pagination: {
+					el: pagination,
+					clickable: true,
+					dynamicBullets: true,
+				},
+			<?php elseif($paginationtype=='progress'): ?>
+				pagination: {
+					el: pagination,
+					clickable: true,
+					type: 'progressbar',
+				},
+			<?php elseif($paginationtype=='fraction'): ?>
+				pagination: {
+					el: pagination,
+					type: 'fraction',
+					
+				},
+			<?php elseif($paginationtype=='custom'): ?>
+				pagination: {
+					el: pagination,
+					clickable: true,
+					renderBullet: function (index, className) {
+						return '<span class="' + className + '">' + (index + 1) + '</span>';
+					},
+				},
+			<?php endif;?>
+			<?php if($navarrow): ?>
+				navigation: {
+					nextEl: btn_next,
+					prevEl: btn_prev,
+				},	
+			<?php endif; ?>
+				breakpoints: {
+					0: {
+						slidesPerView: 1,
+						spaceBetween: 20,
+					},
+					480: {
+						slidesPerView: 2,
+						spaceBetween: 20,
+					},
+					639: {
+						slidesPerView: 2,
+						spaceBetween: 20,
+					},
+					768: {
+						slidesPerView: 3,
+						spaceBetween: 30,
+					},
+					1200: {
+						slidesPerView: <?php echo $items_per_slide ?>,
+						spaceBetween: 30,
+					},
+				}
+			});
+		});
+
+		</script>
+    </div>
+<?php endif;?>

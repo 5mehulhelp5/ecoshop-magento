@@ -1,0 +1,47 @@
+<!--@subject {{var subject}}@-->
+
+{{template config_path="design/email/header_template"}}
+
+<p class="greeting">Hello {{var owner_name}},</p>
+<p>
+New Testimonial is submitted By {{var client_name}}	</br>
+Below mention the detail about Testimonial:
+</p>
+
+<table>
+	<tr>
+		<td>Client Name:</td>
+        <td>{{var client_name}}</td>
+    </tr>
+	<tr>
+		<td>Client Email:</td>
+        <td>{{var data.email}}</td>
+    </tr>
+	<tr>
+		<td>Testimonial Content:</td>
+        <td>{{var data.testimonial}}</td>
+    </tr>
+	{{depend data.company}}
+	<tr>
+		<td>Company:</td>
+        <td>{{var data.company}}</td>
+    </tr>
+	{{/depend}}
+	{{depend data.website}}
+	<tr>
+		<td>Client Website:</td>
+        <td>{{var data.website}}</td>
+    </tr>
+	{{/depend}}
+	{{depend data.rating}}
+	<tr>
+		<td>Ratings:</td>
+        <td>{{var data.rating}}</td>
+    </tr>
+	{{/depend}}
+	</table>
+
+
+	
+{{template config_path="design/email/footer_template"}}
+

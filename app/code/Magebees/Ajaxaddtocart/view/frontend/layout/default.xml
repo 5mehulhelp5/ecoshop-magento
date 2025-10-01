@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">     
+   <body>
+   <referenceContainer name="before.body.end">
+            <block class="Magebees\Ajaxaddtocart\Block\Popup" name="magebees.ajaxaddtocart.script">
+            <action method="manageScriptTemplate" /> 
+            </block>
+            <block class="Magebees\Ajaxaddtocart\Block\Popup" name="magebees.ajaxaddtocart.loader" ifconfig='ajaxaddtocart/setting/enable'>
+            <action method="manageLoader" /> 
+            </block>
+        </referenceContainer>
+       <referenceContainer name="sidebar.additional">
+            <block class="Magento\Sales\Block\Reorder\Sidebar" name="sale.reorder.sidebar" as="reorder" template="Magebees_Ajaxaddtocart::reorder/sidebar.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

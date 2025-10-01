@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "64f618f94e408166a00df27310d6818f",
+    "content-hash": "7e62af73e2c25270905bc71f7aaf917c",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -21536,6 +21536,111 @@
                 }
             ],
             "time": "2025-06-13T08:35:04+00:00"
+        },
+        {
+            "name": "swissup/breeze",
+            "version": "2.25.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/swissup/breeze/swissup-breeze-2.25.0.0.zip",
+                "shasum": "8982351d2edf5d9c4493088dbde8486bf2e732b2"
+            },
+            "require": {
+                "swissup/module-breeze": "^2.15.0",
+                "swissup/module-breeze-integrations": "^1.3.2"
+            },
+            "type": "metapackage",
+            "license": [
+                "MIT"
+            ],
+            "description": "Performant Magento frontend"
+        },
+        {
+            "name": "swissup/module-breeze",
+            "version": "2.25.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/swissup/module-breeze/swissup-module-breeze-2.25.0.0.zip",
+                "shasum": "3e039b532a99fdd84fdb9b3af03307f075572934"
+            },
+            "require": {
+                "swissup/module-rtl": "^1.3.4"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Swissup\\Breeze\\": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Performant Magento Frontend"
+        },
+        {
+            "name": "swissup/module-breeze-integrations",
+            "version": "1.3.5",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/swissup/module-breeze-integrations/swissup-module-breeze-integrations-1.3.5.0.zip",
+                "shasum": "cd60e8e6965b561445bbb386dfefa6d2451f7891"
+            },
+            "require": {
+                "swissup/module-breeze": "^2.12.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Swissup\\BreezeIntegrations\\": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Third-party modules integrations with Breeze Frontend"
+        },
+        {
+            "name": "swissup/module-rtl",
+            "version": "1.3.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/swissup/module-rtl.git",
+                "reference": "abb632fd7b21c395a5c734c3dbefe92584bbac50"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/swissup/module-rtl/zipball/abb632fd7b21c395a5c734c3dbefe92584bbac50",
+                "reference": "abb632fd7b21c395a5c734c3dbefe92584bbac50",
+                "shasum": ""
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Swissup\\Rtl\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Magento2 RTL detection",
+            "keywords": [
+                "rtl"
+            ],
+            "support": {
+                "issues": "https://github.com/swissup/module-rtl/issues",
+                "source": "https://github.com/swissup/module-rtl/tree/1.3.10"
+            },
+            "time": "2025-04-09T11:49:55+00:00"
         },
         {
             "name": "symfony/config",

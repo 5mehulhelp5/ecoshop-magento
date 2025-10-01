@@ -1,0 +1,69 @@
+<?php
+$scopeConfig = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Framework\App\Config\ScopeConfigInterface::class);
+$catNavPos = $scopeConfig->getValue('layerednavigation/category_filter/nav_block_pos', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+$priceNavPos = $scopeConfig->getValue('layerednavigation/price_filter/nav_block_pos', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+$ratingNavPos = $scopeConfig->getValue('layerednavigation/rating_filter/nav_block_pos', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+$stockNavPos = $scopeConfig->getValue('layerednavigation/stock_filter/nav_block_pos', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+?>
+
+<?php if (in_array($catNavPos, [1, 2]) || in_array($priceNavPos, [1, 2]) || in_array($ratingNavPos, [1, 2]) || in_array($stockNavPos, [1, 2])) 
+{ ?>
+
+<span id="magebees_navigation_top_before"></span>
+<div class="block filter" id="layered-filter-block-top" ></div>
+<span id="magebees_navigation_top_after"></span>
+
+
+<script type="text/javascript" data-rocketjavascript="false">
+document.addEventListener("DOMContentLoaded", function () {
+require(['jquery','Magebees_Layerednavigation/js/magebees-layer'], function ($,layeredNav) 
+{	
+	function loadTopContent() 
+	{
+		const url = new URL(window.location.href);
+		const params = new URLSearchParams(url.search);
+		params.set('top_layerednavigation', '1');
+		const newUrl = `${url.origin}${url.pathname}?${params.toString()}`;
+
+		fetch(newUrl)
+			.then(response => response.text())
+			.then(html => {						
+				const parser = new DOMParser();
+				const doc = parser.parseFromString(html, 'text/html');
+				var layeredNavHtml = doc.querySelector('.block.filter');
+				if (layeredNavHtml) {
+					let htmlContent = layeredNavHtml.outerHTML.replace(/&amp;/g, '&');
+					htmlContent = htmlContent.replace(/\b(top_layerednavigation=1)(&|$)/g, '').replace(/\?&/, '?');
+					htmlContent = htmlContent.replace(/[\?&]$/, '');
+					htmlContent = htmlContent.replaceAll('&top_layerednavigation=1', '');
+					
+					<?php if($catNavPos == 2 || $priceNavPos == 2 || $ratingNavPos == 2 || $stockNavPos == 2){ ?>
+					htmlContent = htmlContent.replace(/\b(left_layerednavigation=1)(&|$)/g, '').replace(/\?&/, '?');
+					htmlContent = htmlContent.replace(/[\?&]$/, '');
+					htmlContent = htmlContent.replaceAll('&left_layerednavigation=1', '');
+					htmlContent = htmlContent.replaceAll('?left_layerednavigation=1', '');
+					<?php } ?>				
+					var topfilltercontainer = document.getElementById('layered-filter-block-top');
+						topfilltercontainer.innerHTML = htmlContent;
+					
+					topfilltercontainer.querySelectorAll("script").forEach(script => {
+					  let newScript = document.createElement("script");
+					  newScript.textContent = script.textContent;
+					  document.body.appendChild(newScript);
+					});
+					
+					$("#layered-filter-block-top").trigger('contentUpdated');
+				}
+			});
+	}
+	if (document.readyState !== 'loading') 
+	{
+		loadTopContent();
+	} else {
+		document.addEventListener('DOMContentLoaded', function () {
+			loadTopContent();
+		});
+	}
+});});
+</script>
+<?php } ?>

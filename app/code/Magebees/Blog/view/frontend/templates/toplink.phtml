@@ -1,0 +1,7 @@
+<?php if($block->isEnable()):?>
+<li class="blog-link">
+    <a href="<?php  echo $block->getHref(); ?>" >
+        <?php echo $block->escapeHtml($block->getLabel()); ?>
+    </a>
+</li>
+<?php endif;?>

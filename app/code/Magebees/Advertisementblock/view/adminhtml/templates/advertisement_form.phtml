@@ -1,0 +1,662 @@
+<?php 
+$edit_data=$block->getEditFormData();
+if(isset($edit_data['advertisement_id'])){
+	$advertisement_id=$edit_data['advertisement_id'];
+	$edit_image_info=$block->getEditFieldInfo($advertisement_id);
+	//print_r($edit_image_info);die;
+}
+$helper=$this->helper('\Magebees\Advertisementblock\Helper\Data');
+$effect_arr=$helper->getEffectArr();	
+$text_position_arr=$helper->getTextPositionArr();	
+$img_dir=$helper->getImageMediaDir();
+$field_arr=$helper->getNumberOfBlock();
+$count_arr=count($field_arr);
+?>
+<!-------------------------Start Static Form Field Form Advertisement Block---------------------------------->
+
+	<div class="entry-edit form-inline">
+    <fieldset class="fieldset admin__fieldset " id="page_base_fieldset">
+                    <legend class="admin__legend legend">
+                <span>Advertisement Block Detail</span>
+            </legend><br>
+		<div class="messages"> </div>
+		
+		<?php if(isset($edit_data['advertisement_id'])){?>
+		 <input id="page_advertisement_id" name="advertisement_id" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-hidden-advertisement-id" value="<?php echo $edit_data['advertisement_id'];?>" type="hidden">  
+		<?php } ?>
+        <div class="admin__field field field-block_name  required _required" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-block-name">
+            <label class="label admin__field-label" for="page_block_name" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-block-name-label"><span>Advertisement Block Name</span></label>
+            <div class="admin__field-control control">
+                <input id="page_block_name" name="block_name" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-block-name" value="<?php if(isset($edit_data['block_name'])){echo $edit_data['block_name'];}?>" title="Advertisement Block Name" class=" input-text admin__control-text required-entry _required" type="text">
+			</div>
+        </div>  
+		<div class="admin__field field field-status " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-status">
+            <label class="label admin__field-label" for="page_status" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-status-label"><span>Status</span></label>
+            <div class="admin__field-control control">
+                <select id="page_status" name="status" title="Status" class=" select admin__control-select" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-status">
+				<?php $options = array('Disabled','Enabled');
+				foreach( $options as $key=>$option )
+				{    
+					?>
+					<option value='<?php echo $key; ?>' 
+					<?php
+					if(isset($edit_data['status']) )
+					{
+						$status=$edit_data['status'];
+						if($key==$status)
+							{							
+								echo "selected='selected'";
+							}
+						
+					}						
+					?> >
+					<?php echo $option; ?>
+					</option>
+					<?php
+				}?>					
+				</select>
+            </div>
+        </div>		
+        <div class="admin__field field field-pattern  with-addon required _required" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-pattern">
+            <label class="label admin__field-label" for="page_pattern" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-pattern-label"><span>Pattern</span></label>
+            <div class="admin__field-control control">
+                <div class="admin__field">
+				<select id="page_pattern" name="pattern" title="Pattern" onchange="changePattern(this.value)" class=" required-entry _required select admin__control-select" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-pattern">
+					<?php for($i=1;$i<=$count_arr;$i++)
+					{?>
+						<option value="<?php echo $i;?>" <?php if(isset($edit_data['pattern']) ){
+							$pattern_value=$edit_data['pattern'];
+							if($i==$pattern_value){
+								?>selected='selected'<?php
+								}
+								}
+								else if($i==1){
+									?>  selected='selected'
+								<?php } ?>>Pattern <?php echo $i;?></option>
+					<?php }?>
+					
+					
+				</select>
+		<?php if(isset($edit_data['pattern']))
+		{
+			$pattern=$edit_data['pattern'];			
+			$no_of_field=$field_arr[$pattern];
+			$img_name=$pattern.'.jpg';
+		
+		}
+		else{
+			$no_of_field=1;
+			$img_name=$no_of_field.'.jpg';
+		}
+			
+			$selected_img_url=$this->getViewFileUrl('Magebees_Advertisementblock::images/'.$img_name);
+			
+		
+		?>		
+				</div>       
+			</div>
+        </div>
+		
+		<label class="addafter" for="page_pattern">
+				<small id="pattern_type"><img src='<?php echo $selected_img_url;?>' title='selected_img'/></small>
+										 
+		</label>
+		
+<!-------------------------End Static Form Field Form Advertisement Block---------------------------------->
+		
+<!-------------------------Start Dynamic Form Field Form Advertisement Block---------------------------------->
+    <div id="repeated_field">
+	<?php for($i=0;$i<$no_of_field;$i++)
+	{?>
+	<fieldset class="fieldset admin__fieldset " id="page_base_fieldset">
+    	<style type="text/css">
+        .image-list { background:#f8f8f8; border-bottom:1px solid #e3e3e3; border-top:1px solid #e3e3e3; padding:1.5rem; position:relative; }
+		.image-list:before, .image-list:after { content:''; clear:both; display:block; }
+		.image-list .legend { display:block; }
+		.image-list .expand_image { font-size:16px; padding:6px 10px; display:inline-block; cursor:pointer; position:absolute; left:50%; margin-top:-5px; text-transform:uppercase; }
+        </style>
+    	<div class="image-list">
+            <legend class="admin__legend legend">
+                <span>Image <?php echo $i+1;?></span>
+				<span class='expand_image action-default scalable action-secondary' id='expand_<?php echo $i+1;?>' onclick="expandImage(this,<?php echo $i+1;?>)"><?php if(isset($edit_image_info[$i]['filename']) && $edit_image_info[$i]['filename']!=""){?>+ Edit Image<?php } else{?>+ Add Image<?php }?></span>
+            </legend>
+        </div>
+	</fieldset>	
+	<div class="image_data" id="image_data_<?php echo $i+1;?>" style="display:none;">
+		
+<!-------------------------Start Add Field Display Text Mode ---------------------------------->
+		<div class="admin__field field field-display_text_mode " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-display_text_mode">
+            <label class="label admin__field-label" for="page_display_text_mode" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-display-text-mode-label"><span>Display Text Mode</span></label>
+            <div class="admin__field-control control">
+                <select id="page_display_text_mode" name="display_text_mode_<?php echo $i+1;?>" title="Display Text Mode" class=" select admin__control-select" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-display-text-mode">
+				<?php $options = array('On Mouse Hover','On Page Load');
+				foreach( $options as $key=>$option )
+				{    
+					?>
+					<option value='<?php echo $key; ?>' 
+					<?php
+					if(isset($edit_image_info[$i]['display_text_mode']) )
+					{
+						$display_text_mode=$edit_image_info[$i]['display_text_mode'];
+						if($key==$display_text_mode)
+							{
+								echo "selected='selected'";
+							}
+						
+					}						
+					?> >
+					<?php echo $option; ?>
+					</option>
+					<?php
+				}?>					
+				</select>
+            </div>
+        </div>  
+<!-------------------------End Add Field Display Text Mode ---------------------------------->
+		
+<!-------------------------Start Add Field Show Image ---------------------------------->		
+		<div class="admin__field field field-show_image " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-show-image">
+            <label class="label admin__field-label" for="page_show_image" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-show-image-label"><span>Show Image</span></label>
+            <div class="admin__field-control control">
+                <select id="page_show_image" name="show_image_<?php echo $i+1;?>" title="Show Image" class=" select admin__control-select" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-show-image" onchange="changeShowImage(this.value,<?php echo $i+1;?>)" >
+				<?php $options = array('No','Yes');
+				foreach( $options as $key=>$option )
+				{    
+					?>
+					<option value='<?php echo $key; ?>' 
+					<?php
+					if(isset($edit_image_info[$i]['show_image']) )
+					{
+						$show_image=$edit_image_info[$i]['show_image'];
+						if($key==$show_image)
+							{
+								echo "selected='selected'";
+							}
+						
+					}						
+					?> >
+					<?php echo $option; ?>
+					</option>
+					<?php
+				}?>					
+				</select>
+            </div>
+        </div>    
+<!-------------------------End Add Field Show Image ---------------------------------->		
+		<div class="admin__field field field-bg_color " id="bg_color_element_<?php echo $i+1;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-bg-color" <?php if((isset($edit_image_info[$i]['bg_color']))&&($edit_image_info[$i]['show_image']=="1")){?>style="display:none;"<?php } else {?>style="display:block;"<?php } ?>>
+            <label class="label admin__field-label" for="page_bgcolor" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-bgcolor-label"><span>Background Color</span></label>
+            <div class="admin__field-control control">
+                <input id="bg_color_<?php echo $i+1;?>" name="bg_color_<?php echo $i+1;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-bg-color" value="<?php if(isset($edit_image_info[$i]['bg_color'])){echo $edit_image_info[$i]['bg_color'];}?>" title="Background Color" class="input-text admin__control-text ignore-validate" type="text" >                           
+			</div>
+        </div>  
+		<script>
+		
+		require([
+		'jquery',
+		'jquery/colorpicker/js/colorpicker',
+		], function ($) {
+			'use strict';
+			//console.log("required the colorpicker. Be free!");
+			var i="<?php echo $i+1;?>";
+			var value="<?php if((isset($edit_image_info[$i]['bg_color']))&&($edit_image_info[$i]['bg_color']!='')){ echo $edit_image_info[$i]['bg_color'];}?>";
+			 
+			var $el = $("#bg_color_"+i); 
+			if(value)
+			{
+			$el.css("backgroundColor",value);
+			}
+			$el.ColorPicker({	
+				color: value,
+				onChange: function (hsb, hex, rgb) {					
+					$el.css("backgroundColor", "#" + hex).val("#" + hex);
+				}
+			});		
+		});
+		
+		</script>	
+		
+<!-------------------------Start Add Field Show Heading Text ---------------------------------->		
+        <div class="admin__field field field-show_hover_heading_text " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-show-hover-heading-text">
+            <label class="label admin__field-label" for="page_show_hover_heading_text" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-show-hover-heading-text-label"><span>Show Heading Text</span></label>
+            <div class="admin__field-control control">
+                <select id="page_show_hover_heading_text" name="show_hover_heading_text_<?php echo $i+1;?>" title="Show Heading Text" class=" select admin__control-select" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-show-hover-heading-text" onchange="changeHeading(this.value,<?php echo $i+1;?>)" >
+				<?php $options = array('No','Yes');
+				foreach( $options as $key=>$option )
+				{    
+					?>
+					<option value='<?php echo $key; ?>' 
+					<?php
+					if(isset($edit_image_info[$i]['show_hover_heading_text']) )
+					{
+						$show_hover_heading_text=$edit_image_info[$i]['show_hover_heading_text'];
+						if($key==$show_hover_heading_text)
+							{
+								echo "selected='selected'";
+							}
+						
+					}						
+					?> >
+					<?php echo $option; ?>
+					</option>
+					<?php
+				}?>					
+				</select>
+            </div>
+        </div> 
+<!-------------------------End Add Field Show Heading Text ---------------------------------->	
+		
+<!-------------------------Start Add Field Heading Text,color,font---------------------------------->				
+        <div class="admin__field field field-hover_heading_text " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-hover-heading-text" id="hover_heading_text_<?php echo $i+1;?>" <?php if((isset($edit_image_info[$i]['hover_heading_text']))&&($edit_image_info[$i]['show_hover_heading_text']=="1")){?>style="display:block;"<?php } else {?>style="display:none;"<?php } ?>>
+            <label class="label admin__field-label" for="page_hover_heading_text" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-hover-heading-text-label"><span>Heading Text</span></label>
+            <div class="admin__field-control control">
+                <input id="page_hover_heading_text" name="hover_heading_text_<?php echo $i+1;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-hover-heading-text" value="<?php if(isset($edit_image_info[$i]['hover_heading_text'])){echo $edit_image_info[$i]['hover_heading_text'];}?>" title="Heading Text" class="input-text admin__control-text ignore-validate"   type="text">                           
+			</div>
+        </div>   
+		
+		 <div class="admin__field field field-heading_text_size " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-heading_text_size" id="heading_text_size_<?php echo $i+1;?>" <?php if((isset($edit_image_info[$i]['heading_text_size']))&&($edit_image_info[$i]['show_hover_heading_text']=="1")){?>style="display:block;"<?php } else {?>style="display:none;"<?php } ?>>
+            <label class="label admin__field-label" for="page_heading_text_size" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-heading_text_size-label"><span>Heading Text Font Size </span></label>
+            <div class="admin__field-control control">
+                <input id="page_heading_text_size" name="heading_text_size_<?php echo $i+1;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-heading_text_size" value="<?php if(isset($edit_image_info[$i]['heading_text_size'])){echo $edit_image_info[$i]['heading_text_size'];}?>" title="Heading Text Font Size" class="input-text admin__control-text ignore-validate"   type="text">                           
+			</div>
+        </div>  
+		
+		
+		<div class="admin__field field field-heading_text_color " id="heading_text_color_element_<?php echo $i+1;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-heading_text_color" <?php if((isset($edit_image_info[$i]['heading_text_color']))&&($edit_image_info[$i]['show_hover_heading_text']=="1")){?>style="display:block;"<?php } else {?>style="display:none;"<?php } ?>>
+            <label class="label admin__field-label" for="page_heading_text_color" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-heading_text_color-label"><span>Heading Text Color</span></label>
+            <div class="admin__field-control control">
+                <input id="heading_text_color_<?php echo $i+1;?>" name="heading_text_color_<?php echo $i+1;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-heading_text_color" value="<?php if(isset($edit_image_info[$i]['heading_text_color'])){echo $edit_image_info[$i]['heading_text_color'];}?>" title="Heading Text Color" class="input-text admin__control-text ignore-validate" type="text" >                           
+			</div>
+        </div>  
+		<script>
+		require([
+		'jquery',
+		'jquery/colorpicker/js/colorpicker',
+		], function ($) {
+			'use strict';
+			console.log("required the colorpicker. Be free!");
+			var i="<?php echo $i+1;?>";
+			var value="<?php if((isset($edit_image_info[$i]['heading_text_color']))&&($edit_image_info[$i]['heading_text_color']!='')){ echo $edit_image_info[$i]['heading_text_color'];}?>";
+			 
+			var $el = $("#heading_text_color_"+i); 
+			if(value)
+			{
+			$el.css("backgroundColor",value);
+			}
+			$el.ColorPicker({	
+				color: value,
+				onChange: function (hsb, hex, rgb) {					
+					$el.css("backgroundColor", "#" + hex).val("#" + hex);
+				}
+			});		
+		});
+		
+		
+		
+		</script>	
+		
+<!-------------------------End Add Field Heading Text ---------------------------------->	
+		
+<!-------------------------Start Add Field Show Short Text ---------------------------------->					
+        <div class="admin__field field field-show_hover_short_text " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-show-hover-short-text">
+            <label class="label admin__field-label" for="page_show_hover_short_text" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-show-hover-short-text-label"><span>Show Short Text</span></label>
+            <div class="admin__field-control control">
+                <select id="page_show_hover_short_text" name="show_hover_short_text_<?php echo $i+1;?>" title="Show Short Text" class=" select admin__control-select" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-show-hover-short-text" onchange="changeSortText(this.value,<?php echo $i+1;?>)">
+				<?php $options = array('No','Yes');
+				foreach( $options as $key=>$option )
+				{    
+					?>
+					<option value='<?php echo $key; ?>' 
+					<?php
+					if(isset($edit_image_info[$i]['show_hover_short_text']) )
+					{
+						$show_hover_short_text=$edit_image_info[$i]['show_hover_short_text'];
+						if($key==$show_hover_short_text)
+							{
+								echo "selected='selected'";
+							}
+						
+					}						
+					?> >
+					<?php echo $option; ?>
+					</option>
+					<?php
+				}?>		
+					
+				</select>
+            </div>
+        </div>  
+<!-------------------------End Add Field Show Short Text ---------------------------------->	
+		
+	<!-------------------------Start Add Field Short Text,color,size ---------------------------------->		
+        <div class="admin__field field field-hover_short_text " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-hover-short-text" <?php if((isset($edit_image_info[$i]['hover_short_text']))&&($edit_image_info[$i]['show_hover_short_text']=="1")){?>style="display:block;"<?php } else {?>style="display:none;"<?php } ?> id="hover_short_text_<?php echo $i+1;?>" >
+            <label class="label admin__field-label" for="page_hover_short_text" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-hover-short-text-label"><span>Short Text</span></label>
+            <div class="admin__field-control control">
+               <input id="page_hover_short_text" name="hover_short_text_<?php echo $i+1;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-hover-short-text" value="<?php if(isset($edit_image_info[$i]['hover_short_text'])){echo $edit_image_info[$i]['hover_short_text'];}?>" title="Short Text" class="input-text admin__control-text ignore-validate"   type="text">                           
+			</div>
+        </div>  
+		
+		
+		 <div class="admin__field field field-short_text_size " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-short_text_size" id="short_text_size_<?php echo $i+1;?>" <?php if((isset($edit_image_info[$i]['short_text_size']))&&($edit_image_info[$i]['show_hover_short_text']=="1")){?>style="display:block;"<?php } else {?>style="display:none;"<?php } ?>>
+            <label class="label admin__field-label" for="page_short_text_size" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-short_text_size-label"><span>Short Text Font Size </span></label>
+            <div class="admin__field-control control">
+                <input id="page_short_text_size" name="short_text_size_<?php echo $i+1;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-short_text_size" value="<?php if(isset($edit_image_info[$i]['short_text_size'])){echo $edit_image_info[$i]['short_text_size'];}?>" title="Short Text Font Size" class="input-text admin__control-text ignore-validate"   type="text">                           
+			</div>
+        </div>  
+		
+		
+		<div class="admin__field field field-short_text_color " id="short_text_color_element_<?php echo $i+1;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-short_text_color" <?php if((isset($edit_image_info[$i]['short_text_color']))&&($edit_image_info[$i]['show_hover_short_text']=="1")){?>style="display:block;"<?php } else {?>style="display:none;"<?php } ?>>
+            <label class="label admin__field-label" for="page_short_text_color" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-short_text_color-label"><span>Short Text Color</span></label>
+            <div class="admin__field-control control">
+                <input id="short_text_color_<?php echo $i+1;?>" name="short_text_color_<?php echo $i+1;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-short_text_color" value="<?php if(isset($edit_image_info[$i]['short_text_color'])){echo $edit_image_info[$i]['short_text_color'];}?>" title="Short Text Color" class="input-text admin__control-text ignore-validate" type="text" >                           
+			</div>
+        </div>  
+		<script>
+		
+		
+		
+		require([
+		'jquery',
+		'jquery/colorpicker/js/colorpicker',
+		], function ($) {
+			'use strict';
+			console.log("required the colorpicker. Be free!");
+			var i="<?php echo $i+1;?>";
+			var value="<?php if((isset($edit_image_info[$i]['short_text_color']))&&($edit_image_info[$i]['short_text_color']!='')){ echo $edit_image_info[$i]['short_text_color'];}?>";
+			 
+			var $el = $("#short_text_color_"+i); 
+			if(value)
+			{
+			$el.css("backgroundColor",value);
+			}
+			$el.ColorPicker({	
+				color: value,
+				onChange: function (hsb, hex, rgb) {					
+					$el.css("backgroundColor", "#" + hex).val("#" + hex);
+				}
+			});		
+		});
+		
+		</script>	
+		
+		
+ <!-------------------------End Add Field Short Text ---------------------------------->	 
+		
+<!-------------------------Start Add Field Show Button Text ---------------------------------->	
+    
+        <div class="admin__field field field-show_button_text " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-show-button-text">
+            <label class="label admin__field-label" for="page_show_button_text" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-show-button-text-label"><span>Show Button Text</span></label>
+            <div class="admin__field-control control">
+                <select id="page_show_button_text" name="show_button_text_<?php echo $i+1;?>" title="Show Button Text" class=" select admin__control-select" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-show-button-text" onchange="changeButtonText(this.value,<?php echo $i+1;?>)">
+				<?php $options = array('No','Yes');
+				foreach( $options as $key=>$option )
+				{    
+					?>
+					<option value='<?php echo $key; ?>' 
+					<?php
+					if(isset($edit_image_info[$i]['show_button_text']) )
+					{
+						$show_button_text=$edit_image_info[$i]['show_button_text'];
+						if($key==$show_button_text)
+							{
+								echo "selected='selected'";
+							}						
+					}						
+					?> >
+					<?php echo $option; ?>
+					</option>
+					<?php
+				}?>		
+					
+				</select>
+            </div>
+        </div>
+ <!-------------------------End Add Field Show Button Text ---------------------------------->	 
+		
+		<!-------------------------Start Add Field Button Text,color,bgcolor,font---------------------------->	
+        <div class="admin__field field field-button_text " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-button-text" <?php if((isset($edit_image_info[$i]['button_text']))&&($edit_image_info[$i]['show_button_text']=="1")){?>style="display:block;"<?php } else {?>style="display:none;"<?php } ?> id="button_text_<?php echo $i+1;?>">
+            <label class="label admin__field-label" for="page_button_text" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-button-text-label"><span>Button Text</span></label>
+            <div class="admin__field-control control">
+                <input id="page_button_text" name="button_text_<?php echo $i+1;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-button-text" value="<?php if(isset($edit_image_info[$i]['button_text'])){echo $edit_image_info[$i]['button_text'];}?>" title="Button Text" class="input-text admin__control-text ignore-validate" type="text">                           
+			</div>
+        </div>
+		
+		<div class="admin__field field field-button_text_size " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-button_text_size" id="button_text_size_<?php echo $i+1;?>" <?php if((isset($edit_image_info[$i]['button_text_size']))&&($edit_image_info[$i]['show_button_text']=="1")){?>style="display:block;"<?php } else {?>style="display:none;"<?php } ?>>
+            <label class="label admin__field-label" for="page_button_text_size" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-button_text_size-label"><span>Button Text Font Size </span></label>
+            <div class="admin__field-control control">
+                <input id="page_button_text_size" name="button_text_size_<?php echo $i+1;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-button_text_size" value="<?php if(isset($edit_image_info[$i]['button_text_size'])){echo $edit_image_info[$i]['button_text_size'];}?>" title="Button Text Font Size" class="input-text admin__control-text ignore-validate"   type="text">                           
+			</div>
+        </div>  
+		
+		
+		<div class="admin__field field field-button_text_color " id="button_text_color_element_<?php echo $i+1;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-button_text_color" <?php if((isset($edit_image_info[$i]['button_text_color']))&&($edit_image_info[$i]['show_button_text']=="1")){?>style="display:block;"<?php } else {?>style="display:none;"<?php } ?>>
+            <label class="label admin__field-label" for="page_button_text_color" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-button_text_color-label"><span>Button Text Color</span></label>
+            <div class="admin__field-control control">
+                <input id="button_text_color_<?php echo $i+1;?>" name="button_text_color_<?php echo $i+1;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-button_text_color" value="<?php if(isset($edit_image_info[$i]['button_text_color'])){echo $edit_image_info[$i]['button_text_color'];}?>" title="Button Text Color" class="input-text admin__control-text ignore-validate" type="text" >                           
+			</div>
+        </div>  
+		<script>
+		require(["jquery","jquery/colorpicker/js/colorpicker"], function ($) {
+			var value="<?php if((isset($edit_image_info[$i]['button_text_color']))&&($edit_image_info[$i]['button_text_color']!='')){ echo $edit_image_info[$i]['button_text_color'];}?>";
+			var i="<?php echo $i+1;?>";
+			var $el = $("#button_text_color_"+i); 
+			if(value)
+			{
+			$el.css("backgroundColor",value);
+			}
+			$el.ColorPicker({	
+				color: value,
+				onChange: function (hsb, hex, rgb) {					
+					$el.css("backgroundColor", "#" + hex).val("#" + hex);
+				}
+			});
+        });
+		</script>	
+		
+		
+		<div class="admin__field field field-button_bg_color " id="button_bg_color_element_<?php echo $i+1;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-button_bg_color" <?php if((isset($edit_image_info[$i]['button_bg_color']))&&($edit_image_info[$i]['show_button_text']=="1")){?>style="display:block;"<?php } else {?>style="display:none;"<?php } ?>>
+            <label class="label admin__field-label" for="page_button_bg_color" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-button_bg_color-label"><span>Button Background Color</span></label>
+            <div class="admin__field-control control">
+                <input id="button_bg_color_<?php echo $i+1;?>" name="button_bg_color_<?php echo $i+1;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-button_bg_color" value="<?php if(isset($edit_image_info[$i]['button_bg_color'])){echo $edit_image_info[$i]['button_bg_color'];}?>" title="Button Background Color" class="input-text admin__control-text ignore-validate" type="text" >                           
+			</div>
+        </div>  
+		<script>
+		require(["jquery","jquery/colorpicker/js/colorpicker"], function ($) {
+			var value="<?php if((isset($edit_image_info[$i]['button_bg_color']))&&($edit_image_info[$i]['button_bg_color']!='')){ echo $edit_image_info[$i]['button_bg_color'];}?>";
+			var i="<?php echo $i+1;?>";
+			var $el = $("#button_bg_color_"+i);  
+			if(value)
+			{
+			$el.css("backgroundColor",value);
+			}
+			$el.ColorPicker({	
+				color: value,
+				onChange: function (hsb, hex, rgb) {					
+					$el.css("backgroundColor", "#" + hex).val("#" + hex);
+				}
+			});
+        });
+		</script>
+        <div class="admin__field field field-image_effect required _required" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-image-effect">
+            <label class="label admin__field-label" for="page_image_effect" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-image-effect-label"><span>Effect</span></label>
+            <div class="admin__field-control control">            
+			   <select id="page_image_effect" name="image_effect_<?php echo $i+1;?>" title="Effect" class="select admin__control-select" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-image-effect" >
+				<?php 
+				foreach( $effect_arr as $key=>$option )
+				{    
+					?>
+					<option value='<?php echo $key; ?>' 
+					<?php
+					$string = preg_replace('/\s+/', '', $option);
+					$val=strtolower($string);
+					if(isset($edit_image_info[$i]['image_effect']) )
+					{
+						$image_effect=$edit_image_info[$i]['image_effect'];
+						if($val==$image_effect)
+							{
+								echo "selected='selected'";
+							}						
+					}						
+					?> >
+					<?php echo $option; ?>
+					</option>
+					<?php
+				}?>		
+					
+				</select>
+			
+			</div>
+        </div>
+	<!-------------------------End Add Field Button Text ---------------------------------->	
+		
+<!-------------------------Start Add Field Text Position ---------------------------------->		
+		 <div class="admin__field field field-text_position" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-text_position">
+            <label class="label admin__field-label" for="page_text_position" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-text-position-label"><span>Text Position</span></label>
+            <div class="admin__field-control control">            
+			   <select id="page_text_position" name="text_position_<?php echo $i+1;?>" title="Text Position" class="select admin__control-select" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-text-position" >
+				<?php 
+				foreach( $text_position_arr as $key=>$option )
+				{    
+					?>
+					<option value='<?php echo $key; ?>' 
+					<?php
+					if(isset($edit_image_info[$i]['text_position']) )
+					{
+						$text_position=$edit_image_info[$i]['text_position'];
+						if($key==$text_position)
+							{
+								echo "selected='selected'";
+							}						
+					}						
+					?> >
+					<?php echo $option; ?>
+					</option>
+					<?php
+				}?>						
+				</select>			
+			</div>
+        </div>	
+   <!-------------------------End Add Field Text Position ----------------------------------> 
+		
+	<!-------------------------Start Add Field Url---------------------------------->
+        <div id="external_url_<?php echo $i+1;?>" class="admin__field field field-external_url " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-external-url">
+            <label class="label admin__field-label" for="page_external_url" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-external-url-label"><span>Enable External URL</span></label>
+            <div class="admin__field-control control">
+                <select id="page_external_url" name="external_url_<?php echo $i+1;?>" title="Enable External URL" class=" select admin__control-select" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-select-external-url" onchange="toggleValidateClass(this.value,<?php echo $i+1;?>)">
+					<?php $options = array('No','Yes');
+				foreach( $options as $key=>$option )
+				{    
+					?>
+					<option value='<?php echo $key; ?>' 
+					<?php
+					if(isset($edit_image_info[$i]['external_url']) )
+					{
+						$external_url=$edit_image_info[$i]['external_url'];
+						if($key==$external_url)
+							{
+								echo "selected='selected'";
+							}
+						
+					}						
+					?> >
+					<?php echo $option; ?>
+					</option>
+					<?php
+				}?>					
+				</select>
+            </div>
+        </div>
+		<div id="advertise_url_<?php echo $i+1;?>" class="admin__field field field-advertise_url " data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-form-field-advertise-url">
+            <label class="label admin__field-label" for="page_advertise_url" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-advertise-url-label"><span>Url</span></label>
+            <div class="admin__field-control control">
+                <input id="page_advertise_url_<?php echo $i+1;?>" name="advertise_url_<?php echo $i+1;?>" data-ui-id="advertisementblock-edit-tab-advertisementinfo-fieldset-element-text-advertise-url" value="<?php if(isset($edit_image_info[$i]['advertise_url'])){echo $edit_image_info[$i]['advertise_url'];}?>" title="Url" class="input-text admin__control-text" type="text">     
+			</div>
+        </div>
+	<!-------------------------End Add Field Url---------------------------------->	
+		
+		<!-------------------------Start Add Field Image---------------------------------->
+		<div class="admin__field field field-filename " data-ui-id="layerednavigation-brands-edit-tab-brandinfo-fieldset-element-form-field-filename">
+            <label class="label admin__field-label" for="main_filename" data-ui-id="layerednavigation-brands-edit-tab-brandinfo-fieldset-element-file-filename-label"><span>Image</span></label>
+            <div class="admin__field-control control">
+                <input id="main_filename" name="filename_<?php echo $i+1;?>" data-ui-id="layerednavigation-brands-edit-tab-brandinfo-fieldset-element-file-filename" value="<?php if(isset($edit_image_info[$i]['filename'])){echo $edit_image_info[$i]['filename'];}?>" title="Image" class="input-file" type="file"> 
+				<?php if(isset($edit_image_info[$i]['filename']) && $edit_image_info[$i]['filename']!=""){
+					$url=$img_dir.$edit_image_info[$i]['filename'];?>
+							
+							<input type="checkbox" name="img_del_<?php echo $i+1;?>"/>Delete Image
+			  	  		<img src="<?php echo $url;?>" height="50px" width="50px" style="vertical-align:middle;">  	  		
+			  	  	<?php	             
+						}?>	
+			</div>
+        </div>
+		<!-------------------------End Add Field Image---------------------------------->
+        </div>
+	<?php } ?>
+		
+	</div>
+    </fieldset>
+    
+</div>
+
+<!-------------------------End Dynamic Form Field Form Advertisement Block---------------------------------->
+<script type="text/javascript">	
+var ajax_url = "<?php echo $this->getUrl('*/*/changePattern');  ?>";
+var loading_img="<img src='<?php echo $this->getViewFileUrl('images/loader-2.gif'); ?>' title=loading_img />";	
+  function changePattern(selectElement){
+	  
+	$('pattern_type').update(loading_img);
+	$('repeated_field').update();
+	jQuery.ajax({
+	url: ajax_url,
+	type: 'GET',
+	data:	{ pattern: selectElement },
+	success: function(data) {
+		$('pattern_type').update(data.pattern);			
+		$('repeated_field').update(data.form_content);
+		
+	}
+	}); 
+	}
+
+function changeShowImage(val,index){						
+		$('bg_color_element_'+index).toggle();		
+	}
+	function changeHeading(val,index){						
+		$('hover_heading_text_'+index).toggle();		
+		$('heading_text_size_'+index).toggle();		
+		$('heading_text_color_element_'+index).toggle();		
+	}
+	function changeSortText(val,index){						
+		$('hover_short_text_'+index).toggle();		
+		$('short_text_size_'+index).toggle();		
+		$('short_text_color_element_'+index).toggle();		
+	}
+	function changeButtonText(val,index){						
+		$('button_text_'+index).toggle();		
+		$('button_text_size_'+index).toggle();		
+		$('button_text_color_element_'+index).toggle();		
+		$('button_bg_color_element_'+index).toggle();		
+	}
+	
+	function toggleValidateClass(val,index){		
+		//$('advertise_url_'+index).toggle();
+	//	console.log(index);
+		//console.log($('page_advertise_url_1'));
+		//$('page_advertise_url_'+index).toggleClass('validate-url');
+		console.log(val);
+		//if (jQuery("#page_advertise_url_1").hasClass('validate-url')) {
+		if(val == 1){
+			jQuery("#page_advertise_url_"+index).addClass("validate-url");
+		}else{
+			console.log(val);
+			jQuery("#page_advertise_url_"+index).removeClass("validate-url");
+		}
+		//}
+		
+	}
+	
+	function expandImage(element,index){
+		$('image_data_'+index).toggle();
+	}	
+	
+
+
+</script>

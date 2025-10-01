@@ -1,0 +1,252 @@
+<?php
+	$is_enable = $block->getEnabled();
+	$title = $block->getTitle();
+	$sub_title = $block->getSubtitle();
+	
+	if ($block->getUniqueCode()) {
+		$advertisement_id = $block->getIdByUniqueCode($block->getUniqueCode());
+	} else {
+		$advertisement_id = $block->getAdvertisement();
+	}
+	$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+	$base_url = $poco_helper->getUrl();
+	
+	$spacing_class = '';
+	$custom_class = $this->getData('wd_custom_class')?$this->getData('wd_custom_class'):'';
+	$spacing_class .= $this->getData('wd_spacing')?'sections-spacing ':'';
+	$spacing_class .= $this->getData('wd_bottom_spacing')?'section-bottom-spacing':'';
+	$adv_style             = $block->getStyle();
+	$helper                = $this->helper('\Magebees\Advertisementblock\Helper\Data');
+	$resizes_img_dir       = $helper->getResizedImgDir();
+	$img_dir               = $helper->getImageMediaDir();
+	$advertise_info        = $helper->getAdvertiseBlockdetail($advertisement_id);
+	$pattern_div_arr       = array(
+		'13',
+		'14',
+		'16',
+		'17',
+		'21',
+		'26',
+		'28',
+		'32'
+	);
+	$three_col_pattern_arr = array(
+		'13',
+		'14',
+		'21',
+		'26',
+		'28'
+	);
+	$two_col_pattern_arr   = array(
+		'16',
+		'17',
+		'32'
+	);
+	$img_divarr            = $helper->getPatternImgDiv();
+	$parentDivarr          = $helper->getColumnParentDiv();
+	$patternImageSize      = $helper->getPatternImageSize();
+?>
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); ?>
+<?php $home_style = $poco_helper->getHome('home_style',$poco_helper->getStoreId()); 
+	  $storeId = $poco_helper->getStoreId();
+	  $animation = $poco_helper->getThemeLayout('animation',$storeId)? true:false; 
+	  $animation_class = $animation?"wow animate__fadeIn":" ";
+ ?>
+<?php if (isset($advertise_info[0])): ?>
+<?php
+	$adv_data = $advertise_info[0];
+    $status   = $adv_data['status'];
+    $pattern  = $adv_data['pattern'];
+    ?>
+    
+    <?php if ($is_enable): ?>
+		<?php if ($status): ?>
+		<div class="advertisement-block <?php echo $custom_class; ?> <?php echo $spacing_class ?> <?php echo $animation_class ?>" <?php if($animation): ?> data-wow-delay="0.2s" <?php endif;?>>
+			<div class="container">
+				<div class="maagebees-add">
+					<?php if($title): ?>
+						<div class="section-title">
+							<h2 class="title"><?php echo $title; ?></h2>
+							<?php if($sub_title): ?>
+								<div class="sort-details">
+									<p class="sort-detail"><?php echo $sub_title; ?></p>
+								</div>
+							<?php endif; ?>
+						</div>
+					<?php endif; ?>
+
+					<div class="mageb-patn-inner">
+						<?php
+						if ($pattern == 1) {
+							if ($adv_style == 1) {
+								$style_class = 'full-width';
+							} else {
+								$style_class = 'boxed';
+							}
+						}
+						?>
+						<?php
+						if (in_array($pattern, $pattern_div_arr)): ?>
+							<?php if (in_array($pattern, $three_col_pattern_arr)) {
+								$col_class = 'mageb-three-col clearfix';
+							} else if (in_array($pattern, $two_col_pattern_arr)) {
+								$col_class = 'mageb-two-col clearfix';
+							} ?>
+							<div class = "mageb-patterns mageb-<?php echo 'pattern'.$pattern;?> <?php echo $col_class; ?>"> 
+						<?php else: ?>
+							<ul class = "mageb-patterns mageb-<?php echo 'pattern'.$pattern;?> <?php if($pattern==1) { echo $style_class; } ?> ">
+						<?php endif; ?>
+						<?php $advertise_img_detail=$helper->getAdvertiseImagedetail($advertisement_id); ?>
+						<?php if($advertise_img_detail): ?>
+							<?php $i=-1; ?>
+							<?php foreach($advertise_img_detail as $advertise): ?>
+								<?php
+									$i++;
+									$show_hover_heading_text = $advertise['show_hover_heading_text'];
+									$hover_heading_text = $advertise['hover_heading_text'];
+									$show_hover_short_text = $advertise['show_hover_short_text'];
+									$hover_short_text = $advertise['hover_short_text'];
+									$show_button_text = $advertise['show_button_text'];
+									$button_text = $advertise['button_text'];
+									$text_position = $advertise['text_position'];
+	
+									$display_text_mode = $advertise['display_text_mode']; // on hover or page load
+	
+									$show_image = $advertise['show_image'];
+									$bg_color = $advertise['bg_color'];
+	
+									$heading_text_color = $advertise['heading_text_color'];
+									$heading_text_size = $advertise['heading_text_size'];
+	
+									$short_text_color = $advertise['short_text_color'];
+									$short_text_size = $advertise['short_text_size'];
+	
+									$button_text_color = $advertise['button_text_color'];
+									$button_bg_color = $advertise['button_bg_color'];
+									$button_text_size = $advertise['button_text_size'];
+								?>
+								<?php if($pattern==1): ?>
+									<?php
+									if ($adv_style == 1) {
+										$img_path = $img_dir.$advertise['filename'];
+									} else {
+										$img_path = $resizes_img_dir.$advertise['filename'];
+									}
+									?>
+								<?php else: ?>
+									 <?php $img_path=$resizes_img_dir.$advertise['filename']; ?>
+								<?php endif; ?>
+								<?php 
+									$height = $advertise['image_height']; 
+									$width = $advertise['image_width']; 
+								
+									$effect=$advertise['image_effect'];
+									$img_url=$advertise['advertise_url'];
+									if($advertise['exteranl_url'] == 1){
+											$img_url=$advertise['advertise_url'];
+										}else{
+											//$img_url = $this->getStoreObj()->getStore()->getUrl($advertise['advertise_url']) ;
+											$img_url = $base_url.$advertise['advertise_url'];
+										}
+								?>
+								<?php if (in_array($pattern,$pattern_div_arr)): ?>
+									<?php 
+									$img_classes=$img_divarr[$pattern];
+									$parent_div=$parentDivarr[$pattern];
+									for ($j = 0; $j < 3; $j++) {
+										if (isset($parent_div[$j])) {
+											$add_div_arr = explode(",", $parent_div[$j][0]);
+											if ($i == current($add_div_arr)) { ?>
+												<div class = "<?php echo $parent_div[$j][1];?>" >
+									<?php
+											}
+										}
+									}
+									?>
+									<div class="mageb-pattern-list mageb-<?php echo $effect;?>  <?php echo $img_classes[$i];?>">
+								<?php else: ?>
+									<li class="mageb-pattern-list mageb-<?php echo $effect;?>">
+								<?php endif; ?>
+								<?php /*if(($pattern==28)&&(($i==3)||($i==4)))
+									{
+										$loop=2;
+									}
+									else
+									{
+										$loop=1;
+									}*/?>
+								<?php //for ($k=0; $k < $loop; $k++) {
+									?>
+										<div class="mageb-effects">
+											<?php if(($show_image) &&($advertise['filename'])): ?>
+                                                  <a href="<?php echo $img_url;?>" <?php if($advertise['exteranl_url'] == 1): ?>
+												  target="_blank"
+												  <?php endif; ?>>
+												 <img src="<?php echo $img_path;?>" alt="<?php echo __(strip_tags($hover_heading_text)); ?> " title="<?php echo __(strip_tags($hover_heading_text)); ?> " <?php if($width): ?> width="<?php echo $width;?>" <?php endif; ?> <?php if($height):?> height="<?php echo $height;?>" <?php endif;?> />
+                                                </a>											
+                                            <?php else: ?>
+                                            <?php if(!$bg_color) {
+                                                    $bg_color='#ffffff';
+                                                }
+                                                $img_dimension=$patternImageSize[$pattern][$i];
+                                                $img_dim_arr=explode('*',$img_dimension);
+                                            ?>
+											<div style="background-color:<?php echo $bg_color; ?>;height:<?php echo $img_dim_arr[1].'px'; ?>;width:<?php echo $img_dim_arr[0].'px'; ?>" title="<?php echo __(html_entity_decode($hover_heading_text)); ?> "></div>
+											<?php endif; ?>
+										</div>
+										<?php //} ?>
+										<?php if(($show_hover_heading_text)||($show_hover_short_text)||($show_button_text)): ?>
+											<div class="mageb-caption <?php echo($text_position=='0'? "v-top" : ($text_position=='1'? "v-middle" : ($text_position=='2' ? "v-bottom" : "unknown")));?>
+											<?php echo($display_text_mode=='0'? "mageb-on-hover-caption" : ($display_text_mode=='1'? "mageb-on-load-caption" : "unknown"));?>">
+												<div class="mageb-full-caption">
+													<div class="text">
+														<?php if(($hover_heading_text)): ?>
+															<div class="h4"><a href="<?php echo $img_url;?>" style="color:<?php echo $heading_text_color; ?>; font-size:<?php echo $heading_text_size; ?>"><?php echo __(html_entity_decode($hover_heading_text)); ?></a></div>
+														<?php endif; ?>
+														<?php if((($show_hover_short_text))&&($hover_short_text)): ?>
+															<div class="sort-text" style="color:<?php echo $short_text_color; ?>; font-size:<?php echo $short_text_size; ?>">
+															<?php echo __(html_entity_decode($hover_short_text)); ?>
+															
+															</div>
+														<?php endif; ?>
+													</div>
+													<?php if(($show_button_text)&&($button_text)): ?>
+														<a title="<?php echo __(html_entity_decode($button_text)); ?>" href="<?php echo $img_url;?>" class="button" <?php if($advertise['exteranl_url'] == 1): ?>
+												  target="_blank"
+												  <?php endif; ?>
+															style="color:<?php echo $button_text_color; ?>; font-size:<?php echo $button_text_size; ?>; background-color:<?php echo $button_bg_color; ?>;">
+															<span class="b-text"><?php echo __(html_entity_decode($button_text)); ?></span>
+															<span class="b-icon"><svg xmlns="https://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
+														</a>
+													<?php endif; ?>
+												</div>
+											</div>
+										<?php endif; ?>
+								<?php if (in_array($pattern,$pattern_div_arr)): ?>
+									</div>
+									<?php $parent_div=$parentDivarr[$pattern];
+									for($j=0;$j<3;$j++){
+										if(isset($parent_div[$j])){
+											$add_div_arr=explode(",",$parent_div[$j][0]);	
+											if($i==end($add_div_arr)){ ?>
+										</div>
+											<?php }
+										} 
+									} ?>
+								<?php else: ?>
+									</li>
+								<?php endif; ?>
+							<?php endforeach; ?>
+								</ul>
+						<?php if (in_array($pattern,$pattern_div_arr)): ?>
+                            </div>
+                        <?php else: ?>
+						<?php endif; ?>
+						<?php endif; ?>
+					</div>
+				</div>
+			</div>
+		</div>
+		<?php endif; ?>
+    <?php endif; ?>
+<?php endif; ?>

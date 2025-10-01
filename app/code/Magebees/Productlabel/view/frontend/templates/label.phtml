@@ -1,0 +1,11 @@
+<?php echo $this->helper('Magebees\Productlabel\Helper\Data')->getLabel($block->getProduct(),'product'); ?>
+<script type="text/javascript">
+    require(['jquery', 'mage/gallery/gallery'], function($, gallery){
+        $('[data-gallery-role=gallery-placeholder]').on('gallery:loaded', function () {
+		   $(this).on('fotorama:ready', function(){
+				$('.fotorama__stage').append($(".prodLabel"));
+				$(".prodLabel").show();
+		   });
+        });
+    });
+</script>

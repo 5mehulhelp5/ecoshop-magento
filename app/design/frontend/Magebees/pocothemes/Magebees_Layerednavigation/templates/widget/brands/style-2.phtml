@@ -1,0 +1,197 @@
+<?php 
+$helper = $this->helper('Magebees\Layerednavigation\Helper\Data');
+$brandConfig=$helper->getBrandConfigData();
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $poco_helper->getStoreId();
+$brand_url_key=$brandConfig['brand_url_key'];
+$bg_color = $this->getData('wd_bgcolor');
+if($this->getData('wd_bgimage')){
+	$bg_image_url = $poco_helper->getMediaUrl().$this->getData('wd_bgimage');
+	$bg_image = 'background-image: url('.$bg_image_url.'); background-repeat: no-repeat; background-size: cover;';
+}else{
+	$bg_image = '';
+}
+$spacing_class = '';
+$spacing_class .= $this->getData('wd_spacing')?'sections-spacing ':'';
+$spacing_class .= $this->getData('wd_bottom_spacing') ? 'section-bottom-spacing' : '';
+$show_heading = $this->getData('wd_show_heading');
+$heading = $this->getData('wd_heading');
+$short_desc = $this->getData('wd_short_desc');
+$rtl = $poco_helper->getThemeLayout('rtl',$storeId)?true:false;
+$animation = $poco_helper->getThemeLayout('animation',$storeId)? true:false; 
+$animation_class = $animation?"wow animate__fadeIn":" ";
+$featured_brand = $this->getData('wd_featured_brand');
+$brand_attribute_code = $this->getData('brand_attribute_code');
+?>
+<?php  	
+	$random_number = $helper->generateRandomId(); 
+?>
+<?php 
+
+$_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$brands = $_objectManager->get('\Magebees\Layerednavigation\Model\Brands');
+if($featured_brand):
+$branddata = $brands->getCollection()->addFieldToFilter('status', '1')
+        ->addFieldToFilter('featuredbrand', '1')->addFieldToFilter('brand_code', $this->getBrandAttributeCode())->setOrder('sort_order', 'asc');
+
+else:
+$branddata = $brands->getCollection()->addFieldToFilter('status', '1')
+        ->addFieldToFilter('featuredbrand', '0')->addFieldToFilter('brand_code', $this->getBrandAttributeCode())->setOrder('sort_order', 'asc');
+endif;
+
+$block->_collection = $branddata->getData(); 
+
+if(count($block->_collection) > 0 )  {  ?>
+<?php 
+$slider_id = "brand-slider-style2-".$random_number;
+$swiper_data_init = array();
+			$swiper_data_init['slider_id'] = $slider_id;
+			$swiper_data_init['slidesPerView'] = 6;
+			$swiper_data_init['slidesPerGroup'] = 3;
+			$swiper_data_init['loopAddBlankSlides'] = false;
+			$swiper_data_init['spaceBetween'] = 30;
+			$swiper_data_init['a11y'] = false;
+			$swiper_data_init['grabCursor'] = true;
+			$swiper_data_init['lazy']['loadPrevNext'] = true;
+			$swiper_data_init['lazy']['loadPrevNextAmount'] = 6;
+			$swiper_data_init['loop'] = true;
+		$swiper_data_init['navigation']['nextEl'] = "#brandslider-".$random_number."-next";
+		$swiper_data_init['navigation']['prevEl'] = "#brandslider-".$random_number."-prev";	
+		$swiper_data_init['breakpoints']['0']['slidesPerView'] = 1;
+		$swiper_data_init['breakpoints']['0']['spaceBetween'] = 00;
+		$swiper_data_init['breakpoints']['0']['slidesPerGroup'] = 1;
+		$swiper_data_init['breakpoints']['320']['slidesPerView'] = 1;
+		$swiper_data_init['breakpoints']['320']['spaceBetween'] = 00;
+		$swiper_data_init['breakpoints']['320']['slidesPerGroup'] = 1;
+		$swiper_data_init['breakpoints']['480']['slidesPerView'] = 2;
+		$swiper_data_init['breakpoints']['480']['spaceBetween'] = 20;
+		$swiper_data_init['breakpoints']['480']['slidesPerGroup'] = 1;
+		$swiper_data_init['breakpoints']['640']['slidesPerView'] = 3;
+		$swiper_data_init['breakpoints']['640']['spaceBetween'] = 20;
+		$swiper_data_init['breakpoints']['640']['slidesPerGroup'] = 3;
+		$swiper_data_init['breakpoints']['768']['slidesPerView'] = 4;
+		$swiper_data_init['breakpoints']['768']['spaceBetween'] = 30;
+		$swiper_data_init['breakpoints']['768']['slidesPerGroup'] = 3;
+		$swiper_data_init['breakpoints']['999']['slidesPerView'] = 5;
+		$swiper_data_init['breakpoints']['999']['spaceBetween'] = 30;
+		$swiper_data_init['breakpoints']['999']['slidesPerGroup'] = 3;
+		$swiper_data_init['breakpoints']['1200']['slidesPerView'] = 6;
+		$swiper_data_init['breakpoints']['1200']['spaceBetween'] = 30;
+		$swiper_data_init['breakpoints']['1200']['slidesPerGroup'] = 3;
+		?>
+<?php if(($bg_image)||($bg_color)): ?>
+<style type="text/css">
+	<?php echo '#brand-slider-style2-'.$random_number. " { ".$bg_image."; background-color: ".$bg_color."; } " ?>
+</style>
+
+ <?php endif;?>
+ 
+<div id="<?php echo $slider_id; ?>" class="brandlogoSliderLayer style2 <?php echo $spacing_class ?> <?php echo $animation_class ?>" style="<?php echo $bg_image ?> background-color: <?php echo $bg_color ?>;" <?php if($animation): ?> data-wow-delay="0.2s" <?php endif;?>>	
+	<div class="container">
+	<?php if(($show_heading)||($short_desc)): ?>
+		<div class="section-title">
+			<?php if(($show_heading)&&($heading)): ?>
+				<h2 class="title"><?php echo __($this->getData('wd_heading')) ;?></h2>
+			<?php endif; ?>
+			<?php if($short_desc): ?>
+			<div class="sort-details">
+				<p class="sort-detail"><?php echo $short_desc ?></p>
+			</div>
+			<?php endif; ?>
+		</div>
+	<?php endif; ?>
+	<div class="logoSliderLayer swiper swiper-container" data-swiper='<?php echo json_encode($swiper_data_init);?>' id="brandSlider-style1-<?php echo $random_number; ?>" <?php if($rtl): ?> dir="rtl" <?php endif;?>>
+		<div class="swiper-wrapper">
+			<?php 
+				foreach($this->_collection as $branddetail){ 
+				$option_id = $branddetail['option_id'];
+				//$productCollection = $collection->addFieldToFilter(array('attribute'=>$brand_attribute_code,'eq'=>$option_id));
+				$productCounter = null;				
+				if($brand_attribute_code):
+				 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+				/** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $productCollection */
+				$productCollectionFactory = $objectManager->create('Magento\Catalog\Model\ResourceModel\Product\CollectionFactory');
+				$productStatus = $objectManager->create('Magento\Catalog\Model\Product\Attribute\Source\Status');
+				$productVisibility = $objectManager->create('Magento\Catalog\Model\Product\Visibility');
+   
+				/** Apply filters here */
+				$productCollection = $productCollectionFactory->create();
+				$productCollection->addAttributeToSelect($brand_attribute_code);
+				$productCollection->addAttributeToFilter('status', ['in' => $productStatus->getVisibleStatusIds()]);
+				$productCollection->setVisibility($productVisibility->getVisibleInSiteIds());
+				$productCollection = $productCollection->addFieldToFilter($brand_attribute_code, ['eq' => $option_id]);
+				$productCounter = $productCollection->load()->getSize();
+				 endif;
+				 
+		
+				//print_r($branddetail);
+				if(isset($branddetail) && $branddetail['filename'] != null){
+					$img = $helper->getThumbnailsImage($branddetail['filename']);
+					$link_url = $helper->getBaseUrl();
+					if($brand_url_key)
+					{
+						$link_url .= $brand_url_key.'/';
+					}						
+					$link_url .= $branddetail['seo_url'];						
+					$brand_desc = $branddetail['brand_description'];							
+				?>
+				<div class="swiper-slide">
+					<div class="logo_outer">
+						<div class="logo_in">
+							<a href="<?php echo $link_url; ?>" <?php if($branddetail['brand_description'] != "") { ?> class="tooltipcws tooltip" <?php } ?>  target="_blank">
+								<img class="swiper-lazy" loading="lazy"  src="<?php echo $img; ?>" alt="<?php echo $branddetail['brand_name']; ?>" title="<?php echo $brand_desc;?>" width="200" height="125"/>
+								<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+								<span class="btn_link">
+									<span class="hvr"><?php echo __('Shop Now');?></span>
+									<span class="dflt"><?php echo __('View Catalog');?> <b class="cntr">(<?php echo __($productCounter);?>)</b></span>
+								</span>
+							</a>
+						</div>
+					</div>					
+				</div>
+				<?php }
+					else if(isset($branddetail)){					
+						$link_url = $helper->getBaseUrl();
+						if($brand_url_key)
+						{
+							$link_url .= $brand_url_key.'/';
+						}						
+						$link_url .= $branddetail['seo_url'];
+						$brand_desc = $branddetail['brand_description'];
+				?>
+				<div class="swiper-slide">
+					<a href="<?php echo $link_url; ?>" <?php if($branddetail['brand_description'] != "") { ?> class="tooltipcws tooltip" <?php } ?> title="<?php echo $brand_desc;?>">
+						<?php echo $branddetail['brand_name'];?>
+						<span class="btn_link">
+							<span class="hvr"><?php echo __('Shop Now');?></span>
+							<span class="dflt"><?php echo __('View Catalog');?> <b class="cntr">(<?php echo __($productCounter);?>)</b></span>
+						</span>                    
+					</a>
+				</div>
+			<?php } } ?>
+		</div>
+		<div id="<?php echo "brandslider-".$random_number ."-next";?>" class="swiper-button-next"></div>
+      	<div id="<?php echo "brandslider-".$random_number ."-prev";?>" class="swiper-button-prev"></div>
+	
+		</div>
+		
+	</div>
+	</div>
+
+<!--/* Tooltip Script */-->
+
+<script type="text/javascript">
+	var tooltips = document.querySelectorAll('.tooltip');
+	window.onmousemove = function (e) {
+		var x = (e.clientX + 20) + 'px',
+			y = (e.clientY + 20) + 'px';
+		for (var i = 0; i < tooltips.length; i++) {
+			tooltips[i].style.top = y;
+			tooltips[i].style.left = x;
+		}
+	};
+</script>
+<!--/* Tooltip Script */-->
+
+<?php } ?>
+

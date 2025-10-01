@@ -1,0 +1,177 @@
+<?php
+    $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+    $_helper = $this->helper('Magento\Catalog\Helper\Output');
+    $_imagehelper = $this->helper('Magento\Catalog\Helper\Image');
+	$storeId = $poco_helper->getStoreId();
+	
+    $sticky_header = $poco_helper->getHeader('sticky_menu',$storeId);
+	$font_icons = $poco_helper->getConfigGroup('font_icons',$storeId);
+	$add_cart_icon = array_key_exists('add_cart', $font_icons) ? $font_icons['add_cart'] : false;
+	
+    $_product = $block->getProduct();
+    if($poco_helper->getProductDetail('sticky_cart',$storeId)) :
+        $productImage = $_imagehelper->init($_product, 'category_page_grid')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(80);
+        $productImageUrl = $productImage->getUrl();
+?>
+<div class="sticky-product hide">
+    <div class="container">
+		<a href="javascript:void(0);" id="sticky_close" class="sticky-close-i"><svg xmlns="https://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></a>
+        <div class="sticky-image">
+           <img class="product-image-photo default_image" src="<?php echo $productImageUrl; ?>" alt="<?php echo $productImage->getLabel(); ?>" width="80" height="80"/>
+        </div>
+        <div class="sticky-detail">
+            <div class="product-name-area">
+                <h2 class="product-name"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?></h2>
+            </div>
+			<div class="product-sku-area">
+                <div class="product-sku">
+					<strong><?php echo __('Sku:'); ?></strong> <?php echo $_helper->productAttribute($_product, $_product->getSku(), 'sku'); ?>
+                </div>
+            </div>
+			<div class="product-stock-area">
+			<?php if ($_product->isAvailable()) :?>
+					<div class="stock available"><span><?= $block->escapeHtml(__('In stock')) ?></span></div>
+                    <?php else :?>
+                    <div class="stock unavailable"><span><?= $block->escapeHtml(__('Sold Out')) ?></span></div>
+			<?php endif; ?>
+			</div>
+            <div class="sticky-price">
+                <div class="product-info-price"></div>
+            </div>
+		</div>
+		
+		<div class="sticky-cart-btn">
+			<?php $buttonTitle = __('Add to Cart'); ?>
+				<?php if ($_product->isSaleable()): ?>
+					<div class="actions">
+						<button type="button"
+							title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>"
+							class="action primary tocart" id="product-addtocart-button-clone">
+							<?php if($add_cart_icon):?><span class="icon"><?php echo $add_cart_icon;?></span><?php endif;?>
+						<span><?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
+					</button>
+					<?php echo $block->getChildHtml('', true) ?>
+				</div>
+			<?php endif; ?>
+		</div>
+    </div>
+</div>
+<?php if ($_product->isAvailable()): ?>
+<script>
+
+require([
+    'jquery',
+	"mage/cookies"
+], function ($) {
+	var p_scrolled = false;
+	var previousScroll = 0;
+	var c_scrolled = false;
+	var sticky_style = <?php echo $sticky_header; ?>;
+	var cookieLifetime = <?php /* @escapeNotVerified */ echo $this->helper('Magento\Cookie\Helper\Cookie')->getCookieRestrictionLifetime()?>;
+		var cookieName = "add_to_cart_sticky";
+		var cookieExpires = new Date(new Date().getTime() + cookieLifetime * 1000);
+    $(window).scroll(function(){
+		var currentScroll = $(window).scrollTop();
+		//var topOfOthDiv = $(".box-tocart").position().top + $(".box-tocart").outerHeight(true);
+		var topOfOthDiv = $(".box-tocart").offset().top;
+		if(currentScroll > topOfOthDiv && $(document).height() - $(window).height()){
+        	if(!p_scrolled){
+				p_scrolled = true;
+				$('.product-info-main .product-info-price > *').each(function(){
+					$(this).parent().append($(this).clone());
+					var tmp = $(this).detach();
+					$('.sticky-product .product-info-price').append(tmp);
+					$('.sticky-product .product-info-price > .product-reviews-summary .reviews-actions').hide();
+				});
+				if (!$.mage.cookies.get(cookieName)) {
+					$(".sticky-product").removeClass("hide");
+            	}
+				
+				$("#product-addtocart-button").off("DOMSubtreeModified").on("DOMSubtreeModified",function(){
+					$("#product-addtocart-button-clone").html($(this).html());
+					$("#product-addtocart-button-clone").attr("class",$(this).attr("class"));
+				});
+			}
+			
+			
+			
+				if($('.page-header').hasClass('sticky-header')){
+					
+					var flag = false;
+					if(sticky_style == 2){
+						flag = true;
+					}
+					
+					if(currentScroll < previousScroll || flag) {
+						
+						var sticky_temp = $('.sticky-product-temp').length;
+						var pageHeaderHeight = $('.page-header').outerHeight();
+						var top_bar_height = $('.top-header').height();
+						
+						if(($('#notification_slider').length ) && ($("#notification_slider").is(":visible")))        // use this if you are using id to check
+						{
+							var notification_height = $('#notification_slider').height();
+							var topMenuHeight = pageHeaderHeight + notification_height;
+						}else{
+							var topMenuHeight = pageHeaderHeight;
+						}
+						/* Fix Minicart Scroll issue */
+						var topMenuHeight = pageHeaderHeight;
+						if(!sticky_temp){
+							$('.sticky-product').css("top",topMenuHeight);
+							$('.sticky-product').after('<div class="sticky-product-temp"></div>');
+							var after_menu = $(".sticky-product").detach();
+							$('.page-header').after(after_menu);
+						}
+						
+					}else{
+						var sticky_temp = $('.sticky-product-temp').length;
+						if(sticky_temp){
+							$('.sticky-product').removeAttr('style');
+							var top = $(".sticky-product").detach();
+							$('.sticky-product-temp').after(top);
+							$('.sticky-product-temp').remove();
+						}
+					}
+				}
+			
+			
+			
+			
+        }else if(currentScroll < topOfOthDiv && p_scrolled){ 
+			p_scrolled = false;
+            $('.product-info-main .product-info-price > *').remove();
+            $('.sticky-product .product-info-price > *').each(function(){
+                var tmp = $(this).detach();
+                $('.product-info-main .product-info-price').append(tmp);
+				$('.product-info-main .product-info-price > .product-reviews-summary .reviews-actions').show();
+            });
+            $(".sticky-product").addClass("hide");
+			
+			//for mobile view 
+			var sticky_temp = $('.sticky-product-temp').length;
+			if(sticky_temp){
+				$('.sticky-product').removeAttr('style');
+				var top = $(".sticky-product").detach();
+				$('.sticky-product-temp').after(top);
+				$('.sticky-product-temp').remove();
+			}
+			//for mobile view 
+        }
+		previousScroll = currentScroll;
+        
+    });
+    $("#product-addtocart-button-clone").click(function(){
+        $("#product-addtocart-button").trigger("click");
+    });
+	
+	$("#sticky_close").click(function(){
+		$(".sticky-product").addClass("hide");
+		$.mage.cookies.set(cookieName, <?php /* @escapeNotVerified */ echo $this->helper('Magento\Cookie\Helper\Cookie')->getAcceptedSaveCookiesWebsiteIds() ?>, {expires: cookieExpires});
+	});
+	
+});
+</script>
+<?php endif;?>
+
+<?php endif; ?>

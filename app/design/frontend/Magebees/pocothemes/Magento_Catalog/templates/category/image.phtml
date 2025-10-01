@@ -1,0 +1,49 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Category view template
+ *
+ * @var $block \Magento\Catalog\Block\Category\View
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+// phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
+// phpcs:disable Magento2.Security.LanguageConstruct.DirectOutput
+?>
+<?php
+    $_category = $block->getCurrentCategory();
+    $_imgHtml  = '';
+
+    if ($_imgUrl = $block->getImage()->getUrl($_category)) {
+        // Media directory base path
+        $mediaDirPath = BP . '/pub/media/catalog/category/';
+        $imageFileName = ltrim(str_replace('/media/catalog/category/', '', $_category->getImage()), '/');
+
+        $filePath = $mediaDirPath . $imageFileName; // Construct the full file path
+
+        // Check if the file exists and fetch dimensions
+        $dimensions = file_exists($filePath) ? getimagesize($filePath) : null;
+        $width = $dimensions[0] ?? null;
+        $height = $dimensions[1] ?? null;
+
+        $_imgHtml = '<div class="category-image"><img src="'
+            . $block->escapeUrl($_imgUrl)
+            . '" alt="'
+            . $block->escapeHtmlAttr($_category->getName())
+            . '" title="'
+            . $block->escapeHtmlAttr($_category->getName())
+            . '" class="image"'
+            . ($width && $height ? ' width="' . $width . '" height="' . $height . '"' : '')
+            . ' /></div>';
+
+        // Apply category-specific attributes to the image
+        $_imgHtml = $block->getOutput()->categoryAttribute($_category, $_imgHtml, 'image');
+
+        // Output the image HTML
+        /* @noEscape */ echo $_imgHtml;
+    }
+?>

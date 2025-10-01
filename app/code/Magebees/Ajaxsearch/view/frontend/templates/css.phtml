@@ -1,0 +1,12 @@
+<?php
+	$helper = $this->helper('Magebees\Ajaxsearch\Helper\Data');
+	$store_code = $helper->getStoreCode();
+	$dynamic_css = $block->getViewFileUrl('Magebees_Ajaxsearch::css/dynamic_search'.$store_code.'.css');
+
+if(!$helper->checkCssExist())
+{
+	$dynamic_css = $block->getViewFileUrl('Magebees_Ajaxsearch::css/dynamic_search.css');
+}
+	
+?>
+<link  rel="stylesheet" type="text/css"  media="all" href="<?php echo $dynamic_css;?>" />

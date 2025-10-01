@@ -1,0 +1,43 @@
+<?php 
+
+/*
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$cmsPage = $objectManager->get('\Magento\Cms\Model\Page');
+echo $content = $cmsPage->getContent();
+$filterManager = $objectManager->get('Magento\Cms\Model\Template\FilterProvider')->getPageFilter()->filter($content);
+echo $filterManager;*/
+
+	$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+	$store_code = $poco_helper->getStoreCode();
+	$storeId = $poco_helper->getStoreId();
+	//$css_file_name = "poco_config".$store_code.".css";
+	//$randon_number = rand();
+	//$config_href = $poco_helper->getMediaUrl().'pocothemes/'.$css_file_name."?=".$randon_number;
+	$generalConfig = $poco_helper->getConfigGroup('general',$storeId);
+	$developerConfig = $poco_helper->getConfigGroup('developer',$storeId);
+	
+	$google_font_element = array_key_exists('google_font_targets', $generalConfig) ? $generalConfig['google_font_targets'] : null;
+	$element_google_font_name = array_key_exists('element_google_font', $generalConfig) ? $generalConfig['element_google_font'] : null;
+	
+	//$custom_css = array_key_exists('custom_css', $developerConfig) ? $developerConfig['custom_css'] : null;
+	$custom_js = array_key_exists('custom_js', $developerConfig) ? $developerConfig['custom_js'] : null;
+	//echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setThemeCss($config_href)->setTemplate("Magento_Theme::html/css.phtml")->toHtml();
+?>
+<?php //if($custom_css): ?>	
+<!--CUSTOM CSS-->
+<!--<style>-->	<?php //echo $custom_css; ?>
+<!--</style>--><?php //endif;?>
+
+<?php if($custom_js): ?>	
+<!--CUSTOM JS-->
+<script><?php echo $custom_js; ?></script>
+<?php endif;?>
+<?php if($google_font_element != ''){?>
+	<style> 
+	<?php echo $google_font_element ?> {
+		font-family: <?php $namegooglefont_element = explode(":",(string)(str_replace("+", " ", $element_google_font_name)));
+			echo $namegooglefont_element[0];
+		?>;
+	}
+	</style>
+<?php } ?>

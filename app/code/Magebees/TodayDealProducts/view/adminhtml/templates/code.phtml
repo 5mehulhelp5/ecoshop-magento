@@ -1,0 +1,26 @@
+<div class="entry-edit">
+    <div class="entry-edit-head">
+		<h3 class="icon-head head-edit-form fieldset-legend"><?php echo 'Template Tag'; ?></h3>
+    </div>
+<textarea id="flexslider-template-tag" rows="3" cols="80" onclick="this.focus();this.select()" readonly="readonly">{{block class="Magebees\TodayDealProducts\Block\DealProducts" template="today_deal_products.phtml" today_deal_id="<?php echo $block->getTodayDealData(); ?>"}}</textarea>
+
+</div>
+<br><br>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h3 class="icon-head head-edit-form fieldset-legend"><?php echo 'XML Code'; ?></h3>
+    </div>
+<textarea id="flexslider-code" rows="7" cols="80" onclick="this.focus();this.select()" readonly="readonly"><block class="Magebees\TodayDealProducts\Block\DealProducts" name="today_deal<?php echo $block->getTodayDealData(); ?>" template="today_deal_products.phtml">
+    <arguments>
+        <argument name="today_deal_id" xsi:type="string"><?php echo $block->getTodayDealData(); ?></argument>
+    </arguments>
+</block></textarea>
+</div>
+<br><br>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h3 class="icon-head head-edit-form fieldset-legend"><?php echo 'Call Via Frontend Template File'; ?></h3>
+    </div>
+<textarea id="flexslider-template-tag" rows="3" cols="80" onclick="this.focus();this.select()" readonly="readonly"><?php echo '<?php echo  $this->getLayout()->createBlock("Magebees\TodayDealProducts\Block\DealProducts")->setTodayDealId('. $block->getTodayDealData().')->setTemplate("today_deal_products.phtml")->toHtml() ?>'; ?></textarea>
+</div>
+

@@ -1,0 +1,89 @@
+<?php use Magento\Framework\App\Action\Action; ?>
+<?php $_product = $block->getProduct(); 
+
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $poco_helper->getStoreId();
+$whishlist_icon = $block->getWishlistIcon(); 
+$compare_icon = $block->getCompareIcon(); 
+$add_cart_icon = $block->getAddCartIcon(); 
+$quick_view_icon = $block->getQuickviewIcon();
+?>
+<?php $display_timer = $this->getDisplayTimer()?1:0; ?>
+<?php if($display_timer): ?>
+<?php echo $this->getLayout()->createBlock('Magebees\TodayDealProducts\Block\DealTimerListingProducts')
+	->setProduct($_product)
+	->setTemplate('Magebees_TodayDealProducts::category_page_timer.phtml')->toHtml(); ?>
+<?php endif; ?>
+<div class="product-item-inner style3">
+	<?php if($block->getShowCart()): ?>
+		<?php if ($_product->isSaleable()): ?>
+			<div class="cart-btn icon-btn">
+				<?php if($block->getCurrentAction() == 'catalog_category_view' || $block->getCurrentAction() == 'catalogsearch_result_index' || $_product->getTypeId() == \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE): ?>
+					<?php $postParams = $block->getAddToCartPostParams($_product); ?>
+					<form data-role="tocart-form" action="<?php echo $postParams['action']; ?>" method="post" data-mage-init='{"validation":{}}'>
+						<input type="hidden" name="product" value="<?php echo $postParams['data']['product']; ?>">
+						<input type="hidden" name="<?php echo Action::PARAM_NAME_URL_ENCODED; ?>" value="<?php echo $postParams['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
+							<?php echo $block->getBlockHtml('formkey')?>
+						<button type="submit" title="<?= /* @escapeNotVerified */ __('Add to Cart') ?>" class="action tocart secondary">
+						<?php if($add_cart_icon): ?><span class="icon"><?php echo $add_cart_icon;?></span><?php endif;?>
+						<span class="text"><?= /* @escapeNotVerified */ __('Add to Cart') ?></span>
+						</button>
+					</form>
+				<?php else: ?>
+					<?php
+						$postDataHelper = $this->helper('Magento\Framework\Data\Helper\PostHelper');
+						$postData = $postDataHelper->getPostData($block->getAddToCartUrl($_product), ['product' => $_product->getEntityId()])
+					?>
+					<button class="action tocart secondary"
+							data-post='<?= /* @escapeNotVerified */ $postData ?>'
+							type="button" title="<?= /* @escapeNotVerified */ __('Add to Cart') ?>">
+							<?php if($add_cart_icon): ?><span class="icon"><?php echo $add_cart_icon;?></span><?php endif;?>
+							<span class="text"><?= /* @escapeNotVerified */ __('Add to Cart') ?></span>
+					</button>
+				<?php endif; ?>
+			</div>
+		<?php else: ?>
+			<div class="outstock-btn icon-btn">
+				<?php if ($_product->getIsSalable()): ?>
+					<div class="action stock available" title="<?php /* @escapeNotVerified */ echo __('In stock') ?>"><span class="status-icon"><?php /* @escapeNotVerified */ echo __('In stock') ?></span></div>
+				<?php else: ?>
+					<div class="action stock unavailable btn" title="<?php /* @escapeNotVerified */ echo __('Out of stock') ?>"><span class="status-icon"><?php /* @escapeNotVerified */ echo __('Out of stock') ?></span></div>
+				<?php endif; ?>
+			</div>
+		<?php endif; ?>
+	<?php endif; ?>
+
+	<div class="btn-horizontal d-flex align-item-center justify-content-center">
+		<?php if($block->getShowAjaxQuickView()): ?>
+		<div class="quick-view-btn icon-btn">
+        	<?php //echo $this->helper('Magebees\Ajaxquickview\Helper\Data')->addQuickViewButton($_product);  ?>
+			<?php 
+			 $productUrl = $this->helper('Magebees\Ajaxquickview\Helper\Data')->getQuickViewUrl($_product);
+			 $button_text = $poco_helper->getConfigValue('popupsetting','button_text','ajaxquickview',$storeId);
+			 $button_color = $poco_helper->getConfigValue('popupsetting','button_color','ajaxquickview',$storeId);
+			 $button_text_color = $poco_helper->getConfigValue('popupsetting','button_text_color','ajaxquickview',$storeId);
+			 ?>
+			 <button class='magebees_quickview' title='<?php echo __($button_text);?>' href='<?php echo $productUrl;?>' style='background-color:<?php echo $button_color;?>; color:<?php echo $button_text_color;?>'>
+				<?php echo $quick_view_icon;?>
+				<span class="visually-hidden"><?php echo __($button_text);?></span>
+			</button>
+    	</div>
+		<?php endif; ?>
+		<?php if($block->getShowWishlist()): ?>
+			<div class="btn-wishlist icon-btn">
+				<a href="#" class="action towishlist" title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>" aria-label="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+					data-post='<?php /* @escapeNotVerified */ echo $block->getAddToWishlistParams($_product); ?>' data-action="add-to-wishlist" role="button">
+					<?php echo $whishlist_icon;?>
+				</a>
+			</div>
+		<?php endif; ?>
+		<?php if($block->getShowCompare()): ?>
+			<div class="compare-btn icon-btn">
+				<?php $compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare'); ?>
+				<a href="#" class="action tocompare secondary" title="<?php echo $block->escapeHtml(__('Add to Compare')); ?>" aria-label="<?php echo $block->escapeHtml(__('Add to Compare')); ?>" data-post='<?php /* @escapeNotVerified */ echo $compareHelper->getPostDataParams($_product); ?>' role="button">
+				<?php echo $compare_icon;?> 
+				</a>
+			</div>
+		<?php endif; ?>
+	</div>
+</div>

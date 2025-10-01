@@ -1,0 +1,117 @@
+<script>
+require(['Magento_Ui/js/modal/confirm','prototype'], function(confirmation){
+
+var actionArr = ['advertisement_block','banner_slider','customer_testimonial','new_products','navigation_menu','product_label','today_deal','promotions_notification'];
+
+var url = '<?php echo $block->getAjaxUrl() ?>';
+//<![CDATA[
+    function importModule() {
+		confirmation({
+			title: 'Imoprt Data for Modules',
+			content: 'Import Sample Data for theme related modules. If already exist data for specific store then it will update your data. Do you really want to import sample data for modules?',
+			actions: {
+				confirm: function(){
+					var resultMessage = $('import_result_module');
+					params = {
+						module_name: actionArr[0],
+						//demo_version: document.getElementById('pocoinstall_install_demo_version').value,
+						current_store: ($('store_switcher'))?$('store_switcher').value:'',
+						current_website: ($('website_switcher'))?$('website_switcher').value:''
+					};
+				
+					var count = 0;
+					new Ajax.Request(url, {
+						method: "post",
+						parameters: params,
+						dataType   : 'json',
+						onSuccess: function(response) {
+							var validationMessage = document.getElementById("import_result_module");
+							var result = '<?php echo __('Error during Import Module Datas.') ?>';
+							try {
+								if (response.responseText.isJSON()) {
+									response = response.responseText.evalJSON();
+									result = response.message;
+								}
+								if (response.valid == 1) {
+									count++;
+									if(actionArr[count]!==undefined){
+										AjaxRequest(count);
+									}else{
+										validationMessage.removeClassName('hidden').addClassName('success').addClassName('message-success')
+										validationMessage.update(result);
+									}
+								} else {
+									validationMessage.removeClassName('hidden').addClassName('error').addClassName('message-error')
+									validationMessage.update(result);
+								}
+							} catch (e) {
+								validationMessage.removeClassName('hidden').addClassName('error').addClassName('message-error')
+								validationMessage.update(result);
+							}
+						}
+					});
+				},
+				cancel: function(){},
+				always: function(){}
+			}
+		});
+	}
+
+    window.importModule = importModule; 
+	
+	function AjaxRequest(count){
+		params = {
+			module_name: actionArr[count],
+			//demo_version: document.getElementById('pocoinstall_install_demo_version').value,
+			current_store: ($('store_switcher'))?$('store_switcher').value:'',
+			current_website: ($('website_switcher'))?$('website_switcher').value:''
+		};
+		
+		new Ajax.Request(url,{
+				method: "post",
+				parameters: params,
+				dataType   : 'json',
+				onSuccess: function(response){
+					var validationMessage = document.getElementById("import_result_module");
+					var result = '<?php echo __('Error during Import Module Datas.') ?>';
+					try {
+						if (response.responseText.isJSON()) {
+							response = response.responseText.evalJSON();
+							result = response.message;
+						}
+						if (response.valid == 1) {
+							count++;
+							if(actionArr[count]!==undefined){
+								AjaxRequest(count);
+							}else{
+								validationMessage.removeClassName('hidden').addClassName('success').addClassName('message-success')
+								validationMessage.update(result);
+							}
+						//validationMessage.removeClassName('hidden').addClassName('success').addClassName('message-success')
+						} else {
+							validationMessage.removeClassName('hidden').addClassName('error').addClassName('message-error')
+							validationMessage.update(result);
+						}
+					} catch (e) {
+						validationMessage.removeClassName('hidden').addClassName('error').addClassName('message-error')
+						validationMessage.update(result);
+					}
+    			}
+			});
+		}
+//]]>
+
+});
+</script>
+<style type="text/css">
+#import_result_module:before{
+    top: 20px;
+    margin: 0;
+}
+</style>
+<div class="actions actions-import-data">
+    <button onclick="javascript:importModule(); return false;" class="action-import-data" type="button" id="<?php echo $block->getHtmlId()?>">
+        <span><?php echo $block->escapeHtml($block->getButtonLabel()) ?></span>
+    </button>
+    <div id="import_result_module" class="message-validation hidden message"></div>
+</div>

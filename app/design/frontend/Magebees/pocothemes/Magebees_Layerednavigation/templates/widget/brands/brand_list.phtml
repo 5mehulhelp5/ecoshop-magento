@@ -1,0 +1,153 @@
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$loaderUrl = $poco_helper->getLoadingIcon();  ?>
+<div class="allBrandsLayer">
+	<div class="alphaBetsLayer">
+		<?php	
+			$helper = $this->helper('Magebees\Layerednavigation\Helper\Data'); 
+			$brandConfig=$helper->getBrandConfigData();
+			$brand_url_key=$brandConfig['brand_url_key'];
+			$collection =$block->_getallbrandCollection();
+			if($collection){?>
+				<?php
+					foreach($collection as $key => $allbrand){
+						$key_arr[]=$key;
+					}
+					$count=0;
+					$azRange = range('A', 'Z');
+					foreach ($azRange as $letter){
+						
+						if(in_array($letter,$key_arr)){ $count++;
+						 if($count==1):
+						 ?><button class="alpha" id="<?php echo trim($letter);?>" onload=showAlphabetresult('<?php echo trim($letter);?>') onclick=showAlphabetresult('<?php echo trim($letter);?>') value ="<?php echo trim($letter); ?>"><?php echo $letter ?></button><?php
+						 else:
+						 ?><button class="alpha" id="<?php echo trim($letter);?>" onclick=showAlphabetresult('<?php echo trim($letter);?>') value ="<?php echo trim($letter); ?>"><?php echo $letter ?></button><?php
+						 endif;
+						?>
+							
+						<?php } 
+				?>
+			
+		<?php } ?>
+	</div>
+	
+	<div class="resultInfo" id="resultInfo">
+		<img id="resultInfoLoadingImg"  class="resultInfoLoadingImg" loading="lazy" src="<?php echo $loaderUrl; ?>" width="90" height="90"/>
+		<div id="result"></div>			
+	</div>
+</div>
+<div class="allBrandsLayer">
+		<?php foreach($collection as $key => $allbrand){ ?>
+		<h4 class="letter"><?php echo $key ?></h4>
+		<ul class="logoList">
+			<?php $brandHTML=""; 
+			foreach($allbrand as $brand){
+				$img = $helper->getThumbnailsImage($brand['filename']);
+						$link_url = $helper->getBaseUrl();
+						if($brand_url_key)
+						{
+							$link_url .= $brand_url_key.'/';
+						}						
+						$link_url .= $brand['seo_url'];
+				
+				if(isset($img) && !empty($brand['filename'])){
+					
+						$brandHTML.='<li class="allbrand">';
+						$brand_desc = $brand['brand_description'];
+					
+					
+					if($brand['brand_description'] != "") {
+						$tooltipcws= 'class="tooltipcws tooltip"';
+					}else{
+						$tooltipcws= '';
+					}
+					$brand_desc = '';
+					if(isset($brand['brand_description']) != "" ){
+						$brand_desc= $brand['brand_description'];
+					}
+
+					if(isset($img) && !empty($brand['filename'])){
+						$brandHTML.='<a href="'.$link_url.'"  '.$tooltipcws.' >';
+						$brandHTML.='<img src="'.$img.'" title="'.$brand_desc.'"/>';						
+						$brandHTML.='</a>';
+					} else {
+						$brandHTML.='<a href="'.$link_url.'" ></a>';
+					}
+					$brandHTML.='</li>';
+				}	
+				else
+				{
+
+				$brandHTML.='<li class="allbrand">';
+				if(isset($brand['brand_description']))
+				{
+					$brand_desc=$brand['brand_description'];
+					$brandHTML.='<a href="'.$link_url.'" title="'.$brand_desc.'">';	
+				}
+				else{
+					$brandHTML.='<a href="'.$link_url.'" >';	
+				}
+				
+				$brandHTML.= $brand['brand_name'];
+				$brandHTML.='</a>';
+				$brandHTML.='</li>';
+									
+				}
+			?>
+			<?php } ?>
+			<?php echo $brandHTML; ?>
+			</ul>
+		<?php } ?>
+		</div>
+		
+
+	<script type="text/javascript">
+	requirejs(['jquery','domReady!'], function(jQuery){
+		jQuery('#resultInfoLoadingImg').css('display','none');
+
+		});
+		function showAlphabetresult(id) {
+		jQuery('#resultInfoLoadingImg').css('display','block');
+		//jQuery('.allBrandsLayer').css('display','none');
+		jQuery('.block-content').css('display','none');
+		var param = id;
+		jQuery.ajax({
+			url: "<?php echo $helper->getBaseUrl().'layerednavigation/brand/brandlistsearch' ?>",
+			type: "POST",
+			dataType: "json",
+			data:	{ brandName: param },
+			beforeSend:function(){
+				
+			// this is where we append a loading image
+			},
+			success: function(data) {
+				jQuery( ".alphaBetsLayer" ).find( "button" ).each( function() {
+					jQuery( this ).css('background-color','#ffffff');
+			});
+				
+			jQuery('#resultInfoLoadingImg').css('display','none');
+			jQuery('#loading_div').css('display','none');
+			jQuery('#'+param).css('background-color','#8f8f8f');
+			
+			jQuery('#result').css('display','block');
+				if(data=="null"){
+					jQuery('#result').html('<h3>No Result Found</h3>')
+				} else {
+					 
+					jQuery('#result').html(data.brand);
+					
+						var tooltips = document.querySelectorAll('.tooltip span');
+						window.onmousemove = function (e) {
+							var x = (e.clientX + 20) + 'px',
+								y = (e.clientY + 20) + 'px';
+							for (var i = 0; i < tooltips.length; i++) {
+								tooltips[i].style.top = y;
+								tooltips[i].style.left = x;
+							}
+						}; 
+					
+				}
+			}
+		}); 
+		}
+	</script>
+	<?php }?>

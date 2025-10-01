@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+<!--overwrite default block and controller files -->
+    <preference for="Magento\Checkout\Controller\Cart\Add" type="Magebees\Ajaxaddtocart\Controller\Cart\Add"/>
+    
+    <!--<preference for="Magento\Checkout\Controller\Cart\Delete" type="Magebees\Ajaxaddtocart\Controller\Cart\Delete"/>
+    
+    <preference for="Magento\Checkout\Block\Cart\Item\Renderer\Actions\Remove" type="Magebees\Ajaxaddtocart\Block\Cart\Item\Renderer\Actions\Remove"/> -->
+    
+    <preference for="Magento\Catalog\Controller\Product\View" type="Magebees\Ajaxaddtocart\Controller\Product\View" />
+    
+    <preference for="Magento\Wishlist\Controller\Index\Cart" type="Magebees\Ajaxaddtocart\Controller\Wishlist\Index\Cart" />
+    
+    <preference for="Magento\Wishlist\Controller\Index\Configure" type="Magebees\Ajaxaddtocart\Controller\Wishlist\Index\Configure" />    
+    
+    <preference for="Magento\Swatches\Controller\Ajax\Media" type="Magebees\Ajaxaddtocart\Controller\Ajax\Media"/>
+</config>
+    
+    

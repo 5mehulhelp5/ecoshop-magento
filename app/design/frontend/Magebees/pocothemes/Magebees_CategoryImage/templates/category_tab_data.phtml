@@ -1,0 +1,233 @@
+<?php
+$enabled = $block->getData('wd_enable') ?? 0;
+
+if ($enabled):
+     $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+
+    $poco_helper = $objectManager->get(\Magebees\PocoThemes\Helper\Data::class);
+    $_helper = $objectManager->get(\Magebees\CategoryImage\Helper\Category::class);
+    $_imagehelper = $objectManager->get(\Magento\Catalog\Helper\Image::class);
+
+    $storeId = $poco_helper->getStoreId();
+    $mediaURL = $poco_helper->getStoreMediaUrl($storeId);
+    $pubPath = $poco_helper->getPubAbsolutePath();
+
+    $show_heading = $block->getData('wd_show_heading') ?? 0;
+    $heading = $block->getData('wd_heading') ?? null;
+    $heading_logo = $block->getData('wd_heading_logo') ?? null;
+    $short_desc = $block->getData('wd_short_desc') ?? null;
+    $show_viewall = $block->getData('wd_show_viewall') ?? 0;
+    $viewall_txt = $block->getData('wd_viewall_txt') ?? '';
+    $viewall_url = $block->getData('wd_viewall_url') ?? '';
+    $no_of_items = $block->getData('wd_no_of_items') ?? 10;
+    $bgimage = $block->getData('wd_bgimage') ?? null;
+    $category_description = $block->getData('wd_description') ?? 0;
+    $slider = $block->getData('wd_slider') ?? 0;
+    $rtl = $poco_helper->getThemeLayout('rtl', $storeId) ? true : false;
+    $animation = $poco_helper->getThemeLayout('animation', $storeId) ? true : false;
+    $animation_class = $animation ? "wow animate__fadeIn" : " ";
+    $slider_class = $slider ? " swiper" : " ";
+    $item_class = $slider ? "item swiper-slide" : "item";
+
+    $autoscroll = $block->getData('wd_autoscroll') == '1';
+    $navarrow = $block->getData('wd_navarrow') == '1';
+    $pagination = $block->getData('wd_pagination') == '1';
+    $paginationtype = $block->getData('wd_pagination_type');
+    $infinite_loop = $block->getData('wd_infinite_loop') == '1';
+    $scrollbar = $block->getData('wd_scrollbar') == '1';
+    $grap_cursor = $block->getData('wd_grap_cursor') == '1';
+    $auto_height = $block->getData('wd_slide_auto_height') == '1';
+    $centered = $block->getData('wd_centered') == '1';
+    $items = $block->getData('wd_items_per_slide');
+    $auto_play_delaytime = $block->getData('wd_auto_play_delaytime') ?? 3000;
+    $autoplayoff = $block->getData('wd_autoplayoff') == '1';
+    $items_per_row = $slider ? "category-items-" . $block->getData('wd_items_per_row') : "flx_ctg category-items-" . $block->getData('wd_items_per_row');
+    $bg_color = $block->getData('wd_bgcolor') ?? '';
+
+    $heading_logo_url = $heading_logo ? $poco_helper->getMediaUrl() . $heading_logo : '';
+    $heading_logo_path = $heading_logo ? $pubPath . 'media/' . $heading_logo : '';
+
+    $bg_image = $bgimage ? 'background-image: url(' . $poco_helper->getMediaUrl() . $bgimage . '); background-repeat: no-repeat; background-size: cover;' : '';
+
+    
+    //$_imagehelper = $block->helper('Magento\Catalog\Helper\Image');
+    $random_number = $block->getRandomNumber();
+    $slider_id = "magebees-category-image-slider-style12-" . $random_number;
+    $shop_now = $block->getData('wd_shopnow') ?? 0;
+    $shop_now_txt = $block->getData('wd_shopnow_text') ?? 'Shop Now';
+
+    // Support dynamic category sets
+    $category_ids = $block->getCategoryIds() ?: array_filter(explode(",", (string)$block->getData('wd_categories')));
+	
+    $swiper_data_init = [
+        'slider_id' => $slider_id,
+        'autoHeight' => $auto_height,
+        'slidesPerView' => 1,
+        'spaceBetween' => 10,
+        'lazy' => [
+            'loadPrevNext' => true,
+            'loadPrevNextAmount' => $no_of_items,
+        ],
+        'a11y' => false,
+        'speed' => 600,
+        'loop' => $infinite_loop,
+        'grabCursor' => $grap_cursor,
+        'centeredSlides' => $centered,
+        'breakpoints' => [
+            '0' => ['slidesPerView' => 2, 'spaceBetween' => 20],
+            '480' => ['slidesPerView' => 2, 'spaceBetween' => 20],
+            '639' => ['slidesPerView' => 3, 'spaceBetween' => 20],
+            '768' => ['slidesPerView' => 4, 'spaceBetween' => 20],
+            '1200' => ['slidesPerView' => 4, 'spaceBetween' => 20],
+            '1440' => ['slidesPerView' => $items, 'spaceBetween' => 30],
+            '1520' => ['slidesPerView' => $items, 'spaceBetween' => 30],
+        ]
+    ];
+
+    if ($autoscroll) {
+        $swiper_data_init['autoplay'] = [
+            'delay' => $auto_play_delaytime,
+            'disableOnInteraction' => false,
+            'pauseOnMouseEnter' => $autoplayoff,
+        ];
+    }
+
+    if ($scrollbar) {
+        $swiper_data_init['scrollbar'] = [
+            'el' => "#swiper-scrollbar-" . $random_number,
+            'hide' => false,
+        ];
+    }
+
+    if (in_array($paginationtype, ['default', 'dynamic', 'progress', 'fraction', 'custom'])) {
+        $swiper_data_init['pagination_id'] = "#swiper-pagination-" . $random_number;
+        $swiper_data_init['pagination_type'] = $paginationtype;
+    }
+
+    if ($navarrow) {
+        $swiper_data_init['navigation'] = [
+            'nextEl' => "#swiper-button-next-" . $random_number,
+            'prevEl' => "#swiper-button-prev-" . $random_number,
+        ];
+    }
+?>
+
+
+
+
+        
+
+        <?php if ($slider): ?><div class="psr"><?php endif; ?>
+        <div id="<?php echo $slider_id; ?>" <?php if ($slider): ?> data-swiper='<?php echo json_encode($swiper_data_init); ?>'<?php endif; ?>
+             class="<?php echo $slider ? 'swiper-container' : ''; ?> <?php echo $animation_class ?> <?php echo $items_per_row . $slider_class; ?>"
+             <?php if ($animation): ?> data-wow-delay="0.4s"<?php endif; ?>>
+            <?php if ($slider): ?>
+                <div class="swiper-wrapper <?php echo $grap_cursor ? 'grab-cursor' : ''; ?>" <?php if ($rtl): ?> dir="rtl"<?php endif; ?>>
+            <?php endif; ?>
+
+            <?php
+            $count = 1;
+            $isCategoryExist = false;
+            //$_helper = $block->helper('Magebees\CategoryImage\Helper\Category');
+            ?>
+
+            <?php foreach ($category_ids as $categoryId): ?>
+                <?php $_category = $_helper->getCategoriesCollection($categoryId); ?>
+                <?php if ($_category && $_category->getId()):
+                    $isCategoryExist = true;
+                    $_categoryUrl = $_category->getUrl();
+                    if ($count > $no_of_items) break;
+                    $count++;
+                    if ($_category->getThumbnail()) {
+						$_imgUrl = $_helper->getThumbnailImageUrl($_category);
+						//$_imgPath = $_helper->getThumbnailImagePath($_category); // Already full path
+						$_imgPath = $pubPath.$_helper->getThumbnailImagePath($_category);
+					} else {
+						$_imgUrl = $mediaURL . 'poco/catthumbanil/dummy-image-style-12.jpg';
+						$_imgPath = $pubPath . 'media/poco/catthumbanil/dummy-image-style-12.jpg';
+					}
+					
+					if (is_file($_imgPath)) {
+						list($width, $height) = getimagesize($_imgPath);
+					} else {
+						$width = 300;
+						$height = 300;
+					}
+
+                    ?>
+                    <div class="<?php echo $item_class . ' ' . $animation_class; ?>" <?php if ($animation): ?> data-wow-delay="0.4s"<?php endif; ?>>
+                        <div class="ctg_thumb psr">
+                            <a href="<?php echo $_categoryUrl; ?>" class="img">
+                                <img <?php if ($slider): ?> class="swiper-lazy"<?php endif; ?> loading="lazy"
+                                     src="<?php echo $_imgUrl; ?>"
+                                     alt="<?php echo $block->escapeHtml($_category->getName()) ?>"
+                                     title="<?php echo $block->escapeHtml($_category->getName()) ?>"
+                                     width="<?php echo $width; ?>" height="<?php echo $height; ?>" />
+                                <?php if ($slider): ?><div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div><?php endif; ?>
+                            </a>
+                            <?php if ($shop_now && $shop_now_txt): ?>
+                                <a href="<?php echo $_categoryUrl; ?>" class="action secondary btn-small ct_btn" rel="nofollow">
+                                    <span><?php echo __(html_entity_decode($shop_now_txt)); ?></span>
+                                </a>
+                            <?php endif; ?>
+                            <div class="ctg_ttl d-flex alc jcb">
+                                <div class="ttl w-70 pr-1">
+                                    <a href="<?php echo $_categoryUrl; ?>" id="cat_<?php echo $categoryId ?>" rel="nofollow">
+                                        <span><?php echo $block->escapeHtml($_category->getName()) ?></span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                             class="st-icon"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg>    
+                                    </a>
+                                </div>
+                                <?php if ($_category->getShowProductCounter() != "0" && $_category->getProductCount() > 0): ?>
+                                    <div class="cntr"><?php echo __($_category->getProductCount() ); ?></div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+                        <?php if ($category_description && $_category->getDescription()): ?>
+                            <div class="ctg_srt_dtl"><?php echo __($_category->getDescription()); ?></div>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+
+            <?php
+            if (empty($category_ids) || !$isCategoryExist):
+                echo $block->getLayout()
+                    ->createBlock('Magento\Framework\View\Element\Template')
+                    ->setSlider($slider)
+                    ->setDescription($category_description)
+                    ->setAnimation($animation)
+                    ->setShopnow($shop_now)
+                    ->setShopnowtext($shop_now_txt)
+                    ->setTemplate('Magebees_CategoryImage::dummy-category-style-12.phtml')
+                    ->toHtml();
+            endif;
+            ?>
+
+            <?php if ($slider): ?></div><?php endif; ?>
+
+            <?php if ($pagination): ?>
+                <div id="swiper-pagination-<?php echo $random_number; ?>" class="swiper-pagination"></div>
+            <?php endif; ?>
+            <?php if ($scrollbar): ?>
+                <div id="swiper-scrollbar-<?php echo $random_number; ?>" class="swiper-scrollbar"></div>
+            <?php endif; ?>
+        </div>
+        <?php if ($navarrow): ?>
+            <div id="swiper-button-next-<?php echo $random_number; ?>" class="swiper-button-next"></div>
+            <div id="swiper-button-prev-<?php echo $random_number; ?>" class="swiper-button-prev"></div>
+        <?php endif; ?>
+        <?php if ($slider): ?></div><?php endif; ?>
+
+        <?php if ($show_viewall): ?>
+            <div class="view-all-btn text-center <?php echo $animation_class ?>" <?php if ($animation): ?> data-wow-delay="0.6s"<?php endif; ?>>
+                <a href="<?php echo $viewall_url ?>" class="action primary">
+                    <?php echo __(html_entity_decode($block->escapeHtml($viewall_txt))); ?>
+                </a>
+            </div>
+        <?php endif; ?>
+    
+<?php endif; ?>

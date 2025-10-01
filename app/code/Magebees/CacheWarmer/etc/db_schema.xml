@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Magebees Team
+ * @copyright Copyright (c) Magebees (https://www.magebees.com)
+ * @package Full Page Cache Warmer for Magento 2
+ */-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="magebees_cachewarmer_queue_page" resource="default" engine="innodb" comment="Magebees Cache Warmer Queue Table">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="Id"/>
+    <column xsi:type="varchar" name="url" nullable="false" length="255" comment="Url"/>
+    <column xsi:type="int" name="rate" padding="10" unsigned="true" nullable="false" identity="false" comment="Rate"/>
+    <column xsi:type="smallint" name="store" padding="5" unsigned="true" nullable="true" identity="false" comment="Store"/>
+    <column xsi:type="int" name="activity_id" padding="10" nullable="true" identity="false" comment="Activity Url Id"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="MAGEBEES_CACHEWARMER_QUEUE_PAGE_STORE_STORE_STORE_ID" table="magebees_cachewarmer_queue_page" column="store" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE"/>
+    <index referenceId="MAGEBEES_CACHEWARMER_QUEUE_RATE" indexType="btree">
+      <column name="rate"/>
+    </index>
+  </table>
+  <table name="magebees_cachewarmer_log" resource="default" engine="innodb" comment="Magebees Cache Warmer Log Table">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="Id"/>
+    <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created_at"/>
+    <column xsi:type="varchar" name="url" nullable="false" length="255" comment="Url"/>
+    <column xsi:type="smallint" name="store" padding="5" unsigned="true" nullable="true" identity="false" comment="Store"/>
+    <column xsi:type="varchar" name="currency" nullable="true" length="3" comment="Currency"/>
+    <column xsi:type="int" name="customer_group" padding="10" unsigned="true" nullable="true" identity="false" comment="Customer_group"/>
+    <column xsi:type="int" name="rate" padding="10" unsigned="true" nullable="false" identity="false" comment="Rate"/>
+    <column xsi:type="smallint" name="status" padding="5" unsigned="true" nullable="false" identity="false" comment="Status"/>
+    <column xsi:type="float" name="load_time" scale="3" precision="10" unsigned="true" nullable="false" comment="Load_time"/>
+    <column xsi:type="boolean" name="mobile" nullable="true"/>
+    <column xsi:type="boolean" name="persistent_customer_group" nullable="false" default="false" comment="Is persistent Customer group"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="MAGEBEES_CACHEWARMER_LOG_STORE_STORE_STORE_ID" table="magebees_cachewarmer_log" column="store" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE"/>
+    <constraint xsi:type="foreign" referenceId="MAGEBEES_CACHEWARMER_LOG_CUSTOMER_GROUP_CUSTOMER_GROUP_CUSTOMER_GROUP_ID" table="magebees_cachewarmer_log" column="customer_group" referenceTable="customer_group" referenceColumn="customer_group_id" onDelete="CASCADE"/>
+  </table>
+  <table name="magebees_cachewarmer_activity" resource="default" engine="innodb" comment="Magebees Cache Warmer Activity Table">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="Id"/>
+    <column xsi:type="int" name="rate" padding="10" unsigned="true" nullable="false" identity="false" default="1" comment="Number of Visits"/>
+    <column xsi:type="varchar" name="url" nullable="false" length="255" comment="Url"/>
+    <column xsi:type="int" name="store" padding="10" unsigned="true" nullable="false" identity="false" comment="Store Id"/>
+    <column xsi:type="varchar" name="currency" nullable="false" length="255" comment="Currency"/>
+    <column xsi:type="int" name="customer_group" padding="10" unsigned="true" nullable="false" identity="false" comment="Customer Group"/>
+    <column xsi:type="boolean" name="mobile" nullable="false" comment="Mobile"/>
+    <column xsi:type="int" name="status" padding="10" unsigned="true" nullable="false" identity="false" comment="Status"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+    <constraint xsi:type="unique" referenceId="MAGEBEES_CACHEWARMER_ACTIVITY_URL_MOBILE">
+        <column name="url"/>
+        <column name="mobile"/>
+        <column name="store"/>
+        <column name="currency"/>
+        <column name="customer_group"/>
+    </constraint>
+  </table>
+  <table name="magebees_cachewarmer_pages_to_flush" resource="default" engine="innodb" comment="Magebees Cache Warmer Table with pages need to be flushed">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+    <column xsi:type="varchar" name="url" length="255" nullable="true" comment="Page URL"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+    <index referenceId="MAGEBEES_CACHEWARMER_PAGES_TO_FLUSH_URL" indexType="btree">
+      <column name="url"/>
+    </index>
+  </table>
+  <table name="magebees_cachewarmer_reports" resource="default" engine="innodb" comment="magebees_cachewarmer_reports">
+    <column xsi:type="int" name="report_id" unsigned="true" nullable="false" identity="true" comment="Report ID"/>
+    <column xsi:type="timestamp" name="date" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Visit Time"/>
+    <column xsi:type="varchar" name="status" nullable="false" length="25" comment="Page status"/>
+    <column xsi:type="float" name="response" scale="0" precision="0" unsigned="false" nullable="false" comment="Page response time"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="report_id"/>
+    </constraint>
+  </table>
+  <table name="magebees_cachewarmer_flushes_log" resource="default" engine="innodb" comment="Magebees Cache Warmer Flushes Log Table">
+    <column xsi:type="int" name="log_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Log_id"/>
+    <column xsi:type="varchar" name="source" nullable="true" length="255" comment="Source"/>
+    <column xsi:type="text" name="details" nullable="true" comment="Details"/>
+    <column xsi:type="text" name="tags" nullable="true" comment="Tags"/>
+    <column xsi:type="varchar" name="subject" nullable="true" length="255" comment="Subject"/>
+    <column xsi:type="varchar" name="date" nullable="true" length="255" comment="Date"/>
+    <column xsi:type="text" name="backtrace" nullable="true" comment="Backtrace"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="log_id"/>
+    </constraint>
+  </table>
+  <table name="magebees_cachewarmer_job_queue" resource="default" engine="innodb" comment="Magebees Cache Warmer Table with deferred jobs to process in background">
+    <column xsi:type="int" name="job_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Job ID"/>
+    <column xsi:type="text" name="job_code" nullable="false" comment="Job Code"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="job_id"/>
+    </constraint>
+  </table>
+  <table name="magebees_cachewarmer_context_debug" resource="default" engine="innodb" comment="Magebees Cache Warmer Context Debug">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="Context Debug Entity ID"/>
+    <column xsi:type="varchar" name="url" nullable="false" length="255" comment="Context Debug Entity Url"/>
+    <column xsi:type="text" name="context_data" nullable="true" comment="Context Debug Entity Context Data JSON"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+  </table>
+</schema>

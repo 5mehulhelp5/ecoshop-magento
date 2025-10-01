@@ -1,0 +1,99 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+// @codingStandardsIgnoreFile
+?>
+<?php 
+$_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); ?>
+<?php $enabled = $this->getData('wd_enable')?$this->getData('wd_enable'):0; ?>
+<?php if ($enabled) { 
+
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); 
+$show_heading = $this->getData('wd_show_heading')?$this->getData('wd_show_heading'):0;
+$newsletter_title = $this->getData('wd_newsletter_title')?$this->getData('wd_newsletter_title'):null;
+$heading_logo = $this->getData('wd_heading_logo')?$this->getData('wd_heading_logo'):null;
+$bgimage = $this->getData('wd_bgimage')?$this->getData('wd_bgimage'):null;
+$rtl = $poco_helper->getThemeLayout('rtl',$poco_helper->getStoreId())? true:false; 
+$bg_color = $this->getData('wd_bgcolor');
+$animation = $poco_helper->getThemeLayout('animation',$poco_helper->getStoreId())? true:false; 
+$animation_class = $animation?"wow animate__fadeIn":" ";
+$newsletter_text = $this->getData('wd_newsletter_text')?$this->getData('wd_newsletter_text'):null;
+$newsletter_btn_text = $this->getData('wd_newsletter_button_text')?$this->getData('wd_newsletter_button_text'):'Send';
+$newsletter_text_placeholder = $this->getData('wd_newsletter_text_placeholder')?$this->getData('wd_newsletter_text_placeholder'):'Enter your email';
+
+
+	if($heading_logo){
+		$heading_logo_url = $poco_helper->getMediaUrl().$heading_logo;
+	}else{
+		$heading_logo_url = '';
+	}
+	if($bgimage){
+		$bg_image_url = $poco_helper->getMediaUrl().$bgimage;
+		$bg_image = 'background-image: url('.$bg_image_url.'); background-repeat: no-repeat; background-size: cover;';
+	}else{
+		$bg_image = '';
+	}
+	
+	$spacing_class = '';
+	$spacing_class .= $this->getData('wd_spacing')?'sections-spacing ':'';
+	$spacing_class .= $this->getData('wd_bottom_spacing')?'section-bottom-spacing':'';
+	$randomId = rand();
+	
+?>
+<?php if(($bg_image)||($bg_color)): ?>
+<style type="text/css">
+	<?php echo '#newsletter-'.$randomId. " { ".$bg_image."; background-color: ".$bg_color."; } " ?>
+</style>
+ <?php endif;?>
+
+<div id="<?php echo "newsletter-".$randomId; ?>" class="newsletter-section <?php echo $spacing_class ?>">
+	<div class="container">
+			<?php if(($show_heading)):?>
+				<div class="section-title <?php echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.3s" <?php endif;?>>
+				<?php if($heading_logo):  ?>
+					<div class="icon"><img loading="lazy" src="<?php echo $heading_logo_url;?>" alt="<?php echo $newsletter_title; ?>" title="<?php echo $newsletter_title; ?>" width="158" height="60" /></div>
+				<?php endif; ?>
+				<?php if($newsletter_title):  ?>
+					<h2 class="title"><?php echo __(html_entity_decode($newsletter_title)); ?></h2>
+				<?php endif; ?>
+				<?php if($newsletter_text): ?>
+					<div class="sort-detail"> <?php echo __(html_entity_decode($newsletter_text)); ?>
+				</div>
+				<?php endif; ?>
+			</div>
+			<?php endif; ?>
+			<?php $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); $newsLetterblock= $block->getLayout()->createBlock('Magento\Newsletter\Block\Subscribe');  ?>
+			<div class="content <?php echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.5s" <?php endif;?>>
+				<form class="form subscribe" novalidate action="<?php /* @escapeNotVerified */ echo $newsLetterblock->getFormActionUrl() ?>" method="post" data-mage-init='{"validation": {"errorClass": "mage-error"}}' id="newsletter-validate-detail">
+					<label class="label abs-visually-hidden" for="newsletter"><span><?php /* @escapeNotVerified */ echo __('Sign Up for Our Newsletter:') ?></span></label>
+					<div class="field newsletter">
+						<div class="control">
+							<input name="email" type="email" id="newsletter" placeholder="<?php /* @escapeNotVerified */ echo __($newsletter_text_placeholder) ?>" data-validate="{required:true, 'validate-email':true}"/>
+						</div><?php  /* Remove HTML From String */ ?>
+						<button class="action subscribe primary" title="<?php /* @escapeNotVerified */ echo __('Subscribe'); ?>" type="submit">
+							<span>
+							<?php echo __(html_entity_decode($block->escapeHtml($newsletter_btn_text))); ?>
+							</span>
+						</button>
+						
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>			
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Customer/js/block-submit-on-send": {
+                "formId": "newsletter-validate-detail"
+            }
+        }
+    }
+</script>
+<?php } ?>
+
+
+
+

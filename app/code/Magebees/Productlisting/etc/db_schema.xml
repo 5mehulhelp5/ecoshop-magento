@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="magebees_productlisting" resource="default" engine="innodb" comment="Magebees Product Listing Details">
+    <column xsi:type="int" name="listing_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Listing ID"/>
+    <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Title"/>
+    <column xsi:type="varchar" name="stores" nullable="false" length="255" comment="Stores"/>
+    <column xsi:type="varchar" name="category_ids" nullable="false" length="255" comment="Category_ids"/>
+    <column xsi:type="boolean" name="status" nullable="true" comment="Status"/>
+    <column xsi:type="text" name="general" nullable="false" comment="general"/>
+    <column xsi:type="text" name="slider_options" nullable="false" comment="slider_options"/>
+    <column xsi:type="text" name="display_settings" nullable="false" comment="display_settings"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="listing_id"/>
+    </constraint>
+  </table>
+  <table name="magebees_productlisting_select_products" resource="default" engine="innodb" comment="Listing Products Relations">
+    <column xsi:type="int" name="select_product_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Select_product_id"/>
+    <column xsi:type="int" name="listing_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Listing_id"/>
+    <column xsi:type="varchar" name="sku" nullable="false" length="255" comment="Sku"/>
+    <column xsi:type="int" name="product_id" padding="11" unsigned="false" nullable="false" identity="false" comment="Product_id"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="select_product_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="FK_33460F60DA89FF74D0DEC6012AC405BD" table="magebees_productlisting_select_products" column="listing_id" referenceTable="magebees_productlisting" referenceColumn="listing_id" onDelete="CASCADE"/>
+    <index referenceId="IDX_PRODUCTLISTING_SELECT_PRODUCT_ID_LISTING_ID" indexType="btree">
+      <column name="listing_id"/>
+    </index>
+  </table>
+</schema>

@@ -1,0 +1,188 @@
+<?php use Magento\Framework\App\Action\Action; ?>
+<?php
+
+$viewMode = 'list';
+$image = 'product_swatch_image_large';
+$showDescription = true;
+//$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $poco_helper->getStoreId();
+
+// Theme Options
+include($block->getTemplateFile('Magento_Catalog::product/product-list-theme-options.phtml'));
+
+$random_number = $this->random_number;
+$slider_id = 'productListing-' . $random_number;
+$slider = $this->slider_options['enable_slider'] ? $this->slider_options['enable_slider'] : 0;
+$slider_class = $slider ? "swiper swiper-container" : " ";
+$slider_wrapper_class = $slider ? "swiper-wrapper" : " ";
+$pagination = array_key_exists('pagination', $this->slider_options) ? ($this->slider_options['pagination'] == '1' ? true : false) : false;
+$pagination_class = $this->pagination_class;
+$item_class = $slider ? "item product product-item swiper-slide" : "item product product-item";
+$scrollbar = array_key_exists('scrollbar', $this->slider_options) ? ($this->slider_options['scrollbar'] == '1' ? true : false) : false;
+$navarrow = array_key_exists('nav_arr', $this->slider_options) ? ($this->slider_options['nav_arr'] == '1' ? true : false) : false;
+$grap_cursor = array_key_exists('grab_cur', $this->slider_options) ? ($this->slider_options['grab_cur'] == '1' ? true : false) : false;
+$autoscroll = array_key_exists('autoscroll', $this->slider_options) ? ($this->slider_options['autoscroll'] == '1' ? true : false) : false;
+$auto_load = $autoscroll;
+$_productCollection = $block->getProductCollection();
+$productsCount = count($_productCollection->getData());
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+
+$display_product_short_description = array_key_exists('display_product_short_description', $this->display_settings)
+    ? ($this->display_settings['display_product_short_description'] == '1' ? true : false) : false;
+
+$template = $this->general['template'];
+$product_short_description_length = array_key_exists('product_short_description_length', $this->display_settings)
+    ? $this->display_settings['product_short_description_length'] : null;
+$home_style = $poco_helper->getConfigValue('home', 'home_style', 'pocothemes', $storeId);
+?>
+<?php $image_height = 467; $image_width = 898; ?>
+<?php if ($slider): ?>
+    <?php $swiper_data_init = $block->getSwiperinitdata($this->_listing_id); ?>
+<?php endif; ?>
+
+<div id="<?= $slider_id ?>"
+    <?php if ($slider): ?> data-swiper='<?= json_encode($swiper_data_init); ?>' <?php endif; ?>
+    class="list<?= $this->_listing_id ?> products wrapper <?= $viewMode ?> products-<?= $viewMode ?> <?= $slider_class ?> <?= $pagination_class ?> <?= $swiper_btn_hover_effects_class ?>">
+
+    <div class="<?= $auto_load ? 'auto_load_featured' : '' ?> list items product-items <?= $btn_hover_effects_class ?> <?= $slider_wrapper_class ?>">
+
+        <?php if (!$productsCount): ?>
+            <?php
+            $dummyproductCount = $slider
+                ? ($this->slider_options['num_of_prod'] ?: 8)
+                : ($this->slider_options['items_per_page'] ?: 8);
+			//echo "sdsdsds";
+            echo $this->getLayout()
+                ->createBlock('Magento\Framework\View\Element\Template')
+                ->setProductCount($dummyproductCount)
+                ->setSlider($slider)
+                ->setImageWidth($image_width)
+                ->setImageHeight($image_height)
+                ->setTemplate('Magebees_Productlisting::dummy-products-list_style1.phtml')
+                ->toHtml();
+            ?>
+			<?php //echo "ddfdf";exit; ?>
+        <?php endif; ?>
+		
+        <?php $iterator = 1; ?>
+        <?php foreach ($_productCollection as $_product): ?>
+            <?= ($iterator++ == 1) ? '<div class="' . $item_class . '">' : '</div><div class="' . $item_class . '">' ?>
+            <div class="product-item-info style2" data-container="product-grid">
+                <div class="pro-hover" >
+                    <a href="<?= $_product->getProductUrl() ?>" class="product-item-photo" tabindex="-1">
+                        <?= $this->getLayout()
+                            ->createBlock("Magento\Framework\View\Element\Template")
+                            ->setProduct($_product)
+                            ->setAspectRatio($aspect_ratio)
+                            ->setDisplayArea($image)
+							->setImageWidth($image_width)
+							->setImageHeight($image_height)
+                            ->setTemplate("Magento_Catalog::product/image.phtml")
+                            ->toHtml(); ?>
+                    </a>
+                </div>
+
+                <div class="product details product-item-details">
+                    <div class="detail-left">
+                        <strong class="product-item-name mb-1">
+                            <a title="<?= $block->escapeHtml($_product->getName()) ?>"
+                               href="<?= $block->getProductUrl($_product) ?>"
+                               class="product-item-link">
+                                <?= $block->escapeHtml($_product->getName()) ?>
+                            </a>
+                        </strong>
+
+                        <div class="d-flex mb-1">
+                            <?php if ($show_product_sku): ?>
+                                <?= $this->getLayout()
+                                    ->createBlock("Magento\Framework\View\Element\Template")
+                                    ->setProduct($_product)
+                                    ->setProductSkuLabel($product_sku_label)
+                                    ->setProductSkuSeparator($product_sku_separator)
+                                    ->setTemplate("Magento_Catalog::product/product-sku.phtml")
+                                    ->toHtml(); ?>
+                            <?php endif; ?>
+
+                            <?php if ($display_product_short_description && $_product->getShortDescription()):
+                                $productShortDescription = $this->getProductShortDescription(
+                                    $_product->getShortDescription(), $product_short_description_length
+                                ); ?>
+                                <div class="product-item-shortdesc w-70"><?= $productShortDescription ?></div>
+                            <?php endif; ?>
+                        </div>
+
+                        <?= $block->getProductPrice($_product) ?>
+
+                        <?php if ($_product->getTypeId() === \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE): ?>
+                            <div class="swatches-listing">
+                                <?= $this->getLayout()
+                                    ->createBlock("Magento\Swatches\Block\Product\Renderer\Listing\Configurable")
+                                    ->setProduct($_product)
+                                    ->setTemplate("Magebees_Swatches::product/listing/renderer.phtml")
+                                    ->toHtml(); ?>
+                            </div>
+                        <?php endif; ?>
+                        <div class="view-more">
+							<a href="<?= $_product->getProductUrl() ?>" title="<?php echo __('View More'); ?>"  class="action secondary" rel="nofollow">	
+								   <span class="icon">      
+                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                   </span>
+									<span class="text"><?php echo __('View More'); ?></span>
+							</a>
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+            <?= ($iterator == count($_productCollection) + 1) ? '</div>' : '' ?>
+        <?php endforeach; ?>
+
+       
+    </div>
+
+</div>
+
+    <?php if ($slider): ?>
+        <?php if ($pagination): ?>
+            <div id="swiper-pagination-<?= $random_number ?>" class="swiper-pagination"></div>
+        <?php endif; ?>
+
+        <?php if ($scrollbar): ?>
+            <div id="swiper-scrollbar-<?= $random_number ?>" class="swiper-scrollbar"></div>
+        <?php endif; ?>
+
+        <?php if ($home_style != 'poco-themes-style-17' && $navarrow): ?>
+            <div id="swiper-button-next-<?= $random_number ?>" class="swiper-button-next"></div>
+            <div id="swiper-button-prev-<?= $random_number ?>" class="swiper-button-prev"></div>
+        <?php endif; ?>
+    <?php endif; ?>
+	<script type="text/javascript">
+require(['jquery'], function ($) {
+    $(document).ready(function () {
+
+        $(document).on('click', '.swatch-option', function () {
+            var $productItem = $(this).closest('.product-item');
+            var $label = $productItem.find('.prodLabel');
+            var $image = $productItem.find('.product-image-photo');
+
+            // Fade out the label after 1 second (1000ms)
+            setTimeout(function () {
+                $label.fadeOut('fast');
+            }, 1000);
+
+            // Re-show after image load
+            $image.one('load', function () {
+                $label.fadeIn('fast');
+            });
+
+           
+
+        });
+
+    });
+});
+</script>
+
+
+

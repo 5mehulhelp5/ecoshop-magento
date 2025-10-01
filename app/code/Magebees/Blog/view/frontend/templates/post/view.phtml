@@ -1,0 +1,59 @@
+<?php $_post = $block->getPost(); 
+	$_postUrl = $block->getPosturl(); 
+	$_postName = $block->escapeHtml($_post->getTitle(), null, true);
+	if($_post): 
+?>
+<div class="mb-post-viewpage mb-post-viewpage-<?php echo $_post->getPostId();?>">
+    
+    <div class="mb-post-header clearfix">
+		<div class="mb-metadata">
+			<?php echo $block->getChildHtml('post_info'); ?>
+		</div>
+	</div>
+
+	<div class="mb-featured-thumb"><?php echo $block->getChildHtml('post_featureimage'); ?></div>
+
+	<div class="mb-post-content clearfix">
+		<?php $content = $block->getDescription();
+		echo __($content);
+		?>
+		
+	</div>
+
+	<div class="mb-post-gallery clearfix">
+        <?php echo $block->getChildHtml('post_gallery'); ?>
+	</div>
+	<?php 
+	
+	if($block->IsPostAddThisEnable() || $block->enablePostLikeDislikes()):?>
+	<div class="mb-postview-footer">
+		<?php if($block->enablePostLikeDislikes()):?>
+		<?php echo $block->getChildHtml('post_like_dislike_link'); ?>
+		<?php endif;?>
+		<?php if($block->IsPostAddThisEnable()):?>
+		<div class="addthis_toolbox addthis_default_style item-meta" addthis:url="<?php echo $_postUrl ?>" addthis:title="<?php echo $_postName; ?>">
+			<span class="label">Share:</span>
+	        <a class="addthis_button_facebook"></a>
+	        <a class="addthis_button_twitter"></a>
+	        <a class="addthis_button_email"></a>
+	        <a class="addthis_button_compact"></a>
+	    </div>
+		<?php endif;?>
+	</div>
+	<?php endif;?>
+	<div class="mb-postview-pagination"><?php echo $block->getChildHtml('post_next_prev_link'); ?></div>
+	<?php echo $block->getChildHtml('related_post'); ?>
+	<?php echo $block->getChildHtml('post_related_products'); ?>
+	<?php if($block->IsPostCommentEnable()):?>
+	<?php echo $block->getChildHtml('post_comment'); ?>
+	<?php endif;?>
+	<?php echo $block->getChildHtml('post_add_this'); ?>
+	
+</div>	
+<?php if (!$_post->getPostId()): ?>
+	<div class="message info empty"><div><?php echo __('We can not find post matching the selection.') ?></div></div>
+<?php else: ?>
+	
+<?php endif;?>
+<?php endif;?>
+

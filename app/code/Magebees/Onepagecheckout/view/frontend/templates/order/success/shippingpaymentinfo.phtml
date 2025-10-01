@@ -1,0 +1,39 @@
+<?php
+$mbhelper = $this->helper('Magebees\Onepagecheckout\Helper\Data');
+$order_details = $mbhelper->getObjectManager()->create('Magebees\Onepagecheckout\Block\Thankyou')->getOrder();
+$shipping_address_data = $order_details->getShippingAddress();
+$billing_address_data   = $order_details->getBillingAddress();
+?>
+<?php if(!empty($shipping_address_data) && !empty($order_details->getShippingDescription())){ ?>
+<div class="shippingDetails clearfix col-set">
+	<div class="shippingAddress col1">
+		<h3><?php echo __("Shipping Address"); ?></h3>
+		<p><?php echo $shipping_address_data['firstname'] ?> <?php echo $shipping_address_data['lastname'] ?> </p>
+		<p><?php echo $shipping_address_data['street'] ?></p>
+		<p><?php echo $shipping_address_data['city'] ?></p>
+		<p><?php echo $shipping_address_data['region'] ?></p>
+		<p><?php echo $shipping_address_data['postcode'] ?></p>
+		<p><?php echo $shipping_address_data['country_id'] ?></p>
+	</div>
+	<div class="shippingMethod col2">
+		<h3><?php echo __("Shipping Method"); ?></h3>
+		<!--<p><?php //echo $order_details->getData("shipping_method"); ?></p>-->
+		<p><?php echo $order_details->getShippingDescription(); ?></p>
+	</div>
+</div>
+<?php } ?>
+<div class="billingDetails clearfix col-set">
+	<div class="billingAddress col1">
+		<h3><?php echo __("Billing Address"); ?></h3>
+		<p><?php echo $billing_address_data['firstname'] ?> <?php echo $billing_address_data['lastname'] ?> </p>
+		<p><?php echo $billing_address_data['street'] ?></p>
+		<p><?php echo $billing_address_data['city'] ?></p>
+		<p><?php echo $billing_address_data['region'] ?></p>
+		<p><?php echo $billing_address_data['postcode'] ?></p>
+		<p><?php echo $billing_address_data['country_id'] ?></p>
+	</div>
+	<div class="paymentMethod col2">
+		<h3><?php echo __("Payment Method"); ?></h3>
+		<p><?php echo $order_details->getPayment()->getMethodInstance()->getTitle(); ?></p>
+	</div>
+</div>

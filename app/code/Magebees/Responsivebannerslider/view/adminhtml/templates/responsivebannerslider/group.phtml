@@ -1,0 +1,30 @@
+<?php if($block->getGroupData()) { ?>
+<?php $url = $this->helper('Magento\Backend\Helper\Data')->getUrl('responsivebannerslider/slide/index'); ?>
+<?php $group_id = $this->getRequest()->getParam('group'); ?>
+<div class="store-switcher store-view">
+<span class="store-switcher-label"><?php echo __('Choose Slider Group:'); ?></span>
+
+	<select name="store_switcher" id="store_switcher" onchange="return switchStore(this);">
+		 <option value="0"><?php echo __('Show All Slider Group'); ?></option>
+		<?php foreach($block->getGroupData() as $key => $value) { 
+			if($group_id == $key){
+			?>
+				<option value="<?php echo $key; ?>" selected><?php echo $value; ?></option>
+			<?php }else{?>
+				<option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+			<?php }	?>
+		<?php }?>
+	</select>
+	
+
+</div>
+<script type="text/javascript">
+    function switchStore(obj) {
+        var storeParam = obj.value ? 'group/' + obj.value + '/' : '';
+        if (obj.switchParams) {
+            storeParam += obj.switchParams;
+        }
+        setLocation('<?php echo $url ?>' + storeParam);
+    }
+</script> 
+<?php }?>

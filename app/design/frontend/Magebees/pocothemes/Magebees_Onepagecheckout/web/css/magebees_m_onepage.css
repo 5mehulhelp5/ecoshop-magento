@@ -1,0 +1,329 @@
+
+
+@media only screen and (max-width:1400px) {
+
+	#opcReviewTable .oscProductImage .oscpiw img { max-width:80px; }
+
+
+
+}
+
+
+
+@media only screen and (max-width:1240px) {
+
+	#opcReviewTable .oscDelete { margin-top:17px; }
+
+	#opcReviewTable .oscProductImage .oscpiw img { max-width:70px; }
+
+	
+
+	.sucess-col #checkout-review-table .img-responsive { max-width:50px; height:50px; }
+
+    .mageb-success-page .data-table td, .mageb-success-page .data-table th { padding:5px; font-size:13px; }
+
+	
+
+	#opcReviewTable .oscDelete { position:absolute; bottom:5px; width:15px; height:15px; background-size:15px; }
+
+	.mageb-osc .opc-wrapper ol > li#oscSummaryLi { width:65%; }
+
+}
+
+
+
+@media only screen and (max-width:1069px) {
+
+	.mageb-osc .opc-wrapper .magebees-checkout-shipping-address { width:50%; padding-right: 10px; }
+
+	.mageb-osc .opc-wrapper .magebees-Onepagecheckout-shipping-method,
+
+	.mageb-osc .opc-wrapper ol > li#oscSummaryLi { width:48%; padding-right:0; }
+
+	.mageb-osc .opc-wrapper .magebees-Onepagecheckout-shipping-method,
+
+	.mageb-osc .opc-wrapper .magebees-checkout-payment-method { width:50%; }
+
+}
+
+
+
+@media only screen and (max-width:999px) {
+
+	
+
+	.mageb-osc .opc-wrapper .step-title { font-size:18px; }
+
+	
+
+	.mageb-osc .opc-wrapper .magebees-checkout-shipping-address { padding-right:10px; }
+
+	.mageb-osc .opc-wrapper .magebees-checkout-shipping-address, .mageb-osc .opc-wrapper .magebees-checkout-payment-method { position:relative; }
+
+	.mageb-osc .opc-wrapper .magebees-Onepagecheckout-shipping-method { padding-right:0; }
+
+	.checkout-shipping-method .magebeesLoader { right:10px; }
+
+	
+
+	.mageb-summary table > thead > tr > th { font-size:12px; }
+
+	
+	#opcReviewTable .oscProductImage { text-align:center; }
+	#opcReviewTable .oscProductImage .oscpiw img { max-width:50px; }
+	.mageb-success-row .sucess-col { width:100%; padding:0; }
+    .mageb-success-row #mockRight { padding:0; }
+	.mageb-success-row #mockLeft { margin-bottom: 20px; }
+	.mageb-success-page h3.product-name { margin-bottom: 0; }
+	.mageb-summary table#opcReviewTable thead tr th { font-size:15px; }
+	.mageb-summary table#opcTotalTable > tbody > tr > td { width:150px; }
+}
+
+
+
+@media only screen and (max-width:768px) {
+
+	
+
+    .checkout-index-index .nav-toggle { display: block !important; }
+
+    .mageb-osc .magebees-discount-code-wrapper { padding-left: 0; }
+
+    
+
+	.mageb-osc .opc-estimated-wrapper { display:none; }
+
+	.mageb-osc .checkout-payment-method .field-select-billing,
+
+	.mageb-osc .checkout-payment-method .billing-address-form { max-width: 100% !important; }
+
+	
+
+	.mageb-osc .opc-wrapper .magebees-checkout-shipping-address, .mageb-osc .opc-wrapper .magebees-checkout-payment-method, .mageb-summary,
+
+	.mageb-osc .opc-wrapper .magebees-Onepagecheckout-shipping-method, .mageb-osc .opc-wrapper .magebees-checkout-shipping-address, .mageb-osc .opc-wrapper .magebees-checkout-payment-method { width:100%; padding-right:0; padding-left:0; float:left; }
+
+
+
+	.mageb-osc .opc-wrapper .magebees-Onepagecheckout-shipping-method, .mageb-osc .opc-wrapper ol > li#oscSummaryLi { width:100%; padding-right:0; padding-left:0; }
+
+	
+
+	.mageb-osc .step-content { margin-bottom:20px; }
+
+	
+
+	.mageb-osc .field ._with-tooltip .field-tooltip._active .field-tooltip-content, .mageb-osc form.form.form-login .field-tooltip._active .field-tooltip-content { left:auto; right:0; margin-right:30px; }
+
+	
+
+	.magebees-Onepagecheckout-additional-blocks .magebees-additional-block-form-wrapper { max-width:100%; }
+
+	.magebees-additional-block-form-wrapper .actions-toolbar .primary { display:inline-block; }
+
+	
+
+	.mageb-osc .checkout-payment-method .payment-methods { margin:0; } 
+
+
+
+	.checkout-agreements-block { maRGIN-bottom:0 !important; }
+
+	
+
+	.magebees-Onepagecheckout-virtual .mageb-osc .opc-wrapper ol > li#oscSummaryLi,
+
+	.magebees-Onepagecheckout-virtual .mageb-osc .opc-wrapper .magebees-checkout-payment-method { width:100%; padding:0 0 20px; }
+
+	.magebees-Onepagecheckout-virtual .checkout-payment-method .field-select-billing, 
+
+	.magebees-Onepagecheckout-virtual .checkout-payment-method .billing-address-form { max-width:100%; }
+
+	.magebees-Onepagecheckout-virtual .payment-method-billing-address .magebees-buttons-for-update.actions-toolbar>.primary .action,
+
+	.magebees-Onepagecheckout-virtual .payment-method-billing-address .magebees-buttons-for-update.actions-toolbar>.secondary .action { width:auto; margin-bottom:0; }
+
+	
+
+	.mageb-success-page .col-set .col1, .mageb-success-page .col-set .col2 { width:100%; padding:0 0 10px; }
+
+	.mageb-osc .opc-wrapper .magebees-Onepagecheckout-shipping-method .table-checkout-shipping-method { width:auto; }
+
+	
+
+	#opcReviewTable .oscProductImage .oscpiw img { max-width:70px; } 
+
+	#opcReviewTable .oscDelete { left:44%; }
+
+	
+
+	.mageb-osc .table-checkout-shipping-method tbody .tooltip-info { float:right; }
+
+	.mageb-osc .table-checkout-shipping-method tbody .tooltip-info .toolTipsContent { width:290px; left:auto; right:-22px; }
+
+	.mageb-osc .table-checkout-shipping-method tbody .tooltip-info .toolTipsContent:after { left:auto; right: 26px; }
+
+	
+
+	.checkout-index-index .mageb-checkout-title p { line-height:normal; }
+
+	
+
+	.mageb-osc .checkout-payment-method .magebees-buttons-for-update.actions-toolbar .primary .action { width: auto; margin-bottom: 0; }
+
+	
+
+	.mageb-osc .opc-wrapper.mageb-onecolumn-layout #checkoutSteps,
+
+	.mageb-osc .opc-wrapper.mageb-onecolumn-layout .mageb-review-2col { width:100%; padding-right:0; padding-left: 0; }
+
+}
+
+
+
+@media only screen and (max-width:639px) {
+
+	.magebees-checkout-shipping-address .magebees-form-shipping-address, .magebees-checkout-step-shipping form.form.form-login, .opc-wrapper .methods-shipping { background:inherit; padding:0; }
+
+	.mageb-osc .opc-wrapper .methods-shipping { border:0; padding:0; margin:0; }
+
+	
+
+	#opcReviewTable .oscProductName .item-options { font-size:12px; }
+
+	
+
+	#popup-login h1 { font-size:22px; }
+
+	
+
+	.mageb-osc .two-fields { width:100%; }
+
+	.mageb-osc .opc-wrapper .form-shipping-address, .mageb-osc .opc-wrapper .methods-shipping { margin-top:0; padding:10px 15px; }
+
+	.mageb-osc .opc-wrapper .form-login, .mageb-osc .opc-wrapper .form-shipping-address { margin-top:10px; background: inherit; }
+
+	
+
+	.mageb-osc #checkout-step-shipping_method .form.methods-shipping { padding: 0; }
+
+}
+
+
+
+@media only screen and (max-width:480px) { 
+
+
+
+	.mageb-summary #opcReviewTable td.oscProductName .product-name, .mageb-summary table > thead > tr > th, .mageb-summary table > tbody > tr > td { font-size:11px; }
+
+	.mageb-summary #opcReviewTable td.oscProductName .product-name { padding-right:10px; }
+
+	.mageb-summary table > thead > tr > th, .mageb-summary table > tbody > tr > th, .mageb-summary table > tfoot > tr > th, .mageb-summary table > thead > tr > td, .mageb-summary table > tbody > tr > td, .mageb-summary table > tfoot > tr > td { padding:5px; }
+
+	
+
+	.mageb-summary #opcTotalTable { margin-bottom:20px; }
+
+	
+
+	.mbopc-trust-seals { width:100%; }
+
+	
+
+	.mageb-osc .opc-wrapper .form-login, .mageb-osc .opc-wrapper .form-shipping-address { margin-top:0; }
+
+	.mageb-osc .opc-wrapper .form-login, .mageb-osc .opc-wrapper .form-shipping-address, .mageb-osc .opc-wrapper .methods-shipping { margin-left:0; margin-right: 0; padding: 0; }
+
+	
+
+	.mageb-osc .field-tooltip._active .field-tooltip-content, .mageb-osc form.form.form-login .field-tooltip._active .field-tooltip-content { min-width:160px; width:160px; }
+
+	#opcReviewTable .input-text.reviewQty { min-width:30px; width:30px; height:30px; line-height: 30px; -webkit-apperance: none; }
+
+	#opcReviewTable .qty-wrap .button.btnDec,
+
+	#opcReviewTable .qty-wrap .button.btnInc { width:15px; height:15px; font-size: 13px; line-height:8px; top:8px; }
+
+	#opcReviewTable .qty-wrap .button.btnDec { left:-17px; }
+
+	#opcReviewTable .qty-wrap .button.btnInc { left: 33px; }
+
+	
+
+	.magebees-checkout-payment-method .payment-method._active .payment-method-content > div.actions-toolbar { width:93%; bottom: 60px; }
+
+	
+
+	#opcReviewTable .oscProductImage .oscpiw img { max-width:40px; }
+
+	.mageb-summary table#opcReviewTable thead tr th { font-size:11px; }
+
+	#checkout-payment-method-load.Onepagecheckout-payment { margin-bottom: 10px;}
+
+
+
+	.mageb-osc .actions-toolbar-trigger,
+
+	.mageb-osc .mbOpc-terms { float: left; width: 100%; margin-bottom: 10px; }
+
+	.mageb-osc .actions-toolbar-trigger button{ width: 100%; display: block; }
+
+	
+
+	.mageb-success-page .linearize-table tfoot { background-color: #efefef; }
+
+	.mageb-success-page .linearize-table tfoot tr { display: block; text-align: right; }
+
+  	.mageb-success-page .linearize-table tfoot tr:after { content: ''; display: table; clear: both; }
+
+	.mageb-success-page .linearize-table tr,
+
+	.mageb-success-page .linearize-table th,
+
+	.mageb-success-page .linearize-table td { display: block; }
+
+	.mageb-success-page .linearize-table tbody td { border-bottom: 1px solid #ddd; text-align: center; }
+
+    .mageb-success-page .data-table { font-size:13px; }
+
+   	.mageb-success-page .data-table th { padding:5px; }
+
+    .mageb-success-page .linearize-table { border:1px solid #ddd; }
+
+    .mageb-success-page .linearize-table colgroup { display:none; }
+
+    .mageb-success-page .data-table thead tr { display:none; }
+
+	.mageb-success-page .linearize-table tfoot td { display: block; float: left; }
+
+	.mageb-success-page .linearize-table tfoot td:nth-child(odd) { clear: left; width: 38%; }
+
+	.mageb-success-page .linearize-table tfoot td:nth-child(even) { text-align: left; width: 45%; }
+
+
+
+  	.checkout-onepage-success .left-success .buttons-set, .checkout-onepage-success .mageb-saveform .buttons-set { text-align: center; }
+
+ 
+
+	
+
+	.sucess-col #checkout-review-table .img-responsive { margin:0 auto; max-width:90px; height:90px; }
+
+    .left-success { text-align:center; }
+
+	
+
+	.mb-discount-coupon #discount-coupon-form .button-wrapper button.button, .mage-b-comments { font-size:12px; }
+
+    .mageb-success-row #mockLeft { padding-right:0; }
+
+	
+
+	.mageb-summary table#opcTotalTable > tbody > tr > th, .mageb-summary table#opcTotalTable > tbody > tr > td { font-size:13px; }
+
+
+
+}
+

@@ -1,0 +1,32 @@
+<?php 
+$recentPostsCollection = $block->getRecentPosts();
+if($recentPostsCollection->getSize()>0): ?>
+<div class="mb-block-recent-posts mb-block" data-bind="scope: 'recemt-posts'">
+	<div class="block-title"><strong>Recent Posts</strong></div>
+	<div class="mb-recent-post">
+		<ul class="items clearfix">
+			<?php foreach ($recentPostsCollection as $_post): ?>
+			<?php 	
+				$featuredImage = $block->getFeaturedImage($_post,45,45);
+				$_postUrl =  $block->getPosturl($_post);
+				$_postName = $block->escapeHtml($_post->getTitle(), null, true);
+			?>
+			<li class="item clearfix" id="post-<?php echo $_post->getId() ?>">
+				<div class="mb-thumb">
+					<a href="<?php echo $block->escapeHtml($_postUrl);?>" title="<?php echo $block->escapeHtml($_postName);?>">
+						<?php if($featuredImage): ?>
+							<img src="<?php echo $featuredImage;?>" alt="<?php echo $block->escapeHtml($_postName);?>">
+						<?php endif;?>
+					</a>
+				</div> 
+				<div class="detail">
+					<a class="title" href="<?php echo $block->escapeHtml($_postUrl);?>" 
+						title="<?php echo $block->escapeHtml($_postName);?>"><?php echo $block->escapeHtml($_postName);?></a>
+					<p class="mb-time"><?php echo $block->getdateago($_post->getPublishTime());?></p>
+				</div>
+			</li>    
+			<?php endforeach; ?>
+	    </ul>
+	</div>
+</div>
+<?php endif;?>

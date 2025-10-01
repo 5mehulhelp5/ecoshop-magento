@@ -1,0 +1,27 @@
+<?php 
+$_product = $block->getProduct();
+if($_product):
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $block->getStoreId();
+$categories = $_product->getCategoryIds();
+
+$rootCategoryId = $poco_helper->getRootCategoryId();
+if (in_array($rootCategoryId, $categories, TRUE)) { 
+	unset( $categories[array_search( $rootCategoryId, $categories )] );
+} 
+
+
+if(count($categories)>0):
+
+//$categoryId = $categories[1];
+$categoryId = $categories[0];
+$category = $poco_helper->getCategory($categoryId,$storeId);
+if ($category->getId()&&($category->getIsActive())){
+?>
+<div class="p_ctgry">
+<a class="p_catgry_link" href="<?php echo $category->getUrl()?>" title="<?php echo $block->escapeHtml($category->getName()) ?>" target="_blank;"><?php echo $block->escapeHtml($category->getName()) ?></a></div>
+<?php
+}
+endif;
+endif;
+?>

@@ -1,0 +1,32 @@
+<li id="Onepagecheckout-shipping" class="magebees-checkout-shipping-address checkout-shipping-address">
+    <div class="step-title" translate="'Shipping Address'" data-role="title"></div>
+    <div id="checkout-step-shipping" class="step-content" data-role="content">
+        <each if="!quoteIsVirtual" args="getRegion('customer-email')" render=""></each>
+        <each args="getRegion('address-list')" render=""></each>
+        <each args="getRegion('address-list-additional-addresses')" render=""></each>		
+        <if args="!isFormInline">
+            <button type="button" class="action action-show-popup" click="showFormPopUp" visible="!isNewAddressAdded()"> <span translate="'New Address'"></button>
+            <div id="opc-new-shipping-address" visible="isFormPopUpVisible()" render="shippingFormTemplate"></div>
+        </if>
+        <each args="getRegion('before-form')" render=""></each>
+        <render if="isFormInline" args="shippingFormTemplate"></render>
+    </div>
+</li>
+<li id="magebees-Onepagecheckout-shipping-methods" class="magebees-Onepagecheckout-shipping-method checkout-shipping-method" data-bind="blockLoader: isLoading" role="presentation">
+    <div class="checkout-shipping-method">
+        <div class="step-title" translate="'Shipping Methods'" data-role="title"></div>
+        <each args="getRegion('before-shipping-method-form')" render=""></each>
+        <div id="checkout-step-shipping_method" class="step-content" data-role="content" role="tabpanel" aria-hidden="false">
+            <form id="co-shipping-method-form" class="form methods-shipping" if="rates().length" submit="setShippingInformation" novalidate="novalidate">
+                <render args="shippingMethodListTemplate"></render>
+                <div id="onepage-checkout-shipping-method-additional-load">
+                    <each args="getRegion('shippingAdditional')" render=""></each>
+                </div>
+                <div role="alert" if="errorValidationMessage().length" class="message notice">
+                    <span text="errorValidationMessage()"></span>
+                </div>
+            </form>
+            <div class="no-quotes-block" ifnot="rates().length > 0" translate="'Sorry, no quotes are available for this order at this time'"></div>
+        </div>
+    </div>
+</li>

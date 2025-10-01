@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magebees" translate="label" sortOrder="100">
+            <label>MageBees</label>
+        </tab>
+        <section id="imagegallery" translate="label" type="text" sortOrder="95" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Image Gallery</label>
+            <tab>magebees</tab>
+            <resource>Magebees_Imagegallery::configuration_settings</resource>
+			<group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>General</label>
+				<field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enable Module</label> 
+					<comment><![CDATA[Select Yes for display images in frontend.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="allow_file_type" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Allow Image File Type</label> 
+					<comment><![CDATA[Add Image type Like : jpg,jpeg,png.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				
+			</group>
+			
+			<group id="sidebar" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Sidebar</label>
+				<field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enable</label> 
+					<comment><![CDATA[Select Yes for display image gallery in sidebar.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="display_heading" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Display heading</label> 
+					<depends>						
+						 <field id="enabled">1</field>
+					</depends>
+					<comment><![CDATA[Select Yes for display page heading.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="heading" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Heading</label> 
+					<depends>						
+						 <field id="enabled">1</field>
+						 <field id="display_heading">1</field>
+					</depends>
+					<comment><![CDATA[Here we can set heading..]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				</field>
+				<field id="display_description" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Display Description</label> 
+					<depends>						
+						 <field id="enabled">1</field>
+						 
+					</depends>
+					<comment><![CDATA[Select Yes for display page description.]]></comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="description" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Description</label> 
+					<depends>						
+						 <field id="enabled">1</field>
+						 <field id="display_description">1</field>
+						 
+					</depends>
+					<comment><![CDATA[Here we can set description.]]></comment> 
+				</field>
+				<field id="no_of_images" translate="label comment" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>No of Images</label> 
+					<depends>						
+						 <field id="enabled">1</field>
+					</depends>
+					<validate>required-entry validate-number validate-digits</validate>
+					<comment><![CDATA[Here we can set image limit.]]></comment> 
+				</field>
+				
+				
+			</group>
+		</section>
+    </system>
+</config>

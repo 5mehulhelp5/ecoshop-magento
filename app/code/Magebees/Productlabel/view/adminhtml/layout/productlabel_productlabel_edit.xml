@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<update handle="editor"/>
+	<head>      
+		 <script src="Magebees_Productlabel::js/jscolor/jscolor.js"/>
+	</head>
+	<body>
+		<referenceContainer name="content">
+			<block class="Magebees\Productlabel\Block\Adminhtml\Productlabel\Edit" name="productlabel_edit"/>
+		</referenceContainer>
+		<referenceContainer name="left">
+			<block class="Magebees\Productlabel\Block\Adminhtml\Productlabel\Edit\Tabs" name="productlabel_edit_tabs">
+			</block>
+		</referenceContainer> 
+		
+	</body>
+</page>

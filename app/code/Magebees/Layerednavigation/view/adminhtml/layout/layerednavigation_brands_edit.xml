@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Magebees\Layerednavigation\Block\Adminhtml\Brands\Edit" name="Layerednavigation_Brands_edit"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Magebees\Layerednavigation\Block\Adminhtml\Brands\Edit\Tabs" name="Layerednavigation_Brands_edit_tabs">
+                <block class="Magebees\Layerednavigation\Block\Adminhtml\Brands\Edit\Tab\Brandinfo" name="Layerednavigation_Brands_edit_tab_brandinfo"/>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">main_section</argument>
+                    <argument name="block" xsi:type="string">Layerednavigation_Brands_edit_tab_brandinfo</argument>
+                </action>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

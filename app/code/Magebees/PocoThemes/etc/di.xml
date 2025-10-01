@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<type name="Magento\Variable\Model\Config\Structure\AvailableVariables">
+        <arguments>
+            <argument name="configPaths" xsi:type="array">
+				<item name="pocothemes/contactus" xsi:type="array">
+					<item name="pocothemes/contactus/store_name" xsi:type="string">1</item>
+                    <item name="pocothemes/contactus/store_address" xsi:type="string">1</item>
+					<item name="pocothemes/contactus/store_email" xsi:type="string">1</item>
+                    <item name="pocothemes/contactus/contact" xsi:type="string">1</item>
+				 </item>  
+			</argument> 
+        </arguments>
+    </type>
+	<preference for="Magento\Reports\Model\ResourceModel\Product\Index\Viewed\Collection" 
+    type="Magebees\PocoThemes\Model\ResourceModel\Product\Index\Viewed\Collection"/>
+	<type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="sample_data" xsi:type="object">Magebees\PocoThemes\Console\Command\SampleData</item>   
+                
+            </argument>
+        </arguments>
+    </type>
+	<!--<type name="Magento\Framework\File\Uploader">
+        <plugin sortOrder="1" name="PocoThemesAddSvg" type="Magebees\PocoThemes\Plugin\File\UploaderPlugin"/>
+    </type>
+	<preference for="Magento\MediaStorage\Model\File\Uploader" type="Magebees\PocoThemes\Framework\File\Uploader"/>-->
+		
+</config>

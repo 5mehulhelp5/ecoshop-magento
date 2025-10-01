@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<ajaxsearch>			
+			<setting>			
+				<enable>1</enable>			
+				<search_min_length>2</search_min_length>			
+				<search_type>1</search_type>			
+				<exact_match>1</exact_match>							
+				<right_to_left>0</right_to_left>							
+			</setting>	
+			<recent_search_setting>			
+				<enable>1</enable>			
+				<enable_first_click>1</enable_first_click>			
+				<title>Recent Searches</title>			
+				<position>1</position>							
+				<limit>3</limit>							
+			</recent_search_setting>
+			<popular_search_setting>			
+				<enable>1</enable>							
+				<title>Popular Searches</title>			
+				<position>2</position>							
+				<limit>3</limit>							
+			</popular_search_setting>
+			<suggested_setting>			
+				<enable>1</enable>							
+				<title>Suggested Terms</title>			
+				<position>3</position>	
+				<limit>3</limit>											
+			</suggested_setting>
+			<category_setting>			
+				<enable>1</enable>							
+				<title>Categories</title>			
+				<position>4</position>												
+				<limit>3</limit>												
+				<name_length>30</name_length>									
+			</category_setting>	
+			<cms_setting>			
+				<enable>1</enable>							
+				<title>CMS Pages</title>			
+				<position>5</position>												
+				<limit>3</limit>												
+			</cms_setting>				
+			<cat_filter>			
+				<enable_cat>0</enable_cat>					
+			</cat_filter>	
+			<product_setting>	
+				<enable>1</enable>							
+				<title>Products</title>			
+				<position>4</position>			
+				<product_limit>6</product_limit>					
+				<name_length>50</name_length>					
+				<desc_length>30</desc_length>					
+				<product_price>1</product_price>					
+				<product_sku>1</product_sku>					
+				<product_cart>1</product_cart>					
+				<product_image>1</product_image>					
+				<product_review>1</product_review>					
+			</product_setting>	
+			<layout_setting>			
+				<cat_box_bg_color>#DDDDDD</cat_box_bg_color>					
+				<cat_text_color>#000000</cat_text_color>					
+				<popup_bg_color>#FFFFFF</popup_bg_color>					
+				<popup_border_color>#7E807E</popup_border_color>					
+				<searchtag_highlight_color>#BAFF00</searchtag_highlight_color>					
+				<section_title_color>#FFFFFF</section_title_color>					
+				<section_title_bg_color>#7E807E</section_title_bg_color>					
+				<section_title_link_color>#FFFC00</section_title_link_color>					
+				<searchtag_font_color>#000000</searchtag_font_color>					
+				<searchtag_font_bg_color>#DDDDDD</searchtag_font_bg_color>					
+				<searchtag_font_hover_color>#CCCCCC</searchtag_font_hover_color>					
+				<productlist_font_color>#0E170F</productlist_font_color>					
+				<productlist_bg_color>#FAFAFA</productlist_bg_color>					
+				<productlist_bg_hover_color>#EBEBEB</productlist_bg_hover_color>	
+										
+			</layout_setting>				
+		</ajaxsearch>
+    </default>
+</config>

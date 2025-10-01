@@ -1,0 +1,68 @@
+<?php 
+	$randon_number = rand();	
+	$res_div = '#categoryThumbnail'.$randon_number;
+	$url = $block->getUrl('catthumb/index/ajaxload');
+?>
+<div id="categoryThumbnail<?php echo $randon_number; ?>"></div>
+<script type="text/javascript">
+    require(['jquery'], function(jQuery){
+        jQuery(document).ready(function() {
+		
+		jQuery.fn.iscategoryThumbanailInViewport = function () {
+			let elementTop = jQuery(this).offset().top;
+			let elementBottom = elementTop + jQuery(this).outerHeight();
+			let viewportTop = jQuery(window).scrollTop();
+			let viewportBottom = viewportTop + jQuery(window).height();
+			return elementBottom > viewportTop && elementTop < viewportBottom;
+		};
+
+jQuery(window).scroll(function () {
+    if ((jQuery('<?= $res_div ?> ').iscategoryThumbanailInViewport())&&(!jQuery('<?= $res_div ?>').hasClass('ajax_send'))) {
+        jQuery('<?= $res_div ?>').addClass('ajax_send');
+                jQuery.ajax({
+                    context: '<?= $res_div ?>',
+                    url: '<?= $url ?>',
+                    type: "POST",
+                    data: {
+					'wd_enable':'<?= $this->wd_enable ?>',
+					'wd_categories':'<?= $this->wd_categories ?>',
+					'wd_spacing':'<?= $this->wd_spacing ?>',
+					'wd_bottom_spacing':'<?= $this->wd_bottom_spacing ?>',
+					'wd_show_heading':'<?= $this->wd_show_heading ?>',
+					'wd_heading':'<?= $this->wd_heading ?>',
+					'wd_heading_position':'<?= $this->wd_heading_position ?>',
+					'wd_heading_logo':'<?= $this->wd_heading_logo ?>',
+					'wd_short_desc':'<?= $this->wd_short_desc ?>',
+					'wd_shopnow':'<?= $this->wd_shopnow ?>',
+					'store_id':'<?= $this->store_id ?>',
+					'wd_show_viewall':'<?= $this->wd_show_viewall ?>',
+					'wd_viewall_txt':'<?= $this->wd_viewall_txt ?>',
+					'wd_viewall_url':'<?= $this->wd_viewall_url ?>',
+					'wd_no_of_items':'<?= $this->wd_no_of_items ?>',
+					'wd_bgimage':'<?= $this->wd_bgimage ?>',
+					'wd_description':'<?= $this->wd_description ?>',
+					'wd_slider':'<?= $this->wd_slider ?>',		
+					'wd_autoscroll':'<?= $this->wd_autoscroll ?>',		
+					'wd_navarrow':'<?= $this->wd_navarrow ?>',	
+					'wd_pagination':'<?= $this->wd_pagination ?>',		
+					'wd_pagination_type':'<?= $this->wd_pagination_type ?>',		
+					'wd_infinite_loop':'<?= $this->wd_infinite_loop ?>',
+					'wd_scrollbar':'<?= $this->wd_scrollbar ?>',
+					'wd_grap_cursor':'<?= $this->wd_grap_cursor ?>',
+					'wd_slide_auto_height':'<?= $this->wd_slide_auto_height ?>',
+					'wd_centered':'<?= $this->wd_centered ?>',
+					'wd_items_per_slide':'<?= $this->wd_items_per_slide ?>',
+					'wd_auto_play_delaytime':'<?= $this->wd_auto_play_delaytime ?>',
+					'wd_autoplayoff':'<?= $this->wd_autoplayoff ?>',
+					'wd_items_per_row':'<?= $this->wd_items_per_row ?>',
+					'wd_bgcolor':'<?= $this->wd_bgcolor ?>',
+					'template':'<?= $this->template ?>',
+					},
+                }).done(function (data) {
+					jQuery('<?= $res_div ?>').html(data.result);
+				});
+	} 
+	});
+	});
+    });
+</script>

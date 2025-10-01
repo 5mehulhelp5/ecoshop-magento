@@ -1,0 +1,51 @@
+<!-- ko if: isShowDiscount() -->
+
+<!--<div class="payment-option _collapsible Onepagecheckout-payment-additional discount-code magebees-discount-code-wrapper magebees-Onepagecheckout-additional-blocks"
+     data-bind="mageInit: {'collapsible':{'openedState': '_active'}}, myTestHandler: {} ">-->
+	 
+	 <div class="payment-option _collapsible Onepagecheckout-payment-additional discount-code magebees-discount-code-wrapper magebees-Onepagecheckout-additional-blocks" data-bind="mageInit: {'collapsible':{'openedState': '_active'}}">
+	 
+    <div class="payment-option-title field choice" data-role="title">
+        <span class="action magebees-action-toggle action-toggle" id="block-discount-heading" role="heading" aria-level="2">
+            <!-- ko i18n: 'Discount Codes'--><!-- /ko -->
+        </span>
+    </div>
+    <div class="magebees-payment-option-content payment-option-content" data-role="content">
+
+        <form class="form form-discount magebees-discount-form magebees-additional-block-form-wrapper" id="discount-form" data-bind="blockLoader: isLoading">
+            <div class="payment-option-inner">
+                <div class="field">
+                    <label class="label magebees-additional-block-code-label" for="discount-code">
+                        <span class="magebees-additional-block-code-name" data-bind="i18n: 'Enter your coupon code:'"></span>
+                    </label>
+                    <div class="control">
+                        <input class="input-text magebees-input-for-code"
+                               type="text"
+                               id="discount-code"
+                               name="discount_code"
+                               data-validate="{'required-entry':true}"
+                               data-bind="value: couponCode, attr:{placeholder: $t('')} " />
+                    </div>
+                </div>
+            </div>
+            <!-- ko foreach: getRegion('messages') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+            <div class="magebees-actions-toolbar actions-toolbar">
+                <div class="primary">
+                    <!-- ko ifnot: isApplied() -->
+                    <button class="action magebees-action-code-button magebees-action-apply mageb-button action-apply" type="submit" data-bind="'value': $t('Apply Discount'), click: apply">
+                        <span><!-- ko i18n: 'Apply'--><!-- /ko --></span>
+                    </button>
+                    <!-- /ko -->
+                    <!-- ko if: isApplied() -->
+                    <button class="action magebees-action-code-button magebees-action-cancel action-cancel button" type="submit" data-bind="'value': $t('Cancel'), click: cancel">
+                        <span><!-- ko i18n: 'Cancel'--><!-- /ko --></span>
+                    </button>
+                    <!-- /ko -->
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- /ko -->

@@ -1,0 +1,56 @@
+<?php /* @var block \Magebees\Promotionsnotification\Block\View\Top */
+/* @var block \Magebees\Promotionsnotification\Block\View\Bottom */
+$dontShowBar = $this->_cookieManager->getCookie('dontShowBar');
+if ($block->getBarEnabled()) :
+    $bar_collection = $block->getNotificationCollection();
+    if ($block->getBarHeight() == 0) {
+        $bar_height = "";
+    } else {
+        $bar_height = 'height:'.$block->getBarHeight().'px';
+    }
+    $count = $bar_collection->getSize();
+    ?>
+    <?php if ($count) :
+	$notificationData = array();
+	$notificationinitData = array();
+	$notificationData['count'] = $count;
+	$notificationData['bar_height'] = $block->getBarHeight();
+	$notificationData['bar_after_time'] = $block->getBarAfterTimer();
+	$notificationData['bar_auto_close'] = $block->getBarAutoClose();
+	$notificationData['bar_auto_close_time'] = $block->getBarAutoCloseTime();
+	$notificationData['bar_one_time_per_user'] = $block->getBarOneTimePerUser();
+	$notificationData['bar_all_or_one'] = $block->getBarAllOrOne();
+	$notificationData['id'] = "bar";
+	$notificationinitData['magebees.notification'] = $notificationData;
+	?>
+        <?php $helper = $this->helper('Magebees\Promotionsnotification\Helper\Data'); ?>
+        <div id="notification_slider" data-mage-init='<?php echo json_encode($notificationinitData);?>' class="<?php if (!$block->getBarShowInMobile()) { echo 'hideInmobile'; } ?>" style="display:none;">
+            <a href="#;" id="close_notification" title="CloseBar"><span class="lbl"><?php echo $block->escapeHtml(__('Close')); ?></span></a>			<?php if ($block->getBarAllOrOne()!="one") {
+				$swiper_data_init = array();	
+				$swiper_data_init['slider_id'] = 'swiper_notification_bar';		
+				$swiper_data_init['autoplay']['delay'] = 5000;
+				$swiper_data_init['spaceBetween'] = 30;			
+				$swiper_data_init['effect'] = 'fade';	
+				$swiper_data_init['a11y'] = false;	
+				if ($count<=1) {			
+				$swiper_data_init['loop'] = false;
+				}else{				
+				$swiper_data_init['loop'] = true;	
+				}			
+				$swiper_data_init['grabCursor'] = true;	
+				?><div id="swiper_notification_bar" class="swiper-container" data-swiper='<?php echo json_encode($swiper_data_init);?>'><?php			}else{				?><div id="swiper_notification_bar" class="swiper-container"><?php			}						?>			
+            
+                <div class="swiper-wrapper">
+                    <?php foreach ($bar_collection as $bar_collection) : ?>
+                    <div class="swiper-slide" style="background-color:<?php echo $bar_collection->getBackgroundColor() ?>; <?php echo $bar_height ?>">
+                        <?php echo $helper->getFilterProvider()->getPageFilter()->filter($bar_collection->getData('notification_content')); ?>
+                    </div>
+                    <?php if ($block->getBarAllOrOne()=="one") : ?>
+                    <?php $count=1; break; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            </div>
+            </div>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>

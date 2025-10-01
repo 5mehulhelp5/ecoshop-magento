@@ -1,0 +1,38 @@
+<?php 
+$brandlogo_coll=$block->getAjaxBrandData();
+$helper=$this->helper('\Magebees\Layerednavigation\Helper\Data');
+$brands_config=$helper->getBrandConfigData();
+$brand_url_key=$brands_config['brand_url_key'];	
+if (count($brandlogo_coll) >0)	{?>
+	<ul class="block-content">		
+<?php foreach($brandlogo_coll as $brand){			
+			if(isset($brand) && !empty($brand)){						
+					$img = $helper->getThumbnailsImage($brand['filename']);	
+							$link_url = $helper->getBaseUrl();
+							if($brand_url_key)	{
+								$link_url .= $brand_url_key.'/';
+							}							
+							$link_url .= $brand['seo_url'];								
+					?>
+						<li class="brandsearching">
+								<?php	$brand_desc = $brand['brand_description'];					
+								if($brand['brand_description'] != "") {
+									$tooltipcws= 'tooltipcws tooltip';
+								}else{
+									$tooltipcws= '';
+								}
+								$brand_desc = '';
+								if(isset($brand['brand_description']) != "" ) {
+									$brand_desc= $brand['brand_description'];
+								}
+								if(isset($img) && !empty($brand['filename'])){?>
+									<a href="<?php echo $link_url;?>" class="<?php echo $tooltipcws;?>" target="_blank">
+										<img src="<?php echo $img;?>" title="<?php echo $brand_desc;?>"/>	</a>					
+								<?php }else{?>						
+									<a href="<?php echo $link_url;?>" title="<?php echo $brand_desc;?>" target="_blank">
+									<?php echo $brand['brand_name'];?></a>
+							<?php	}?>
+					</li>
+		<?php	}	} ?>
+	</ul>
+<?php }?>

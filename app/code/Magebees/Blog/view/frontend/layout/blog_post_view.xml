@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd" layout="2columns-left">
+    <body>
+        <referenceContainer name="columns.top">
+            
+            <container name="page.messages" htmlTag="div" htmlClass="page messages">
+                <block class="Magento\Framework\View\Element\Template" name="ajax.message.placeholder" template="Magento_Theme::html/messages.phtml"/>
+                <block class="Magento\Framework\View\Element\Messages" name="messages" as="messages" template="Magento_Theme::messages.phtml"/>
+            </container>
+        </referenceContainer>
+        <referenceContainer name="content">
+			<block class="Magento\Theme\Block\Html\Title" name="page.main.title" template="html/title.phtml"/>
+            <block class="Magebees\Blog\Block\Post\View" name="post_view" template="Magebees_Blog::post/view.phtml">
+				<block class="Magebees\Blog\Block\Post\FeatureImage" name="post_featureimage" template="Magebees_Blog::post/view/featureimage.phtml"></block>
+				<block class="Magebees\Blog\Block\Post\Info" name="post_info" template="Magebees_Blog::post/view/info.phtml"  ></block>
+				<block class="Magebees\Blog\Block\Post\Gallery" name="post_gallery" template="Magebees_Blog::post/view/gallery.phtml"></block>
+				<block class="Magebees\Blog\Block\Post\Relatedpost" name="related_post" template="Magebees_Blog::post/view/relatedpost.phtml"></block>
+				<block class="Magebees\Blog\Block\Post\PostRelatedProducts" name="post_related_products" template="Magebees_Blog::post/view/relatedproducts.phtml"></block>
+					<block class="Magebees\Blog\Block\Post\Addthis" name="post_add_this" template="Magebees_Blog::post/view/addthis.phtml"></block>
+				<block class="Magebees\Blog\Block\Post\Comment" name="post_comment" template="Magebees_Blog::post/view/comment.phtml"></block>
+				<block class="Magebees\Blog\Block\Post\NextPrevLink" name="post_next_prev_link" template="Magebees_Blog::post/view/nextprevlink.phtml"></block>
+				<block class="Magebees\Blog\Block\Post\Likedislike" name="post_like_dislike_link" template="Magebees_Blog::post/view/likedislike.phtml"></block>
+			
+            </block>
+        </referenceContainer>
+<referenceContainer name="sidebar.additional">
+             <referenceBlock name="catalog.compare.sidebar" remove="true"/>
+		<referenceBlock name="wishlist_sidebar" remove="true" />	
+		
+			
+        </referenceContainer>
+		<referenceContainer name="sidebar.main">
+             <referenceBlock name="catalog.compare.sidebar" remove="true"/>
+		<referenceBlock name="wishlist_sidebar" remove="true" />	
+		<block class="Magebees\Blog\Block\Sidebar\Search" name="sidebar.blog.search" template="Magebees_Blog::sidebar/search.phtml"></block>
+			<block class="Magebees\Blog\Block\Sidebar\Category" name="sidebar.blog.category" template="Magebees_Blog::sidebar/category.phtml">
+				
+            </block>
+			<block class="Magebees\Blog\Block\Sidebar\Recentposts" name="sidebar.blog.recentposts" template="Magebees_Blog::sidebar/recentposts.phtml"></block>
+			<block class="Magebees\Blog\Block\Sidebar\Recentcomments" name="sidebar.blog.recentcomments" template="Magebees_Blog::sidebar/recentcomments.phtml"></block>
+			<block class="Magebees\Blog\Block\Sidebar\Archive" name="sidebar.blog.archive" template="Magebees_Blog::sidebar/archive.phtml"></block>
+			<block class="Magebees\Blog\Block\Sidebar\TagList" name="sidebar.blog.tags" template="Magebees_Blog::sidebar/tags.phtml"></block>
+			
+        </referenceContainer>
+		<move element="page.main.title" destination="content" before="-" />
+    </body>
+</page>

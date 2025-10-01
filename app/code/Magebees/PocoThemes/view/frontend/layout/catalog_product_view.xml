@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<body>
+		<referenceContainer name="content">
+			<block class="Magento\Framework\View\Element\Template" before="pocotheme-guaranteed-safe-checkout" name="pocothemes.freeshippingbar" template="Magebees_PocoThemes::free_shipping_bar.phtml">
+			<action method="setSection"><argument name="section" xsi:type="string">productdetail</argument></action></block>
+		</referenceContainer> 
+	<move element="pocothemes.freeshippingbar" destination="product.info.main" before="product.info.overview"/>
+	</body>
+</page>

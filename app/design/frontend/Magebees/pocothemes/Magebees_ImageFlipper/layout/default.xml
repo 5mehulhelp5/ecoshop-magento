@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">  	
+   <body>
+  
+   <referenceContainer name="before.body.end">
+            <block class="Magebees\ImageFlipper\Block\ImageFlipper" ifconfig="imageflipper/setting/enable" name="magebees.imageflipper">
+			<action method="manageScriptTemplate" /> 
+			 <arguments><argument name="cache_lifetime" xsi:type="number">7200</argument></arguments>
+			</block>		
+        </referenceContainer>
+    </body>
+</page>

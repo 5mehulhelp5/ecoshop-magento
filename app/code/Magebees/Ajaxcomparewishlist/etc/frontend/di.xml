@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Controller\Product\Compare\Add">
+        <plugin name="ajax_compare_plugin" type="Magebees\Ajaxcomparewishlist\Plugin\Controller\Product\Compare\Add"/>
+    </type>
+	<type name="Magento\Wishlist\Controller\Index\Add">
+        <plugin name="wishlist_add_ajax" type="Magebees\Ajaxcomparewishlist\Plugin\Controller\Index\Plugin" sortOrder="10" />
+    </type>
+    <type name="Magento\Wishlist\Controller\Index\Remove">
+        <plugin name="wishlist_add_ajax" type="Magebees\Ajaxcomparewishlist\Plugin\Controller\Index\Plugin" sortOrder="10" />
+    </type>
+    <type name="Magento\Wishlist\Controller\Index\Update">
+        <plugin name="wishlist_add_ajax" type="Magebees\Ajaxcomparewishlist\Plugin\Controller\Index\Plugin" sortOrder="10" />
+    </type>	
+</config>

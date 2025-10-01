@@ -1,0 +1,176 @@
+<?php 
+$order = $block->getOrder();
+$mbhelper = $this->helper('Magebees\Onepagecheckout\Helper\Data');
+$mockdata = $mbhelper->getObjectManager()->create('Magebees\Onepagecheckout\Model\Successcustom')->getCollection()->getData();
+$order_details = $block->getOrder();
+?>
+
+<div class="mageb-success-page">
+    <div id="mockTop">
+    <?php foreach($mockdata as $items){ ?>
+        <?php if($items['oscsection'] == "mockTop"){ ?>
+                <?php 
+                    if($items['oscfieldname'] == "block1"){
+						echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/cmsblock1.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "block2"){
+                        echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/cmsblock2.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "block3"){
+                        echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/cmsblock3.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "block4"){
+                        echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/cmsblock4.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "thankUnote"){
+                        echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/thankyou.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "quickReg"){
+                        $guest = $order_details->getCustomerIsGuest();
+                        if ($guest) {
+                            echo $this->getLayout()->createBlock("Magento\Customer\Block\Form\Register")->setTemplate("Magebees_Onepagecheckout::order/success/register.phtml")->toHtml();	
+                        }
+                    }
+                    if($items['oscfieldname'] == "orderDetails"){
+						echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/orderdetails.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "shipingPayment"){
+						echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/shippingpaymentinfo.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "additionalInfo"){
+						echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/additionalinfo.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "recurrProfile"){
+                        //echo $this->getChildHtml('opc_recurring_profile');
+                    }
+                ?>
+        <?php } ?>
+    <?php } ?>
+    </div>
+    
+    <div class="mageb-success-row">
+        <div id="mockLeft" class="sucess-col">
+        <?php foreach($mockdata as $items){ ?>
+            <?php if($items['oscsection'] == "mockLeft"){ ?>
+                    <?php 
+                    if($items['oscfieldname'] == "block1"){
+						echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/cmsblock1.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "block2"){
+                        echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/cmsblock2.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "block3"){
+                        echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/cmsblock3.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "block4"){
+                        echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/cmsblock4.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "thankUnote"){
+						echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/thankyou.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "quickReg"){
+                        $guest = $order_details->getCustomerIsGuest();
+                        if ($guest) {
+                            echo $this->getLayout()->createBlock("Magento\Customer\Block\Form\Register")->setTemplate("Magebees_Onepagecheckout::order/success/register.phtml")->toHtml();	
+                        }
+                    }
+                    if($items['oscfieldname'] == "orderDetails"){
+						echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/orderdetails.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "shipingPayment"){
+						echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/shippingpaymentinfo.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "additionalInfo"){
+						echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/additionalinfo.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "recurrProfile"){
+                        //echo $this->getChildHtml('opc_recurring_profile');
+                    }
+                ?>
+            <?php } ?>
+        <?php } ?>
+        </div>
+        <div id="mockRight" class="sucess-col">
+        <?php foreach($mockdata as $items){ ?>
+            <?php if($items['oscsection'] == "mockRight"){ ?>
+                    <?php 
+                    if($items['oscfieldname'] == "block1"){
+						echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/cmsblock1.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "block2"){
+                        echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/cmsblock2.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "block3"){
+                        echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/cmsblock3.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "block4"){
+                        echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/cmsblock4.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "thankUnote"){
+						echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/thankyou.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "quickReg"){
+                        $guest = $order_details->getCustomerIsGuest();
+                        if ($guest) {
+                            echo $this->getLayout()->createBlock("Magento\Customer\Block\Form\Register")->setTemplate("Magebees_Onepagecheckout::order/success/register.phtml")->toHtml();	
+                        }
+                    }
+                    if($items['oscfieldname'] == "orderDetails"){
+						echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/orderdetails.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "shipingPayment"){
+						echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/shippingpaymentinfo.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "additionalInfo"){
+						echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/additionalinfo.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "recurrProfile"){
+                        //echo $this->getChildHtml('opc_recurring_profile');
+                    }
+                ?>
+            <?php } ?>
+        <?php } ?>
+        </div>
+    </div>
+    <div id="mockBottom">
+    <?php foreach($mockdata as $items){ ?>
+        <?php if($items['oscsection'] == "mockBottom"){ ?>
+                <?php 
+                    if($items['oscfieldname'] == "block1"){
+						echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/cmsblock1.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "block2"){
+                        echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/cmsblock2.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "block3"){
+                        echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/cmsblock3.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "block4"){
+                        echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/cmsblock4.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "thankUnote"){
+						echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/thankyou.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "quickReg"){
+                        $guest = $order_details->getCustomerIsGuest();
+                        if ($guest) {
+                            echo $this->getLayout()->createBlock("Magento\Customer\Block\Form\Register")->setTemplate("Magebees_Onepagecheckout::order/success/register.phtml")->toHtml();	
+                        }
+                    }
+                    if($items['oscfieldname'] == "orderDetails"){
+						echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/orderdetails.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "shipingPayment"){
+						echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/shippingpaymentinfo.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "additionalInfo"){
+						echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Magebees_Onepagecheckout::order/success/additionalinfo.phtml")->toHtml();
+                    }
+                    if($items['oscfieldname'] == "recurrProfile"){
+                        //echo $this->getChildHtml('opc_recurring_profile');
+                    }
+                ?>
+        <?php } ?>
+    <?php } ?>
+    </div>
+</div>

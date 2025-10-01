@@ -1,0 +1,32 @@
+<div class="mb-block-search mb-block" data-bind="scope: 'blog-search'">
+    <div class="block-title"><strong><?php echo $block->escapeHtml('Search The Blog');?></strong></div>
+    <div class="block-content">
+    	<form class="form" id="blog_search_mini_form" action="<?php echo $block->getFormUrl() ?>" method="get">
+            <div class="field search">
+                <label class="label" for="blog_search">
+                    <span><?php echo __('Search') ?></span>
+                </label>
+                <div class="control">
+                    <input id="blog_search" type="text" name="q" value="<?php echo $block->escapeHtml($block->getSearchQuery()) ?>" placeholder="<?php echo __('Search posts here...') ?>" class="input-text" maxlength="128" role="combobox" aria-haspopup="false" aria-autocomplete="both" autocomplete="off">
+                </div>
+            </div>
+            <div class="actions">
+                <button type="submit" onclick="return BlogSearch(this);" title="<?php echo __('Search') ?>" class="action search">
+                    <span><?php echo __('Search') ?></span>
+                </button>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+    	function BlogSearch(e)
+    	{
+    		var blog_search_term = document.getElementById('blog_search').value;
+    		blog_search_term = blog_search_term.trim();
+    		if (blog_search_term) {
+    			var a = e.form.action;
+    			window.location = a + ( ('/' != a.charAt(a.length - 1)) ? '/' : '' ) + encodeURI(blog_search_term) + '/';
+    		}
+    		return false;
+    	}
+    </script>
+</div>

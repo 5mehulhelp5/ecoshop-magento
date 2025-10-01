@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Backend/etc/menu.xsd">
+	<menu>		
+		<add id="Magebees_Responsivebannerslider::Heading" title="MageBees - Responsive Banner Slider" module="Magebees_Responsivebannerslider" sortOrder="50" parent="Magento_Backend::content" resource="Magebees_Responsivebannerslider::Heading" />
+		<add id="Magebees_Responsivebannerslider::grid" title="Manage Groups"  action="responsivebannerslider/slidergroup" module="Magebees_Responsivebannerslider" sortOrder="2" parent="Magebees_Responsivebannerslider::Heading"  resource="Magebees_Responsivebannerslider::grid"/>
+		<add id="Magebees_Responsivebannerslider::slide" title="Manage Slides"  action="responsivebannerslider/slide" module="Magebees_Responsivebannerslider" sortOrder="2" parent="Magebees_Responsivebannerslider::Heading"  resource="Magebees_Responsivebannerslider::slide"/>
+			
+	</menu>
+</config>
+

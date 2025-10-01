@@ -1,0 +1,53 @@
+<?php
+
+/** @var $block \Magento\Catalog\Block\Product\View*/
+
+?>
+
+<?php
+
+$_product = $block->getProduct();
+
+$_wishlistSubmitParams = $this->helper('Magento\Wishlist\Helper\Data')->getAddParams($_product);
+
+$compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare');
+
+$helper = $this->helper('Magebees\Ajaxquickview\Helper\Data');
+
+$block_quickview=$block->getLayout()->createBlock('\Magebees\Ajaxquickview\Block\QuickView');
+
+$popup_config=$block_quickview->getPopupConfig();
+
+?>
+
+<div class="product-addto-links" data-role="add-to-links">	
+		<?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()) : ?>
+		<?php if ($popup_config['show_wishlist']) : ?>
+			<a title="<?php echo __('Add to Wish List');?>" href="#" class="action towishlist" data-post='<?php /* @escapeNotVerified */ echo $_wishlistSubmitParams; ?>' data-action="add-to-wishlist">
+				<svg xmlns="https://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+				<span><?php /* @escapeNotVerified */ echo __('Add to Wish List') ?></span>
+			</a>
+		<?php endif; ?>
+		<?php endif; ?>
+	<?php if ($popup_config['show_compare']) : ?>
+		<a title="<?php echo __('Add to Compare');?>" href="#" data-post='<?php /* @escapeNotVerified */ echo $helper->getPostDataParams($_product);?>' data-role="add-to-links" class="action tocompare">
+			<svg xmlns="https://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+			<span><?php /* @escapeNotVerified */ echo __('Add to Compare') ?></span>
+		</a>
+	<?php endif; ?>
+</div>
+
+<script type="text/x-magento-init">
+
+    {
+
+        "body": {
+
+            "addToWishlist": <?php /* @escapeNotVerified */ echo $this->helper('Magento\Framework\Json\Helper\Data')->jsonEncode($block->getWishlistOptions())?>
+
+        }
+
+    }
+
+</script>
+

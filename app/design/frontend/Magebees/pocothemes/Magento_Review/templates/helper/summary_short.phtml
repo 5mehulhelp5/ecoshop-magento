@@ -1,0 +1,59 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Review\Block\Product\ReviewRenderer $block */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+
+$url = $block->getReviewsUrl() . '#reviews';
+$urlForm = $block->getReviewsUrl() . '#review-form';
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $poco_helper->getStoreId();
+$home_style =$poco_helper->getConfigValue('home','home_style','pocothemes',$storeId);
+?>
+<?php if ($block->isReviewEnabled() && $block->getReviewsCount()): ?>
+    <?php $rating = $block->getRatingSummary(); ?>
+    <div class="product-reviews-summary short<?= !$rating ? ' no-rating' : '' ?>">
+		<?php if ($rating):?>
+            <?php if($home_style=='poco-themes-style-17'):?>
+		        <div class="rt-couters">
+		            <div class="rt-count"><?php echo $rating / 20; ?></div>
+		            <div class="rt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div>
+		            <div class="rv-count"><?php echo $block->getReviewsCount();?></div>
+		        </div>
+		<?php else:?>
+         <div class="rating-summary">
+            <span class="label"><span><?= $block->escapeHtml(__('Rating')) ?>:</span></span>
+            <div class="rating-result"
+                 id="rating-result_<?= /* @noEscape */ $block->getProduct()->getId() ?>"
+                 title="<?= $block->escapeHtmlAttr($rating) ?>%">
+                <span><span><?= $block->escapeHtml($rating) ?>%</span></span>
+            </div>
+            <?= /* @noEscape */ $secureRenderer->renderStyleAsTag(
+                'width:' . $block->escapeHtmlAttr($rating) . '%',
+                '#rating-result_' . $block->getProduct()->getId() . ' span'
+            ) ?>
+        </div>
+		<?php endif;?>
+        <?php endif;?>
+		<div class="reviews-actions">
+            <a class="action view"
+               href="<?= $block->escapeUrl($url) ?>"><?= $block->escapeHtml($block->getReviewsCount()) ?>
+                &nbsp;<span><?= ($block->getReviewsCount() == 1) ?
+                        $block->escapeHtml(__('Review')) : $block->escapeHtml(__('Reviews')) ?>
+                </span>
+            </a>
+        </div>
+		
+    </div>
+<?php elseif ($block->isReviewEnabled() && $block->getDisplayIfEmpty()): ?>
+    <div class="product-reviews-summary short empty">
+        <div class="reviews-actions">
+            <a class="action add" href="<?= $block->escapeUrl($urlForm) ?>">
+                <?= $block->escapeHtml(__('Be the first to review this product')) ?>
+            </a>
+        </div>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="jquery/colorpicker/css/colorpicker.css"/>
+     <!--  <link src="jquery/colorpicker/js/colorpicker.js"/>-->
+    </head>
+	 <body>		
+		<referenceBlock name="before.body.end">
+			<block class="Magento\Framework\View\Element\Template" name="ajaxquickview.color.js" template="Magebees_Ajaxquickview::colorpickerJs.phtml"/>			
+		</referenceBlock>
+	 	
+    </body>
+</page>

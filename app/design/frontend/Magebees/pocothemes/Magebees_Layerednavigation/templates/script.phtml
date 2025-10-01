@@ -1,0 +1,49 @@
+<?php 
+$helper = $this->helper('\Magebees\Layerednavigation\Helper\Data');
+$varnish_enable = $helper->isLayerVarnishEnabled();
+$image_url = $block->getViewFileUrl('Magebees_Layerednavigation::images/ajax_loader.gif'); 
+$enableAjax = $helper->getAjaxConfig();
+
+// Get the Infinite Scroll block
+$scrollBlock = $this->getLayout()->createBlock('Magebees\AjaxInfiniteScroll\Block\AjaxScroll');
+$config = $scrollBlock->getConfig();
+?>
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$loaderUrl = $poco_helper->getLoadingIcon(); ?>
+<div id="loadingLayer" style="display:none;">
+    <div><img loading="lazy" src="<?php echo $loaderUrl; ?>" alt="Loading..." width="90" height="90" /></div>
+</div>
+<input type="hidden" name="enable_varnish" id="enable_varnish" value="<?php echo $varnish_enable; ?>">
+<input type="hidden" name="enable_ajaxscroll" id="enable_ajaxscroll" value="<?php echo $config['enable']; ?>">
+<div id="infinite-scroll-config"
+     data-config='<?php echo htmlspecialchars(json_encode($config), ENT_QUOTES, 'UTF-8'); ?>'>
+</div>
+<?php if ($enableAjax == 0) { ?>
+<script type="text/javascript">
+require([
+    'jquery',
+    "Magebees_Layerednavigation/js/magebees-layer"
+], function($, layeredNav) {  
+
+    function loadContent(event) {
+        var layerednav = new layeredNav();
+		layerednav.dropChange();
+        layerednav.initAjaxLayerNavigation();
+        layerednav.initFilterNavigation();
+        layerednav.gridSwitchList();
+        layerednav.gridSorterOptions();
+        layerednav.gridSorterAction();
+        layerednav.gridLimiterAction();
+    }
+
+    if (document.readyState !== 'loading') {
+        loadContent();
+    } else {
+        document.addEventListener('DOMContentLoaded', function () {
+            loadContent();
+        });
+    }
+
+});
+</script>
+<?php } ?>

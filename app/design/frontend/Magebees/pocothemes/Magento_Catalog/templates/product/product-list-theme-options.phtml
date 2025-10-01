@@ -1,0 +1,172 @@
+<?php 
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $poco_helper->getStoreId();	
+$themeLayoutConfig = $poco_helper->getConfigGroup('theme_layout',$storeId);
+$productListConfig = $poco_helper->getConfigGroup('pro_list',$storeId);
+
+$rtl = array_key_exists('rtl', $themeLayoutConfig) ? $themeLayoutConfig['rtl'] : null;
+$animation = array_key_exists('animation', $themeLayoutConfig) ? $themeLayoutConfig['animation'] : null;
+$animation_class = $animation?"wow animate__fadeIn":" ";
+
+$allow_add_to_cart = array_key_exists('add_to_cart', $themeLayoutConfig) ? $themeLayoutConfig['add_to_cart'] : false;
+$show_cart = array_key_exists('add_to_cart', $themeLayoutConfig) ? $themeLayoutConfig['add_to_cart'] : false;
+$show_wishlist = array_key_exists('add_to_wishlist', $themeLayoutConfig) ? $themeLayoutConfig['add_to_wishlist'] : false;
+$show_compare = array_key_exists('add_to_compare', $themeLayoutConfig) ? $themeLayoutConfig['add_to_compare'] : false;
+
+
+$font_icons = $poco_helper->getConfigGroup('font_icons',$storeId);
+$whishlist_icon = array_key_exists('whishlist', $font_icons) ? $font_icons['whishlist'] : false;
+$compare_icon = array_key_exists('compare', $font_icons) ? $font_icons['compare'] : false;
+$add_cart_icon = array_key_exists('add_cart', $font_icons) ? $font_icons['add_cart'] : false;
+$quick_view_icon = array_key_exists('quick_view', $font_icons) ? $font_icons['quick_view'] : false;
+
+ 
+ 
+$currentAction = $poco_helper->getCurrentAction();
+
+$showAddtoCart = false;
+/* if($hover_effects == 'button-hover-style7' || $hover_effects == 'button-hover-style8')
+{
+	$showAddtoCart = true;
+}*/
+
+$hover_effects = array_key_exists('hover_effects', $productListConfig) ? $productListConfig['hover_effects'] : null;
+$show_deal_timer = array_key_exists('show_deal_timer', $productListConfig) ? $productListConfig['show_deal_timer'] : null;
+$swiper_btn_hover_effects_class = null;
+
+$hover_style2 = $hover_effects == 'button-hover-style2'?'hover-style2':'';
+$hover_style3 = $hover_effects == 'button-hover-style3'?'hover-style3':'';
+$hover_style4 = $hover_effects == 'button-hover-style4'?'hover-style4':'';
+$hover_style5 = $hover_effects == 'button-hover-style5'?'hover-style5':'';
+$hover_style6 = $hover_effects == 'button-hover-style6'?'hover-style6':'';
+$hover_style7 = $hover_effects == 'button-hover-style7'?'hover-style7':'';
+$hover_style8 = $hover_effects == 'button-hover-style8'?'hover-style8':'';
+$hover_style9 = $hover_effects == 'button-hover-style9'?'hover-style9':'';
+$hover_style10 = $hover_effects == 'button-hover-style10'?'hover-style10':'';
+$hover_style11 = $hover_effects == 'button-hover-style11'?'hover-style11':'';
+$hover_style12 = $hover_effects == 'button-hover-style12'?'hover-style12':'';
+$hover_style13 = $hover_effects == 'button-hover-style13'?'hover-style13':'';
+
+$hover_btn_style_array = array();
+$hover_btn_style_array['button-hover-style1'] = ' hover-style1 ';
+$hover_btn_style_array['button-hover-style2'] = ' hover-style2 ';
+$hover_btn_style_array['button-hover-style3'] = ' hover-style3 ';
+$hover_btn_style_array['button-hover-style4'] = ' hover-style4 ';
+$hover_btn_style_array['button-hover-style5'] = ' hover-style5 ';
+$hover_btn_style_array['button-hover-style6'] = ' hover-style6 ';
+$hover_btn_style_array['button-hover-style7'] = ' hover-style7 ';
+$hover_btn_style_array['button-hover-style8'] = ' hover-style8 ';
+$hover_btn_style_array['button-hover-style9'] = ' hover-style9 ';
+$hover_btn_style_array['button-hover-style10'] = ' hover-style10 ';
+$hover_btn_style_array['button-hover-style11'] = ' hover-style11 ';
+$hover_btn_style_array['button-hover-style12'] = ' hover-style12 ';
+$hover_btn_style_array['button-hover-style13'] = ' hover-style13 ';
+$add_to_cart_btn_title = 'Cart';
+
+$swiper_btn_hover_effects_class = null;
+$bottom_btn_hover_effects_class = null;
+if($hover_effects == 'button-hover-style7') {
+	$showAddtoCart = false;
+}
+if($hover_effects == 'button-hover-style10') {
+	$showAddtoCart = true;
+	if($show_cart): 
+		$show_cart = false;
+	endif;
+	$swiper_btn_hover_effects_class = null;
+	
+	if(isset($hover_btn_style_array[$hover_effects])){
+	$swiper_btn_hover_effects_class = $hover_btn_style_array[$hover_effects];
+	}
+	//$add_cart_icon = $add_to_cart_icon;
+	$bottom_btn_hover_effects_class = 'jcb';
+}
+if($hover_effects == 'button-hover-style12') {
+	$showAddtoCart = true;
+	
+	if($show_cart): 
+		$show_cart = false;
+	endif;
+	$swiper_btn_hover_effects_class = null;
+	
+	if(isset($hover_btn_style_array[$hover_effects])){
+	$swiper_btn_hover_effects_class = $hover_btn_style_array[$hover_effects];
+	}
+	$add_to_cart_btn_title = 'Add To Cart';
+	//$add_cart_icon = $add_to_cart_icon;
+	$bottom_btn_hover_effects_class = 'jcc';
+}
+if($hover_effects == 'button-hover-style11') {
+	$swiper_btn_hover_effects_class = null;
+	if(isset($hover_btn_style_array[$hover_effects])){
+	$swiper_btn_hover_effects_class = $hover_btn_style_array[$hover_effects];
+	}
+}
+if(isset($hover_btn_style_array[$hover_effects])){
+	$btn_hover_effects_class = $hover_btn_style_array[$hover_effects];
+}else{
+	$btn_hover_effects_class = 'hover-style1';
+}
+if($hover_effects == 'button-hover-style13') {
+	$showAddtoCart = true;
+	
+	if($show_cart): 
+	//	$show_cart = false;
+	endif;
+	$swiper_btn_hover_effects_class = null;
+	
+	if(isset($hover_btn_style_array[$hover_effects])){
+	$swiper_btn_hover_effects_class = $hover_btn_style_array[$hover_effects];
+	}
+	$add_to_cart_btn_title = 'Add To Cart';
+	//$add_cart_icon = $add_to_cart_icon;
+	$bottom_btn_hover_effects_class = 'jcc';
+}
+//$dealTimerListingProducts = $block->getLayout()->createBlock('Magebees\TodayDealProducts\Block\DealTimerListingProducts');
+//$dealTimerListingProducts->getDealProductsCollection();
+$buyNowListProduct = $block->getLayout()->createBlock('Magebees\Buynow\Block\Product\ListProduct');
+$buyNowhelper = $this->helper("Magebees\Buynow\Helper\Data"); 
+$buyNowEnabled = $buyNowhelper->getConfig('buynow/general/enable_list');
+$buyNowbuttonTitle = $buyNowhelper->getButtonTitle();
+
+$richsnippetsEnabled = $poco_helper->getConfigValue('setting','enabled','richsnippets',$storeId);
+$categoryEnabled = $poco_helper->getConfigValue('category','enabled','richsnippets',$storeId);
+if(($richsnippetsEnabled)&&($richsnippetsEnabled))
+{
+$productRichSnippetsBlock = $block->getLayout()->createBlock('Magebees\RichSnippets\Block\Product');	
+$productContent = $productRichSnippetsBlock->canShowContent();
+$customProperties=$productRichSnippetsBlock->getCustomProperties();
+$currencyCode = $productRichSnippetsBlock->getCurrencyCode();
+$storeName = $productRichSnippetsBlock->getStoreName();
+}
+
+
+$aspect_ratio = array_key_exists('aspect_ratio', $productListConfig) ? $productListConfig['aspect_ratio'] : null;
+$ratio_width = array_key_exists('ratio_width', $productListConfig) ? $productListConfig['ratio_width'] : null;
+$image_width = $ratio_width?$ratio_width:240;
+$ratio_height = array_key_exists('ratio_height', $productListConfig) ? $productListConfig['ratio_height'] : null;
+$image_height = $ratio_height?$ratio_height:240;
+$show_product_category = array_key_exists('show_product_category', $productListConfig) ? $productListConfig['show_product_category'] : null;
+
+$show_product_brand_name = array_key_exists('brand_name', $productListConfig) ? $productListConfig['brand_name'] : null;
+$show_product_rating = array_key_exists('enable_rating', $productListConfig) ? $productListConfig['enable_rating'] : null;
+$show_product_price = array_key_exists('enable_price', $productListConfig) ? $productListConfig['enable_price'] : null;
+$show_product_view_link = array_key_exists('view_link', $productListConfig) ? $productListConfig['view_link'] : null;
+$show_product_sku = array_key_exists('show_product_sku', $productListConfig) ? $productListConfig['show_product_sku'] : null;
+$product_sku_label = array_key_exists('sku_label', $productListConfig) ? $productListConfig['sku_label'] : null;
+$product_sku_separator = array_key_exists('sku_separator', $productListConfig) ? $productListConfig['sku_separator'] : null;
+$layerhelper = $this->helper('Magebees\Layerednavigation\Helper\Data');
+$brandConfig=$layerhelper->getBrandConfigData(); 
+$brand_url_key=$brandConfig['brand_url_key'];
+$webUrl=$poco_helper->getWebUrl();
+
+if(isset($productListConfig['brand_code']) && !empty($productListConfig['brand_code'])){
+	$brand_attribute_code = $productListConfig['brand_code'];
+}else{
+	$brand_attribute_code = $brandConfig['brand_attribute_code'];
+}
+$move_actions = "";
+$randon_number = rand();
+$random_number = $randon_number;
+$ajaxquickview_enable = $poco_helper->getConfigValue('setting','enable','ajaxquickview',$storeId);
+?>

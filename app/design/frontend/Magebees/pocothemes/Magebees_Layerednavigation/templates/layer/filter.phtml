@@ -1,0 +1,148 @@
+<?php
+$attr_code=$block->getAttributeCode();
+$attr_id=$block->getAttributeId();
+$shuffle_code=str_shuffle($attr_code);
+$shuffled_attr_code=preg_replace('/[^a-zA-Z0-9]/s', '',$shuffle_code);	
+$show_product_count=$block->getShowProductCount();
+$unfold=$block->getUnfoldOption();
+$enable_searchbox=$block->getSearchbox();
+$count=0;
+$url_helper=$this->helper('\Magebees\Layerednavigation\Helper\Url');
+$helper=$this->helper('\Magebees\Layerednavigation\Helper\Data');
+$enableAjax = $helper->getAjaxConfig();
+$seoConfig=$helper->getSeoConfigData();
+if($attr_code=='price'){
+	$rel_nofollow=$seoConfig['rel_nofollow_price'];
+}else{
+	$rel_nofollow=$helper->getRelNoFollow($attr_id);
+}
+$option_img_dir=$url_helper->getOptionImageMediaDir();
+$option_hover_img_dir=$url_helper->getOptionHoverMediaDir();
+$display_image=$helper->isApplyLabelWithImages($attr_id);
+?>
+<?php if($enable_searchbox):?>	
+	<div class="searchList"><input class="searchbox" type="text" id="searchattribute_<?php echo $shuffled_attr_code;?>"/></div>
+<?php endif; ?>
+
+<ol class="items">
+    <?php foreach ($block->getFilterItems() as $filterItem): ?>
+	<?php $count++;
+	$option_id=$filterItem->getValue();
+	$option_image=$url_helper->getOptionImage($option_id);	
+	$option_hover_image=$url_helper->getOptionHoverImage($option_id);?>
+        <li id="item_<?php echo $shuffled_attr_code;?>" 
+		<?php if(($display_image=='1')||($display_image=='2')) { ?>	class="magebees_filter_item" <?php } ?> style="<?php if($count>$unfold):?>display:none;<?php else:?>display:block; <?php endif; ?> ">
+            <?php if ($filterItem->getCount() > 0):		
+				if($display_image=='0'){ // check if not image only
+					$radio_mode=$helper->isApplyRadioButton($attr_id);
+					 if($radio_mode){ ?>
+							<input type="radio"  value="<?php echo $block->escapeUrl($filterItem->getUrl()) ?>" <?php if ($helper->isFilterItemActive($filterItem)):?>checked<?php endif; ?> >
+							<?php }?>
+							<a class="ajax_<?php echo $shuffled_attr_code;?> <?php if ($helper->isFilterItemActive($filterItem)):?>active<?php endif; ?>" href="<?php echo $block->escapeUrl($filterItem->getUrl()) ?>" <?php if($rel_nofollow){?>rel="nofollow"<?php } ?>>	<span class="name-label">
+							<?php /* @escapeNotVerified */ echo $filterItem->getLabel() ?>	
+							</span>
+								<?php if ($show_product_count): ?>				
+								<span class="counter">
+										<?php echo $filterItem->getCount()?></span>
+								<?php endif; ?>								
+							</a>							
+			<?php }else if($display_image=='1'){
+				if($display_image){
+					//check for image only and image and label
+					if($option_image){?>
+					<a class="ajax_<?php echo $shuffled_attr_code;?> <?php if ($helper->isFilterItemActive($filterItem)):?>active<?php endif; ?>" href="<?php echo $block->escapeUrl($filterItem->getUrl()) ?>" <?php if($rel_nofollow){?>rel="nofollow"<?php } ?>>
+						<img src="<?php echo $option_img_dir.$option_image;?>" width="25px" height="25px" onmouseover="this.src='<?php if($option_hover_image){ echo $option_hover_img_dir.$option_hover_image; }?>'" onmouseout="this.src='<?php echo $option_img_dir.$option_image;?>'"/>
+						<?php if ($show_product_count): ?>
+									(<?php /* @escapeNotVerified */ echo $filterItem->getCount()?>)
+								<?php endif; ?>
+						</a>
+					<?php }
+					else{?>
+						<a class="ajax_<?php echo $shuffled_attr_code;?> <?php if ($helper->isFilterItemActive($filterItem)):?>active<?php endif; ?>" href="<?php echo $block->escapeUrl($filterItem->getUrl()) ?>" <?php if($rel_nofollow){?>rel="nofollow"<?php } ?>>
+						<span class="name-label">
+						<?php /* @escapeNotVerified */ echo $filterItem->getLabel() ?>
+						</span>
+						<?php if ($show_product_count): ?>
+								<span class="counter"><?php /* @escapeNotVerified */ echo $filterItem->getCount()?></span>
+								<?php endif; ?>	
+						</a>
+					<?php }
+				}
+			}
+			else{?>
+
+				<a class="ajax_<?php echo $shuffled_attr_code;?> <?php if ($helper->isFilterItemActive($filterItem)):?>active<?php endif; ?>" href="<?php echo $block->escapeUrl($filterItem->getUrl()) ?>" <?php if($rel_nofollow){?>rel="nofollow"<?php } ?>>
+					<?php /* @escapeNotVerified */ echo $filterItem->getLabel() ?>		               
+				</a>
+				<?php if($option_image){?>
+					<img src="<?php echo $option_img_dir.$option_image;?>" width="25px" height="25px" onmouseover="this.src='<?php if($option_hover_image){ echo $option_hover_img_dir.$option_hover_image; }?>'" onmouseout="this.src='<?php echo $option_img_dir.$option_image;?>'"/>
+				<?php } ?>		
+				<?php if ($show_product_count): ?>
+									(<?php /* @escapeNotVerified */ echo $filterItem->getCount()?>)
+								<?php endif; ?>				
+								
+			<?php }	?>				
+				<input id="layer_attribute_value" value="<?php echo $filterItem->getValue();?>" type="hidden"/> 
+            <?php else:?>
+                <?php /* @escapeNotVerified */ echo $filterItem->getLabel() ?>
+                <?php if ($this->helper('\Magento\Catalog\Helper\Data')->shouldDisplayProductCountOnLayer()): ?>
+                   (<?php /* @escapeNotVerified */ echo $filterItem->getCount()?>)
+                <?php endif; ?>
+            <?php endif; ?>
+        </li>
+    <?php endforeach ?>
+</ol>
+<input id="unfold_<?php echo $shuffled_attr_code;?>" class="unfold" value="<?php echo $unfold; ?>" type="hidden"/>
+<?php 
+$total_item=count($block->getFilterItems());
+if($total_item>$unfold):?>
+<button id="more_<?php echo $shuffled_attr_code;?>" class="more" value="<?php echo $unfold; ?>"><?php /* @escapeNotVerified */ echo __('More'); ?></button>
+<?php endif; ?>
+<?php $priceblock=$block->getPriceBlock();
+ $fromto=$block->getFromToWidget();
+if($priceblock){
+	if($fromto){
+		$button_id = 'from-to';
+		$from_id = 'fromprice';
+		$to_id = 'toprice';
+		$shuffled_button_id = str_shuffle($button_id);
+		$shuffled_from_id = str_shuffle($from_id);
+		$shuffled_to_id = str_shuffle($to_id);
+		$url = $block->getFilterUrl();
+		$val=$block->getApplyPrice();
+		$price_arr=explode('-', (string)$val);		
+?>
+	<div class="priceRange">
+		<span><?php /* @escapeNotVerified */ echo __('From:'); ?><input type="text" id="<?php echo $shuffled_from_id;?>" name="from" class="from_price" value="<?php if(isset($price_arr[0])){echo $price_arr[0];}?>" aria-label="From"/></span>
+		<span><?php /* @escapeNotVerified */ echo __('To:'); ?><input type="text" id="<?php echo $shuffled_to_id;?>" name="to" class="to_price" value="<?php if(isset($price_arr[1])){echo $price_arr[1];}?>" aria-label="To"/></span>
+		<button id="<?php echo $shuffled_button_id;?>" class="from-to_price"><?php /* @escapeNotVerified */ echo __('GO'); ?></button>
+	</div>
+<script type="text/javascript" <?php if($enableAjax == 1){ ?> data-rocketjavascript="false" <?php } ?>>
+var price_url = "<?=$url;?>";
+
+require([
+    'jquery',
+    'jquery-ui-modules/core',
+	'jquery-ui-modules/widget',
+    'domReady!',
+	"Magebees_Layerednavigation/js/magebees-layer"
+], function($,layeredNav){	
+ $("#"+"<?php echo $shuffled_button_id; ?>").on('click', function() {
+	 	var from_val=$("#"+"<?php echo $shuffled_from_id; ?>").val();
+				var to_val=$("#"+"<?php echo $shuffled_to_id; ?>").val();
+				
+				if(price_url.indexOf( "?" ) > -1)				{
+					var price_filter_url=price_url+"&price="+from_val+"-"+to_val;
+				}else{
+					var price_filter_url=price_url+"?price="+from_val+"-"+to_val;
+				}
+				
+				if((from_val)||(to_val)){			
+					var widget = $(this).layeredNav({});
+					widget.layeredNav('ajaxLayerNav',price_filter_url);
+				}
+	 
+});	});
+</script>	
+	<?php }
+}?>

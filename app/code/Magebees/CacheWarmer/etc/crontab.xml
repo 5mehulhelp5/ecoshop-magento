@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="magebees_crawler">
+        <job name="magebees_cachewarmer_generate_queue" instance="Magebees\CacheWarmer\Cron\GeneratePageQueue" method="execute">
+            <config_path>magebees_cachewarmer/performance_settings/generate_cron</config_path>
+        </job>
+        <job name="magebees_cachewarmer_process_queue" instance="Magebees\CacheWarmer\Cron\ProcessPageQueue" method="execute">
+            <config_path>magebees_cachewarmer/performance_settings/process_cron</config_path>
+        </job>
+    </group>
+</config>

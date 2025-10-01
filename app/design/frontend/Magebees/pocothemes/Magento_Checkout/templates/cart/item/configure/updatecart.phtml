@@ -1,0 +1,108 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php $buttonTitle = __('Update Cart'); ?>
+<?php if ($_product->isSaleable()) :
+
+$QuantityValidators = $block->getQuantityValidators();
+
+if(isset($QuantityValidators['validate-item-quantity']['qtyIncrements']))
+{
+$qtyIncrements = $QuantityValidators['validate-item-quantity']['qtyIncrements'];	
+}else{
+$qtyIncrements = 1;	
+}
+if(isset($QuantityValidators['validate-item-quantity']['minAllowed']))
+{
+$minAllowed = $QuantityValidators['validate-item-quantity']['minAllowed'];	
+}else{
+$minAllowed = 1;	
+}
+if(isset($QuantityValidators['validate-item-quantity']['maxAllowed']))
+{
+$maxAllowed = $QuantityValidators['validate-item-quantity']['maxAllowed'];	
+}else{
+$maxAllowed = 1000;	
+}
+ 
+?>
+    <div class="box-tocart update">
+        <fieldset class="fieldset">
+            <?php if ($block->shouldRenderQuantity()) :?>
+            <div class="field qty">
+                <label class="label" for="qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
+				<div class="qty-outer">
+				<input type="number"
+                           name="qty"
+                           id="qty"
+                           min="0"
+                           value=""
+                           title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
+                           class="input-text qty"
+                           data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"/>
+				<div class="qnty">
+                <div class="quantity-controls quantity-plus quantity-plus-qv"></div>
+                    <div class="quantity-controls quantity-minus quantity-minus-qv"></div>
+				</div>
+				
+				
+				
+				
+				</div>
+                <script>
+				require([
+					'jquery'
+				], function ($) {
+					var qtyIncrements = parseInt('<?php echo $qtyIncrements; ?>',10);	
+						var minAllowed = parseInt('<?php echo $minAllowed; ?>',10);	
+						var maxAllowed = parseInt('<?php echo $maxAllowed; ?>',10);	
+						
+					$('.quantity-plus-qv').click(function () {
+						var currentQty = parseInt($('#qty').val());
+								var valueIncr = parseInt(currentQty+qtyIncrements);
+								if(currentQty < maxAllowed){
+									$('#qty').val(valueIncr);
+								}
+					});
+
+					$('.quantity-minus-qv').click(function () {
+						var currentQty = parseInt($('#qty').val());
+							var valueDesc = parseInt(currentQty-qtyIncrements);
+							if(currentQty > minAllowed){
+								$('#qty').val(valueDesc);
+							}
+					});
+
+				});
+			</script>
+            </div>
+            <?php endif; ?>
+            <div class="actions">
+                <button type="submit"
+                        title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
+                        class="action primary tocart"
+                        id="product-updatecart-button">
+                    <span><?= $block->escapeHtml($buttonTitle) ?></span>
+                </button>
+                <?= $block->getChildHtml('', true) ?>
+            </div>
+        </fieldset>
+    </div>
+    <script type="text/x-magento-init">
+        {
+            "#product_addtocart_form": {
+                "validation": {},
+                "addToCart": {
+                    "cartButtonId": "#product-updatecart-button",
+                    "cartForm": "#product_addtocart_form"
+                }
+            }
+        }
+    </script>
+<?php endif; ?>

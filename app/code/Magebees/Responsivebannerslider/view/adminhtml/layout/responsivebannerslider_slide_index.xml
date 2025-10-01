@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <body>
+     	<referenceContainer name="content">
+            <block class="Magebees\Responsivebannerslider\Block\Adminhtml\Slide" name="responsivebannerslider_slide_listing"/>
+        </referenceContainer>
+		<referenceContainer name="page.main.actions">
+            <block class="Magebees\Responsivebannerslider\Block\Adminhtml\Slidergroup\Grid" 
+				   name="adminhtml.system.config.group.switcher" template="responsivebannerslider/group.phtml">
+            </block>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+		<add id="Magebees_PocoThemes::pocothemes_content" title="Poco Themes" module="Magebees_PocoThemes" sortOrder="1" parent="Magebees_PocoBase::title" resource="Magebees_PocoThemes::pocothemes_content" />
+			<add id="Magebees_PocoThemes::config" title="Configuration" action="adminhtml/system_config/edit/section/pocothemes" module="Magebees_PocoThemes" sortOrder="2" parent="Magebees_PocoThemes::pocothemes_content" resource="Magebees_PocoThemes::config"/>
+			<add id="Magebees_PocoThemes::install" title="Install Theme Demo Data" action="adminhtml/system_config/edit/section/pocothemesinstall" module="Magebees_PocoThemes" sortOrder="4" parent="Magebees_PocoThemes::pocothemes_content" resource="Magebees_PocoThemes::install"/>
+    </menu>
+</config>

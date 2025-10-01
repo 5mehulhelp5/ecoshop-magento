@@ -1,0 +1,54 @@
+<?php
+use Magento\Framework\App\Action\Action;
+
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$helper = $this->helper('\Magebees\Testimonial\Helper\Data');
+
+$enabled = $block->getEnabled();
+$collection = $block->getTestimonialCollection();
+$testimonialCollection = $collection ? $collection->getData() : [];
+
+$averageRating = 0;
+$totalRating = 0;
+$totalCount = 0;
+
+if ($testimonialCollection && $enabled):
+    foreach ($testimonialCollection as $testimonial) {
+        if (!empty($testimonial['rating'])) {
+            $totalRating += (int)$testimonial['rating'];
+            $totalCount++;
+        }
+    }
+	
+    if ($totalCount > 0) {
+        $averageRating = round($totalRating / $totalCount, 1);
+    }
+
+    // Preload star image paths
+    $starFull = $this->getViewFileUrl('Magebees_Testimonial::images/rating.png');
+    $starEmpty = $this->getViewFileUrl('Magebees_Testimonial::images/empty_rating.png');
+?>
+    <div id="ratings" class="mageTmRating d-flex" >
+        <div class="rating-num" >
+            <?php echo number_format($averageRating, 1); ?>
+        </div>
+        <div class="rating-details">
+        <div class="rating-stars ">
+            <?php for ($i = 1; $i <= 5; $i++): ?>
+                <img
+                    src="<?php echo $i <= $averageRating ? $starFull : $starEmpty; ?>"
+                    height="15"
+                    width="15"
+                    alt="Star"
+                    loading="lazy"
+                />
+            <?php endfor; ?>
+             
+        </div>
+         <div class="reviews">
+                <?php echo __($totalCount. "Reviews"); ?> 
+              </div>
+        </div>
+        
+    </div>
+<?php endif; ?>

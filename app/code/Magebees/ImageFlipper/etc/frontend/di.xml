@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">   
+ 
+	<!--Start for add image fliper data in product list page after ajax-->
+   <!--  <type name="Magento\Catalog\Block\Product\ListProduct">
+        <plugin name="magebees-imageflipper-block-product-list"
+                type="Magebees\ImageFlipper\Plugin\BlockProductList"
+                sortOrder="10"/>
+    </type>-->
+	<!--End for add image fliper data in  product list page after ajax-->
+	
+	<!--Add Compatibility with AjaxCategoryProducts extension-->
+	 <!--<type name="Magebees\AjaxCategoryProducts\Block\CategoryProducts">
+        <plugin name="magebees-imageflipper-ajaxcategoryproducts-list"
+                type="Magebees\ImageFlipper\Plugin\AjaxCategoryProductsList"
+                sortOrder="10"/>
+    </type>	-->
+	<!--End Compatibility with AjaxCategoryProducts extension-->
+	
+	<!--Add Compatibility with AbstractProduct class extended-->
+	 <type name="Magento\Catalog\Block\Product\AbstractProduct">
+        <plugin name="magento-imageflipper-abstaract-products-list"
+                type="Magebees\ImageFlipper\Plugin\AbstractProductList"
+                sortOrder="10"/>
+    </type>	
+	<!--End Compatibility with AbstractProduct class extended-->
+	
+	<!--Start for add image fliper data in search page after ajax-->
+	<virtualType name="Magento\CatalogSearch\Block\SearchResult\ListProduct" type="Magento\Catalog\Block\Product\ListProduct">
+        <plugin name="magebees-imageflipper-block-search-list"
+                type="Magebees\ImageFlipper\Plugin\BlockProductList"
+                sortOrder="10"/>
+    </virtualType> 	
+	<!--End for add image fliper data in search page after ajax-->
+</config>

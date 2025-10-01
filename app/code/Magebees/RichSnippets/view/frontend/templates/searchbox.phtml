@@ -1,0 +1,17 @@
+<?php if ($website = $block->canShowContent()) : ?>
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "url": "<?php echo $website['siteurl'] ?>",
+        <?php if(($website['enable_sitename'])&&($website['sitename']!='')):?>
+        "name": "<?php echo $website['sitename'] ?>",
+        <?php endif;?>
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "<?php echo $this->helper('Magento\CatalogSearch\Helper\Data')->getResultUrl()?>?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+</script>
+<?php endif ?>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="core_layout_render_element">
+        <observer name="render_element" instance="Magebees\Layerednavigation\Observer\LayoutRenderElement"/>
+    </event>
+	<event name="layout_generate_blocks_after">
+        <observer name="layout_generate_blocks_after_router" instance="Magebees\Layerednavigation\Observer\LayoutGenerate"/>
+    </event>
+	<event name="catalog_product_compare_add_product">
+        <observer name="catalog_product_compare_add_product" instance="Magebees\Layerednavigation\Observer\Compare"/>
+    </event>
+	
+	<event name="layout_load_before">
+        <observer name="mb_layout_load_before" instance="Magebees\Layerednavigation\Observer\ChangePageLayoutObserver"/>
+    </event>
+</config>

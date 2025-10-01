@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Magebees Team
+ * @copyright Copyright (c) Magebees (https://www.magebees.com)
+ * @package Full Page Cache Warmer for Magento 2
+ */-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Customer\Model\Session">
+        <plugin name="magebees-page-cache-crawler" type="Magebees\CacheWarmer\Plugin\SessionManager"/>
+    </type>
+    <type name="Magento\Framework\App\ActionInterface">
+        <plugin name="magebees-page-cache-crawler" type="Magebees\CacheWarmer\Plugin\ActionInterface"/>
+    </type>
+    <type name="Magento\Framework\App\PageCache\Kernel">
+        <plugin name="magebees_cachewarmer_flush_page_cache" type="Magebees\CacheWarmer\Plugin\OnePageCacheFlush"/>
+    </type>
+
+    <type name="Magento\Framework\App\Http\Context">
+        <plugin name="magebeesCacheWarmerContext" type="Magebees\CacheWarmer\Plugin\App\Http\ContextPlugin"/>
+    </type>
+    <type name="Magento\Framework\Authorization">
+        <plugin name="Magebees_CacheWarmer::AllowManageCustomer" type="Magebees\CacheWarmer\Plugin\Framework\Authorization\AllowManageCustomer"/>
+    </type>
+	<!-- fix local bug in magento 2.4.7 https://github.com/magento/magento2/issues/38626 -->
+    <type name="Magento\PageCache\Model\App\Request\Http\IdentifierForSave">
+        <plugin name="core-app-area-design-exception-plugin"
+                type="Magebees\CacheWarmer\Plugin\PageCache\Model\App\Request\Http\CacheIdentifier" />
+    </type>
+</config>

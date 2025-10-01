@@ -1,0 +1,109 @@
+<?php $helperConfig = $this->helper('Magebees\Onepagecheckout\Helper\Configurations'); ?>
+<?php $helperData = $this->helper('Magebees\Onepagecheckout\Helper\Data'); ?>
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$loaderUrl = $poco_helper->getLoadingIcon();  ?>
+
+<?php $scriptString = <<<script
+   require([
+		'Magebees_Onepagecheckout/js/model/addressFieldManager'
+	], function(addressFieldManager) {
+		addressFieldManager.init('{$block->escapeJs($helperConfig->getAddressFieldsJsonConfig())}');
+	})
+script;
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
+
+<?php $show_header_footer = (boolean)$helperConfig->getConfig('magebees_Onepagecheckout/general/show_header_footer'); ?>
+<?php if($show_header_footer) { ?>
+	<div class="mageb-checkout-title">
+		<p><?php echo $helperConfig->getCheckoutDescription(); ?></p>
+	</div>
+<?php }else{ ?>
+	<div class="mageb-checkout-title">
+		<h1><?php echo $helperConfig->getCheckoutTitle(); ?></h1>
+			<p><?php echo $helperConfig->getCheckoutDescription(); ?></p>
+	</div>
+<?php } ?>
+
+<?php if($helperData->isLoggedIn()) : ?>
+    <div class="sign-in-btn"><a href="<?php echo $block->getUrl('customer/account/logout/'); ?> id="opcLogout" class='action mageb-button'><span><?php echo __('Sign Out'); ?></span></a></div>
+<?php else : ?>
+	<?php if($helperConfig->getSignInSettings()){ ?>
+		<?php if($helperConfig->getLoginMsg()){ ?>
+			<div class="sign-in-btn"><a href="#" id="opcLogin" class='action mageb-button'><span><?php echo __($helperConfig->getLoginMsg()); ?></span></a></div>
+		<?php }else{ ?>
+			<div class="sign-in-btn"><a href="#" id="opcLogin" class='action mageb-button'><span><?php echo __("Sign In"); ?></span></a></div>
+		<?php } ?>
+	<?php } ?>
+<?php endif; ?>
+
+<div id="checkout" data-bind="scope:'checkout'" class="magebees-onepage-checkout-container checkout-container mageb-osc">
+
+	<input id="storeactionurl" type="hidden" value="<?php echo $this->getUrl("onepage/index/store") ?>"/>
+
+    <div id="checkout-loader" data-role="checkout-loader" class="loading-mask" data-mage-init='{"checkoutLoader": {}}'>
+        <div class="loader">
+            <img src="<?php /* @escapeNotVerified */ echo $loaderUrl; ?>"
+                 alt="<?php /* @escapeNotVerified */ echo __('Loading...'); ?>"
+                 style="position: absolute;">
+        </div>
+    </div>
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "#checkout": {
+                "Magento_Ui/js/core/app": <?php /* @escapeNotVerified */ echo $block->getJsLayout();?>
+            }
+        }
+    </script>
+	    <?php $serializedCheckoutConfig = /* @noEscape */ $block->getSerializedCheckoutConfig();
+    $scriptString = <<<script
+        window.checkoutConfig = {$serializedCheckoutConfig};
+        // Create aliases for customer.js model from customer module
+        window.isCustomerLoggedIn = window.checkoutConfig.isCustomerLoggedIn;
+        window.customerData = window.checkoutConfig.customerData;
+script;
+    ?>
+    <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
+    <?php $scriptString = <<<script
+        require([
+            'mage/url',
+            'Magento_Ui/js/block-loader'
+        ], function(url, blockLoader) {
+            blockLoader("{$loaderUrl}");
+            return url.setBaseUrl('{$block->escapeJs($block->escapeUrl($block->getBaseUrl()))}');
+        })
+script;
+    ?>
+    <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
+</div>
+
+<script type="text/x-magento-init">
+	{
+		"*": {
+            "cwsopc":
+				{
+					"defaultShippingMethod": "<?php echo $helperConfig->getDefaultShippingMethod() ?>",
+					"isCustomerLogged": "<?php echo $helperConfig->getDefaultShippingMethod() ?>",
+					"numberofAttachment": "<?php echo $helperData->getNumberofAttachment(); ?>"
+			}
+        }
+	}
+</script>
+
+<style>
+<?php
+if(!$helperConfig->enableDifferentBillingAddress()){ ?>
+	.checkout-payment-method .checkout-billing-address{display:none;}
+<?php } ?>
+.magebees-onepage-checkout-container .opc-wrapper .step-title { color:<?php echo $helperConfig->getTitleFontColors(); ?> !important; background-color:<?php echo $helperConfig->getTitleBgColors(); ?> !important; }
+#oscSummary .oscSummaryTitle { color:<?php echo $helperConfig->getTitleFontColors(); ?> !important; background-color:<?php echo $helperConfig->getTitleBgColors(); ?> !important; }
+.mageb-button, .mageb-osc .checkout, #place-order-trigger, .mageb-osc .block-order-comments .addMorebtn, .mageb-osc .block-order-comments .attComRmv, .mageb-osc .order-comment-btn,
+.mageb-osc .opc-wrapper .magebees-checkout-shipping-address .action-show-popup { color:<?php echo $helperConfig->getButtonFontColors(); ?> !important; background-color:<?php echo $helperConfig->getButtonBgColors(); ?> !important; border:0 none !important; -webkit-box-shadow:none !important; box-shadow:none !important;
+	transition:all 0.5s ease-in-out 0s; -moz-transition:all 0.5s ease-in-out; -webkit-transition:all 0.5s ease-in-out; }
+.mageb-button:focus, .mageb-button:hover, .mageb-osc .checkout:hover, .mageb-osc .checkout:focus,
+.mageb-osc .block-order-comments .addMorebtn:focus, .mageb-osc .block-order-comments .addMorebtn:hover, .mageb-osc .block-order-comments .attComRmv:focus, .mageb-osc .block-order-comments .attComRmv:hover,
+.mageb-osc .order-comment-btn:focus, .mageb-osc .order-comment-btn:hover, .mageb-osc .opc-wrapper .magebees-checkout-shipping-address .action-show-popup:hover,
+.mageb-osc .opc-wrapper .magebees-checkout-shipping-address .action-show-popup:focus { opacity:0.8; border:0 none !important; -webkit-box-shadow:none !important; box-shadow:none !important; font-weight: 600; }
+.magebees-billing-address-details{display:none;}
+</style>

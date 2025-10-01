@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_layout.xsd">
+    <body>
+         <move element="catalogsearch.leftnav" destination="content.top" after="-"/>
+		 <move element="catalog.leftnav" destination="content.top" before="-"/>
+		 <move element="catalog.leftnav1" destination="content.top" before="-"/>
+		<!--<move element="category.image" destination="content.top" before="-" />
+		<move element="category.description" destination="content.top" before="catalog.leftnav" />-->
+    </body>
+</page>

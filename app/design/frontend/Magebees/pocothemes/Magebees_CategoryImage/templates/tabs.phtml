@@ -1,0 +1,141 @@
+<?php
+$enabled = $this->getData('wd_enable') ? $this->getData('wd_enable') : 0;
+$tab1_category_ids = array_filter(explode(",", (string)$this->getData('wd_categories')));
+$tab2_category_ids = array_filter(explode(",", (string)$this->getData('wd_categories_tab2')));
+$show_heading = $block->getData('wd_show_heading') ?? 0;
+$heading = $block->getData('wd_heading') ?? null;
+$heading_logo = $block->getData('wd_heading_logo') ?? null;
+$short_desc = $block->getData('wd_short_desc') ?? null;
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $poco_helper->getStoreId();
+$animation = $poco_helper->getThemeLayout('animation', $storeId) ? true : false;
+$animation_class = $animation ? "wow animate__fadeIn" : " ";
+$bg_color = $block->getData('wd_bgcolor') ?? '';
+$bgimage = $block->getData('wd_bgimage') ?? null;
+$bg_image = $bgimage ? 'background-image: url(' . $poco_helper->getMediaUrl() . $bgimage . '); background-repeat: no-repeat; background-size: cover;' : '';
+$spacing_class = '';
+$spacing_class .= $block->getData('wd_spacing') ? 'sections-spacing ' : '';
+$spacing_class .= $block->getData('wd_bottom_spacing') ? 'section-bottom-spacing' : '';
+$random_number = rand();
+$tab1_title = $block->getData('wd_tab1') ?? null;
+$tab2_title = $block->getData('wd_tab2') ?? null;
+?>
+
+<?php if ($bg_image || $bg_color): ?>
+<style type="text/css">
+    #category-images-<?php echo $random_number; ?> {
+        <?php echo $bg_image; ?>
+        background-color: <?php echo $bg_color; ?>;
+    }
+</style>
+<?php endif; ?>
+
+<?php if ($enabled): ?>
+<div id="category-images-<?php echo $random_number; ?>" class="ctg_img_wdg ctg_img_wdg_style12 <?php echo $spacing_class ?>">
+    <div class="container">
+
+        <?php if ($show_heading): ?>
+        <div class="sidebar-shopby">
+            <div class="section-title <?php echo $animation_class ?>" <?php if ($animation): ?> data-wow-delay="0.2s"<?php endif; ?>>
+                <?php if ($heading): ?>
+                    <h2 class="title"><?php echo __(html_entity_decode($heading)); ?></h2>
+                <?php endif; ?>
+                <?php if ($heading_logo || $short_desc): ?>
+                    <div class="sort-details">
+                        <?php if ($heading_logo && is_file($heading_logo_path)): ?>
+                            <?php list($heading_logo_width, $heading_logo_height) = getimagesize($heading_logo_path); ?>
+                            <div class="icon">
+                                <img loading="lazy" src="<?php echo $heading_logo_url; ?>" alt="<?php echo __($heading); ?>" title="<?php echo __($heading); ?>" width="<?php echo $heading_logo_width; ?>" height="<?php echo $heading_logo_height; ?>" />
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($short_desc): ?>
+                            <p class="sort-detail"><?php echo __(html_entity_decode($short_desc)); ?></p>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <div class="block-content">
+                <ul class="magebees-tabs-nav">
+                    <li class="active" data-tab="tab1">
+                        <a href="javascript:void(0)" title="<?php echo $tab1_title ?>" rel="nofollow"> <?php echo $tab1_title ?> </a> 
+                    </li>
+                    <li data-tab="tab2">
+                        <a href="javascript:void(0)" title="<?php echo $tab2_title ?>" rel="nofollow"> <?php echo $tab2_title ?> </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <!-- Tab 1 Content -->
+        <div id="tab1" class="magebees-tab-content active" style="display:block; opacity:1; transition:opacity 0.4s;">
+            <?php
+            echo $this->getLayout()
+                ->createBlock('Magento\Framework\View\Element\Template')
+                ->setData($this->getData())
+                ->setCategoryIds($tab1_category_ids)
+                ->setTabId('tab1')
+                ->setRandomNumber($random_number)
+                ->setTemplate('Magebees_CategoryImage::category_tab_data.phtml')
+                ->toHtml();
+            ?>
+        </div>
+
+        <!-- Tab 2 Content -->
+        <div id="tab2" class="magebees-tab-content" style="display:none; opacity:0; transition:opacity 0.4s;">
+            <?php
+            echo $this->getLayout()
+                ->createBlock('Magento\Framework\View\Element\Template')
+                ->setData($this->getData())
+                ->setCategoryIds($tab2_category_ids)
+                ->setTabId('tab2')
+                ->setRandomNumber($random_number)
+                ->setTemplate('Magebees_CategoryImage::category_tab_data.phtml')
+                ->toHtml();
+            ?>
+        </div>
+
+        <!-- Loading Spinner -->
+		<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+		$loaderUrl = $poco_helper->getLoadingIcon();  ?>
+
+		<div id="loadingImage" style="display:none;"><div><img loading="lazy" src="<?php echo $loaderUrl; ?>" alt="Loading..." width="90" height="90" /></div></div>
+       
+
+    </div>
+</div>
+
+<!-- Tab JS -->
+<script>
+require(['jquery'], function ($) {
+    $(document).ready(function () {
+        var $tabs = $('.magebees-tabs-nav li');
+        var $loader = $('#loadingImage');
+
+        $tabs.on('click', function () {
+            var tabId = $(this).data('tab');
+
+            if ($(this).hasClass('active')) return;
+
+            // Show loader
+            $loader.show();
+
+            setTimeout(function () {
+                // Switch tab content
+                $('.magebees-tab-content').hide().css('opacity', 0);
+                $('#' + tabId).show().css('opacity', 1);
+
+                // Update active tab
+                $tabs.removeClass('active');
+                $('[data-tab="' + tabId + '"]').addClass('active');
+
+                // Hide loader
+                $loader.hide();
+            }, 500); // Simulated delay
+        });
+    });
+});
+</script>
+
+<?php endif; ?>

@@ -1,0 +1,31 @@
+<?php 
+$randon_number = rand();	
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$dealWidgetData = array();
+$dealWidgetData['type'] = $this->getData('type');
+$dealWidgetData['template'] = $this->getData('template');
+$dealWidgetData['wd_spacing'] = $this->getData('wd_spacing');
+$dealWidgetData['wd_bottom_spacing'] = $this->getData('wd_bottom_spacing');
+$dealWidgetData['wd_bgcolor'] = $this->getData('wd_bgcolor');
+$dealWidgetData['wd_deal'] = $this->getData('wd_deal');
+$dealWidgetData['wd_show_viewall'] = $this->getData('wd_show_viewall');
+$dealWidgetData['wd_viewall_txt'] = $this->getData('wd_viewall_txt');
+$dealWidgetData['wd_viewall_url'] = $this->getData('wd_viewall_url');
+
+if(count($dealWidgetData)>0): 
+$dealWidgetEmptyOptions = array('template'=>null,'wd_spacing'=>null,'wd_bottom_spacing'=>null,'wd_bgcolor'=>null,'wd_deal'=>null,'wd_show_viewall'=>null,'wd_viewall_txt'=>null,'wd_viewall_url');
+$dealWidget = array();
+$ajaxLoadingData = array();
+$ajaxLoadingData['randon_number'] = $randon_number;
+$ajaxLoadingData['url'] = $block->getUrl('poco/index/todaydeal');
+$ajaxLoadingData['res_div'] = '#deal'.$randon_number;
+$ajaxLoadingData['loading_div'] = '#loadingImage'.$randon_number;
+$ajaxLoadingData['loaderUrl'] = $poco_helper->getLoadingIcon(); 
+$dealWidget['ajaxloading'] = (array_merge($dealWidgetEmptyOptions,$dealWidgetData,$ajaxLoadingData));
+
+?>
+
+<div id="deal<?php echo $randon_number; ?>" class="ajx_loader" data-mage-init='<?php echo $poco_helper->getJsonEncode($dealWidget);?>'>
+<div id="loadingImage<?php echo $randon_number; ?>" style="display:none;"></div>
+</div>
+<?php endif; ?>

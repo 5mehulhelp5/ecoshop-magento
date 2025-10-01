@@ -1,0 +1,109 @@
+<?php
+/**
+ * Theme Settings initialization script
+ *
+ * @var $block \Magento\Framework\View\Element\Template
+ */
+?>
+<?php
+	$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+	$storeId = $poco_helper->getStoreId();
+	$headerConfig = $poco_helper->getConfigGroup('header',$storeId);
+	$themeLayoutConfig = $poco_helper->getConfigGroup('theme_layout',$storeId);
+	$browserTabNotificationConfig = $poco_helper->getConfigGroup('browser_tab_notification',$storeId);
+	$enable_browser_tab_notification = array_key_exists('enable_browser_tab_notification', $browserTabNotificationConfig) ? $browserTabNotificationConfig['enable_browser_tab_notification'] : null;
+	$browser_tab_notification_time_interval = array_key_exists('time_interval', $browserTabNotificationConfig) ? $browserTabNotificationConfig['time_interval'] : null;
+	$browser_tab_notification_message = array_key_exists('notification_message', $browserTabNotificationConfig) ? $browserTabNotificationConfig['notification_message'] : null;
+	
+	$browser_tab_notification_message = $poco_helper->getBrowserTabNotificationMessage($browser_tab_notification_message);
+	
+$header_style = array_key_exists('header_style', $headerConfig) ? $headerConfig['header_style'] : null;
+$rtl = array_key_exists('rtl', $themeLayoutConfig) ? $themeLayoutConfig['rtl'] : 0;
+$theme_option_animation = array_key_exists('animation', $themeLayoutConfig) ? $themeLayoutConfig['animation'] : 0;
+$animation_on_mobile = array_key_exists('animation_in_mobile', $themeLayoutConfig) ? $themeLayoutConfig['animation_in_mobile'] : 0;
+$scroll_top_enable = array_key_exists('scroll_top', $themeLayoutConfig) ? $themeLayoutConfig['scroll_top'] : 0;
+$scroll_position = array_key_exists('scroll_position', $themeLayoutConfig) ? $themeLayoutConfig['scroll_position'] : 'left';
+$sticky_menu = array_key_exists('sticky_menu', $headerConfig) ? $headerConfig['sticky_menu'] : 0;
+$sticky_menu_logo = array_key_exists('sticky_menu_logo', $headerConfig) ? $headerConfig['sticky_menu_logo'] : 0;
+$mobile_sticky_menu = array_key_exists('mobile_sticky_menu', $headerConfig) ? $headerConfig['mobile_sticky_menu'] : 0;
+$responsive_breakpoint = $poco_helper->getConfigValue($group='general',$field='responsive_break_point',$section='navigationmenu');
+	$responsive_breakpoint = (int)str_replace("px","",$responsive_breakpoint);
+	if(!is_int($responsive_breakpoint)){
+		$responsive_breakpoint = '1201';
+	}
+	
+$enable_exit_intent_popup = $poco_helper->getConfigValue('exit_intent_popup','enable_exit_intent_popup','pocothemes',$storeId);
+$showexitIntentPopupImage = $poco_helper->getConfigValue('exit_intent_popup','show_image','pocothemes',$storeId);
+$product_skus = $poco_helper->getConfigValue('exit_intent_popup','product_skus','pocothemes',$storeId);
+$_productCollection = $poco_helper->getExitIntentPopupProducts($product_skus,$storeId);	
+if((!($_productCollection->getSize())>0) || (!$enable_exit_intent_popup)):
+$enable_exit_intent_popup = 0;
+endif;
+$exitIntentPopupModalClass = 'exitIntentPopup';
+if(!$showexitIntentPopupImage): 
+$exitIntentPopupModalClass = 'exitIntentPopup exitIntentPopupFull';
+endif;
+$enable_cookie_policy = $poco_helper->getConfigValue('cookie_policy','enable_cookie_policy','pocothemes',$storeId);
+$text = $poco_helper->getConfigValue('cookie_policy','text','pocothemes',$storeId);
+if((!$text)||(!$enable_cookie_policy)): 
+$enable_cookie_policy = 0;
+endif;
+	
+?>
+<script type="text/x-magento-init">
+    {"*": { 
+			"swiperinit": {}
+		  }
+	}
+</script>
+
+<!-- components initialized without binding to an element -->
+<script type="text/x-magento-init">
+	{
+		"*": {
+            "pocotheme": {
+				"scroll_top_enable":"<?php echo $scroll_top_enable ?>",
+				"scroll_top_position":"<?php echo $scroll_position ?>",
+				"sticky_menu":"<?php echo $sticky_menu ?>",
+				"theme_option_rtl":"<?php echo $rtl ?>",
+				"header_style":"<?php echo $header_style ?>",
+				"breakPoint":"<?php echo $responsive_breakpoint ?>",
+				"enable_exit_intent_popup":"<?php echo $enable_exit_intent_popup?>","exitIntentPopupModalClass":"<?php echo $exitIntentPopupModalClass?>","enable_cookie_policy":"<?php echo $enable_cookie_policy?>",
+				"cookieLifetime":"<?php echo $this->helper('Magento\Cookie\Helper\Cookie')->getCookieRestrictionLifetime() ?>",
+				"cookieName":"<?php /* @escapeNotVerified */ echo \Magento\Cookie\Helper\Cookie::IS_USER_ALLOWED_SAVE_COOKIE ?>",
+				"noCookiesUrl":"<?php /* @escapeNotVerified */ echo $block->getUrl('cookie/index/noCookies') ?>",
+				"enableBrowserTabNotification":"<?php echo $enable_browser_tab_notification?>",
+				"browserTabNotificationTimeInterval":"<?php echo $browser_tab_notification_time_interval?>",
+				"browserTabNotificationMessage":<?php echo $browser_tab_notification_message?>,
+				"enable_animation":"<?php echo $theme_option_animation?>",
+				"enable_animation_on_mobile":"<?php echo $animation_on_mobile?>"
+				
+			}
+        }
+	}
+</script>
+<script type="text/x-magento-init">
+	{
+		"*": {
+            "alignProductSection": {"container":".products-grid","item":".item","elementlist":".product-item-details,.detail-left,.product-brand,.product-item-name,.product-name,.productTitle,.product-reviews-summary,.price-box,.product-item-description,.buynow-btn,.swatches-listing,.p_ctgry"
+			}
+        }
+	}
+</script>
+<script type="text/x-magento-init">
+	{
+		"*": {
+            "alignProductSection": {"container":".products-grid","item":".product-item","elementlist":".product-item-name,.product-reviews-summary,.price-box"
+			}
+        }
+	}
+</script>
+<script type="text/x-magento-init">
+	{
+		"*": {
+            "alignProductSection": {"container":".home-blog-post","item":".item","elementlist":".pst_ttl,.pst_meta"
+			}
+        }
+	}
+</script>
+

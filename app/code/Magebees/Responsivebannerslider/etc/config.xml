@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Store/etc/config.xsd">
+	<default>
+		<responsivebannerslider>
+			<setting>
+				<enabled>1</enabled>		
+				<jquery>1</jquery>
+				<thumbnail_width>200</thumbnail_width>
+				<cms_page>1</cms_page>
+				<category_page>1</category_page>
+				<product_page>1</product_page>
+			</setting>
+			<optimize_performance>
+				<developer_mode_enable_disable>1</developer_mode_enable_disable>
+			</optimize_performance>
+		</responsivebannerslider>
+    </default>
+</config>

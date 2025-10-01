@@ -1,0 +1,14 @@
+<?php $orderId = $this->getRequest()->getParam('order_id'); ?>
+<div id="delivery-date">
+    <strong><?php echo __('Delivery Date') ?></strong>
+    <span class="price"><?php echo $block->getDeliveryDate($orderId) ?></span>
+</div>
+<script type="text/javascript">
+    require(
+        ['jquery'],
+        function($) {
+            var element = $('#delivery-date').detach();
+            $('.box-order-shipping-method').append(element);
+        }
+    );
+</script>

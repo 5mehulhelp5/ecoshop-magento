@@ -1,0 +1,23 @@
+<?php if ($crumbs = $block->canShowContent()) : ?>
+<?php $i = 0; $count = count($crumbs); ?>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        <?php foreach ($crumbs as $crumbName => $crumbInfo) : ?>
+        <?php if (!array_key_exists('link', $crumbInfo)) continue; ?>
+        <?php if ($i > 0) : ?>,<?php endif; ?>
+        <?php $i++; ?>
+        {
+          "@type": "ListItem",
+            "position": <?php echo $i; ?>,
+            "item": {
+                "@id": "<?php /* @escapeNotVerified */ echo $crumbInfo['link'] ?>",
+                "name": "<?php echo $block->escapeHtml($crumbInfo['label']) ?>"
+            }
+        }
+        <?php endforeach ?>]
+}
+</script>
+<?php endif ?>

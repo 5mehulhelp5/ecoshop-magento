@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="ecoshop_download_html" xsi:type="object">Ecoshop\ProductImport\Console\Command\DownloadHtml</item>
+                <item name="ecoshop_import_products" xsi:type="object">Ecoshop\ProductImport\Console\Command\ImportProducts</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,10 @@
+<!-- ko if: isDisplayed() -->
+<tr><th>
+    <span class="magebees-grand-total-item-label" data-bind="i18n: 'Grand Total'"></span></th>
+    <td><span class="magebees-grand-total-item" data-bind="text: getValue(), attr:{'data-label': title}"></span>
+
+    <!-- ko foreach: elems() -->
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <!-- /ko -->
+</td></tr>	
+<!-- /ko -->

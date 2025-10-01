@@ -1,0 +1,70 @@
+/* ============================================ *
+    * Today Deal Products
+* ============================================ */
+.block.widget.mage-products .pager { text-align:center; padding:10px 0; border-bottom:3px double #f3f3f3; border-top:3px double #f3f3f3; }
+.block.widget.mage-products .pager .toolbar-amount, .block.widget.mage-products .pager .pages { display:inline-block; padding-right:10px; position:static; }
+.block.widget.mage-products .pager .pages strong.page { padding:0 10px; border-radius:3px; }
+
+.mage-products .timer-product { float:right; }
+#timer-countbox .countdown-section { color:#fff; margin-left:3px; vertical-align:middle; float:left; }
+#timer-countbox .countdown-section .countdown-amount { font-weight:600; background-color:#191919; padding:3px 10px; min-width:41px; text-align:center; display:block; border-radius:3px 3px 0 0; -webkit-border-radius:3px 3px 0 0; }
+#timer-countbox .countdown-section .countdown-period { font-size:13px; background-color:#2f2f2f; padding:3px 10px; text-align:center; display:block; border-radius:0 0 3px 3px; -webkit-border-radius:0 0 3px 3px; }
+
+/* Sidebar in Today Deal Slider */
+.sidebar .widget.mage-products .block-title { padding:7px 10px; }
+.sidebar .widget.mage-products .block-title strong { font-size:20px; line-height:28px; }
+.sidebar .mage-products .timer-product { float:none; text-align:center; margin-bottom:8px; }
+.sidebar #timer-countbox .countdown-section { margin-left:2px; float:none; display:inline-block; }
+.sidebar #timer-countbox .countdown-section .countdown-amount { font-size:13px; padding:2px 8px; min-width:30px; border-radius:0; -webkit-border-radius:0; }
+.sidebar #timer-countbox .countdown-section .countdown-period { font-size:12px; padding:2px 8px; border-radius:0; -webkit-border-radius:0; margin-bottom:3px; }
+.sidebar .deal-description { font-size:13px; padding-bottom:0; }
+
+.sidebar .mage-deal-slider { position:relative; }
+.sidebar .mage-deal-slider .product-image-container { width:100% !important; }
+
+.sidebar .mage-products .product-items .product-item-info .product-item-photo { position:static; left:inherit; float:inherit; }
+.sidebar .mage-products .product-items .product-item-details { margin-left:0; }
+.page-layout-2columns-left .sidebar .block.widget.mage-deal-slider .products-grid .product-item,
+.page-layout-2columns-right .sidebar .block.widget.mage-deal-slider .products-grid .product-item { width:100%; }
+.sidebar .mage-products .product-items .product-item { margin-bottom:0; }
+.sidebar .mage-products .products-grid .product-item-info, .sidebar .mage-products .products-grid .product-item-info { border:none; margin:0; padding:0; text-align:center; }
+.sidebar .mage-products .products-grid .product-item-info:hover, .sidebar .mage-products .products-grid .product-item-info.active { box-shadow:none; -webkit-box-shadow:none; border:none; }
+
+
+/* ============================================ *
+ * Media Query CSS Responsvie View
+ * ============================================ */
+@media only screen and (max-width:999px) {
+    .sidebar .product-items .product-item-actions .actions-primary,
+    .sidebar .product-items .product-item-actions .actions-secondary { display:block; width:auto; text-align:center; padding-left:0; }
+    .sidebar .product-items .product-item-actions .actions-primary { margin-bottom:5px; }
+}
+
+@media only screen and (max-width:767px) {
+    .mage-products .timer-product { float:none; }
+    #timer-countbox .countdown-section { float:none; display:inline-block; margin:0 2px; }
+    .deal-description { text-align:center; }
+    
+    .sidebar .mage-deal-slider { width:320px; }
+    .sidebar .mage-deal-slider .products-grid .product-item-info, .sidebar .mage-products .timer-product, .sidebar .deal-description, .sidebar .widget.mage-products .block-title { text-align:left; }
+    .sidebar .mage-deal-slider .product-image-container { width:240px !important; }
+    .sidebar .product-items .product-item-actions .actions-primary,
+    .sidebar .product-items .product-item-actions .actions-secondary { display:table-cell; width:auto; text-align:left; padding-left:10px; }
+    .sidebar .product-items .product-item-actions .actions-primary { margin-bottom:0; padding-left:0; }
+}
+
+@media only screen and (max-width:479px) {
+    #timer-countbox .countdown-section { margin:0 1px; }
+    #timer-countbox .countdown-section .countdown-amount, #timer-countbox .countdown-section .countdown-period { font-size:12px; min-width:35px; }
+    
+    .block.widget.mage-deal-slider .product-item-info { text-align:center; }
+    .block.widget.mage-deal-slider .product-item-actions { display:block; }
+    .block.widget.mage-deal-slider .product-item-actions .actions-primary, .block.widget.mage-deal-slider .product-item-actions .actions-secondary { display:inline-block; }
+    
+    .page-layout-3columns .block.widget.mage-products .products-grid .product-item { width:50%; }
+    .page-layout-3columns .block.widget.mage-products.mage-deal-slider .products-grid .product-item { width:100%; }
+    
+    .sidebar .mage-deal-slider { width:285px; }
+    .sidebar .block.widget.mage-deal-slider .product-item-info { text-align:left; }
+}
+

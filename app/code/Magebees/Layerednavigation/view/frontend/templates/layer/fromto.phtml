@@ -1,0 +1,42 @@
+<?php 
+$url = $block->getFilterUrl();
+$button_id = 'from-to';
+$from_id = 'fromprice';
+$to_id = 'toprice';
+$shuffled_button_id = str_shuffle($button_id);
+$shuffled_from_id = str_shuffle($from_id);
+$shuffled_to_id = str_shuffle($to_id);
+$val=$block->getApplyPrice();
+$price_arr=explode('-', (string)$val);
+$helper = $this->helper('Magebees\Layerednavigation\Helper\Data');
+$enableAjax = $helper->getAjaxConfig();
+?>
+<script type="text/javascript" <?php if($enableAjax == 1){ ?> data-rocketjavascript="false" <?php } ?>>
+var price_url = "<?=$url;?>";
+require([
+    'jquery',
+   'jquery-ui-modules/core',
+	'jquery-ui-modules/widget',
+	'domReady!',
+	"Magebees_Layerednavigation/js/magebees-layer"
+], function($,layeredNav){	
+		$("#"+"<?php echo $shuffled_button_id; ?>").on('click', function() {			 
+		var from_val=$("#"+"<?php echo $shuffled_from_id; ?>").val();
+		var to_val=$("#"+"<?php echo $shuffled_to_id; ?>").val();
+		if(price_url.indexOf( "?" ) > -1){
+			var price_filter_url=price_url+"&price="+from_val+"-"+to_val;
+		}else{
+			var price_filter_url=price_url+"?price="+from_val+"-"+to_val;
+		}
+		if((from_val)||(to_val)){			
+			var widget = $(this).layeredNav({});
+			widget.layeredNav('ajaxLayerNav',price_filter_url);
+		}				
+	});    
+});
+</script>
+<div class="priceRange">
+	<span><?php /* @escapeNotVerified */ echo __('From:'); ?><input type="text" id="<?php echo $shuffled_from_id;?>" name="from" class="from_price" value="<?php if(isset($price_arr[0])){echo $price_arr[0];}?>"/></span>
+	<span><?php /* @escapeNotVerified */ echo __('To:'); ?><input type="text" id="<?php echo $shuffled_to_id;?>" name="to" class="to_price" value="<?php if(isset($price_arr[1])){echo $price_arr[1];}?>"/></span>
+	<button id="<?php echo $shuffled_button_id;?>" class="from-to_price"><?php /* @escapeNotVerified */ echo __('Go'); ?></button>
+</div>

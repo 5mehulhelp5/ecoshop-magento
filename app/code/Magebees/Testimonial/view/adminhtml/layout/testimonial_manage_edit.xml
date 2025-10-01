@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+ <update handle="editor"/>
+    <body>
+	     <referenceContainer name="content">
+            <block class="Magebees\Testimonial\Block\Adminhtml\Testimonial\Edit" name="testimonial_edit"/>			 
+         </referenceContainer>
+		 
+		<referenceContainer name="left">
+     		
+		<block class="Magebees\Testimonial\Block\Adminhtml\Testimonial\Edit\Tabs" name="testimonial_edit_tabs">
+		<block class="Magebees\Testimonial\Block\Adminhtml\Testimonial\Edit\Tab\Testimonialinfo" name="testimonial_edit_tab_testimonialinfo"/>
+		  <action method="addTab">
+			<argument name="name" xsi:type="string">main_section</argument>
+			<argument name="block" xsi:type="string">testimonial_edit_tab_testimonialinfo</argument>
+		</action>
+		</block>			
+		</referenceContainer> 
+		
+		
+    </body>
+</page>

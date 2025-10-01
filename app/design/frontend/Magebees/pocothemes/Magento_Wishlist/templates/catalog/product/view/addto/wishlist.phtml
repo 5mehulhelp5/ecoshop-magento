@@ -1,0 +1,96 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Wishlist\Block\Catalog\Product\View\AddTo\Wishlist $block */
+?>
+<?php 
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$enable = (bool)$poco_helper->getProductDetail('wishlist_prod',$poco_helper->getStoreId()); 
+?>
+<?php 
+if ($enable):
+if ($block->isWishListAllowed()): ?>
+    <a href="#" class="action towishlist" data-post='<?= /* @noEscape */ $block->getWishlistParams() ?>' data-action="add-to-wishlist">
+        <svg xmlns="https://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+        <span><?= $block->escapeHtml(__('Add to Wish List')) ?></span>
+    </a>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "body": {
+            "addToWishlist": <?= /* @noEscape */ $block->getWishlistOptionsJson() ?>
+        }
+    }
+</script>
+<?php endif; ?>
+<?php 
+
+$enablesizeGuide = (bool)$poco_helper->getProductDetail('show_size_guide',$poco_helper->getStoreId()); 
+$sizeGuideLabel = $poco_helper->getProductDetail('size_guide_label',$poco_helper->getStoreId()); 
+$sizeGuideBlockId = $poco_helper->getProductDetail('size_guide_block',$poco_helper->getStoreId());
+ 
+//$sizeChardBlockId = 'poco-themes-size-chart';
+$sizeGuideContent = $poco_helper->getBlockContentByIdentifier($sizeGuideBlockId);
+if(($enablesizeGuide)&&($sizeGuideLabel)&&($sizeGuideContent)): //guard
+?>
+    <a href="#" id="size-guide" class="action sizeguide">
+        <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        <?php echo __($sizeGuideLabel); ?>
+    </a>
+	<div id="size-guide-modal" style="display:none;">
+        <?php echo __($sizeGuideContent); ?>
+    </div>
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+            var sizechartoptions = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+				clickableOverlay: true,
+				modalClass: 'sizeGuidePopup',
+                title: $.mage.__('size Guide'),
+				closed: function(){
+                   //$('.sizeGuidePopup').remove();
+				   var currentURL =  window.location.href;
+					currentURL = currentURL.replace('#','');
+					currentURL = currentURL.replace(';','');
+					history.pushState({}, "", currentURL);
+                },
+				buttons: [{
+                    text: $.mage.__('Continue'),
+                    class: '',
+                    click: function () {
+                        this.closeModal();
+                    }
+                }]
+            };
+            var sizechartpopup = modal(sizechartoptions, $('#size-guide-modal'));
+            $("#size-guide").on('click',function(){ 
+				
+                $("#size-guide-modal").modal("openModal");
+				
+				var currentURL =  window.location.href;
+				currentURL = currentURL.replace('#','');
+				currentURL = currentURL.replace(';','');
+				history.pushState({}, "", currentURL);
+            });
+			
+			
+
+        }
+    );
+</script>
+
+	
+<?php endif; ?>

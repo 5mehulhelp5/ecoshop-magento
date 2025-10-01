@@ -1,0 +1,86 @@
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$loaderUrl = $poco_helper->getLoadingIcon();  ?>
+<?php 
+$config=$block->getConfig();
+$popup_config=$block->getPopupConfig();
+$button_text=$popup_config['button_text'];
+$button_color=$popup_config['button_color'];
+$button_text_color=$popup_config['button_text_color'];
+$enable=$config['enable'];
+$auto=$config['auto'];
+if(!$enable)
+{
+	return;
+}
+?>
+<div id="loadingImage" style="display:none;"><div><img loading="lazy" src="<?php echo $loaderUrl; ?>" alt="Loading..." width="90" height="90" /></div></div>
+<?php 
+if($auto)
+{ ?>
+
+<script>
+	function _AjaxQuickView(){
+		var $ = (typeof $ !== 'undefined') ? $ : jQuery.noConflict();
+		var	pathbase = 'ajaxquickview/index/index',
+			_item_cls = $('.products .product-items li.product-item .product-item-info .product-item-details'),
+			_item_cls_show_button = $('.products .product-items li.product-item .product-item-info .product-item-details'),
+			_base_url = '<?php echo str_replace("index.php/","",$this->getUrl()) ?>';
+		var baseUrl = _base_url + pathbase;
+		var _arr = [];
+		if(_item_cls.length > 0 && _item_cls_show_button.length > 0){
+			_item_cls.each(function() {
+				var $this = $(this);
+				
+				if($this.parent().parent().find("a.magebees_quickview").length <= 0) {
+					if( $this.find('a').length > 0 ){
+						var _href =	(typeof $($this.find('a')[0]).attr('href') !== 'undefined' && $($this.find('a')[0]).attr('href').replace(_base_url,"") == '#') ? $($this.parent().find('a')[0]) : $($this.find('a')[0]);
+						if(typeof _href.attr('href') !== 'undefined'){
+							var	producturlpath = _href.attr('href').replace(_base_url,"");
+							producturlpath = ( producturlpath.indexOf('index.php') >= 0 ) ? producturlpath.replace('index.php/','') : producturlpath;
+							var	reloadurl = baseUrl+ ("/path/"+producturlpath).replace(/\/\//g,"/"),
+								_quickviewbutton = "<div class='mageb-quick-outr'><button class='magebees_quickview' title='Quick View' href='"+reloadurl+"' style='background-color:<?php echo $button_color;?>'><span style='color:<?php echo $button_text_color;?>'> <svg xmlns='https://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='st-icon'><path d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'></path><circle cx='12' cy='12' r='3'></circle></svg> <?php echo $button_text;?></span></button></div>";
+							_arr.push(_quickviewbutton);
+							
+						}
+					}
+				}
+			});
+			var count = 0 ;
+			_item_cls_show_button.each(function () {
+				if(typeof _arr[count] != 'undefined' && $(this).find(".magebees_quickview").length <= 0)
+				{
+					$(this).append(_arr[count]);
+					count ++;
+				}
+			});
+			
+		}
+	}
+
+	
+</script>
+
+<script type="text/javascript">
+	//<![CDATA[
+	requirejs(['jquery','domReady!','ajaxQuickView'], function($){	
+		_AjaxQuickView();
+	});
+	//]]>
+</script>
+<?php } ?>
+<script type="text/javascript">
+	//<![CDATA[
+	requirejs(['jquery','domReady!','ajaxQuickView'], function($){	
+		document.getElementById('loadingImage').style['display']='none';	
+		 $('body').on('click','.magebees_quickview',function(e){
+			 e.preventDefault();			 
+			  //return false;
+			 document.getElementById('loadingImage').style['display']='block';
+			 var widget = $(this).ajaxQuickView({});
+			 var url = $(this).attr('href');
+			 widget.ajaxQuickView('productQuickView',url);
+			
+		 });
+	});
+	//]]>
+</script>

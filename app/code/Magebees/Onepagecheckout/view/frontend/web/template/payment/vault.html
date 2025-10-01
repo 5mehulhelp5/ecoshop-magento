@@ -1,0 +1,39 @@
+<div class="payment-method" css="'_active': (getId() === isChecked())">
+    <div class="payment-method-title field choice">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="
+                    attr: {'id': getId()},
+                    value: getId(),
+                    click: selectPaymentMethod,
+                    checked: isChecked,
+                    visible: isRadioButtonVisible()"/>
+        <label class="label" data-bind="attr: {'for': getId()}">
+            <span translate="'Saved Credit Card'"></span>
+            (<span text="getMaskedCard()"></span>)
+        </label>
+    </div>
+
+    <div class="payment-method-content">
+        <each args="getRegion('messages')" render=""></each>
+        <div class="checkout-agreements-block">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+		
+		
+    </div>
+</div>
+ <div class="actions-toolbar">
+            <div class="primary">
+                <button class="action mageb-button checkout"
+                        type="submit"
+                        data-bind="
+                            click: placeOrder,
+                            attr: {title: $t('Place Order')}">
+                    <span translate="'Place Order'"></span>
+                </button>
+            </div>
+        </div>

@@ -1,0 +1,390 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php /* @var $block \Magento\Catalog\Block\Product\View\AbstractView */?>
+<?php $_product = $block->getProduct() ?>
+<?
+$helper = $this->helper('Magebees\Customstockstatus\Helper\Data');
+$attribute=$helper->getAttribute();
+$icon = $helper->getIconCollection();  
+$path= $helper->getIconPath();
+$showproductpage = $helper->getConfigValues()->getValue('customstockstatus/display_settings/product_page', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+
+$enable = $helper->getConfigValues()->getValue('customstockstatus/general/enable', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+
+$quickview = $helper->getConfigValues()->getValue('customstockstatus/display_settings/other_view', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+
+$icon_text = $helper->getConfigValues()->getValue('customstockstatus/general/icon_text', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+
+$pageenable= $helper->getConfigValues()->getValue('customstockstatus/info_link/show_link', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+
+$linkname= $helper->getConfigValues()->getValue('customstockstatus/info_link/text_link', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+
+$cmspage= $helper->getConfigValues()->getValue('customstockstatus/info_link/cmspage', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+
+
+$change_status= $helper->getConfigValues()->getValue('customstockstatus/configurable_products/change_status', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+
+$show_dropdowns= $helper->getConfigValues()->getValue('customstockstatus/configurable_products/show_dropdowns', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+
+$configurable_list_mode= $helper->getConfigValues()->getValue('customstockstatus/configurable_products/configurable_list_mode', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+
+
+
+$this->_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+
+$collection = $this->_objectManager->get('\Magento\Cms\Model\ResourceModel\Page\CollectionFactory')->create();
+  	  $collection->addFieldToFilter('is_active' , \Magento\Cms\Model\Page::STATUS_ENABLED); 
+ foreach($collection as $page){
+
+    if ($page->getData('identifier')==$cmspage) {
+
+	$CMSPageURL = $this->_objectManager->create('Magento\Cms\Helper\Page')->getPageUrl($page->getId());
+    
+    }
+ }
+
+?>
+
+<div id="addExt"></div>
+<div id="parent">
+<?php
+                if ($enable && $showproductpage && $quickview) {
+                  $status = $helper->getStatus($_product->getSku());
+
+                   if ($status=='')
+                   {
+                      $status=$helper->getRuleStatus($block->getProduct(),'product');    
+                   }
+                   for ($i=1; $i < count($attribute); $i++) { 
+                      
+                    if ($attribute[$i]['value']==$status) {
+                        foreach ($icon as $ic) {
+                        if ($ic['icon_name']!='' && $ic['option_id']==$status ) {
+                        ?>
+                        <img id="icon" src="<? echo $path.$ic['icon_name']; ?>" max-width="100%" max-height="100%" /><br>
+                        <?
+                        }
+                      } 
+
+                  $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                  $StockState = $objectManager->get('\Magento\CatalogInventory\Api\StockStateInterface');
+                  $qty=$StockState->getStockQty($_product->getId(), $_product->getStore()->getWebsiteId());  
+                  
+                  if (strpos($attribute[$i]['label'], '{qty}') !== false) {
+                    if (!$icon_text) {
+                      
+                    echo str_replace("{qty}",$qty,$attribute[$i]['label']).'<br>';
+                    
+                    }
+
+                    if ($pageenable) {
+                                ?>
+                   <a href="<?php echo $CMSPageURL;?>"><?php echo $linkname; ?><br></a>
+                   <?
+                   }
+                }
+                else
+                { 
+                      if (!$icon_text) {
+                      
+                      echo $attribute[$i]['label'].'<br>';
+                      
+                      }
+
+                      if ($pageenable) {
+                                ?>
+                   <a href="<?php echo $CMSPageURL;?>"><?php echo $linkname; ?><br></a>
+                   <?
+                   }
+                 }
+                }
+               }           
+              }  ?>   
+</div>
+<div id="instock">
+<?php if ($block->displayProductStockStatus()) :?>
+    <?php if ($_product->isAvailable()) :?>
+        <div class="stock available" title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
+            <span><?= $block->escapeHtml(__('In stock')) ?></span>
+        </div>
+    <?php else :?>
+        <div class="stock unavailable" title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
+            <span><?= $block->escapeHtml(__('Out of stock')) ?></span>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>
+</div>
+<div id="stockstatus"></div>
+<script>
+   requirejs(['jquery','underscore'], function(jQuery,_){
+             
+        jQuery( ".product-options-wrapper div" ).click(function() {
+            var quickview = <?php echo $quickview;?>;
+            var enable = <?php echo $enable; ?>;
+            if (enable && quickview) {
+              selpro();
+            }
+        });
+   
+    
+    function selpro () {
+        
+        var selected_options = [];
+        var count_code=-1;
+        var option_selected;
+        var attribute_code=[];
+        var option_id;
+        jQuery('div.swatch-attribute').each(function(k,v){
+            count_code++; 
+            attribute_id = jQuery(v).attr('attribute-id');
+            option_selected = jQuery(v).attr('option-selected');
+            //attribute_code=jQuery(v).attr('attribute-code');
+            if (jQuery(v).attr('attribute-code')!== undefined) {
+
+              attribute_code.push(jQuery(v).attr('attribute-code'));
+
+            }
+            
+            
+            if(!attribute_id || !option_selected){ return;}
+            selected_options.push(option_selected);
+        });
+        var found_ids;
+        var change_status="<?php echo $change_status;?>";
+        var ajaxPageurl = "<?php echo $block->getUrl('customstatus/icon/index'); ?>";
+        var stockPageurl = "<?php echo $block->getUrl('customstatus/icon/stock'); ?>";
+        var stock_status="<?php echo $block->displayProductStockStatus();?>";  
+        var show_dropdowns="<?php echo $show_dropdowns;?>"
+        var Id=[];
+        jQuery("select").each(function(){
+            Id.push(jQuery(this).attr('id'));
+        });
+        var count=0;
+        jQuery.each(Id,function(index,value){
+          if(jQuery("select#"+value+" option:selected").val())
+          {
+           count++;
+          }            
+        }); 
+        
+        var product_id=<?php echo $_product->getId();?>;
+         var found;
+         
+         if (count_code > -1 && attribute_code.length){
+
+          var ajaxFoundurl="<?php echo $block->getUrl('ajaxquickview/status/index'); ?>"; 
+          var attribute_code1=attribute_code.join(',');
+          var selected_options1=selected_options.join(',');
+          
+          
+          if (count_code == selected_options.length ){
+
+          jQuery.ajax({
+                    type: "POST",
+                    dataType: 'json',
+                    url: ajaxFoundurl,
+                    data: {form_key: window.FORM_KEY,attributecode:attribute_code1,selectedoptions:selected_options1,product_id:product_id },
+                    success: function(msg){
+                      found=msg.output;
+                    }
+                  });
+           } 
+         setTimeout(function(){ 
+         
+         if (found && change_status!='0') {
+          jQuery.ajax({
+                    type: "POST",
+                    dataType: 'json',
+                    url: ajaxPageurl,
+                    data: {form_key: window.FORM_KEY,found_ids:found },
+                    success: function(msg){
+                      //jQuery("#addExt").empty();
+                      jQuery("#parent").hide();
+                      jQuery("#addExt").html(msg.output);
+                      
+                      if (show_dropdowns!='0') {
+                      jQuery("div#product_quickview_content select option").each(function()
+                      {   
+                          str=jQuery(this).text();
+                          
+                          var index= str.indexOf('(');
+                          while(index >= 0){
+                            var remove=str.substring(str.lastIndexOf("("),str.lastIndexOf(")")+1);
+                            str=str.replace(remove, "");
+                            
+                            index= str.indexOf('(');
+                          }
+                          jQuery(this).text(str);
+                           // Add $(this).val() to your list
+                      });
+                      var option_label=jQuery("div#product_quickview_content select option:selected").text();
+                      var drop_status=jQuery("#drop_status").text();
+                      
+                      
+                      var dropdown_status;
+                      if (drop_status!='') {
+                       dropdown_status='('+drop_status+')';
+                      }
+                      else
+                      {
+                       dropdown_status=drop_status;
+                      }
+                      jQuery("div#product_quickview_content select option:selected").text(option_label+dropdown_status);
+                     }
+                    }
+                });
+          }
+         else
+         {
+                      jQuery("#addExt").html('');
+                      jQuery("#parent").show();
+                       if (show_dropdowns!='0' && change_status!='0') {
+                        jQuery("div#product_quickview_content select option").each(function()
+                        {   
+                            str=jQuery(this).text();
+                            var index= str.indexOf('(');
+                            while(index >= 0){
+                              var remove=str.substring(str.lastIndexOf("("),str.lastIndexOf(")")+1);
+                              str=str.replace(remove, "");
+                              index= str.indexOf('(');
+                            }
+                            jQuery(this).text(str);
+                             // Add $(this).val() to your list
+                        });
+                      }
+                      //var option_label=jQuery("select option:selected").text();
+         }
+
+//          var id='option-label-'+attribute_code+'-'+attribute_id+'-item-'+option_selected;
+          var configurable_list_mode="<?php echo $configurable_list_mode;?>";
+          if (found && stock_status!='0') {
+          jQuery.ajax({
+                      type: "POST",
+                      dataType: 'json',
+                      url: stockPageurl,
+                      data: {form_key: window.FORM_KEY,found_ids:found },
+                      success: function(msg){
+                        //jQuery("#addExt").empty();
+                        jQuery("#instock").hide();
+                        jQuery("#stockstatus").html(msg.output);
+
+                       var outofstock=jQuery("div#stockstatus" ).find('input[type=hidden]').val();
+                       if (configurable_list_mode=='selectable_cross') {
+                        if (outofstock=='outofstock'){
+                         jQuery('div.swatch-option.selected:first').addClass('disabled');
+                        }
+                        else
+                        {
+                        jQuery('div.swatch-option').removeClass('disabled');
+                        }
+                       }
+                      }
+                  });
+            }
+            else 
+            {
+              jQuery("#instock").show();
+              jQuery("#stockstatus").html('');
+              
+              if (configurable_list_mode=='selectable_cross') {
+              jQuery('div.swatch-option').removeClass('disabled');
+              }
+            
+            }  
+         },1500);
+       }
+      else if(count==Id.length)
+      {
+         
+        //jQuery(".product-options-wrapper select[id^='attribute']").last().on('change', function() {
+         setTimeout(function (){
+          found_ids=jQuery("input[name=selected_configurable_option]").val();
+          var found=found_ids;
+        
+           if (found && change_status!='0') {
+            jQuery.ajax({
+                      type: "POST",
+                      dataType: 'json',
+                      url: ajaxPageurl,
+                      data: {form_key: window.FORM_KEY,found_ids:found },
+                      success: function(msg){
+                        //jQuery("#addExt").empty();
+                        jQuery("#parent").hide();
+                        jQuery("#addExt").html(msg.output);
+                        if (show_dropdowns!='0') {
+                        jQuery("div#product_quickview_content select option").each(function()
+                        {   
+                            str=jQuery(this).text();
+                            var index= str.indexOf('(');
+                            while(index >= 0){
+                              var remove=str.substring(str.lastIndexOf("("),str.lastIndexOf(")")+1);
+                              str=str.replace(remove, "");
+                              index= str.indexOf('(');
+                            }
+                            jQuery(this).text(str);
+                             // Add $(this).val() to your list
+                        });
+                        var drop_status=jQuery("#drop_status").text();
+                        var dropdown_status;
+                        if (drop_status!='') {
+                          dropdown_status='('+drop_status+')';
+                        }
+                        else
+                        {
+                          dropdown_status=drop_status;
+                        }    
+                        jQuery("div#product_quickview_content select option:selected").each(function(){
+                            var option_label=jQuery(this).text();
+                            jQuery(this).text(option_label+dropdown_status);
+                        });
+                       }
+                      }
+                  });
+            }
+
+            if (found && stock_status!='0') {
+            jQuery.ajax({
+                        type: "POST",
+                        dataType: 'json',
+                        url: stockPageurl,
+                        data: {form_key: window.FORM_KEY,found_ids:found },
+                        success: function(msg){
+                          //jQuery("#addExt").empty();
+                          jQuery("#instock").hide();
+                          jQuery("#stockstatus").html(msg.output);
+                        }
+                    });
+            }
+         },200);
+        //});
+      }
+      else 
+      {
+
+        jQuery("#addExt").html('');
+        jQuery("#parent").show();
+        
+        if (stock_status!='0') {
+         jQuery("#instock").show();
+         jQuery("#stockstatus").html('');
+        }
+        if (show_dropdowns!='0' && change_status!='0') {
+        jQuery("div#product_quickview_content select option").each(function(){   
+           str=jQuery(this).text();
+           var index= str.indexOf('(');
+           while(index >= 0){
+            var remove=str.substring(str.lastIndexOf("("),str.lastIndexOf(")")+1);
+            str=str.replace(remove, "");
+              index= str.indexOf('(');
+            }
+            jQuery(this).text(str);
+        });
+       }
+      }       
+  }
+});
+</script>

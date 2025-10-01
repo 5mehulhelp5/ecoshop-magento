@@ -1,0 +1,61 @@
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $poco_helper->getStoreId();
+$sales_notificationConfig = $poco_helper->getConfigGroup('sales_notification',$storeId);
+if($sales_notificationConfig['enable_sales_notification']):
+$sales_notification_title = $sales_notificationConfig['title'];
+$sales_notification_display_device = $sales_notificationConfig['display_device'];
+$sales_notification_time_interval = $sales_notificationConfig['time_interval'];
+$sales_notification_products = $poco_helper->getSalesNotificationProducts($sales_notificationConfig['product_skus'],$storeId);
+if(count($sales_notification_products)>0): ?>
+
+<div class="sales_ntf hide">
+    <div class="sls_dtls d_fl">
+      <div class="img">
+        <a href="#;" title="recent sales" class="sales-ntf-product-link"><img class="sales-ntf-product-image d-block" width="65" height="85" src="" alt="" loading="lazy"></a>
+      </div>
+    <div class="sls_cnt">
+      <p class="sls_text"><?php echo __($sales_notification_title) ;?></p> 
+      <p class="sales-ntf-product-name"><a href="#;" class="sales-ntf-product-link" rel="nofollow" aria-label="<?php echo __('Product Name') ;?>"></a></p>
+      <p class="time_zone m-0">
+        <span class="sls_no"></span> <?php echo __('minutes ago.') ;?> 
+        <?php if($sales_notificationConfig['enable_locations']):?>		
+          <?php echo __(' From ') ;?><span class="location"></span>
+        <?php endif; ?>
+      </p>
+    </div>
+  </div>
+  <span class="cls_ntf"><svg xmlns="https://www.w3.org/2000/svg" class="st-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+</div>
+
+
+<script>
+window.sales_notification_products = <?php echo json_encode($sales_notification_products); ?>;
+</script>
+<?php 
+
+if($sales_notificationConfig['enable_locations']):
+
+$sales_notification_locations = $poco_helper->getSalesNotificationLocation($sales_notificationConfig,$storeId);
+if(count($sales_notification_locations)>0):
+?>
+<script>
+window.sales_notification_locations = <?php echo json_encode($sales_notification_locations); ?>;
+</script>
+<?php 
+endif;
+endif;
+?>
+<script type="text/x-magento-init">
+	{
+		"*": {
+            "productnotification": {
+			"salesnotification_enable_locations":"<?php echo $sales_notificationConfig['enable_locations']; ?>",	
+			"salesnotification_interval_time":"<?php echo $sales_notification_time_interval; ?>",
+			"salesnotification_display_device":"<?php echo $sales_notification_display_device; ?>"
+			}
+        }
+	}
+</script>
+<?php endif;?>
+
+<?php endif;?>

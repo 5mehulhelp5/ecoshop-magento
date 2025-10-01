@@ -1,0 +1,22 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$helperData = $this->helper('Magebees\Onepagecheckout\Helper\Data');
+$order = $helperData->getObjectManager()->create('Magebees\Onepagecheckout\Block\Thankyou')->getOrder();
+$CustomerId = $helperData->getObjectManager()->create('Magebees\Onepagecheckout\Block\Thankyou')->getCustomerId();
+?>
+
+<div class="left-success">
+	<img id="MagebeesSuccess" name="MagebeesSuccess" class="mageb-success-img" src="<?php echo $block->getViewFileUrl('Magebees_Onepagecheckout::images/success.png'); ?>" alt="Success" />
+	<h2 class="sub-title"><?php echo __('Thank you for your purchase!') ?></h2>	
+	<?php if($order->getIncrementId()): ?>
+	<p><?php echo __('You will receive an order confirmation email with details of your order and a link to track its progress.') ?></p>
+    <?php if ($CustomerId): ?>
+        <p><?php echo 'Your order number is: '.$order->getIncrementId(); ?></p>
+        <?php  else :?>
+            <p><?php echo __('Your order # is: <span>%1</span>.',$order->getIncrementId()) ?></p>
+        <?php endif; ?>
+	<?php endif; ?>
+	<div class="buttons-set">
+        <a title="<?php echo __('Continue Shopping') ?>" class="button" onclick="<?php echo $helperData->getContinueUrl(); ?>"><span><span><?php echo __('Continue Shopping') ?></span></span></a>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magebees" translate="label" sortOrder="100">
+            <label>Magebees</label>
+        </tab>
+        <section id="ajaxaddtocart" translate="label" type="text" sortOrder="30" showInDefault="1" 
+                 showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Ajax Add To Cart</label>
+            <tab>magebees</tab>
+            <resource>Magebees_Ajaxaddtocart::ajaxaddtocart_config</resource>
+
+            <group id="setting" translate="label" type="text" sortOrder="1" showInDefault="1" 
+                   showInWebsite="1" showInStore="1">
+                <label>Settings</label>
+
+                <field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+                    <label>Enabled</label> 
+                    <comment>Select Yes for enable ajax add to cart in frontend.</comment> 
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+                 </field>
+                 
+                 <field id="enable_home" translate="label comment" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1"> 
+                    <label>Enable Ajax Add To Cart to home</label> 
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                    <comment>Select Yes for enable ajax add to cart in home page.</comment> 
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+                 </field>                
+            </group>
+             <group id="confirmaddtocart" translate="label" type="text" sortOrder="2" showInDefault="1" 
+                   showInWebsite="1" showInStore="1">
+                <label>Add in Dialog box after add to cart confirmation</label>
+
+                <field id="addblock" translate="label comment" type="editor" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+                    <label>Dialogbox Content</label> 
+                    <frontend_model>Magebees\Ajaxaddtocart\Block\Adminhtml\Editor</frontend_model> 
+                 </field>            
+            </group>
+            
+             <group id="confirmremovecart" translate="label" type="text" sortOrder="3" showInDefault="1" 
+                   showInWebsite="1" showInStore="1">
+                <label>Add in Dialog box after delete item from cart confirmation</label>
+
+                <field id="removeblock" translate="label comment" type="editor" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+                    <label>Dialogbox Content</label> 
+                    <frontend_model>Magebees\Ajaxaddtocart\Block\Adminhtml\Editor</frontend_model> 
+                 </field>            
+            </group>
+            
+            <group id="dialogboxsetting" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Dialog Box settings</label>                 
+                <field id="productimage" translate="label comment" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1"> 
+                    <label>Display Product Image in confirm dialog box</label> 
+                    <comment>Select Yes for display Image in confirmation dialog box.</comment> 
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+                 </field>
+                 
+                <field id="related" translate="label comment" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1"> 
+                    <label>Display Related Product</label> 
+                    <comment>Select Yes for display related product in confirmation dialog box.</comment> 
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+                 </field>
+                 <field id="crosssell" translate="label comment" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1"> 
+                    <label>Display Cross-sells Product</label> 
+                    <comment>Select Yes for display cross-sells product in confirmation dialog box.</comment> 
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+                 </field>
+                 <field id="upsell" translate="label comment" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1"> 
+                    <label> Display Up-sells Product</label> 
+                    <comment>Select Yes for display up-sells product in confirmation dialog box.</comment> 
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+                 </field>
+                 <field id="livetime" translate="label comment" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1"> 
+                    <label>Close Confirmation dialog box after second</label> 
+                    <comment>Default 60 Seconds.</comment>
+                    <validate>validate-zero-or-greater</validate>                 
+                 </field>
+                   <field id="loadingimage" translate="label comment" type="image" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label> Ajax Load indicator</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">ajaxaddtocart</upload_dir>
+                    <base_url type="media" scope_info="1">ajaxaddtocart</base_url>
+                    <comment>Selected image display in ajax loading.</comment>     
+                </field>
+            </group>
+             <group id="support" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Info</label>
+                    <field id="style" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1"> 
+                        <label>Info</label> 
+                        <frontend_model>Magebees\Ajaxaddtocart\Model\Support</frontend_model>
+                    </field>
+                </group>
+        </section>
+    </system>
+</config>

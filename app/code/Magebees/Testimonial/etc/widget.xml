@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+     <widget id="customer_testimonials" class="Magebees\Testimonial\Block\Widget\Testimonialwidget" is_email_compatible="true"
+            placeholder_image="Magebees_Testimonial::images/Testimonialwidget.png" ttl="86400">
+        <label translate="true">Magebees::Customer Testimonial Widget</label>
+        <description translate="true">List of Customer Testimonial</description>
+		<parameters>
+		<parameter name="wd_enabled" xsi:type="select" visible="true" sort_order="10">
+                <label translate="true">Enabled</label>				
+				 <options>
+					<option name="yes" value="1" selected="true"><label translate="true">Yes</label></option>
+					<option name="no" value="0"><label translate="true">No</label></option>
+				</options>
+        </parameter>
+		<parameter name="wd_title_testimonial" xsi:type="text" visible="true" required="true" sort_order="11">
+                <label translate="true">Title For Testimonial</label>
+				<description translate="true">Set title For Testimonial</description>
+				<value>Customer Testimonial</value>
+        </parameter>
+		<parameter name="wd_content_length" xsi:type="text" visible="true" required="true" sort_order="15">
+                <label translate="true">Testimonial Word Limit</label>
+				<description translate="true">Set Testimonial Content Length</description>
+			<value>500</value>
+        </parameter>
+		<parameter name="wd_youtube_video" xsi:type="select" visible="true" sort_order="16">
+                <label translate="true">Display Youtube Video</label>
+				<description translate="true">Select Yes for show youtube video in testimonial detail</description>
+				<options>
+					<option name="yes" value="1" selected="true"><label translate="true">Yes</label></option>
+					<option name="no" value="0"><label translate="true">No</label></option>
+				</options>
+				
+		</parameter>	
+		<parameter name="wd_autoplay_video" xsi:type="select" visible="true" sort_order="17">
+                <label translate="true">Autoplay Youtube Video</label>
+				<description translate="true">Select Yes for autoplay youtube video in testimonial detail</description>
+				<depends>
+                    <parameter name="wd_youtube_video" value="1" />
+                </depends>
+				<options>
+					<option name="yes" value="1"><label translate="true">Yes</label></option>
+					<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>                        
+				
+				
+		</parameter>	
+		<parameter name="wd_profile" xsi:type="select" visible="true" sort_order="18">
+                <label translate="true">Display Profile Image</label>
+				<description translate="true">Select Yes for show client profile image in testimonial detail</description>
+				<options>
+					<option name="yes" value="1" selected="true"><label translate="true">Yes</label></option>
+					<option name="no" value="0" ><label translate="true">No</label></option>
+				</options>
+				
+		</parameter>	
+		<parameter name="wd_img_width" xsi:type="text" visible="true" required="true" sort_order="19">
+                <label translate="true">Profile Image Width</label>
+				<description translate="true">Set width of profile image(set in pixel).</description>
+			<depends>
+                    <parameter name="wd_profile" value="1" />
+                </depends>
+				<value>100</value>
+        </parameter>
+		<parameter name="wd_img_height" xsi:type="text" visible="true" required="true" sort_order="20">
+                <label translate="true">Profile Image Height</label>
+				<description translate="true">Set height of profile image(set in pixel).</description>
+			<depends>
+                    <parameter name="wd_profile" value="1" />
+                </depends>
+			<value>100</value>
+        </parameter>		
+		<parameter name="wd_company" xsi:type="select" visible="true" sort_order="21">
+                <label translate="true">Display Company Name</label>
+					<description translate="true">Select Yes for show company name in testimonial detail</description>
+				<options>
+					<option name="yes" value="1" selected="true"><label translate="true">Yes</label></option>
+					<option name="no" value="0" ><label translate="true">No</label></option>
+				</options>
+			
+		</parameter>
+		<parameter name="wd_website" xsi:type="select" visible="true" sort_order="22">
+                <label translate="true">Link Website Url</label>
+				<description translate="true">Select Yes for link company name to website url in frontend.</description>
+				<options>
+					<option name="yes" value="1" selected="true"><label translate="true">Yes</label></option>
+					<option name="no" value="0" ><label translate="true">No</label></option>
+				</options>
+
+		</parameter>
+		<parameter name="wd_rating" xsi:type="select" visible="true" sort_order="23">
+                <label translate="true">Display Rating</label>
+				<description translate="true">Select Yes for show ratings in testimonial detail</description>
+				<options>
+					<option name="yes" value="1" selected="true"><label translate="true">Yes</label></option>
+					<option name="no" value="0" ><label translate="true">No</label></option>
+				</options>
+				
+		</parameter>
+		<parameter name="wd_email" xsi:type="select" visible="true" sort_order="24">
+                <label translate="true">Display Email</label>
+				<description translate="true">Select Yes for show email address in testimonial detail</description>
+				<options>
+					<option name="yes" value="1" selected="true"><label translate="true">Yes</label></option>
+					<option name="no" value="0" ><label translate="true">No</label></option>
+				</options>
+				
+        </parameter>
+		<parameter name="wd_address" xsi:type="select" visible="true" sort_order="25">
+                <label translate="true">Display Address</label>
+				<description translate="true">Select Yes for show client address in testimonial detail</description>
+				<options>
+					<option name="yes" value="1" selected="true"><label translate="true">Yes</label></option>
+					<option name="no" value="0" ><label translate="true">No</label></option>
+				</options>
+				
+		</parameter>
+		<parameter name="wd_created_date" xsi:type="select" visible="true"
+                sort_order="26">
+                <label translate="true">Display Created Datetime</label>
+				<description translate="true">Select Yes for show created date time in testimonial detail</description>
+				<options>
+					<option name="yes" value="1" selected="true"><label translate="true">Yes</label></option>
+					<option name="no" value="0" ><label translate="true">No</label></option>
+				</options>
+
+		</parameter>		
+		<parameter name="wd_slidemode" xsi:type="select" visible="true"
+                       source_model="Magebees\Testimonial\Model\Slidemode" sort_order="27">
+                <label translate="true">Select Slide Mode</label>				
+			<description translate="true"><![CDATA[Select Slide Mode for testimonial slider.<br/>
+Note: Works only with Customer Testimonial Slider Template.]]></description>
+        </parameter>
+		<parameter name="wd_autoplay_slider" xsi:type="select" visible="true" sort_order="28">
+                <label translate="true">Auto Play Slider</label>			
+				<description translate="true"><![CDATA[Select Yes for autoplay testimonial slider.<br/>
+Note: Works only with Customer Testimonial Slider Template.]]></description>
+				<options>
+					<option name="yes" value="1"><label translate="true">Yes</label></option>
+					<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+			
+        </parameter>
+		<parameter name="wd_delaytime" xsi:type="text" visible="true" required="true" sort_order="29">
+                <label translate="true">Slider Speed</label>				
+			<description translate="true"><![CDATA[Set slider speed for testimonial(in milliseconds).<br/>
+Note: Works only with Customer Testimonial Slider Template.]]></description>
+			<depends>
+                    <parameter name="wd_autoplay_slider" value="1" />
+                </depends>
+			<value>7000</value>
+			
+        </parameter>
+			<parameter name="wd_autoplayoff" xsi:type="select" visible="true" sort_order="30">
+				<label translate="true">Disable On Mouse Enter</label>
+									<description translate="true"><![CDATA[Disable Auto Slider When Mouse Enter On Slider Section .<br/>
+Note: Works only with Customer Testimonial Slider Template.]]></description>
+				<depends><parameter name="wd_autoplay_slider" value="1" /></depends>
+				<options>
+					<option name="yes" value="1"><label translate="true">Yes</label></option>
+					<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+			
+				
+			</parameter>		
+			<parameter name="wd_slide_auto_height" xsi:type="select" visible="true"
+						  sort_order="31">
+				<label translate="true">Slide Auto Height </label>
+								<description translate="true"><![CDATA[Set Auto Height On Slider Section.<br/>
+Note: Works only with Customer Testimonial Slider Template.]]></description>
+
+				<options>
+					<option name="yes" value="1"><label translate="true">Yes</label></option>
+					<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+			</parameter>
+			<parameter name="wd_navarrow_slider" xsi:type="select" visible="true" sort_order="32">
+                <label translate="true">Display Navigation Arrow in Slider</label>				
+								<description translate="true"><![CDATA[Select Yes for display navigation arrow in testimonial slider.<br/>
+Note: Works only with Customer Testimonial Slider Template.]]></description>
+				<options>
+					<option name="yes" value="1"><label translate="true">Yes</label></option>
+					<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+        </parameter>
+		<parameter name="wd_pagination_slider" xsi:type="select" visible="true" sort_order="33">
+                <label translate="true">Display Pagination in Slider</label>	
+             			<description translate="true"><![CDATA[Select Yes for display pagination in testimonial slider.<br/>
+Note: Works only with Customer Testimonial Slider Template.]]></description>
+
+			 <options>
+					<option name="yes" value="1"><label translate="true">Yes</label></option>
+					<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>          				
+        </parameter>
+		<parameter name="wd_pagination_type" xsi:type="select" visible="true" sort_order="34">
+				<label translate="true">Pagination Type</label>
+				<depends>
+					<parameter name="wd_pagination_slider" value="1" />                   
+				</depends>
+				<options>
+				<option name="default" value="default"><label translate="true">Default</label></option>
+				<option name="dynamic" value="dynamic"><label translate="true">Dynamic</label></option>
+				<option name="progress" value="progress"><label translate="true">Progress</label></option>
+				<option name="fraction" value="fraction"><label translate="true">Fraction</label></option>
+				<option name="custom" value="fraction"><label translate="true">Custom</label></option>
+				</options>
+					</parameter>
+<parameter name="wd_infinite_loop" xsi:type="select" visible="true"
+						   sort_order="35">
+				<label translate="true">Infinite loop</label>
+				<description translate="true"><![CDATA[Select Yes For slider In Infinite loop.<br/>
+Note: Works only with Customer Testimonial Slider Template.]]></description>
+
+				<options>
+					<option name="yes" value="1"><label translate="true">Yes</label></option>
+					<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+			</parameter>
+			<parameter name="wd_scrollbar" xsi:type="select" visible="true"
+						    sort_order="36">
+				<label translate="true">Show Scrollbar</label>
+								<description translate="true"><![CDATA[Select Yes For display scrollbar.<br/>
+Note: Works only with Customer Testimonial Slider Template.]]></description>
+
+				<options>
+					<option name="yes" value="1"><label translate="true">Yes</label></option>
+					<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+			</parameter>
+			<parameter name="wd_grab_cursor" xsi:type="select" visible="true"
+						    sort_order="37">
+				<label translate="true">Grab Cursor</label>
+								<description translate="true"><![CDATA[Select Yes For Grab Cursor On Slider.<br/>
+Note: Works only with Customer Testimonial Slider Template.]]></description>
+				<options>
+					<option name="yes" value="1" selected="true"><label translate="true">Yes</label></option>
+					<option name="no" value="0"><label translate="true">No</label></option>
+				</options>
+			</parameter>
+		 <parameter name="template" xsi:type="select" required="true" visible="true" >
+                <label translate="true">Template</label>
+                <options>
+                    <option name="default" value="testimonial.phtml" selected="true">
+                        <label translate="true">Customer Testimonial Content Slider Template</label>
+                    </option>
+					<option name="testimonial_detail" value="testimonial_detail.phtml" selected="true">
+                        <label translate="true">All Customer Testimonial List Template</label>
+                    </option>
+                    <option name="list_default"
+                            value="sidebar_slider.phtml">
+                        <label translate="true">Customer Testimonial Sidebar Slider Template</label>
+                    </option>             
+                </options>
+            </parameter>
+		 </parameters>
+        <containers>
+            <container name="sidebar.main">
+                <template name="default" value="list_default" />
+            </container>
+            <container name="content">
+                <template name="grid" value="default" />            
+                <template name="testimonial_detail" value="testimonial_detail" />            
+            </container>
+            <container name="sidebar.additional">
+                <template name="default" value="list_default" />
+            </container>
+        </containers>
+    </widget>
+</widgets>

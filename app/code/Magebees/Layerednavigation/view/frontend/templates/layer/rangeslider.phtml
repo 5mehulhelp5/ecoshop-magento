@@ -1,0 +1,67 @@
+<?php
+$url = $block->getFilterUrl();
+$price_slider_id = 'price-slider';
+$price_amount_id = 'amount';
+$shuffled_price_slider_id = str_shuffle($price_slider_id);
+$shuffled_price_amount_id = str_shuffle($price_amount_id);
+$helper = $this->helper('\Magebees\Layerednavigation\Helper\Data');
+$currency_symbol = $helper->getCurrencySymbol();
+$enableAjax = $helper->getAjaxConfig();
+?>
+<script type="text/javascript" <?php if($enableAjax == 1){ ?> data-rocketjavascript="false" <?php } ?>>
+var price_url = "<?=$url;?>";
+<?php
+$version=$helper->getMagentoVersion();
+if(version_compare($version, '2.4.4', '>=')) { ?>
+require([
+    'jquery',
+    'jquery-ui-modules/core',
+	'jquery-ui-modules/widget',
+	'jquery/ui-modules/widgets/slider',
+    'domReady!',
+	"Magebees_Layerednavigation/js/magebees-layer"
+],
+<?php }else{ ?>
+require([
+    'jquery',
+    'jquery-ui-modules/core',
+	'jquery-ui-modules/widget',
+	'jquery-ui-modules/slider',
+    'domReady!',
+	"Magebees_Layerednavigation/js/magebees-layer"
+],
+<?php } ?>	
+
+ function($,layeredNav){
+	 $("#"+"<?php echo $shuffled_price_slider_id; ?>").slider({
+			range: true,
+			step: 0.01,
+			min: <?=$block->getMinValue()?>,
+			max: <?=$block->getMaxValue()?>,
+			values: [ <?=$block->getLeftValue()?>, <?=$block->getRightValue()?> ],
+			slide: function( event, ui ) {
+				$( "#"+"<?php echo $shuffled_price_amount_id; ?>" ).val( "<?=$currency_symbol;?>" + $( "#"+"<?php echo $shuffled_price_slider_id; ?>").slider( "values", 0 ) +
+			" - "+"<?=$currency_symbol;?>" + $("#"+"<?php echo $shuffled_price_slider_id; ?>" ).slider( "values", 1 ) );
+			},
+			change: function( event, ui ) {				
+				if(price_url.indexOf( "?" ) > -1) {
+					var price_filter_url=price_url+"&price="+ui.values[0]+"-"+ui.values[1];
+				}else{					
+					var price_filter_url=price_url+"?price="+ui.values[0]+"-"+ui.values[1];
+				}
+							
+				var widget = $(this).layeredNav({});
+				widget.layeredNav('ajaxLayerNav',price_filter_url);
+				$( "#"+"<?php echo $shuffled_price_amount_id; ?>").val( "<?=$currency_symbol;?>" + ui.values[ 0 ] + " - "+"<?=$currency_symbol;?>" + ui.values[ 1 ] );
+			}			
+		});
+		$( "#"+"<?php echo $shuffled_price_amount_id; ?>" ).val( "<?=$currency_symbol;?>" + $( "#"+"<?php echo $shuffled_price_slider_id; ?>").slider( "values", 0 ) +
+			" - "+"<?=$currency_symbol;?>" + $("#"+"<?php echo $shuffled_price_slider_id; ?>" ).slider( "values", 1 ) );
+		
+});
+</script>
+<?php 
+?>      
+<!--<label for="amount">Price range:</label>-->
+<input type="text" id="<?php echo $shuffled_price_amount_id; ?>" readonly class="priceFromTo">
+<div id="<?php echo $shuffled_price_slider_id; ?>"></div>

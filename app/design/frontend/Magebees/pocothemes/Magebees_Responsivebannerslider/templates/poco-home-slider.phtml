@@ -1,0 +1,7 @@
+<?php $_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); 
+ $slider_group_code = $_helper->getHome('home_slider',$_helper->getStoreId()); 
+ if($slider_group_code): 
+ $group_code = $_helper->getSliderIdFromUniqueCode($slider_group_code); 
+ $slider_style = 'style1.phtml';
+echo  $this->getLayout()->createBlock("Magebees\Responsivebannerslider\Block\View")->setTemplate($slider_style)->setCode($group_code)->toHtml(); 
+ endif; ?>

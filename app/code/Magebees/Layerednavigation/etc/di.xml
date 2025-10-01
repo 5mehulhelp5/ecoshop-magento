@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\LayeredNavigation\Block\Navigation\FilterRenderer">
+        <plugin name="magebees_layered_nav_renderer" type="Magebees\Layerednavigation\Model\Plugin\FilterRenderer" />
+    </type>	
+	<preference for="Magento\Catalog\Block\Product\ProductList\Toolbar"                type="Magebees\Layerednavigation\Block\ProductList\Toolbar"/>
+	<type name="Magento\Elasticsearch\Model\Adapter\FieldMapper\ProductFieldMapper">
+        <plugin name="Magebees::FieldMapper" type="Magebees\Layerednavigation\Plugin\Elasticsearch\Model\Adapter\FieldMapper" />
+    </type>
+	<type name="Magento\Elasticsearch\ElasticAdapter\Model\Adapter\FieldMapper\ProductFieldMapper">
+        <plugin name="Magebees::FieldMapper" type="Magebees\Layerednavigation\Plugin\Elasticsearch\Model\Adapter\FieldMapper" />
+    </type>
+	<type name="Magebees\Layerednavigation\Plugin\Elasticsearch\Model\Adapter\FieldMapper">
+        <arguments>
+            <argument name="fields" xsi:type="array">
+               <item name="rating_summary" xsi:type="string">integer</item>
+               <item name="stock_status" xsi:type="string">integer</item>                 
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Elasticsearch\Model\Adapter\DataMapper\ProductDataMapper">
+        <plugin name="Magebees::DataMapper"
+                type="Magebees\Layerednavigation\Plugin\Elasticsearch\Model\Adapter\DataMapper" />
+    </type>
+    <type name="Magento\Elasticsearch\Elasticsearch5\Model\Adapter\DataMapper\ProductDataMapper">
+        <plugin name="Magebees::DataMapper" type="Magebees\Layerednavigation\Plugin\Elasticsearch\Model\Adapter\DataMapper" />
+    </type>
+    <type name="Magebees\Layerednavigation\Plugin\Elasticsearch\Model\Adapter\DataMapper">
+        <arguments>
+            <argument name="dataMappers" xsi:type="array">
+                <item name="rating_summary" xsi:type="object">Magebees\Layerednavigation\Plugin\Elasticsearch\Model\Adapter\DataMapper\RatingFilter</item>
+                  <item name="stock_status" xsi:type="object">Magebees\Layerednavigation\Plugin\Elasticsearch\Model\Adapter\DataMapper\StockFilter</item>   
+       
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Elasticsearch\Model\Adapter\BatchDataMapper\ProductDataMapper">
+        <plugin name="Magebees::BatchDataMapper"
+                type="Magebees\Layerednavigation\Plugin\Elasticsearch\Model\Adapter\BatchDataMapper" />
+    </type> 
+    <type name="Magento\Elasticsearch\Elasticsearch5\Model\Adapter\DataMapper\ProductDataMapper">
+        <plugin name="Magebees::BatchDataMapper" type="Magebees\Layerednavigation\Plugin\Elasticsearch\Model\Adapter\BatchDataMapper" />
+    </type>  
+    <type name="Magebees\Layerednavigation\Plugin\Elasticsearch\Model\Adapter\BatchDataMapper">
+        <arguments>
+            <argument name="dataMappers" xsi:type="array">
+                <item name="rating_summary" xsi:type="object">Magebees\Layerednavigation\Plugin\Elasticsearch\Model\Adapter\DataMapper\RatingFilter</item>             
+                <item name="stock_status" xsi:type="object">Magebees\Layerednavigation\Plugin\Elasticsearch\Model\Adapter\DataMapper\StockFilter</item>
+
+               
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magebees\Layerednavigation\Plugin\Elasticsearch\SearchAdapter\Aggregation\Builder\TermFilter">
+        <arguments>
+            <argument name="bucketBuilders" xsi:type="array">
+                <item name="rating_summary" xsi:type="object">Magebees\Layerednavigation\Plugin\Elasticsearch\Model\Adapter\BucketBuilder\RatingFilter</item>             
+            </argument>
+        </arguments>
+    </type>
+	<!-- Added by amrish -->
+	<type name="Magento\Eav\Model\Entity\Collection\AbstractCollection">
+    		<plugin name="find_duplicate_entry" type="Magebees\Layerednavigation\Plugin\Collection" sortOrder="20"/>
+ 	</type>
+	 <type name="Magento\Catalog\Model\Layer">
+        <plugin name="custom_product_toolbar" type="Magebees\Layerednavigation\Plugin\Layer" />
+    </type>
+	
+	<!--End by amrish -->
+	
+</config>

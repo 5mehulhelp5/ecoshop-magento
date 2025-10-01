@@ -1,0 +1,251 @@
+ <?php $_config = $block->getConfig();
+ $testimonial_config=$block->getTestimonialConfig();
+$rating_bg_url=$block->getViewFileUrl('Magebees_Testimonial::images/stars.png');
+ if(isset($testimonial_config['require_fields']))
+ {
+	 $require_fields=$testimonial_config['require_fields'];
+	 
+ }
+ else{
+	 $require_fields='';
+ }
+ $helper = $this->helper('Magebees\Testimonial\Helper\Data');?>
+
+<div class="block mageTestForm">
+	<div class="block-title"><h3><?php echo $block->getTestimonialFormTitle();?></h3></div>
+	<?php $form_data = $block->getFormData();
+
+	if(isset($form_data['name']))
+	{
+		$fname = $form_data['name'];
+	}else{
+		$fname = null;
+	} 
+	if(isset($form_data['email']))
+	{
+		$email = $form_data['email'];
+	}else{
+		$email = null;
+	} 
+	if(isset($form_data['address']))
+	{
+		$address = $form_data['address'];
+	}else{
+		$address = null;
+	} 
+	if(isset($form_data['company']))
+	{
+		$company = $form_data['company'];
+	}else{
+		$company = null;
+	} 
+	if(isset($form_data['website']))
+	{
+		$website = $form_data['website'];
+	}else{
+		$website = null;
+	} 
+	if(isset($form_data['ext_video']))
+	{
+		$ext_video = $form_data['ext_video'];
+	}else{
+		$ext_video = null;
+	} 
+	if(isset($form_data['video_url']))
+	{
+		$video_url = $form_data['video_url'];
+	}else{
+		$video_url = null;
+	} 
+	if(isset($form_data['testimonial']))
+	{
+		$testimonial = $form_data['testimonial'];
+	}else{
+		$testimonial = null;
+	} 
+	?>
+    <form id="form-testimonial" action="<?php echo $block->getUrl('testimonial/index/save') ?>" method="post" enctype="multipart/form-data" data-mage-init='{"validation":{}}'>
+        <fieldset class="fieldset login"  data-hasrequired="<?php echo __('* Required Fields') ?>">
+            <div class="field name required">
+            	<div class="fields group group-2">
+                	<div class="field">
+                        <label> <?php echo __('Your Name') ?><span class="required" style="color:red;"> *</span></label>
+                        <div class="control">
+                            <input type="text" name="name" id="name" data-validate="{required:true,'validate-textarea':true}" class="input-text required-entry" value="<?php echo $fname; ?>"/>
+                        </div>
+                    </div>
+                    <div class="field email required">
+                        <label><?php echo __('Your Email') ?><span class="required" style="color:red"> *</span></label>
+                        <div class="control">
+                           <input type="text" name="email" id="email" value="<?php echo $email; ?>" data-validate="{required:true,'validate-email':true}" class="input-text required-entry validate-email">
+                        </div>
+                	</div>
+                </div>		
+            </div>
+            <div class="field">
+                <div class="fields group group-2">
+                    <div class="field address required">
+                      <label><?php echo __('Your Address') ?>  <?php if(strpos($require_fields, '0') !== false):?><span class="required" style="color:red"> *</span><?php endif;?></label>
+                        <div class="control">
+                         <textarea rows="3" <?php if(strpos($require_fields, '0') !== false):?>class="required-entry"<?php endif;?> type="text" id="address"  name="address" data-validate="{'validate-textarea':true}"><?php echo $address; ?></textarea>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="company">
+                          <label><?php echo __('Your Company') ?> <?php if(strpos($require_fields, '1') !== false):?><span class="required" style="color:red"> *</span><?php endif;?></label>
+                          <div class="control">
+                            <input type="text" name="company" id="company" value="<?php echo $company; ?>" <?php if(strpos($require_fields, '1') !== false):?>data-validate="{required:true,'validate-textarea':true}"  class="input-text required-entry"<?php else:?>data-validate="{'validate-textarea':true}"<?php endif;?> />
+                          </div>
+                        </div>
+                	</div>
+                </div>
+            </div> 
+            <div class="field">
+                <div class="website">
+                    <label><?php echo __('Your Website') ?> <?php if(strpos($require_fields, '2') !== false):?><span class="required" style="color:red"> *</span><?php endif;?></label>
+                    <div class="control">
+                        <input placeholder="Ex.http://www.yoururl.com" type="text" name="website" id="website" value="<?php echo $website; ?>" <?php if(strpos($require_fields, '2') !== false):?>data-validate="{required:true,validate-url:true}"  class="input-text required-entry"<?php else:?>data-validate="{'validate-url':true}"<?php endif;?> />
+                    </div>
+                </div>
+            </div> 
+            <div class="field">
+            	<div class="fields group group-2">
+                	<div class="field ext_video required">
+                      <label><?php echo __('Video Testimonial') ?></label>
+                        <div class="control">
+                            <select name="ext_video" id="ext_video">
+                                <option value="1" <?php if($ext_video==1) { echo "selected='selected'"; } ?>><?php echo __('Yes') ?></option>				
+                                <option value="0" <?php if($ext_video==0) { echo "selected='selected'"; }?>><?php echo __('No') ?></option>
+                            </select>	
+                        </div>
+                    </div>
+           			<div id="field video" class="field required">
+                         <label id="lbl_video"><?php echo __('Youtube Video URL') ?> <?php if(strpos($require_fields, '3') !== false):?><span class="required" style="color:red"> *</span><?php endif;?></label>
+                        <div class="control">
+                        	<input type="text" name="video_url" id="video_url" value="<?php echo $video_url; ?>" <?php if(strpos($require_fields, '3') !== false):?>data-validate="{required:true,'validate-textarea':true}" class="input-text required-entry"<?php else:?>data-validate="{'validate-textarea':true}"<?php endif;?> />
+                        </div>
+					</div>
+                </div>
+            </div>
+            <div class="field">
+            	<div class="fields group group-2">
+            		<div class="field image required">
+            		<label><?php echo __('Profile Picture') ?><?php if(strpos($require_fields, '4') !== false):?><span class="required" style="color:red"> *</span><?php endif;?></label>
+                    <div class="control">
+                        <input type="file" name="image" id="image" <?php if(strpos($require_fields, '4') !== false):?>data-validate="{required:true}"  class="input-text required-entry"<?php endif;?>/>
+                    </div>
+            	</div>
+                	<div class="field rating required">
+                     <label><?php echo __('Rating') ?><?php if(strpos($require_fields, '5') !== false):?><span class="required" style="color:red"> *</span><?php endif;?> </label>
+                        <div class="control">
+                            <div class="mageRating" style="background-image:url(<?php echo $rating_bg_url;?>)">
+                                <input type="radio" name="rating" class="star-1" id="star-1"  value="1" <?php if(strpos($require_fields, '5') !== false):?>
+                                data-validate="{required:true}"  class="input-text required-entry"
+                                	<?php endif;?>  />
+                                <label class="star-1" for="star-1">1</label>
+                                <input type="radio" name="rating" class="star-2" id="star-2" value="2"  />
+                                <label class="star-2" for="star-2">2</label>
+                                <input type="radio" name="rating" class="star-3" id="star-3" value="3"/>
+                                <label class="star-3" for="star-3">3</label>
+                                <input type="radio" name="rating" class="star-4" id="star-4" value="4"/>
+                                <label class="star-4" for="star-4">4</label>
+                                <input type="radio" name="rating" class="star-5" id="star-5" value="5" />
+                                <label class="star-5" for="star-5">5</label>
+                                <span style="background-image:url(<?php echo $rating_bg_url;?>)"></span>
+                            </div>
+                        </div>
+           		 	</div>
+                </div>
+            </div> 
+             <div class="field testimonial required">
+              <label><?php echo __('Your Testimonial') ?> <span class="required" style="color:red"> *</span></label>
+                <div class="control">
+                 <textarea class="required-entry" type="text" id="testimonial" name="testimonial" data-validate="{'validate-textarea':true}"><?php echo $testimonial; ?></textarea>	
+                </div>
+            </div>
+            <div class="field">
+            	<div class="fields group group-2">
+                	<?php if($testimonial_config['enable_captcha']):?>
+                    	<div class="field image required">
+                         <label><?php echo __('Captcha') ?><span class="required" style="color:red"> *</span></label>
+                            <div class="control">
+                               <div class="control captcha">
+                                <?php $image_name = $helper->createCaptchaImage(); ?>
+                                    <img src="<?php echo $helper->getImgUrl().$image_name ;?>" id="captcha_image" />
+                                    <img src="<?php echo $block->getViewFileUrl('Magebees_Testimonial::images/refresh.png'); ?>" id="captcha_refresh" class="refreshBtn" alt="Refresh"/>
+                                    <input name="captcha" id="captcha" title="Captcha" value="" class="input-text captchaText" type="text" data-validate="{required:true}" />
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif;?>
+                </div>
+           	</div>
+            
+            <div class="field">
+                <button type="submit" class="action login primary" name="submit" id="submit"><span><?php echo __('Submit Testimonial') ?></span></button>	
+            </div>	
+          </fieldset>           
+      </form>
+</div>
+
+<script type="text/javascript">
+	require([
+		'jquery'
+	],
+	function($) {
+		$('#video_url').hide();
+		$('#lbl_video').hide();
+		$('#ext_video').change(function() {
+			
+			var video=$('#ext_video').val();
+			if(video==1)
+			{
+				$('#video_url').show();
+				$('#lbl_video').show();
+			}
+			else
+			{
+				$('#video_url').hide();
+				$('#lbl_video').hide();
+			}
+        });
+		
+		<?php $url = $block->getRefreshUrl(); ?>
+	   $('#form-testimonial').on('click', '#captcha_refresh', function(event){
+		   	$.ajax({
+					url : '<?php echo $url; ?>',
+					type: 'get',
+					showLoader:true,
+					success: function(data){
+						$("#captcha_image").attr("src",'<?php echo $helper->getImgUrl();?>'+data);
+					}
+				});
+			})
+		}
+	);
+</script>
+<script type="text/javascript">
+require([
+'jquery',
+"jquery-ui-modules/core",
+"jquery-ui-modules/widget",
+'jquery/validate',
+'mage/translate' 
+], function($){
+$.validator.addMethod(
+'validate-textarea', function (value) {
+    
+return (!(/<(.|\n)*?>/g.test(value)));
+}, $.mage.__('HTML Tag are not allowed'));
+});
+</script>
+  
+  
+  
+  
+
+
+
+   
+   
+  

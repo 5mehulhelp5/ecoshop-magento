@@ -1,0 +1,37 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Top menu for store
+ *
+ * @var $block \Magento\Theme\Block\Html\Topmenu
+ */
+?>
+<?php $columnsLimit = $block->getColumnsLimit() ?: 0; ?>
+<?php $_menu = $block->getHtml('level-top', 'submenu', $columnsLimit) ?>
+<?php $_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); ?>
+
+<?php 
+$enable = $_helper->getConfigValue('general','module_enable_disable','navigationmenu',$_helper->getStoreId());
+?>
+<?php if($enable): ?>
+	<?php $header_style = $_helper->getHeader('header_style',$_helper->getStoreId());?>	<?php $unique_code = $_helper->getHeader('top_menu',$_helper->getStoreId());?>
+	<?php 		if($unique_code):
+		$topMenuHtml = $this->getLayout()->createBlock("Magebees\Navigationmenu\Block\Menucreator")->setUniqueCode($unique_code)->setTemplate("Magebees_Navigationmenu::menucreator.phtml")->toHtml(); 
+		echo $topMenuHtml;		endif;
+ ?>
+<?php else: ?>
+<nav class="navigation" data-action="navigation">
+    <ul data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>
+        <?= /* @escapeNotVerified */ $_menu ?>
+        <?= /* @escapeNotVerified */ $block->getChildHtml() ?>
+    </ul>
+</nav>
+<?php endif; ?>

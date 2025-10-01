@@ -1,0 +1,16 @@
+<?php $helper = $this->helper('Magebees\Blog\Helper\Configuration');
+$blogEnabled = $helper->isEnableBlogModule();
+if($blogEnabled):
+?>
+<script type="text/x-magento-init">
+    {
+
+        "*": {
+
+            "blog": {}
+
+        }
+
+    }
+</script>
+<?php endif; ?>

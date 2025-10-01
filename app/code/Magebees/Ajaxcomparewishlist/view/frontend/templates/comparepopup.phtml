@@ -1,0 +1,23 @@
+<?php
+$helper = $this->helper('Magebees\Ajaxcomparewishlist\Helper\Data');
+if(!$helper->isAjaxCompareEnabled()) return;
+$product = $block->getProduct();
+$productImage = $block->getImage($product, 'category_page_grid');
+$message = $helper->getPopupMsg();
+?>
+<div class="mbpopupbox">
+    <div class="mbproimg">
+        <a href="<?php echo $block->escapeUrl($product->getProductUrl()) ?>" tabindex="-1"><?php echo $productImage->toHtml() ?></a>
+        <h2 class="mbproname"><?php echo $product->getName() ?></h2>
+    </div>
+    <h3 class="mbsuccessmsg"><?php echo $message ? $message : __('You added this product to the comparison list') ?></h3>
+    <div class="mbcomwishbtns">
+		<button type="button" id="mbcompareviewbtn" class="action focus primary" title="<?php echo __('View Comparison') ?>" onClick="window.location='<?php echo $block->getUrl('catalog/product_compare/index/'); ?>'"> <span><?php echo __('View Comparison List') ?></span></button>
+		<button type="button" id="mbcomparebtnclose" class="action primary mbcompareclose" title="<?php echo __('Close') ?>"><span><?php echo __('Close ') ?></span>
+            <?php
+                 if ($popupTime = $helper->getPopupTime()) {?>
+                 (<span class="mbcompareautoclosetime"><?php echo $popupTime ?></span>)
+                 <?php }?>
+        </button>
+    </div>
+</div>

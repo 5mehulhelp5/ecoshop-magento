@@ -1,0 +1,13 @@
+.mbAjaxSearch .select-wrapper .holder { color:#000000; background-color:#ffffff; }
+.mbAjaxSearch .select-wrapper .holder:after { border-top-color:#000000; }
+.mbAjaxSearch #search_autocomplete { background-color:#ffffff; border-color:#f7f5f4; }
+.mbAjaxSearch .mbSecTitle { background-color:#e6e6e6;color:#000000; }
+.mbAjaxSearch .mbSecTitle a { color:#4d3ad2; }
+.mbAjaxSearch ul.searchTags { background-color:#ffffff; }
+.mbAjaxSearch .searchTags .searchTag a { color:#000000;}
+.mbAjaxSearch .searchTags .searchTag a:hover { background-color:#CCCCCC; }
+.mbAjaxSearch ul#ajax_ul > li { background-color:#FAFAFA; }
+.mbAjaxSearch ul#ajax_ul > li:hover { background-color:#EBEBEB; }
+.mbAjaxSearch ul#ajax_ul > li p { color:#0E170F; }
+.mbAjaxSearch ul> li#products { background-color:#e6e6e6; }
+.searchText { background-color:#d4ffd5; }

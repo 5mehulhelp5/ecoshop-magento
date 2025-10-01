@@ -1,0 +1,381 @@
+<?php // Magebees\Blog\Block\Post\Postlist ?>
+<div class="mbb-blog-category-page">
+	<?php $_postCollection = $block->getPostCollection(); ?>
+
+	<?php if ($block->getDescription()): ?>
+		<div class="mb-blog-description"><?php echo __($block->getDescription());?></div>
+	<?php endif ?>
+
+	<?php 
+		$defaultPosts = false;
+		$postlinks = false;
+		$subCategorylinks = false;
+		if($block->getDisplayMode()==0){
+		$defaultPosts = true;
+		}else if($block->getDisplayMode()==1){
+			$postlinks = true;
+		}else if($block->getDisplayMode()==2){
+		$subCategorylinks = true;
+		}elseif($block->getDisplayMode()==3){
+		$subCategorylinks = true;
+		$defaultPosts = true;
+		}
+		if($subCategorylinks){ ?>
+			<div class="mb-subcategory-links"><?php $SubCategoryList = $block->getSubCategoryList();
+				if(count($SubCategoryList)>0){?>
+				<ul class="items">
+					<?php foreach($SubCategoryList as $list): ?>
+						<li class="item"><a href="<?php echo $list['url'];?>" title="<?php echo __($list['title']);?>">
+							<?php echo __($list['title']);?></a></li>
+					<?php endforeach;?>
+				</ul>
+				<?php } ?>
+			</div>
+		<?php } ?>
+
+		<?php if (!$_postCollection->count()): ?>
+    		<div class="message info empty"><div><?php echo __('We can not find posts matching the selection.') ?></div></div>
+		<?php else: ?>
+		<?php 
+	
+ 		if($defaultPosts){ ?>
+		<div class="mb-post-listing">
+			<?php if ($block->getPagerHtml()): ?>
+	    		<div class="toolbar top mb-blog-toolbar"><?php echo $block->getPagerHtml(); ?></div>
+			<?php endif ?>
+			<?php if($block->getPageViewStyle()=='grid'){ ?>
+			<div class="mb-post-gridview">
+				<?php //echo $block->getChildHtml('post_gridview'); ?>
+				<ul class="items clearfix">
+<?php foreach ($_postCollection as $_post): ?>
+<?php 	
+	$_postUrl =  $block->getPosturl($_post);
+	$_postName = $block->escapeHtml($_post->getTitle(), null, true);
+	$featuredImage = $block->getFeaturedImage($_post);
+?>
+<li class="item item-<?php echo $_post->getId() ?>">
+    <?php if($featuredImage):?> 
+        <div class="mb-featured-image">
+            <a href="<?php echo $block->escapeHtml($_postUrl);?>" title="<?php echo $block->escapeHtml($_postName);?>">
+                <img src="<?php echo $featuredImage;?>" alt="<?php echo $block->escapeHtml($_postName);?>" title="<?php echo $block->escapeHtml($_postName);?>" />
+            </a>
+        </div>
+    <?php endif;?>
+	<div class="mb-post-header">
+        <?php if($_postName):?> 
+        <h2 class="mb-post-title">
+            <a href="<?php echo $_postUrl ?>"><?php echo __($_postName); ?> </a>
+        </h2>
+        <?php endif;?>
+		<div class="mb-post-meta">
+			<?php if($block->EnablePublishDate()):?>
+				<div class="item-meta mb-post-post-date">
+					<span class="label"><?php echo __('Posted:') ?></span>
+					<span class="value"><?php echo $block->getCreationDate($_post);?></span>
+				</div> 
+			<?php endif;?>
+
+            <?php if ($_categoriesCount = $block->getCategoriesCount($_post)) { ?>
+            <div class="item-meta mb-post-categories">
+                <span class="label"><?php echo __('Categories:') ?></span>
+                <?php $cat_count = 0; 
+                    $post_cat_ids = $postCategoryIds = $_post->getCategoryIds();
+                        foreach($block->getBlockCategories($post_cat_ids) as $ct) { $cat_count++; ?>
+                
+            <?php if($cat_count > 2){ ?>    
+            <a class="hide-cat-more" title="<?php echo $block->escapeHtml($ct['title']) ?>" href="<?php echo $ct['url']; ?>">
+                <?php echo $block->escapeHtml($ct['title']) ?>
+            <?php if ($cat_count != $_categoriesCount) { ?>, <?php } ?>
+            </a>
+            <?php }else{ ?>
+            <a class="show-cat" title="<?php echo $block->escapeHtml($ct['title']) ?>" href="<?php echo $ct['url']; ?>">
+                 <?php echo $block->escapeHtml($ct['title']) ?>
+            <?php if ($cat_count != $_categoriesCount) { ?>, <?php } ?>
+            </a>
+
+            <?php } ?>
+                
+                <?php } ?>
+                <?php if($_categoriesCount > 2):?>
+                <a class="show-more-cat showmorecat"><?php echo __(' More'); ?></a>
+                <?php endif;?>
+            </div>
+            <?php } ?>
+
+            <?php if(($block->getPostComment($_post)->getSize()) > 0) { ?>
+            <div class="item-meta mb-post-comments">
+                <span class="label"><?php echo __('Comments:') ?></span>
+                <a title="<?php echo $block->escapeHtml($_postName) ?>" href="<?php echo $_postUrl ?>#post-comments">
+                    <?php echo $block->getPostComment($_post)->getSize(); ?>
+                </a>
+            </div>
+            <?php } ?> 
+
+            <?php $_posttags = $block->getPostTags($_post);
+            if ($_posttags->getSize()>0) { $_tagsTotalCount = $_posttags->getSize(); ?>
+            <div class="item-meta mb-post-tags">
+                <span class="label"><?php echo __('Tags:') ?></span>
+                <?php $tag_count = 0; foreach($_posttags as $tag) { $tag_count++; ?>
+                    
+                <?php if($tag_count > 2){ ?>    
+            <a class="hide-tag-more" title="<?php echo $block->escapeHtml($tag->getTitle()) ?>" href="<?php echo $block->getTagurl($tag); ?>">
+                <?php echo $block->escapeHtml($tag->getTitle()) ?>
+             <?php if ($tag_count != $_tagsTotalCount) { ?>, <?php } ?>
+            </a>
+            <?php }else{ ?>
+            <a class="show-tag" title="<?php echo $block->escapeHtml($tag->getTitle()) ?>" href="<?php echo $block->getTagurl($tag); ?>">
+                <?php echo $block->escapeHtml($tag->getTitle()) ?>
+             <?php if ($tag_count != $_tagsTotalCount) { ?>, <?php } ?>
+            </a>
+            <?php } ?>
+                        <?php } ?>
+                        <?php if($tag_count > 2):?>
+            <a class="show-more-tag showmoretag"><?php echo __(' More'); ?></a>
+            <?php endif;?>
+            </div>
+            <?php } ?>
+
+            <?php 
+                if($block->EnableAuthorDisplay()):
+                if ($_authorId = $_post->getAuthorId()) { 
+                $authorInfo = $block->getPostAuthorInfo($_authorId);?>
+                <div class="item-meta mb-post-author">
+                    <span class="label"><?php echo __('Author:') ?></span>
+                    <span class="value">
+                        <?php if($block->EnableAuthorLink()):?>
+                        <a title="<?php echo $block->escapeHtml($authorInfo['name']) ?>" href="<?php echo $authorInfo['url']; ?>">
+                            <?php endif;?>
+                            <?php echo $block->escapeHtml($authorInfo['name']) ?>
+                            <?php if($block->EnableAuthorLink()):?>
+                        </a>
+                        <?php endif;?>
+                    </span>
+                </div>
+            <?php } ?>
+           <?php endif; ?>
+
+           <?php if($block->IsAddthisEnable()):?>
+            <div class="addthis_toolbox addthis_default_style item-meta" addthis:url="<?php echo $_postUrl ?>" addthis:title="<?php echo $_postName; ?>"
+                <?php if ($featuredImage) { ?>
+                    addthis:media="<?php echo $featuredImage ?>"
+                <?php } ?>>
+                <a class="addthis_button_facebook"></a>
+                <a class="addthis_button_twitter"></a>
+                <a class="addthis_button_email"></a>
+                <a class="addthis_button_compact"></a>
+            </div>
+            <?php endif;?>
+        </div> 
+    </div>
+        
+	<div class="mb-post-excerpt clearfix">
+        <div class="mb-post-text">
+            <?php echo $block->getPostShortContent($_post);?>
+        </div>
+        <div class="mb-read-btn">
+            <a class="mb-post-readmore action subscribe primary" href="<?php echo $_postUrl ?>" title="<?php echo $_postName ?>">
+                <?php echo __('Read More') ?>
+            </a>
+        </div>
+    </div>
+</li>
+			
+<?php endforeach; ?>
+
+</ul>
+			</div>
+			<?php } else if($block->getPageViewStyle()=='list'){ ?>
+			<div class="mb-post-listview">
+				<?php //echo $block->getChildHtml('post_listview'); ?>
+				<ul class="items clearfix">
+<?php foreach ($_postCollection as $_post): ?>
+<?php 	
+	
+    $_postUrl =  $block->getPosturl($_post);
+    $_postName = $block->escapeHtml($_post->getTitle(), null, true);
+    $featuredImage = $block->getFeaturedImage($_post);
+?>
+<li class="item item-<?php echo $_post->getId() ?>">
+	<div class="mb-post-header">
+        <div class="post-title-holder clearfix">
+    		<h2 class="mb-post-title">
+                <a href="<?php echo $_postUrl ?>"><?php echo __($_postName); ?></a>
+            </h2>
+
+            <div class="mb-post-meta">
+                <?php if($block->EnablePublishDate()):?>
+                    <div class="item-meta mb-post-posed-date">
+                        <span class="label"><?php echo __('Posted:') ?></span>
+                        <span class="value"><?php echo $block->getCreationDate($_post);?></span>
+                    </div> 
+                <?php endif;?>
+
+                <?php if(($block->getPostComment($_post)->getSize()) > 0) { ?>
+                    <div class="item-meta mb-post-comments">
+                        <span class="label"><?php echo __('Comments:') ?></span>
+                        <a title="<?php echo $block->escapeHtml($_postName) ?>" href="<?php echo $_postUrl ?>#post-comments">
+                            <?php echo $block->getPostComment($_post)->getSize(); ?>
+                        </a>
+                    </div>
+                <?php } ?> 
+
+                <?php if ($_categoriesCount = $block->getCategoriesCount($_post)) { ?>          
+        <div class="item-meta mb-post-categories">
+            <span class="label"><?php echo __('Categories:') ?></span>
+            <?php $cat_count = 0; 
+                $post_cat_ids = $postCategoryIds = $_post->getCategoryIds();
+                    foreach($block->getBlockCategories($post_cat_ids) as $ct) { $cat_count++; ?>
+            
+            <?php if($cat_count > 2){ ?>    
+            <a class="hide-cat-more" title="<?php echo $block->escapeHtml($ct['title']) ?>" href="<?php echo $ct['url']; ?>">
+                <?php echo $block->escapeHtml($ct['title']) ?>
+            <?php if ($cat_count != $_categoriesCount) { ?>, <?php } ?>
+            </a>
+            <?php }else{ ?>
+            <a class="show-cat" title="<?php echo $block->escapeHtml($ct['title']) ?>" href="<?php echo $ct['url']; ?>">
+                 <?php echo $block->escapeHtml($ct['title']) ?>
+            <?php if ($cat_count != $_categoriesCount) { ?>, <?php } ?>
+            </a>
+
+            <?php } ?>
+              
+            <?php } ?>
+            <?php if($_categoriesCount > 2):?>
+               <a class="show-more-cat showmorecat"><?php echo __(' More'); ?></a>
+            <?php endif;?>
+        </div>
+        <?php } ?>
+
+            <?php $_posttags = $block->getPostTags($_post);
+            if ($_posttags->getSize()>0) { 
+            $_tagsTotalCount = $_posttags->getSize();
+            ?>
+            <div class="item-meta mb-post-tags">
+            <span class="label"><?php echo __('Tags:') ?></span>
+            <?php $tag_count = 0; foreach($_posttags as $tag) { $tag_count++; ?>
+            
+            <?php if($tag_count > 2){ ?>    
+            <a class="hide-tag-more" title="<?php echo $block->escapeHtml($tag->getTitle()) ?>" href="<?php echo $block->getTagurl($tag); ?>">
+                <?php echo $block->escapeHtml($tag->getTitle()) ?>
+             <?php if ($tag_count != $_tagsTotalCount) { ?>, <?php } ?>
+            </a>
+            <?php }else{ ?>
+            <a class="show-tag" title="<?php echo $block->escapeHtml($tag->getTitle()) ?>" href="<?php echo $block->getTagurl($tag); ?>">
+                <?php echo $block->escapeHtml($tag->getTitle()) ?>
+             <?php if ($tag_count != $_tagsTotalCount) { ?>, <?php } ?>
+            </a>
+            <?php } ?>
+            
+            <?php } ?>
+            <?php if($tag_count > 2):?>
+            <a class="show-more-tag showmoretag"><?php echo __(' More'); ?></a>
+            <?php endif;?>
+                </div>
+        <?php }  ?>
+
+        <?php if($block->EnableAuthorDisplay()):    
+        if ($_authorId = $_post->getAuthorId()) { 
+        $authorInfo = $block->getPostAuthorInfo($_authorId);?>
+        <div class="item-meta mb-post-author">
+            <span class="label"><?php echo __('Author:') ?></span>
+            <span class="value">
+                <?php if($block->EnableAuthorLink()):?>
+                <a title="<?php echo $block->escapeHtml($authorInfo['name']) ?>" href="<?php echo $authorInfo['url']; ?>">
+                    <?php endif;?>
+                    <?php echo $block->escapeHtml($authorInfo['name']) ?>
+                    <?php if($block->EnableAuthorLink()):?>
+                </a>
+                    <?php endif;?>
+            </span>
+        </div>
+        <?php } ?>
+        <?php endif; ?>
+
+                <?php if($block->IsAddthisEnable()):?>
+                <div class="addthis_toolbox addthis_default_style item-meta" addthis:url="<?php echo $_postUrl ?>" addthis:title="<?php echo $_postName; ?>"
+                    <?php if ($featuredImage) { ?> addthis:media="<?php echo $featuredImage ?>"
+                    <?php } ?>>
+                    <a class="addthis_button_facebook"></a>
+                    <a class="addthis_button_twitter"></a>
+                    <a class="addthis_button_email"></a>
+                    <a class="addthis_button_compact"></a>
+                </div>
+                <?php endif;?>
+            </div>
+            <?php if($featuredImage):?> 
+                <div class="featured-image left">
+                    <a href="<?php echo $block->escapeHtml($_postUrl);?>" title="<?php echo $block->escapeHtml($_postName);?>">
+                        <img src="<?php echo $featuredImage;?>" alt="<?php echo $block->escapeHtml($_postName);?>">
+                    </a>
+                </div>
+            <?php endif;?>
+        </div>    
+    </div>
+	<div class="mb-post-excerpt clearfix">
+        <div class="mb-post-text">
+            <?php echo $block->getPostShortContent($_post);?>
+        </div>
+        <div class="mb-read-btn">
+            <a class="mb-post-readmore action subscribe primary" href="<?php echo $_postUrl ?>" title="<?php echo $_postName ?>">
+               <?php echo __('Read More') ?>
+            </a>
+        </div>
+    </div>
+
+    <div class="mb-meta-footer">
+        
+    </div>
+</li>
+<?php endforeach; ?>
+</ul>
+			</div>
+			<?php }?>
+		    
+			<?php if ($block->getPagerHtml()): ?>
+	        	<div class="toolbar bottom mb-blog-toolbar"><?php echo $block->getPagerHtml(); ?></div>
+	    	<?php endif ?>
+		</div>
+		<?php } 
+		if($postlinks){
+		?>
+
+	<div class="mb-post-links clearfix">
+		<?php if ($block->getPagerHtml()): ?>
+    		<div class="toolbar top mb-blog-toolbar"><?php echo $block->getPagerHtml(); ?></div>
+		<?php endif ?>
+		<ul class="mb-link-items">
+            <?php foreach ($_postCollection as $_post): ?>
+            <?php 	
+			
+			$_postUrl =  $block->getPosturl($_post);
+			$_postName = $block->escapeHtml($_post->getTitle(), null, true);
+			?>
+			<li class="item item-<?php echo $_post->getId() ?>">
+		        <div class="mb-post-link-title">
+		            <h2 class="mb-post-title">
+		                <a href="<?php echo $_postUrl ?>"><?php echo __($_postName); ?></a>
+		            </h2>
+		        </div>
+			</li>
+            <?php endforeach; ?>
+        </ul>
+		<?php if ($block->getPagerHtml()): ?>
+        	<div class="toolbar bottom mb-blog-toolbar"><?php echo $block->getPagerHtml(); ?></div>
+    	<?php endif ?>
+		</div>
+	<?php
+	}
+	?>
+	
+	<?php if($block->EnableAddThis()):?>
+<script type="text/javascript">
+    var addthis_config = {
+        "ui_language": '<?php echo $block->getAddThisLanguage();?>',
+        "data_track_clickback":false
+    }
+</script>
+<script type="text/javascript" async src="//s7.addthis.com/js/250/addthis_widget.js#pubid=<?php echo $block->getAddThisId();?>"></script>
+<?php endif;?>
+
+<?php endif;?>
+</div>

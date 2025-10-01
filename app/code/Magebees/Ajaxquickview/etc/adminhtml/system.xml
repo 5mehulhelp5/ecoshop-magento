@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magebees" translate="label" sortOrder="100">
+            <label>Magebees</label>
+        </tab>
+        <section id="ajaxquickview" translate="label" type="text" sortOrder="70" showInDefault="1" 
+				 showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Ajax Quick View</label>
+            <tab>magebees</tab>
+            <resource>Magebees_Ajaxquickview::ajaxquickview_config</resource>
+
+			<group id="code" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+            <label>Default Package Code</label>
+		    <field id="fronttag" translate="label comment" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+				    <label>Call Via Frontend Template File</label>
+				   <frontend_model>Magebees\Ajaxquickview\Block\Adminhtml\DefaultFrontend</frontend_model>
+				  <comment>Add this code in custom product listing page for display Quickview button</comment> 				
+		    </field>
+	   </group>
+
+			
+            <group id="setting" translate="label" type="text" sortOrder="1" showInDefault="1" 
+				   showInWebsite="1" showInStore="1">
+				<label>Settings</label>
+				<field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enabled</label> 
+					<comment>Select Yes for enable ajax quick view in frontend.</comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>
+				  <field id="auto" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Display Quick View Button Auto</label> 
+					<comment>Select Yes for display Quick View Button on product automatically. If no you can add short code for displaying manually.</comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>						
+			</group>			
+			<group id="popupsetting" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+            	<label>Quick View Popup Settings</label>	
+				 <field id="button_text" translate="label comment" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Quick View Button Text</label> 
+					 <validate>required-entry</validate>
+					<comment>Set Button Text for Quick View.</comment> 				
+				 </field>
+				 <field id="button_text_color" translate="label comment" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Quick View Button Text Color</label> 
+					 <frontend_model>Magebees\Ajaxquickview\Block\Color</frontend_model> 					
+				 </field>
+				 <field id="button_color" translate="label comment" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Quick View Button Color</label> 
+					<frontend_model>Magebees\Ajaxquickview\Block\Color</frontend_model> 					
+				 </field>
+				<field id="show_wishlist" translate="label comment" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Display Add To Wishlist</label> 
+					<comment>Select Yes for display add to wishlist button in quick view popup.</comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>
+				<field id="show_compare" translate="label comment" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Display Add To Compare</label> 
+					<comment>Select Yes for display add to compare button in quick view popup.</comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>
+				<field id="show_product_tab" translate="label comment" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Display Product Detail Tab</label> 
+					<comment>Select Yes for display product tabs in quick view popup.</comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>
+					<field id="show_related" translate="label comment" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Display Related Products</label> 
+					<comment>Select Yes for display related products in quick view popup.</comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>
+					<field id="show_upsell" translate="label comment" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Display Upsell Products</label> 
+					<comment>Select Yes for display upsell products in quick view popup.</comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>
+				<field id="show_cross_sell" translate="label comment" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Display Cross-sell Products</label> 
+					<comment>Select Yes for display cross-sell products in quick view popup.</comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>
+				<field id="enable_go_to_product" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enable Go To Product Page Button </label> 
+					<comment>Select Yes for enable go to product page button in quick view popup.</comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>
+			</group>
+             
+        </section>
+    </system>
+</config>

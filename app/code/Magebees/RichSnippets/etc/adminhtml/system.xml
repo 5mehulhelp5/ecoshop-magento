@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magebees" translate="label" sortOrder="100">
+            <label>Magebees</label>
+        </tab>
+        <section id="richsnippets" translate="label" type="text" sortOrder="94" showInDefault="1" 
+				 showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Google Rich Snippets</label>
+            <tab>magebees</tab>
+            <resource>Magebees_RichSnippets::richsnippets_config</resource>
+            <group id="setting" translate="label" type="text" sortOrder="1" showInDefault="1" 
+				   showInWebsite="1" showInStore="1">
+				<label>Settings</label>
+				<field id="enabled" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enabled</label> 
+					<comment>Select Yes for enable the extension.</comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>					
+			</group>
+			<group id="product_rich_data" translate="label" type="text" sortOrder="2" showInDefault="1" 
+				   showInWebsite="1" showInStore="1">
+				<label>Product Rich Data</label>
+				<field id="enabled" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enabled</label> 				
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment>Select Yes for enable the product rich data.</comment> 
+				 </field>
+				 <field id="show_availability" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Availability</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>
+				  <field id="show_condition" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Condition</label>		
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>
+				 <field id="show_config_as" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Configurable Products as</label>		
+					<source_model>Magebees\RichSnippets\Model\Config\Source\Configurable</source_model> 
+				 </field>
+				 <field id="show_group_as" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Grouped Products as</label>		
+					<source_model>Magebees\RichSnippets\Model\Config\Source\Grouped</source_model> 
+				 </field>
+				 <field id="description" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Description</label>			
+					<source_model>Magebees\RichSnippets\Model\Config\Source\Description</source_model> 
+				 </field>
+				<field id="brand" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Brand</label>			
+					<source_model>Magebees\RichSnippets\Model\Config\Source\Attributes</source_model> 
+				 </field>
+				 <field id="manufacture" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Manufacture</label>			
+					<source_model>Magebees\RichSnippets\Model\Config\Source\Attributes</source_model> 
+				 </field>
+				 <field id="show_rating" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Show Rating</label>			
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+					<comment>Select Yes for add the rating and review to product rich data.</comment>
+				 </field>
+				  <field id="custom_property" translate="label" type="textarea" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Custom Properties</label>  
+                    <comment><![CDATA[list of comma separated schema.org properties and attribute codes (format: property,attribute code).<br>Example of pair: mpn,sku. In that case mpn will be replaced with sku value.<br> Each pair or new added attribute has to be inserted on a new line.]]></comment>
+                </field>
+			</group>
+			<group id="category" translate="label" type="text" sortOrder="3" showInDefault="1" 
+				   showInWebsite="1" showInStore="1">
+				<label>Enabled on Category Pages</label>
+				<field id="enabled" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enabled</label> 				
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+					<comment>Select Yes for add the product rich data for each product on category page.</comment>
+				 </field>
+			</group>
+			<group id="breadcrumbs" translate="label" type="text" sortOrder="4" showInDefault="1" 
+				   showInWebsite="1" showInStore="1">
+				<label>Breadcrumbs</label>
+				<field id="enabled" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enabled</label> 				
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>	
+				 <field id="type" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Type</label> 				
+					<source_model>Magebees\RichSnippets\Model\Config\Source\Breadcrumbtype</source_model>
+					<comment><![CDATA[ It will only modify the Breadcrumbs Type for the Search Engine.<br>It will not modify the Breadcrumbs on store front.<br> Choose 'Short' to make "Store > Subcategory 2 > Product" instead of "Store > Category > Subcategory 1 > Subcategory 2 > Product".]]></comment> 
+				 </field>					
+			</group>	
+			<group id="searchbox" translate="label" type="text" sortOrder="5" showInDefault="1" 
+				   showInWebsite="1" showInStore="1">
+				<label>Search Box</label>
+				<field id="enabled" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enabled</label> 				
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment>Select Yes for display search input box for home page in Google search results.</comment> 
+				 </field>
+				 <field id="enable_websitename" translate="label comment" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Include Website Name in Search Result</label> 				
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>	
+				  <field id="websitename" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Website Name</label>
+                     <depends>						
+						 <field id="enable_websitename">1</field>
+					</depends>
+                </field>
+                <!--<field id="websiteurl" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Website Url</label>
+                    <validate>validate-url</validate>      
+                </field>	-->							
+			</group>
+			<group id="organization" translate="label" type="text" sortOrder="7" showInDefault="1" 
+				   showInWebsite="1" showInStore="1">
+				<label>Organization</label>
+				<field id="enabled" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enabled</label> 				
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>				
+				<field id="name" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Organization Name</label> 
+                    <validate>required-entry</validate>  
+                </field>
+                <field id="logo_url" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Logo Url</label>              
+                </field>
+                <field id="description" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Description</label>              
+                </field>
+                <field id="desc_length" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Description Length</label>
+                    <validate>validate-number</validate> 
+                    <comment>Set the number of characters which will be displayed in the description.</comment>
+                </field>
+                 <field id="country" translate="label" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Country</label>    
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                </field>
+                <field id="region" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Region/State</label>          
+                </field>
+                <field id="zipcode" translate="label" type="text" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>ZIP/Postal Code</label>       
+                </field>
+                <field id="city" translate="label" type="text" sortOrder="19" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>City</label>             
+                </field>   
+                <field id="sales" translate="label" type="text" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sales</label> 
+                     <comment>An internationalized version of the phone number, starting with the "+" symbol and country code (+91 in the India). Examples: "+91 9999999999"</comment>           
+                </field> 
+                <field id="tech_support" translate="label" type="text" sortOrder="23" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Technical Support</label>  
+                     <comment>An internationalized version of the phone number</comment>        
+                </field>   								
+                <field id="cust_service" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Customer Service</label>   
+                    <comment>An internationalized version of the phone number</comment>      
+                </field> 
+			</group>
+			<group id="social_profile" translate="label" type="text" sortOrder="9" showInDefault="1" 
+				   showInWebsite="1" showInStore="1">
+				<label>Social Profiles</label>
+				<field id="enabled" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1"> 
+					<label>Enabled</label> 				
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+					<comment>Please make sure 'organization' is enabled to get 'Social Profiles' working.</comment> 
+				 </field>				
+				<field id="facebook" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Facebook</label>              
+                </field>
+                <field id="twitter" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Twitter</label>              
+                </field>
+                <field id="google" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Google+</label>              
+                </field>
+                 <field id="instagram" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Instagram</label>              
+                </field>
+                 <field id="youtube" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>YouTube</label>              
+                </field>                
+                 <field id="linkedin" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>LinkedIn</label>              
+                </field>
+                <field id="pinterest" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Pinterest</label>             
+                </field> 
+                 <field id="myspace" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Myspace</label>              
+                </field> 
+                 <field id="soundcloud" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SoundCloud</label>            
+                </field> 
+                 <field id="tumblr" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Tumblr</label>              
+                </field> 
+            </group>
+            
+        </section>
+    </system>
+</config>

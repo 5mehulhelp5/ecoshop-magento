@@ -1,0 +1,145 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var $block \Magento\Checkout\Block\Cart\Sidebar */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+?>
+<style>
+.minicart_drawer .minicart-items { overflow-y: auto; overflow-x: hidden; max-height: calc(100vh - 250px) !important; }
+</style>
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); $store_Id = $poco_helper->getStoreId(); ?>
+<?php $cart_icon = $poco_helper->getFontIcon('cart',$store_Id); ?>
+<?php $cart_label = $poco_helper->getFontIcon('cart_label',$store_Id);
+	  //$mini_cart_label = $cart_label?$cart_label:'My Cart'; 
+	  $mini_cart_label = $cart_label?$cart_label:null; 
+	/* $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of Object Manager
+    $priceHelper = $objectManager->create('Magento\Framework\Pricing\Helper\Data'); // Instance of Pricing Helper
+    $price =  0; //Your Price
+    $formattedPrice = $priceHelper->currency($price, true, false);*/
+	
+	
+	$header_style = $poco_helper->getHeader('header_style',$store_Id);
+	$showCartGrandTotal = false;
+	if($header_style=='header-7'){
+		$showCartGrandTotal = true;
+		$formattedPrice = $poco_helper->getCartGrandTotal();	
+	}
+	$freeShippingBarEnabled = $poco_helper->getThemeLayout('free_shipping_bar',$store_Id);
+	$enabldMinicartDrawer = $poco_helper->getThemeLayout('enable_minicart_drawer',$store_Id);
+?>
+<div data-block="minicart" class="minicart-wrapper quickcart-wrapper <?php if($enabldMinicartDrawer): echo 'minicart_drawer'; endif; ?>">
+    <?php if($header_style!='header-7') : ?>
+<a class="action showcart" title="My Cart" href="<?= $block->escapeUrl($block->getShoppingCartUrl()) ?>"
+       data-bind="scope: 'minicart_content'">
+	   <span class="icon"><?= $cart_icon ?></span>
+	    <?php if($mini_cart_label): ?>
+		<span class="text"><?= $block->escapeHtml(__($mini_cart_label)) ?></span>
+		<?php endif;?>
+		<span class="counter qty empty"
+              data-bind="css: { empty: !!getCartParam('summary_count') == false && !isLoading() },
+               blockLoader: isLoading">
+			   <span class="counter-number">
+			   <!-- ko if: getCartParam('summary_count') -->
+			   <!-- ko text: getCartParam('summary_count').toLocaleString(window.LOCALE) --><!-- /ko -->
+			   <!-- /ko --><!-- ko ifnot: getCartParam('summary_count') -->0<!-- /ko --></span></span>
+		<!-- ko if: getCartParam('subtotal') -->
+		<span class="minicartPrice" data-bind="html: getCartParam('subtotal')"></span>
+		<!-- /ko -->
+		<!-- ko ifnot: getCartParam('subtotal') -->
+			<span class="minicartPrice"><?php echo $poco_helper->getCartGrandTotal();?></span>
+		<!-- /ko -->	
+    </a>
+<?php else: ?>
+<a class="action showcart" title="My Cart" href="<?= $block->escapeUrl($block->getShoppingCartUrl()) ?>"
+       data-bind="scope: 'minicart_content'">
+	   <span class="icon"><?= $cart_icon ?></span>
+        <?php if($mini_cart_label): ?>
+		<span class="text"><?= $block->escapeHtml(__($mini_cart_label)) ?></span>
+		<?php endif;?>
+		<!-- ko if: getCartParam('subtotal') -->
+		<span class="price-label" data-bind="html: getCartParam('subtotal')"></span>
+		<!-- /ko -->
+		<!-- ko ifnot: getCartParam('subtotal') -->
+			<span class="price-label"><?php echo $poco_helper->getCartGrandTotal();?></span>
+		<!-- /ko -->	
+		<span class="sep">
+		<!-- ko i18n: ' - ' --><!-- /ko -->
+		</span>
+        <span class="counter qty empty"
+              data-bind="css: { empty: !!getCartParam('summary_count') == false && !isLoading() },
+               blockLoader: isLoading"><!-- ko if: getCartParam('summary_count') --><span class="counter-number"><!-- ko text: getCartParam('summary_count').toLocaleString(window.LOCALE) --><!-- /ko --></span><span class="counter-label"><!-- ko i18n: ' items' --><!-- /ko --></span><!-- /ko --><!-- ko ifnot: getCartParam('summary_count') --><span class="counter-number">0</span><!-- ko i18n: ' item' --><!-- /ko --><!-- /ko --></span>
+		<span class="minicartPrice" data-bind="html: getCartParam('subtotal')"></span>
+    </a>
+<?php endif;?>
+    <?php if ($block->getIsNeedToDisplaySideBar()):?>
+        <div class="block block-minicart block-quickcart empty"
+             data-role="dropdownDialog"
+             data-mage-init='{"dropdownDialog":{
+                "appendTo":"[data-block=minicart]",
+                "triggerTarget":".showcart",
+                "timeout": "2000",
+                "closeOnMouseLeave": false,
+                "closeOnEscape": true,
+				"triggerClass":"active",
+                "parentClass":"active",
+			     "bodyClass":"<?php if($enabldMinicartDrawer): echo 'mini_drw_open'; else: echo null; endif; ?>",
+                "buttons":[]}}'>
+				<?php if($enabldMinicartDrawer): ?>
+					<h4 class="crt_ttl" style="display:none;"><?php echo __('Your Shopping Cart'); ?></h4>
+				<?php endif; ?>
+				<?php if($freeShippingBarEnabled): ?>
+				<?php echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")
+				->setSection('minicart')
+				->setTemplate("Magebees_PocoThemes::free_shipping_bar.phtml")->toHtml();?>
+				<?php endif; ?>
+            <div id="minicart-content-wrapper" class="quickcart-content-wrapper" data-bind="scope: 'minicart_content'">
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            </div>
+            <?= $block->getChildHtml('minicart.addons') ?>
+        </div>
+    <?php else: ?>
+        <?php $scriptString = <<<script
+            require(['jquery'], function ($) {
+                $('a.action.showcart').on('click', function() {
+                 
+				   $(document.body).trigger('processStart');
+					
+                });
+            });
+script;
+        ?>
+        <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false); ?>
+    <?php endif ?>
+    <?= /* @noEscape */ $secureRenderer->renderTag('script', [], 'window.checkout = ' .
+     /* @noEscape */ $block->getSerializedConfig(), false); ?>
+    <script type="text/x-magento-init">
+    {
+        "[data-block='minicart']": {
+            "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
+        },
+        "*": {
+            "Magento_Ui/js/block-loader": "<?= $block->escapeJs(
+                $block->escapeUrl($block->getViewFileUrl('images/poco-loading.png'))
+            ) ?>"
+        }
+    }
+    </script>
+	<?php if($enabldMinicartDrawer): ?>
+	
+	<?php $scriptString = <<<script
+            require(['jquery'], function ($) {
+                $('a.action.showcart').on('click', function() {
+                 
+				   $('.crt_ttl').show();;
+					
+                });
+            });
+script;
+        ?>
+	 <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false); ?>	
+	
+	 <?php endif ?>
+</div>

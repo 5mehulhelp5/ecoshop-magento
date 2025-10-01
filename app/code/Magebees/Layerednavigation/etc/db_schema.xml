@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="magebees_layernav_attribute" resource="default" engine="innodb" comment="magebees_layernav_attribute">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="id"/>
+    <column xsi:type="int" name="attribute_id" padding="10" unsigned="true" nullable="false" identity="false" comment="attribute_id"/>
+    <column xsi:type="int" name="display_mode" padding="10" unsigned="true" nullable="false" identity="false" comment="display_mode"/>
+    <column xsi:type="int" name="show_product_count" padding="10" unsigned="true" nullable="false" identity="false" comment="show_product_count"/>
+    <column xsi:type="int" name="show_searchbox" padding="10" unsigned="true" nullable="false" identity="false" comment="show_searchbox"/>
+    <column xsi:type="int" name="show_in_block" padding="10" unsigned="true" nullable="false" identity="false" comment="show_in_block"/>
+    <column xsi:type="int" name="unfold_option" padding="10" unsigned="true" nullable="false" identity="false" comment="unfold_option"/>
+    <column xsi:type="int" name="always_expand" padding="10" unsigned="true" nullable="false" identity="false" comment="always_expand"/>
+    <column xsi:type="int" name="sort_option" padding="10" unsigned="true" nullable="false" identity="false" comment="sort_option"/>
+    <column xsi:type="text" name="tooltip" nullable="false" comment="tooltip"/>
+    <column xsi:type="int" name="robots_nofollow" padding="10" unsigned="true" nullable="false" identity="false" comment="robots_nofollow"/>
+    <column xsi:type="int" name="robots_noindex" padding="10" unsigned="true" nullable="false" identity="false" comment="robots_noindex"/>
+    <column xsi:type="int" name="rel_nofollow" padding="10" unsigned="true" nullable="false" identity="false" comment="rel_nofollow"/>
+    <column xsi:type="int" name="and_logic" padding="10" unsigned="true" nullable="false" identity="false" comment="and_logic"/>
+    <column xsi:type="text" name="include_cat" nullable="false" comment="include_cat"/>
+    <column xsi:type="text" name="exclude_cat" nullable="false" comment="exclude_cat"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+  </table>
+  <table name="magebees_layernav_attribute_option" resource="default" engine="innodb" comment="magebees_layernav_attribute_option">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="id"/>
+    <column xsi:type="int" name="attribute_id" padding="10" unsigned="true" nullable="false" identity="false" comment="attribute_id"/>
+    <column xsi:type="int" name="option_id" padding="10" unsigned="true" nullable="false" identity="false" comment="option_id"/>
+    <column xsi:type="int" name="store_id" padding="10" unsigned="true" nullable="false" identity="false" comment="store_id"/>
+    <column xsi:type="text" name="option_label" nullable="false" comment="option_label"/>
+    <column xsi:type="text" name="meta_title" nullable="false" comment="meta_title"/>
+    <column xsi:type="text" name="meta_desc" nullable="false" comment="meta_desc"/>
+    <column xsi:type="text" name="meta_keyword" nullable="false" comment="meta_keyword"/>
+    <column xsi:type="text" name="url_alias" nullable="false" comment="url_alias"/>
+    <column xsi:type="text" name="main_url_alias" nullable="true" comment="Magebees main url alias"/>
+    <column xsi:type="text" name="option_image" nullable="false" comment="option_image"/>
+    <column xsi:type="text" name="option_hover_image" nullable="false" comment="option_hover_image"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+  </table>
+  <table name="magebees_layernav_brand" resource="default" engine="innodb" comment="magebees_layernav_brand">
+    <column xsi:type="int" name="brand_id" padding="10" unsigned="true" nullable="false" identity="true" comment="brand_id"/>
+    <column xsi:type="int" name="option_id" padding="10" unsigned="true" nullable="false" identity="false" comment="option_id"/>
+    <column xsi:type="varchar" name="brand_name" nullable="false" length="255" comment="brand_name"/>
+ <column xsi:type="varchar" name="brand_code" nullable="false" length="255" comment="brand_code"/>
+    <column xsi:type="text" name="brand_description" nullable="false" comment="brand_description"/>
+    <column xsi:type="text" name="filename" nullable="false" comment="filename"/>
+    <column xsi:type="smallint" name="status" padding="5" unsigned="true" nullable="false" identity="false" default="1" comment="status"/>
+    <column xsi:type="smallint" name="sort_order" padding="5" unsigned="true" nullable="false" identity="false" default="1" comment="sort_order"/>
+    <column xsi:type="text" name="seo_url" nullable="false" comment="seo_url"/>
+    <column xsi:type="smallint" name="featuredbrand" padding="5" unsigned="true" nullable="false" identity="false" default="1" comment="featuredbrand"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="brand_id"/>
+    </constraint>
+  </table>
+</schema>

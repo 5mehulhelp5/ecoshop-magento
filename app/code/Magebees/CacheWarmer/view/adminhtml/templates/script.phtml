@@ -1,0 +1,93 @@
+<script>
+    require([
+        'jquery',
+		'Magento_Ui/js/modal/confirm',
+        'mage/translate'
+    ], function ($,confirmation) {
+        var totalbatch = 300;
+		var processedinbatch = 0;
+        $('#warmqueue').click(function () {
+            confirmation({
+                title: 'Warm up now',
+                content: 'At a time you can processed maximum 300 URLs, we recommended to do from command line, are you sure you want to do it?',
+                actions: {
+                    confirm: function () {
+                        $.ajax({
+                            showLoader: true,
+							dataType: 'json',
+                            url: "<?= $this->getUrl('magebees_cachewarmer/queue/process') ?>",
+                            //data: param,
+							data: { batch: 5} ,
+                            type: "get",
+                            //timeout: 1200,
+                            error: function () {
+                              
+                            },
+							success: function(response) {
+								
+								var processed = response;
+								processedinbatch = processedinbatch + response;
+								totalbatch = totalbatch - processed;
+								if(totalbatch > 0 && processed > 0){
+									warmupRecursive();
+								}else{
+									if(response){
+										var msg = '<div id="messages"><div class="messages"><div class="message message-success success"><div data-ui-id="messages-message-success">Cache warmer queue Batch process finished,'+ processed +' URLs were processed. </div></div></div></div>';
+										
+										$(msg).insertAfter(".page-main-actions");
+										
+										setTimeout(function(){
+											window.location="<?= $this->getUrl('magebees_cachewarmer/queue/index') ?>";	
+										},5000);
+									}else{
+										var msg = '<div id="messages"><div class="messages"><div class="message message-error error"><div data-ui-id="messages-message-error">Please generate the warmer queue first.</div></div></div></div>';
+										
+										$(msg).insertAfter(".page-main-actions");
+									}
+								}
+							}
+                        })
+                    },
+                    cancel: function () {
+                        return false;
+                    }
+                }
+            });
+        });
+		
+		function warmupRecursive(){
+			$.ajax({
+				showLoader: true,
+				dataType: 'json',
+				url: "<?= $this->getUrl('magebees_cachewarmer/queue/process') ?>",
+				data: { batch: 5} ,
+				type: "get",
+				//timeout: 1200,
+				error: function () {
+				  
+				},
+				success: function(response) {
+					
+					var processed = response;
+					processedinbatch = processedinbatch + response;
+					totalbatch = totalbatch - processed;
+					if(totalbatch > 0 && processed > 0){
+						warmupRecursive();
+					} else {
+						
+							var msg = '<div id="messages"><div class="messages"><div class="message message-success success"><div data-ui-id="messages-message-success">Cache warmer queue Batch process finished. Total '+processedinbatch+' Urls were processed.</div></div></div></div>';
+							
+							$(msg).insertAfter(".page-main-actions");
+							
+							setTimeout(function(){
+								window.location="<?= $this->getUrl('magebees_cachewarmer/queue/index') ?>";	
+							},5000);
+						
+					}
+				}
+				
+			});
+		}
+        
+    })
+</script>

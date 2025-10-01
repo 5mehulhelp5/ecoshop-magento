@@ -1,0 +1,229 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?> 
+<?php $_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $_helper->getStoreId(); ?>
+<?php $viewModel = $block->getViewModel(); ?>
+
+    <div class="container">
+        <div class="section-bottom-spacing">
+            <div class="section-title wow animate__fadeIn" data-wow-delay="0.2s">
+                <h2 class="title"><?php /* @escapeNotVerified */ echo __('Quick support');?></h2>
+                <div class="sort-details"><p class="sort-detail"><?php /* @escapeNotVerified */ echo __('Stay touch with us');?></p></div>
+            </div>
+            <div class="d-flex contact-info align-item-start">
+                <div class="flex-1 text-center wow animate__fadeIn md-mb-3 sm-mb-3" data-wow-delay="0.4s">
+                    <?php if($_helper->getContactus('store_address',$storeId)):?>
+                        <div class="icon mb-3 md-mb-2 display-block"><svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
+                        <h4 class="mb-1 sm-mb-1 fw-600 text-medium-18 body-font text-uppercase"><?php /* @escapeNotVerified */ echo __('Store address') ?></h4>
+                        <p class="gray-color mb-0">
+                            <b class="fw-600 display-block text-uppercase"><?php echo $_helper->getContactus('store_name',$storeId); ?></b>
+                            <?php echo $_helper->getContactus('store_address',$storeId) ?>
+                        </p>
+                    <?php endif;?>
+                </div>
+                <div class="flex-1 text-center wow animate__fadeIn md-mb-3 sm-mb-3" data-wow-delay="0.6s">
+                    <?php if($_helper->getContactus('contact',$storeId)):?>
+                        <div class="icon mb-3 md-mb-2 display-block"><svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
+                        <h4 class="mb-1 sm-mb-1 fw-600 text-medium-18 body-font text-uppercase"><?php /* @escapeNotVerified */ echo __('phone number') ?></h4>
+                        <p class="gray-color mb-0"><?php echo $_helper->getContactus('contact',$storeId) ?></p>
+                    <?php endif;?>
+                </div>
+                <div class="flex-1 text-center wow animate__fadeIn sm-mb-3" data-wow-delay="0.8s">
+                    <?php if($_helper->getContactus('store_email',$storeId)):?>
+                        <div class="icon mb-3 md-mb-2 display-block"><svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></div>
+                        <h4 class="mb-1 sm-mb-1 fw-600 text-medium-18 body-font text-uppercase"><?php /* @escapeNotVerified */ echo __('email address') ?></h4>
+                        <p class="gray-color mb-0"><?php echo $_helper->getContactus('store_email',$storeId) ?></p>
+                    <?php endif;?>
+                </div>
+				<?php if($_helper->getStaticBlockDetails('hour_operation')): ?>
+				<div class="flex-1 text-center wow animate__fadeIn" data-wow-delay="0.9s">
+                    <div class="icon mb-3 md-mb-2 display-block"><svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
+                    <h4 class="mb-1 sm-mb-1 fw-600 text-medium-18 body-font text-uppercase"><?php /* @escapeNotVerified */ echo __('Hour operation') ?></h4>
+                    <div class="gray-color mb-0"><?php echo $this->getLayout() ->createBlock('Magento\Cms\Block\Block') ->setBlockId('hour_operation') ->toHtml(); ?></div>
+                </div>
+				<?php endif;?>
+                
+            </div>
+        </div>
+    </div>
+	
+    <div class="form-image-section d-flex align-items-stretch">
+        <div class="contact-form-image flex-1 wow animate__fadeIn" data-wow-delay="0.2s">
+            <div class="img height-100">
+                <?php if($_helper->getContactus('contact_form_image',$storeId)):?>
+                <?php  $contact_form_image = $_helper->getContactus('contact_form_image',$storeId);
+                        $baseURL = $_helper->getUrlWithoutStoreCode($storeId);
+						$mediaURL = $_helper->getStoreMediaUrl($storeId);
+						$ContactFormImageURL = $mediaURL.'/poco/contactform/'.$contact_form_image;
+                        //$ContactFormImageURL = $baseURL.'pub/media/poco/contactform/'.$contact_form_image;
+                ?>
+				<img src="<?php echo $ContactFormImageURL;?>" alt=""/>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="contact-form-default flex-1 wow animate__fadeIn d-flex align-item-center" data-wow-delay="0.4s">
+            <div class="w-100 p-12 md-p-7 md-p-7 sm-p-4 sm-p-5">
+                <form class="form contact" action="<?= $block->escapeUrl($block->getFormAction()) ?>" id="contact-form" method="post" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>" data-mage-init='{"validation":{}}'>
+                    <fieldset class="fieldset">
+                        <legend class="legend"><span><?= $block->escapeHtml(__('Write Us')) ?></span></legend><br />
+                        <div class="field note no-label">
+                            <?= $block->escapeHtml(__('Jot us a note and we’ll get back to you as quickly as possible.')) ?>
+                        </div>
+                        <div class="field name required">
+                            <label class="label" for="name"><span><?= $block->escapeHtml(__('Your name')) ?></span></label>
+                            <div class="control">
+                                <input name="name"
+                                    id="name"
+                                    title="<?= $block->escapeHtmlAttr(__('Your name *')) ?>"
+                                    value="<?= $block->escapeHtmlAttr($viewModel->getUserName()) ?>"
+                                    class="input-text"
+                                    type="text"
+                                    placeholder="<?= $block->escapeHtmlAttr(__('Your name *')) ?>"
+                                    data-validate="{required:true}"/>
+                            </div>
+                        </div>
+                        <div class="field email required">
+                            <label class="label" for="email"><span><?= $block->escapeHtml(__('Your email address *')) ?></span></label>
+                            <div class="control">
+                                <input name="email"
+                                    id="email"
+                                    title="<?= $block->escapeHtmlAttr(__('Your email address')) ?>"
+                                    value="<?= $block->escapeHtmlAttr($viewModel->getUserEmail()) ?>"
+                                    class="input-text"
+                                    type="email"
+                                    placeholder="<?= $block->escapeHtmlAttr(__('Your email address *')) ?>"
+                                    data-validate="{required:true, 'validate-email':true}"
+                                    data-mage-init='{"mage/trim-input":{}}'
+                                />
+                            </div>
+                        </div>
+                        <div class="field telephone">
+                            <label class="label" for="telephone"><span><?= $block->escapeHtml(__('Your phone number')) ?></span></label>
+                            <div class="control">
+                                <input name="telephone"
+                                    id="telephone"
+                                    title="<?= $block->escapeHtmlAttr(__('Your phone number')) ?>"
+                                    value="<?= $block->escapeHtmlAttr($viewModel->getUserTelephone()) ?>"
+                                    placeholder="<?= $block->escapeHtmlAttr(__('Your phone number')) ?>"
+                                    class="input-text"
+                                    type="tel" />
+                            </div>
+                        </div>
+                        <div class="field comment required">
+                            <label class="label" for="comment">
+                                <span><?= $block->escapeHtml(__('Your message here...')) ?></span>
+                            </label>
+                            <div class="control">
+                                <textarea name="comment"
+                                        id="comment"
+                                        title="<?= $block->escapeHtmlAttr(__('Your message here...')) ?>"
+                                        class="input-text"
+                                        placeholder="<?= $block->escapeHtmlAttr(__('Your message here...')) ?>"
+                                        cols="5"
+                                        rows="3"
+                                        data-validate="{required:true}"
+                                ><?= $block->escapeHtml($viewModel->getUserComment()) ?></textarea>
+                            </div>
+                        </div>
+                        <?= $block->getChildHtml('form.additional.info') ?>
+                    </fieldset>
+                    <div class="actions-toolbar">
+                        <div class="primary">
+                            <input type="hidden" name="hideit" id="hideit" value="" />
+                            <button type="submit" title="<?= $block->escapeHtmlAttr(__('Send Message')) ?>" class="submit btn action primary">
+                                <?= $block->escapeHtml(__('Send Message')) ?>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+	<?php if($_helper->getStaticBlockDetails('contact-us-default-features')): ?>
+    <div class="container">
+        <div class="sections-spacing">
+            <?php echo $this->getLayout() ->createBlock('Magento\Cms\Block\Block') ->setBlockId('contact-us-default-features') ->toHtml(); ?>
+        </div>
+    </div>
+	<?php endif; ?>
+	<?php if($_helper->getStaticBlockDetails('contact_us_stores')): ?>
+    <div class="our-stores">
+        <div class="container">
+            <div class="sections-spacing section-bottom-spacing">
+                <div class="section-title wow animate__fadeIn" data-wow-delay="0.2s">
+                    <h2 class="title"><?= $block->escapeHtml(__('Our Stores, the world')) ?></h2>
+                </div>
+                <div class="our-stores-list-section wow animate__fadeIn" data-wow-delay="0.4s">
+                    <?php echo $this->getLayout() ->createBlock('Magento\Cms\Block\Block') ->setBlockId('contact_us_stores') ->toHtml(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Customer/js/block-submit-on-send": {
+                "formId": "contact-form"
+            }
+        }
+    }
+</script>
+<?php if($_helper->getContactus('google_map',$storeId)): ?>
+    <div class="container">
+        <div class="section-bottom-spacing google-map wow animate__fadeIn" data-wow-delay="0.2s">
+            <?php echo $_helper->getContactus('map_code',$storeId) ?>
+        </div>
+    </div>
+<?php endif; ?>
+
+<div class="container">
+    <div class="wow animate__fadeIn" data-wow-delay="0.2s">
+        <?php echo $this->getLayout() ->createBlock('Magento\Cms\Block\Block') ->setBlockId('contact-us-default-work-text') ->toHtml(); ?>
+    </div>
+</div>
+
+<script>
+	requirejs(['jquery',"magebees.swiper"], function ($,Swiper) {
+    "use strict";
+	var slider_id="#ourStores";
+	var swiper = new Swiper("#ourStores", {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        grabCursor: true,
+		a11y: false,
+		lazy: true,
+		scrollbar: {
+          el: ".swiper-scrollbar",
+          hide: false,
+        },
+		breakpoints: {
+		 0: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+          },
+          639: {
+            slidesPerView: 1,
+            spaceBetween: 30,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 30,
+          },
+          1200: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          },
+		}
+    });
+});
+
+</script>
+

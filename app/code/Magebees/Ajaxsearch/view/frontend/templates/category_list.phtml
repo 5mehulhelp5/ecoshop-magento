@@ -1,0 +1,32 @@
+<?php
+$_categoryCollection = $block->getCategorySearchCollection();
+$search_block=$block->getLayout()->createBlock('\Magebees\Ajaxsearch\Block\Searchbox');
+$cat_config=$search_block->getCatConfig();
+$name_length=$cat_config['name_length'];
+$order=$cat_config['position'];
+
+if(count($_categoryCollection)){
+?>
+	<ul id="ajax_category" class="searchTags">
+		<li class="titleRow category_title">
+			<span class="order" style="display:none;"><?php echo $order;?></span>
+			<h6 class="mbSecTitle">
+				<?php
+					if($cat_config['title']){
+						echo __($cat_config['title']);
+					} else {
+						echo __('Categories');
+					}
+				?>
+			</h6>
+		</li>
+		<?php
+			foreach ($_categoryCollection as $_category):
+			$categoryId=$_category;
+			$category=$search_block->loadCategory($categoryId);
+			
+		?>
+			<li class="searchTag category_item"><a href="<?php echo $category->getUrl();?>"><?php $name=$category->getName(); $new_name=substr($name,0,$name_length); echo $new_name; ?></a></li>
+		<?php  endforeach; ?>
+	</ul>
+<?php } ?>

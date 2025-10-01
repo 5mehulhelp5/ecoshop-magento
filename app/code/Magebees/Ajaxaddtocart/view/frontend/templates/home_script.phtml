@@ -1,0 +1,25 @@
+<script>
+    requirejs(['jquery'],
+        function($) {
+            $(document).ready(function() {				        
+				$( ".tocart" ).click(function(e) {					
+					if ($(this).data('post')) {  
+					
+					} else {
+						var form = $(this).closest('form');
+						var productId = $(this).closest('li.product-item').find('div.price-box').data('product-id');					
+							var url = $(this).closest('li.product-item').find('a.product-item-link').attr('href');
+							var customurl=url+"?options=cart";					
+							if(customurl) {
+								var params = form.serialize();
+								if(params) {
+									
+								} else {
+									 window.location =customurl;
+								}													
+							}							  
+					}					    
+                });	
+            });
+        });
+</script>

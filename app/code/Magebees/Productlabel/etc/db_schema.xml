@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="magebees_productlabel" resource="default" engine="innodb" comment="Magebees Product Label Details">
+    <column xsi:type="int" name="label_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Label ID"/>
+    <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Title"/>
+    <column xsi:type="boolean" name="is_active" nullable="true" comment="Is_active"/>
+    <column xsi:type="boolean" name="hide" nullable="true" comment="Hide"/>
+    <column xsi:type="smallint" name="sort_order" padding="6" unsigned="false" nullable="false" identity="false" comment="Sort_order"/>
+    <column xsi:type="varchar" name="stores" nullable="false" length="255" comment="Stores"/>
+    <column xsi:type="varchar" name="customer_group_ids" nullable="false" length="255" comment="Customer_group_ids"/>
+    <column xsi:type="varchar" name="prod_text" nullable="false" length="255" comment="Prod_text"/>
+    <column xsi:type="varchar" name="prod_image" nullable="false" length="255" comment="Prod_image"/>
+    <column xsi:type="int" name="prod_image_width" padding="11" unsigned="false" nullable="true" identity="false" comment="Prod_image_width"/>
+    <column xsi:type="int" name="prod_image_height" padding="11" unsigned="false" nullable="true" identity="false" comment="Prod_image_height"/>
+    <column xsi:type="varchar" name="state" nullable="false" length="100" comment="State"/>
+    <column xsi:type="varchar" name="prod_position" nullable="false" length="2" comment="Prod_position"/>
+    <column xsi:type="varchar" name="prod_text_color" nullable="false" length="255" comment="Prod_text_color"/>
+    <column xsi:type="int" name="prod_text_size" padding="11" unsigned="false" nullable="true" identity="false" comment="Prod_text_size"/>
+    <column xsi:type="varchar" name="cat_text" nullable="false" length="255" comment="Cat_text"/>
+    <column xsi:type="varchar" name="cat_image" nullable="false" length="255" comment="Cat_image"/>
+    <column xsi:type="int" name="cat_image_width" padding="11" unsigned="false" nullable="true" identity="false" comment="Cat_image_width"/>
+    <column xsi:type="int" name="cat_image_height" padding="11" unsigned="false" nullable="true" identity="false" comment="Cat_image_height"/>
+    <column xsi:type="varchar" name="cat_position" nullable="false" length="2" comment="Cat_position"/>
+    <column xsi:type="varchar" name="cat_text_color" nullable="false" length="255" comment="Cat_text_color"/>
+    <column xsi:type="int" name="cat_text_size" padding="11" unsigned="false" nullable="false" identity="false" comment="Cat_text_size"/>
+    <column xsi:type="boolean" name="include_sku" nullable="true" comment="Include_sku"/>
+    <column xsi:type="boolean" name="include_cat" nullable="true" comment="Include_cat"/>
+    <column xsi:type="varchar" name="attr_code" nullable="false" length="255" comment="Attr_code"/>
+    <column xsi:type="varchar" name="attr_value" nullable="false" length="255" comment="Attr_value"/>
+    <column xsi:type="boolean" name="is_new" nullable="true" comment="Is_new"/>
+    <column xsi:type="boolean" name="is_sale" nullable="true" comment="Is_sale"/>
+    <column xsi:type="boolean" name="date_enabled" nullable="true" comment="Date_enabled"/>
+    <column xsi:type="datetime" name="from_date" on_update="false" nullable="true" comment="From_date"/>
+    <column xsi:type="datetime" name="to_date" on_update="false" nullable="true" comment="To_date"/>
+    <column xsi:type="boolean" name="price_enabled" nullable="true" comment="Price_enabled"/>
+    <column xsi:type="decimal" name="from_price" scale="4" precision="12" unsigned="false" nullable="false" comment="From_price"/>
+    <column xsi:type="decimal" name="to_price" scale="4" precision="12" unsigned="false" nullable="false" comment="To_price"/>
+    <column xsi:type="smallint" name="by_price" padding="6" unsigned="false" nullable="false" identity="false" comment="By_price"/>
+    <column xsi:type="smallint" name="stock_status" padding="6" unsigned="false" nullable="false" identity="false" comment="Stock_status"/>
+    <column xsi:type="text" name="cond_serialize" nullable="true"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="label_id"/>
+    </constraint>
+  </table>
+</schema>

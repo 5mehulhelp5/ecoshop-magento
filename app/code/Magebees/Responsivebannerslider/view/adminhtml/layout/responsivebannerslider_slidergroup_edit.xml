@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <head>      
+		<!--<script src="Magebees_Responsivebannerslider::js/jscolor/jscolor.js"/>-->
+        <css src="jquery/colorpicker/css/colorpicker.css"/>
+       <!-- <link src="jquery/colorpicker/js/colorpicker.js"/>-->
+		<css src="Magebees_Responsivebannerslider::css/responsivebannerslider/responsivebannerslider.css"/>
+    </head>
+	
+	<body>
+        <referenceContainer name="content">
+            <block class="Magebees\Responsivebannerslider\Block\Adminhtml\Slidergroup\Edit" name="responsivebannerslider_slidergroup_edit"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Magebees\Responsivebannerslider\Block\Adminhtml\Slidergroup\Edit\Tabs" name="responsivebannerslider_slidergroup_edit_tabs">
+				<block class="Magebees\Responsivebannerslider\Block\Adminhtml\Slidergroup\Edit\Tab\Slide" name="responsivebannerslider_slidergroup_edit_tab_slide"/> 
+				<block class="Magebees\Responsivebannerslider\Block\Adminhtml\Slidergroup\Edit\Tab\Code" name="responsivebannerslider_slidergroup_edit_tab_code"/> 
+				<action method="addTab">
+                    <argument name="name" xsi:type="string">slidergroup_slide_section</argument>
+                    <argument name="block" xsi:type="string">responsivebannerslider_slidergroup_edit_tab_slide</argument>
+                </action> 		
+				<action method="addTab">
+                    <argument name="name" xsi:type="string">slidergroup_code_section</argument>
+                    <argument name="block" xsi:type="string">responsivebannerslider_slidergroup_edit_tab_code</argument>
+                </action> 						
+            </block>
+        </referenceContainer>
+    </body>
+</page>

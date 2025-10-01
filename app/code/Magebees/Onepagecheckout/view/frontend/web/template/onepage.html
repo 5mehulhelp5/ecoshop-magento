@@ -1,0 +1,160 @@
+<!-- ko foreach: getRegion('authentication') -->
+<!-- ko template: getTemplate() --><!-- /ko -->
+<!--/ko-->
+
+<!-- ko foreach: getRegion('progressBar') -->
+<!-- ko template: getTemplate() --><!-- /ko -->
+<!--/ko-->
+
+<!-- ko foreach: getRegion('estimation') -->
+    <!-- ko template: getTemplate() --><!-- /ko -->
+<!--/ko-->
+
+<!-- ko foreach: getRegion('messages') -->
+    <!-- ko template: getTemplate() --><!-- /ko -->
+<!--/ko-->
+
+<!--<div class="opc-wrapper magebees-one-page-checkout-wrapper">-->
+
+	<div data-bind="attr: {'class': getclass()}" >
+
+		<!-- 1 Column Layout Start -->
+
+		<!-- ko if: chklayout() -->
+			<ol class="Onepagecheckout magebees-one-page-checkout-steps" id="checkoutSteps">
+			<!-- ko foreach: getRegion('steps') -->
+					<!-- ko foreach: getRegion('shipping-step') -->
+						<!-- ko template: getTemplate() --><!-- /ko -->
+					<!--/ko-->
+			<!--/ko-->
+			<!-- ko foreach: getRegion('steps') -->
+				<!-- ko foreach: getRegion('storepickup-step') -->
+					<!-- ko template: getTemplate() --><!-- /ko -->
+				<!--/ko-->
+			<!--/ko-->
+			<!-- ko foreach: getRegion('steps') -->
+					<!-- ko foreach: getRegion('billing-step') -->
+						<!-- ko template: getTemplate() --><!-- /ko -->
+					<!--/ko-->
+			<!--/ko-->
+			</ol>
+			<ol class="mageb-review-2col">
+			<li id="oscSummaryLi"> 
+			   <div class="oscSummary mageb-summary" id="oscSummary">
+				<div class="magebeesLoader" id="summaryReview"> </div>
+				<div id="checkout-review-load" class="default-box checkout-review-load">
+					<div id="opcReviewTableWrapper">
+						<div data-bind="i18n: 'Review Your Order'" class="step-title"></div>
+						<div class="mageb-summary-content step-content">
+							<table id="opcReviewTable" class="OpcSummaryTabel">
+								<thead>
+									<tr class="first odd">
+										<th class="a-left" rowspan="1" style="width:18%;"></th>
+										<th class="a-left" rowspan="1" style="width:50%;" data-bind="i18n: 'Product name'"></th>
+										<th class="a-right" rowspan="1" style="width:21%;" data-bind="i18n: 'Qty'"></th>
+										<th class="a-right" colspan="1" style="width:30%;" data-bind="i18n: 'Subtotal'"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- ko foreach: getRegion('sidebar') -->
+										<!-- ko foreach: getRegion('summary') -->
+											<!-- ko foreach: getRegion('item-review') -->
+													<!-- ko template: getTemplate() --><!-- /ko -->
+												<!--/ko-->
+										<!--/ko-->
+									<!--/ko-->
+								</tbody>
+							</table>	
+						</div>
+						<table id="opcTotalTable" class="OpcSummaryTabel">
+							<tbody>
+								<!-- ko foreach: getRegion('sidebar') -->
+									<!-- ko foreach: getRegion('summary') -->
+										<!-- ko foreach: getRegion('totals') -->
+										<!-- ko template: getTemplate() --><!-- /ko -->
+										<!--/ko-->
+									<!--/ko-->
+								<!--/ko-->
+							</tbody>
+						</table>
+					</div>
+				</div>
+				</div>
+			    <!-- ko foreach: getRegion('after-place-agreements') -->
+			        <!-- ko template: getTemplate() --><!-- /ko -->
+			    <!--/ko-->
+			</li>
+			</ol>
+		<!--/ko-->
+
+		<!-- 2 Column Layout Start -->
+
+		<!-- ko ifnot: chklayout() -->
+
+			<ol class="Onepagecheckout magebees-one-page-checkout-steps" id="checkoutSteps">
+		<!-- ko foreach: getRegion('steps') -->
+				<!-- ko foreach: getRegion('shipping-step') -->
+					<!-- ko template: getTemplate() --><!-- /ko -->
+				<!--/ko-->
+		<!--/ko-->
+        <!-- ko foreach: getRegion('steps') -->
+				<!-- ko foreach: getRegion('billing-step') -->
+					<!-- ko template: getTemplate() --><!-- /ko -->
+				<!--/ko-->
+		<!--/ko-->
+		<!-- ko foreach: getRegion('steps') -->
+			<!-- ko foreach: getRegion('storepickup-step') -->
+				<!-- ko template: getTemplate() --><!-- /ko -->
+			<!--/ko-->
+		<!--/ko-->
+		
+		<li id="oscSummaryLi"> 
+		   <div class="oscSummary mageb-summary" id="oscSummary">
+			<div class="magebeesLoader" id="summaryReview"> </div>
+			<div id="checkout-review-load" class="default-box checkout-review-load">
+				<div id="opcReviewTableWrapper">
+					<div data-bind="i18n: 'Review Your Order'" class="step-title"></div>
+					<div class="mageb-summary-content step-content">
+						<table id="opcReviewTable" class="OpcSummaryTabel">
+							<thead>
+								<tr class="first odd">
+									<th class="a-left" rowspan="1" style="width:18%;"></th>
+									<th class="a-left" rowspan="1" style="width:50%;" data-bind="i18n: 'Product name'"></th>
+									<th class="a-right" rowspan="1" style="width:21%;" data-bind="i18n: 'Qty'"></th>
+									<th class="a-right" colspan="1" style="width:30%;" data-bind="i18n: 'Subtotal'"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- ko foreach: getRegion('sidebar') -->
+									<!-- ko foreach: getRegion('summary') -->
+										<!-- ko foreach: getRegion('item-review') -->
+												<!-- ko template: getTemplate() --><!-- /ko -->
+											<!--/ko-->
+									<!--/ko-->
+								<!--/ko-->
+							</tbody>
+						</table>	
+					</div>
+					<table id="opcTotalTable" class="OpcSummaryTabel">
+						<tbody>
+							<!-- ko foreach: getRegion('sidebar') -->
+								<!-- ko foreach: getRegion('summary') -->
+									<!-- ko foreach: getRegion('totals') -->
+									<!-- ko template: getTemplate() --><!-- /ko -->
+									<!--/ko-->
+								<!--/ko-->
+							<!--/ko-->
+						</tbody>
+					</table>
+				</div>
+			</div>
+			</div>
+            <!-- ko foreach: getRegion('after-place-agreements') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+		</li>
+</ol>
+		<!--/ko-->
+		<div data-bind="text:mbsticky()"></div>
+</div>
+<div class="mbstickystop"></div>

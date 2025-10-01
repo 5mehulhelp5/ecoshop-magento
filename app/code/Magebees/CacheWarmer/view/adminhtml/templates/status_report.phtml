@@ -1,0 +1,88 @@
+<!-- Styles -->
+<style>
+#chartdiv {
+  width: 100%;
+  height: 500px;
+}
+
+</style>
+<?php 
+
+$warmerLogData=$this->warmerLogFactory->create()->getCollection()->getData();
+$pie_array=[];
+$status_count=[];
+if(!empty($warmerLogData))
+{
+foreach($warmerLogData as $data)
+{
+  if($data['status']!=null)
+  {
+    $status_count[]=$data['status'];
+  }
+  
+}
+$status_data=array_count_values($status_count);
+foreach($status_data as $skey=>$scount)
+{
+    /*if($skey==200)
+    {
+      $statusLabel='200 OK';
+    }
+    elseif ($skey==301) {
+        $statusLabel='301 Moved Permanently';
+    }
+    elseif ($skey==400) {
+       $statusLabel=' 400 Bad Request';     
+    }
+    elseif ($skey==403) {
+    $statusLabel='403 Forbidden';
+    }
+    elseif ($skey==404) {
+    $statusLabel='404 Not Found';
+    }
+    elseif ($skey==500) {
+    $statusLabel='500 Internal Server Error';
+    }
+    elseif ($skey==503) {
+    $statusLabel='503 Service Unavailable';
+    }
+    elseif ($skey==504) {
+     $statusLabel='504 Gateway Timeout';
+    }
+    else
+    {
+      $statusLabel='other';
+    }*/
+	
+	$status_arr = $this->httpHelper->getStatusCodes();
+    $statusLabel=$status_arr[$skey];
+    $pie_array[]=array("status" => $statusLabel, "urlCount" => $scount);
+}
+}
+$pie_array_encode=json_encode($pie_array);
+?>
+<?php if(!empty($pie_array)): ?>
+<script>
+// LOAD DEPENDENCIES; CREATE CHART
+require(['amcharts', 'amcharts.pie'], function(AmCharts, AmChartsPie) {
+  var pieChartData=<?php echo $pie_array_encode; ?>;
+  var chart = AmCharts.makeChart("chartdiv", {
+    "type": "pie",
+    "theme": "none",
+    "dataProvider": pieChartData,
+    "valueField": "urlCount",
+    "titleField": "status"
+    
+  });
+
+  // ERROR HANDLER
+}, function(err) {
+  console.log('Something went wront: ', err);
+});
+</script>
+<?php else: ?>
+  <div>Sorry, There is no data available.</div>
+<?php endif; ?>
+
+<!-- HTML -->
+<div id="chartdiv"></div>

@@ -1,0 +1,249 @@
+<?php if( $this->configuration->isEnableBlogModule()):?>
+<div class="widget block mb-widget-post-grid mb-post-grid-block">
+	<div class="widget-heading">
+		<?php if($block->getWdShowHeading()):?>
+			<div class="widget-title"><h2 class="title"><?php echo $block->escapeHtml($block->getWdHeading());?></h2></div>
+		<?php endif;?>
+		<?php if($block->getWdShowDescription()):?>
+			<div class="widget-description"><p><?php echo $block->escapeHtml($block->getWdDescription());?></p></div>
+		<?php endif;?>
+		
+	</div>
+	<?php  
+		$post_type = $block->getWdPostType();
+		$postCollection = $block->getPostCollection();
+		$postCollectionLimit = $block->getWdPostLimit();
+			if($post_type=='featured')
+			{
+			$postCollection->addFieldToFilter('is_featured', array('eq'=> 1));
+			}else if($post_type=='latest'){
+			$postCollection->setOrder('creation_time','DESC');
+			}else if($post_type=='custom'){
+				$post_ids = $block->getWdPostIds();
+					if($post_ids):
+				$postCollection->addFieldToFilter('post_id', array('in'=> $post_ids));
+				endif;
+			}else if($post_type=='product-related-post'){
+				
+				if($this->_registry('current_product')):
+					$product = $this->_registry('current_product');//get current product
+					$product_Id = $product->getId();
+					$postCollection->addFieldToFilter('products_id', array('finset'=> $product_Id));
+				endif;
+			}
+			if($postCollectionLimit):
+				$postCollection->setPageSize($postCollectionLimit);		
+			endif;
+			$sort_order = $block->getWdSortBy();
+			if($sort_order==1){
+				$postCollection->setOrder('position', 'asc');
+			}else if($sort_order==2){
+				$postCollection->setOrder('title', 'asc');
+			}else if($sort_order==3){
+				$postCollection->getSelect()->orderRand();
+			}else{
+				$postCollection->setOrder('creation_time', 'asc');
+			}
+if(($postCollection->getSize())>0):
+		$id = 'wp-'.rand();
+	?>
+	<ul id="<?php echo $id?>" class="items clearfix">
+		<?php  
+			$width = $block->getFeatureImageWidth();
+			$height = $block->getFeatureImageHeight();
+			$resize_type = $block->getResizeType();
+			if(!$block->getFeatureImageWidth()):
+			$width = '250';
+			endif;
+			if(!$block->getFeatureImageHeight()):
+			$height = '250';
+			endif;
+			if(!$resize_type):
+				$resize_type = 'resizeonly';
+			endif;
+			foreach($postCollection as $_post):
+			$_postUrl =  $block->getPosturl($_post);
+			$_postName = $block->escapeHtml($_post->getTitle(), null, true);
+			$featuredImageUrl = null;
+			if($_post->getFeaturedImg()):
+				$image_name = $_post->getFeaturedImg();
+				$featuredImageUrl = $block->getFeaturedImageResize($image_name,$width,$height,$resize_type);
+			endif;
+		?>
+		
+		<li class="item" id="post-<?php echo $_post->getPostId();?>"> 
+			  <?php if($block->getWdPostShowFeatureImage()): ?>
+			<div class="mb-fetured-thumb"> 
+				<a href="<?php echo $block->escapeHtml($_postUrl);?>" title="<?php echo $block->escapeHtml($_post->getTitle(), null, true);?>"> 
+					<img src="<?php echo $block->escapeHtml($featuredImageUrl);?>"  alt="<?php echo $block->escapeHtml($_post->getTitle(), null, true);?>" 
+						title="<?php echo $block->escapeHtml($_post->getTitle(), null, true);?>">
+				</a> 
+			</div> 
+			  <?php endif; ?>
+			<h3 class="mb-post-title">
+				<a href="<?php echo $block->escapeHtml($_postUrl);?>" title="<?php echo $block->escapeHtml($_post->getTitle(), null, true);?>">
+					<?php echo $block->escapeHtml($_post->getTitle(), null, true);?>
+				</a>
+			</h3> 
+			
+			<div class="mb-post-meta">
+				<div class="meta-item mb-post-date">
+					<span class="label"><?php echo __('Posted:') ?></span> <span class="value"><?php echo $block->getCreationDate($_post);?></span>
+				</div> 
+				
+				<?php if ($_categoriesCount = $block->getCategoriesCount($_post)) { ?>
+	            <?php if($block->getWdCategory()): ?>
+				<div class="meta-item mb-post-categories">
+	                <span class="label"><?php echo __('Categories:') ?></span>
+	                <?php $cat_count = 0; 
+	                    $post_cat_ids = $postCategoryIds = $_post->getCategoryIds();
+	                        foreach($block->getBlockCategories($post_cat_ids) as $ct) { $cat_count++; ?>
+						<?php if($cat_count > 2){ ?>	
+			<a class="hide-cat-more" title="<?php echo $block->escapeHtml($ct['title']) ?>" href="<?php echo $ct['url']; ?>">
+				<?php echo $block->escapeHtml($ct['title']) ?>
+			<?php if ($cat_count != $_categoriesCount) { ?>, <?php } ?>
+			</a>
+			<?php }else{ ?>
+			<a class="show-cat" title="<?php echo $block->escapeHtml($ct['title']) ?>" href="<?php echo $ct['url']; ?>">
+				 <?php echo $block->escapeHtml($ct['title']) ?>
+			<?php if ($cat_count != $_categoriesCount) { ?>, <?php } ?>
+			</a>
+
+			<?php } ?>
+					<?php } ?>
+					<?php if($_categoriesCount > 2):?>
+	<a class="show-more-cat showmorecat"><?php echo __(' More'); ?></a>
+	<?php endif;?>
+	            </div>
+				<?php endif;?>
+	            <?php } ?>
+
+				<?php 
+					if($block->getWdCommentCount()):
+					if(($block->getPostComment($_post)->getSize()) > 0) { ?>
+				    <div class="meta-item mb-post-comments">
+				        <span class="label"><?php echo __('Comments:') ?></span>
+				        <a title="<?php echo $block->escapeHtml($_postName) ?>" href="<?php echo $_postUrl ?>#post-comments">
+				            <?php echo $block->getPostComment($_post)->getSize(); ?>
+				        </a>
+				    </div>
+				<?php } endif; ?> 
+
+				<?php 
+					if($block->getWdTags()):
+					$_posttags = $block->getPostTags($_post);
+					if ($_posttags->getSize()>0) { $_tagsTotalCount = $_posttags->getSize(); ?>
+				    <div class="meta-item mb-post-tags">
+				        <span class="label"><?php echo __('Tags:') ?></span>
+				        <?php $tag_count = 0; foreach($_posttags as $tag) { $tag_count++; ?>
+							<?php if($tag_count > 2){ ?>	
+							<a class="hide-tag-more" title="<?php echo $block->escapeHtml($tag->getTitle()) ?>" href="<?php echo $block->getTagurl($tag); ?>">
+								<?php echo $block->escapeHtml($tag->getTitle()) ?>
+							 <?php if ($tag_count != $_tagsTotalCount) { ?>, <?php } ?>
+							</a>
+							<?php }else{ ?>
+							<a class="show-tag" title="<?php echo $block->escapeHtml($tag->getTitle()) ?>" href="<?php echo $block->getTagurl($tag); ?>">
+								<?php echo $block->escapeHtml($tag->getTitle()) ?>
+							 <?php if ($tag_count != $_tagsTotalCount) { ?>, <?php } ?>
+							</a>
+							<?php } ?>
+						<?php } ?>
+						<?php if($tag_count > 2):?>
+	<a class="show-more-tag showmoretag"><?php echo __(' More'); ?></a>
+	<?php endif;?>
+				    </div>
+			    <?php } endif; ?>
+
+				<?php 
+					if($block->getWdAuthor()):
+					if ($_authorId = $_post->getAuthorId()) { 
+					$authorInfo = $block->getPostAuthorInfo($_authorId);?>
+		        	<div class="meta-item mb-post-author">
+			            <span class="label"><?php echo __('Author:') ?></span>
+			            <span class="value">
+							<?php if($block->EnableAuthorLink()):?>
+						    <a title="<?php echo $block->escapeHtml($authorInfo['name']) ?>" href="<?php echo $authorInfo['url']; ?>">
+								<?php endif; ?>
+						        <?php echo $block->escapeHtml($authorInfo['name']) ?>
+						    <?php if($block->EnableAuthorLink()):?>
+							</a>
+							<?php endif; ?>
+						</span>
+			        </div>
+		        <?php } ?>
+	    		<?php endif; ?>
+			
+				<?php if($block->getWdAddThis()):?>
+				<div class="addthis_toolbox addthis_default_style meta-item" addthis:url="<?php echo $_postUrl ?>" addthis:title="<?php echo $_postName; ?>"
+	                <?php if ($featuredImageUrl) { ?>
+	                	addthis:media="<?php echo $featuredImageUrl ?>"
+	                <?php } ?>>
+	                <a class="addthis_button_facebook"></a>
+	                <a class="addthis_button_twitter"></a>
+	                <a class="addthis_button_email"></a>
+	                <a class="addthis_button_compact"></a>
+	            </div>
+				<?php endif;?>
+			</div>
+
+	        <div class="clearfix mb-post-excerpt">
+	            <?php if($block->getWdPostContent()):?>
+	                <?php 
+						$post_short_desc = $_post->getContentHeading();
+						if(!$_post->getContentHeading())
+						{
+							$post_short_desc = $_post->getContent();
+						}
+						$post_short_desc_length = $block->getWdPostContentLength();
+						if($block->getWdPostContentLength()):
+						$post_short_desc = strip_tags($post_short_desc);
+						if (strlen($post_short_desc) > $post_short_desc_length) {
+						  $post_short_desc_cut = substr($post_short_desc, 0, $post_short_desc_length);
+							 $post_short_desc_cut_end = strrpos($post_short_desc_cut, ' ');
+						
+							$post_short_desc = $post_short_desc_cut_end? substr($post_short_desc_cut, 0, $post_short_desc_cut_end) : substr($post_short_desc_cut, 0);
+							$post_short_desc .= '...'; 
+							
+						}
+						echo $block->escapeHtml($post_short_desc);
+						endif;
+					?>
+				<?php endif;?>
+		    </div>
+		    <?php 
+			if($block->getWdPostReadmore()): ?>
+    			<div class="mb-readmore">
+    				<a href="<?php echo $block->escapeHtml($_postUrl);?>" title="<?php echo $block->escapeHtml($_postName) ?>" class="mb-post-readmore action primary"><?php echo __('Read more') ?></a>
+    			</div>
+			<?php endif;?>
+	    </li>
+<?php endforeach; ?>
+</ul>
+	
+	<?php if($block->getWdPostShowViewAll()):?>
+			
+		
+		<div class="view-more"><a href="<?php echo $block->getViewAllUrl($block->getWdPostShowViewAllUrl());?>" title="<?php echo $block->escapeHtml('View All');?>" class="readMore action primary"><?php echo $block->escapeHtml('View All');?></a></div>
+		
+		<?php endif;?>
+	
+	
+	<?php if($block->getWdAddThis()):?>
+    <script type="text/javascript">
+        if (window.addthis) {
+            addthis.toolbox('.addthis_toolbox');
+        }
+	var addthis_config = {
+        "ui_language": '<?php echo $block->getAddThisLanguage();?>',
+        "data_track_clickback":false
+    }
+	</script>
+	<script type="text/javascript" async src="//s7.addthis.com/js/250/addthis_widget.js#pubid=<?php echo $block->getAddThisId();?>"></script>
+	<?php endif;?>
+	
+	
+	</div>
+<?php
+endif;
+
+endif;

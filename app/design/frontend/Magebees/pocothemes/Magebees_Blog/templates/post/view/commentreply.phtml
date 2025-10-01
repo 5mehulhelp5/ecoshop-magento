@@ -1,0 +1,167 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+$_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+
+$_post = $block->getPost(); 
+$_customerId = $block->getCustomerId(); 
+$current_url = $block->getCurrentUrl();
+$post_id = $_post->getPostId();
+$commentCount = $block->getCommentscount($post_id);
+$policy_Url = $block->getPrivacyPolicyUrl();
+$policy_Page_Title = $block->getPrivacyPolicyTitle(); 
+$comment_status = $block->getDefaultStatus();
+
+if($_customerId)
+{
+$author_type = 'customer';
+}else{
+$author_type = 'guest';
+}
+$allow_comment = $block->IsAllowComment();
+
+?>
+<?php 
+
+$captchaOptions = $block->getCaptchaSettigns();
+
+if(isset($captchaOptions['captchatype'])){
+$captchatype = $captchaOptions['captchatype'];
+}else{
+$captchatype = 'visible';
+}
+	
+if(isset($captchaOptions['enabled'])){
+$captchaenable = $captchaOptions['enabled'];
+}else{
+$captchaenable = '0';
+}
+if($captchaenable==1) {
+	$site_key = null;
+	
+	if($captchatype=='visible')
+	{
+	
+		if(isset($captchaOptions['visible_site_key'])){
+		$site_key = $captchaOptions['visible_site_key'];
+		}
+		if(isset($captchaOptions['type'])){
+		$captchadatatype = $captchaOptions['type'];
+		}else{
+		$captchadatatype = 'audio';
+		}
+		if(isset($captchaOptions['size'])){
+		$captchasize = $captchaOptions['size'];
+		}else{
+		$captchasize = 'compact';
+		}
+		if(isset($captchaOptions['theme'])){
+		$captchatheme = $captchaOptions['theme'];
+		}else{
+		$captchatheme = 'dark';
+		}
+?>		
+<script type="text/javascript" src='//www.google.com/recaptcha/api.js?onload=CaptchaCallback&render=explicit&hl=en_US' async defer></script>
+<script type="text/javascript">
+   var CaptchaCallback = function () {
+       require(['jquery'], function ($) {
+           $('.g-recaptcha').each(function (index, el) {
+               grecaptcha.render(el, {'sitekey': '<?php echo $site_key;?>'});
+           });
+       })
+   };
+</script>
+
+<?php 
+	} else {
+		  if(isset($captchaOptions['invisible_site_key'])){
+$site_key = $captchaOptions['invisible_site_key'];
+}else{
+$site_key = null;
+}
+	?>
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback" async defer></script>
+<script>
+var onloadCallback = function() {
+    grecaptcha.execute();
+};
+
+function setResponse(response) { 
+    document.getElementById('captcha-response-comment').value = response; 
+	document.getElementById('captcha-response-comment-reply').value = response; 
+	
+}
+</script>
+<?php } ?>
+<?php } ?>
+
+<!--Comment List-->
+<form class="form text mb-comment-form mb-comment-form-popup" action="<?= $this->getUrl("blog/comment/index"); ?>" id="comment-reply-form" method="post"
+data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>"
+      data-mage-init='{"validation":{}}'>
+    <fieldset class="fieldset">
+        <legend class="legend"><span><?= $block->escapeHtml(__('Leave a Reply')) ?></span></legend><br />
+		<div class="fields">
+			<div class="field name required">
+				<label class="label" for="author_nickname"><span><?= $block->escapeHtml(__('Your name')) ?></span></label>
+				<div class="control">
+					<?php if($_helper->isLoggedIn()): ?>
+					<input name="author_nickname" id="author_nickname" title="<?= $block->escapeHtmlAttr(__('Your name')) ?>" placeholder="<?= $block->escapeHtmlAttr(__('Your name')) ?>" value="<?= $block->escapeHtmlAttr($block->getCustomerName() ?: $block->getCustomerName() ) ?>" class="input-text" type="text" data-validate="{required:true}"/>
+					<?php else: ?>
+					<input name="author_nickname" id="author_nickname" title="<?= $block->escapeHtmlAttr(__('Name')) ?>"  placeholder="<?= $block->escapeHtmlAttr(__('Your name')) ?>" class="input-text" type="text" data-validate="{required:true}"/>
+					
+					<?php endif;?>
+				</div>
+			</div>
+			<div class="field author_email required last">
+				<label class="label" for="author_email"><span><?= $block->escapeHtml(__('Your email')) ?></span></label>
+				<div class="control">
+					<input name="author_email" id="author_email" title="<?= $block->escapeHtmlAttr(__('Your email')) ?>" placeholder="<?= $block->escapeHtmlAttr(__('Your email')) ?>" value="<?= $block->escapeHtmlAttr($block->getCustomerEmailId() ?: $block->getCustomerEmailId() ) ?>" class="input-text" type="author_email" data-validate="{required:true, 'validate-email':true}"/>
+				</div>
+			</div>
+		</div>
+        <div class="field text required">
+            <label class="label" for="text"><span><?= $block->escapeHtml(__('Your comment')) ?></span></label>
+            <div class="control">
+                <textarea name="text" id="text" title="<?= $block->escapeHtmlAttr(__('Your comment')) ?>" placeholder="<?= $block->escapeHtmlAttr(__('Your comment')) ?>" class="input-text" cols="5" rows="3" data-validate="{required:true}"></textarea>
+            </div>
+        </div>
+		
+		<?php if($policy_Page_Title):?>
+		  <div class="field author_confirm required">
+		    <div class="control">
+                <input class="input required-entry" type="checkbox" id="blog_comment_privacy_post_parent" name="blog_comment_privacy_post_parent" value="1" data-validate="{required:true}" />  
+				<label for="blog_comment_privacy_post" class="required"><?php echo __('Yes, I have read the'); ?> <a href="<?php echo $policy_Url;?>" target="_blank" style="text-decoration: underline;"><?php echo $policy_Page_Title;?></a> <?php echo __('and agree to the processing of my personal data.');?></label>
+				
+				
+            </div>
+        </div>    
+		<?php endif;?>       
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <input type="hidden" name="hideit" id="hideit" value="" />
+			<input type="hidden" name="parent_id" id="parent_id" value="" />
+			<input type="hidden" name="post_id" id="post_id" value="<?= $block->escapeHtmlAttr($post_id ?: $post_id) ?>" />
+			<input type="hidden" name="status" id="status" value="<?php echo $comment_status; ?>" />
+		<input type="hidden" name="post_url" id="post_url" value="<?= $block->escapeHtmlAttr($current_url) ?>" />
+			<input type="hidden" name="author_type" id="author_type" value="<?= $block->escapeHtmlAttr($author_type ?: $author_type) ?>" />
+			
+			<input type="hidden" name="customer_id" id="customer_id" value="<?= $block->escapeHtmlAttr($_customerId ?: $_customerId) ?>" />
+			
+            <button type="submit" title="<?= $block->escapeHtmlAttr(__('Post Comment')) ?>" class="action submit primary">
+                <span><?= $block->escapeHtml(__('Post Comment')) ?></span>
+            </button>
+        </div>
+    </div>
+	<?php if ($captchaenable==1) :  ?>
+	<?php  if($captchatype=='visible') { ?>
+	<div class="g-recaptcha<?php if ($captchasize == 'compact'): ?> compact<?php endif ?>" data-theme="<?php echo $captchatheme; ?>" data-type="<?php echo $captchadatatype ?>" data-size="<?php echo $captchasize; ?>" data-sitekey="<?php echo $site_key; ?>"></div>
+	<?php }else{ ?>
+	<div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>" data-badge="inline" data-size="invisible" data-callback="setResponse"></div>
+    <input type="hidden" id="captcha-response-comment-reply" name="captcha-response-comment-reply" />
+	<?php } ?>
+	<?php endif;  ?>
+</form>

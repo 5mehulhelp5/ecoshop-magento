@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+ <menu>
+	<add id="Magebees_Advertisementblock::Heading" title="MageBees Advertisement Blocks" module="Magebees_Advertisementblock" sortOrder="70" parent="Magento_Backend::marketing" resource="Magebees_Advertisementblock::Heading" />	
+	<add id="Magebees_Advertisementblock::grid" title="Manage Advertising Blocks"  action="advertisementblock/manage" module="Magebees_Advertisementblock" sortOrder="1" parent="Magebees_Advertisementblock::Heading" resource="Magebees_Advertisementblock::advertisementblock"/>	
+ </menu>
+</config>
+

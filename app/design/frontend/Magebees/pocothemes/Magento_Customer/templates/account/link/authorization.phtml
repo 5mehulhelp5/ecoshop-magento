@@ -1,0 +1,29 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var \Magento\Customer\Block\Account\AuthorizationLink $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $poco_helper->getStoreId();
+$font_icons = $poco_helper->getConfigGroup('font_icons',$storeId);
+$sign_in_label = array_key_exists('login_label', $font_icons) ? $font_icons['login_label'] : 'Sign In';
+$sign_out_label = array_key_exists('logout_label', $font_icons) ? $font_icons['logout_label'] : 'Sign Out';
+
+$isLoggedIn = $block->isLoggedIn();
+$linkLabel = $isLoggedIn ? __($sign_out_label) : __($sign_in_label);
+
+
+$dataPostParam = '';
+if ($isLoggedIn) {
+    $dataPostParam = sprintf(" data-post='%s'", $block->getPostParams());
+}
+?>
+<li class="link authorization-link" data-label="<?= $escaper->escapeHtml(__('or')) ?>">
+    <a <?= /* @noEscape */ $block->getLinkAttributes() ?>
+        <?= /* @noEscape */ $dataPostParam ?>><?= $escaper->escapeHtml($linkLabel) ?></a>
+</li>

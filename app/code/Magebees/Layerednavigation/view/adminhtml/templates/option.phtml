@@ -1,0 +1,96 @@
+<a href="<?php echo $block->getBackUrl()?>"><?php echo __('<< Back') ?></a>
+<?php $optionData= $block->getOptionData()->getData(); 
+$optionimg_dir=$block->getOptionImageMediaDir();
+$hoverimg_dir=$block->getOptionHoverMediaDir();
+//print_R(array_column($optionData,'id'));die; ?>
+<div class="admin__old">
+	
+		<div class="entry-edit form-inline">
+			<form method="post" enctype="multipart/form-data"  action="<?php  echo $block->getUrl('*/*/saveoption') ?>" id="option_edit_form" >
+				<input name="form_key" type="hidden" value="<?php echo $block->getFormKey() ?>" />
+					
+					<legend class="admin__legend legend">
+						<span>Meta Data</span><hr>
+					</legend>
+					<div>
+						<label class="label admin__field-label">
+							<span><b>Meta Title</b></span> &nbsp;&nbsp;
+						</label>
+						<input type="text" name="meta_title" value="<?php if(isset($optionData[0]['meta_title'])){ echo $optionData[0]['meta_title']; } ?>"/>
+					</div>
+					<br><br>
+					<div>
+						<label class="label admin__field-label">
+							<span><b>Meta Description</b></span> &nbsp;&nbsp;
+						</label>
+						<textarea name="meta_desc" rows="4" cols="50"><?php if(isset($optionData[0]['meta_desc'])){ echo $optionData[0]['meta_desc']; } ?>
+						</textarea>
+					</div>
+					<br><br>
+					<div>
+						<label class="label admin__field-label">
+							<span><b>Meta Keywords</b></span> &nbsp;&nbsp;
+						</label>
+						<textarea name="meta_keyword" rows="4" cols="50"><?php if(isset($optionData[0]['meta_keyword'])){ echo $optionData[0]['meta_keyword']; } ?>
+						</textarea>						
+					</div>
+					<br><br><br>
+					<legend class="admin__legend legend">
+						<span>SEO Content</span><hr>
+					</legend>
+					
+<div>
+						<label class="label admin__field-label">
+							<span><b>SEO Url alias</b></span> &nbsp;&nbsp;
+						</label>
+						<input type="text" name="url_alias" class="url_alias" value="<?php if(isset($optionData[0]['url_alias'])){ echo $block->escapeUrl($optionData[0]['url_alias']); } ?>"/>
+					</div>
+					<br>
+					<br>
+					<legend class="admin__legend legend">
+						<span>Layered Navigation Option Settings</span><hr>
+					</legend>
+					
+					<div>
+					<label class="label admin__field-label">
+							<span><b>Option Image</b></span> &nbsp;&nbsp;
+						</label>
+							      	
+		      		<input type="file" id="option_image" name="option_image">
+					<?php if(isset($optionData[0]['option_image'])){
+							if($optionData[0]['option_image']){?>
+							<input type="checkbox" name="option_image_delete"></input>Delete Image
+			  	  		<img src="<?php echo $optionimg_dir.$optionData[0]['option_image'];?>" height="50px" width="50px">
+			  	  		
+			  	  	<?php
+		             }
+						}
+		             ?>		
+					<br>
+					</div>
+					<br>
+					<div>
+					<label class="label admin__field-label">
+							<span><b>Option Active & Hover Image</b></span> &nbsp;&nbsp;
+					</label>							      	
+		      		<input type="file" id="option_hover_image" name="option_hover_image">
+					<?php if(isset($optionData[0]['option_hover_image'])){
+							if($optionData[0]['option_hover_image']){?>
+							<input type="checkbox" name="option_hover_image_delete"></input>
+							Delete Image
+			  	  		<img src="<?php echo $hoverimg_dir.$optionData[0]['option_hover_image'];?>" height="50px" width="50px">
+			  	  		
+			  	  	<?php
+		             }
+						}
+		             ?>		
+					<br>
+					</div>
+					
+<br><br>
+				<button id="opt_submit" type="submit" class="action- scalable"><span>Save Option</span></button>			
+			</form>
+		</div>
+	</div>
+</div>
+

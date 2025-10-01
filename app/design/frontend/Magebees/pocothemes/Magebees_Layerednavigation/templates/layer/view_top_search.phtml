@@ -1,0 +1,125 @@
+<?php
+$defaultblock=$this->getLayout()->getBlock('catalogsearch.leftnav');
+$helper=$this->helper('\Magebees\Layerednavigation\Helper\Data');
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $poco_helper->getStoreId();
+$page_layout = $poco_helper->getProductListing('page_layout',$storeId);
+
+if($page_layout != '1column'){
+?>
+<?php if($defaultblock->getLayer()->getProductCollection()->getSize()):?>
+<?php $topFilters=$block->getTopFilters($defaultblock->getFilters());
+	$generalConfig=$helper->getGeneralConfigData();
+	$layer_collapse=$generalConfig['layer_collapse'];
+	$verticalScrolling=$generalConfig['vertical_scroll'];
+	$topfilter_type=$generalConfig['top_filter_template'];
+?>
+<span id="magebees_navigation_top_before"></span>
+<?php if ($defaultblock->canShowBlock()): ?>
+    <div class="block filter hrl_filter" id="layered-filter-block-top">
+        <?php $filtered = count($defaultblock->getLayer()->getState()->getFilters()); ?>
+        <div class="block-title filter-title" data-count="<?php /* @escapeNotVerified */ echo $filtered; ?>">
+            <strong data-role="title"><?php /* @escapeNotVerified */ echo __('Shop By'); ?></strong>
+        </div>
+        <div class="block-content filter-content">          
+            <?php $wrapOptions = false; ?>
+            <?php foreach ($topFilters as $filter): ?>
+			<?php if(($filter->hasAttributeModel())&&($filter->getAttributeModel()->getFrontendInput()=='boolean'))	{
+				$include_filter=false;
+			}else{
+				$include_filter=true;
+			} ?>
+			<?php if($include_filter): ?>
+			<?php $shuffle_name=str_shuffle($filter->getName());
+			$shuffle_code = preg_replace('/[^a-zA-Z0-9]/s', '',$shuffle_name);
+			$is_applied=$block->checkAppliedFilter($filter->getRequestVar());
+			if($filter->hasAttributeModel()){
+					$attr_id=$filter->getAttributeModel()->getId();
+					$include_cat=$helper->getIncludeCategories($attr_id);
+					$exclude_cat=$helper->getExcludeCategories($attr_id);
+					$tooltip=$helper->getTooltip($attr_id);					
+					if($filter instanceof \Magento\CatalogSearch\Model\Layer\Filter\Price ){	
+						$priceConfig=$helper->getPriceConfigData();
+						$collapse_filter=$priceConfig['collapse_price'];					
+					}else{
+						$collapse_filter=$helper->checkCollapseFilter($attr_id);
+					}
+				}else if($filter instanceof \Magebees\Layerednavigation\Model\Layer\Filter\Rating){
+					$ratingConfig=$helper->getRatingConfigData();
+					$collapse_filter=$ratingConfig['collapse_rating'];				
+					$tooltip="";
+				}else if($filter instanceof \Magebees\Layerednavigation\Model\Layer\Filter\Stock){
+					$stockConfig=$helper->getStockConfigData();
+					$collapse_filter=$stockConfig['collapse_stock'];				
+					$tooltip="";
+				}else if($filter instanceof \Magebees\Layerednavigation\Model\Layer\Filter\Category){
+					$catConfig=$helper->getCatConfigData();
+				 	$collapse_filter=$catConfig['collapse_cat'];
+				 	$tooltip="";
+				}				
+				if(!isset($include_cat)) {
+					$include_cat=1;
+				}
+				if(!isset($exclude_cat)){	
+					$exclude_cat=0;
+					
+				}?>
+                <?php if ($filter->getItemsCount()): ?>
+                    <?php if (!$wrapOptions): ?>
+                        <strong role="heading" aria-level="2" class="block-subtitle filter-subtitle"><?php /* @escapeNotVerified */ echo __('Shopping Options') ?></strong>
+                      <div class="filter-options <?php if($topfilter_type==0):?>
+						ddFilter<?php endif;?>" id="narrow-by-list_<?php echo $shuffle_code;?>" data-role="content" <?php if($topfilter_type==0):?>data-mage-init='{"accordion":{"openedState": "active", "collapsible": true, "active": false, "multipleCollapsible": false}}'<?php endif;?>>
+                    <?php  $wrapOptions = true; ?>
+                	<?php endif; ?>
+					<?php if($exclude_cat==0): ?>
+						<?php if($include_cat==1):?>
+                    <div data-role="collapsible" class="filter-options-item">
+                         <div data-role="title" data-position="top" data-filtertype='<?php echo $topfilter_type;?>' id="filter-options-title_<?php echo $shuffle_code;?>" data-layercollapse='<?php if($layer_collapse==0){
+							
+							if($topfilter_type==0){
+								echo '1';
+							}else{
+								echo $layer_collapse;
+							}							
+						}else{echo $layer_collapse;}?>' class="filter-options-title <?php if(isset($collapse_filter)){ if($collapse_filter==0){if($topfilter_type==1){?>active<?php }}} if($layer_collapse){ ?> collapsible<?php }?>" data-filter="<?php echo $filter->getName();?>">
+                        	<?php /* @escapeNotVerified */ echo __($filter->getName()) ?>
+                        	<?php $tooltip_image_url=$block->getViewFileUrl('Magebees_Layerednavigation::images/tooltip.png');?>
+							<?php if($tooltip):?>
+								<img src="<?php echo $tooltip_image_url; ?>" title="<?php echo $tooltip;?>" class="tooltip" />
+							<?php endif; ?></div>
+                        <div data-role="content" id="filter-options-content_<?php echo $shuffle_code;?>" class="filter-options-content" <?php 
+						if($topfilter_type==1){
+							if($layer_collapse){								
+							if(isset($collapse_filter)){ if($collapse_filter==1){ ?> style="display:none;" <?php }}	}						
+						}else{ ?>	style="display:none;" <?php }?>><?php echo $block->getChildBlock('renderer')->render($filter); ?></div>
+                    </div>
+					<?php endif; ?>
+					<?php endif; ?>
+                <?php endif; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <?php if ($wrapOptions): ?>
+                </div>
+            <?php else: ?>
+                <script>
+                    require([
+                        'jquery'
+                    ], function ($) {
+                        $('#layered-filter-block').addClass('filter-no-options');
+                    });
+                </script>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php endif; ?>
+<span id="magebees_navigation_top_after"></span>
+<?php if($verticalScrolling):?>
+<style>	
+	.filter-options-content {
+   		max-height: <?php echo $verticalScrolling.'px' ?>;   		
+   		overflow-x: hidden;
+   		overflow-y: scroll;
+	}
+</style>
+<?php endif; ?>
+<?php endif; } ?>

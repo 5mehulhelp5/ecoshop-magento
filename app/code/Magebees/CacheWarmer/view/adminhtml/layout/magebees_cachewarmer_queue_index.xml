@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+           	<block class="Magento\Backend\Block\Template" name="script" template="Magebees_CacheWarmer::script.phtml"/> 
+			<block class="Magebees\CacheWarmer\Block\Adminhtml\Information" name="magebees_cli"
+                   template="Magebees_CacheWarmer::information.phtml"/>
+           <block class="Magebees\CacheWarmer\Block\Adminhtml\WarmerQueue" name="warmerqueue_list"/>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,164 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php 
+$block_popup=$block->getLayout()->createBlock('\Magebees\Ajaxaddtocart\Block\Popup');
+$dialog_config=$block_popup->getDialogConfig();
+if(isset($dialog_config['livetime'])){
+	$livetime=$dialog_config['livetime'];
+} else {
+	$livetime= 4;
+}
+$fileopt = "no";
+	if ( $_product->getData('has_options') ) {
+		foreach ($_product->getOptions() as $o)
+		  {
+			$fileopt = "no";        
+			if($o->getType() == "file") {
+				$fileopt = "yes";
+				break;
+			}
+		}
+	}
+?>
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php if ($_product->isSaleable()):
+$QuantityValidators = $block->getQuantityValidators();
+
+if(isset($QuantityValidators['validate-item-quantity']['qtyIncrements']))
+{
+$qtyIncrements = $QuantityValidators['validate-item-quantity']['qtyIncrements'];	
+}else{
+$qtyIncrements = 1;	
+}
+if(isset($QuantityValidators['validate-item-quantity']['minAllowed']))
+{
+$minAllowed = $QuantityValidators['validate-item-quantity']['minAllowed'];	
+}else{
+$minAllowed = 1;	
+}
+if(isset($QuantityValidators['validate-item-quantity']['maxAllowed']))
+{
+$maxAllowed = $QuantityValidators['validate-item-quantity']['maxAllowed'];	
+}else{
+$maxAllowed = 1000;	
+}
+$CustomCartHelper = $this->helper('Magebees\CustomCartStyle\Helper\Data'); 
+$show_add_to_cart_popup = false;
+
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $poco_helper->getStoreId();	
+$font_icons = $poco_helper->getConfigGroup('font_icons',$storeId);
+$add_cart_icon = array_key_exists('add_cart', $font_icons) ? $font_icons['add_cart'] : false;
+
+?>
+<?php if ($CustomCartHelper->enableCustomCart()) : ?>
+<?php $show_add_to_cart_popup = $CustomCartHelper->getMiniCartStyle(); ?>
+<?php endif; ?>
+ 
+<div class="box-tocart">
+    <div class="fieldset">
+        <?php if ($block->shouldRenderQuantity()): ?>
+        <div class="field qty">
+            <label class="label" for="qty"><span><?php /* @escapeNotVerified */ echo __('Qty') ?></span></label>
+			<div class="qty-outer">
+			<input type="number" name="qty" id="qty" maxlength="12" value="<?php /* @escapeNotVerified */ echo $block->getProductDefaultQty() * 1 ?>"
+						   title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="input-text qty" data-validate="<?php echo $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>" />
+			 <div class="qnty">
+			 <div class="quantity-controls quantity-plus quantity-plus-qv"><i class="feather-plus icon"></i></div>
+                            <div class="quantity-controls quantity-minus quantity-minus-qv"><i class="feather-minus icon"></i></div>
+			 </div>
+			</div>
+           
+			
+			<script>
+				require([
+					'jquery'
+				], function ($) {
+					var qtyIncrements = parseInt('<?php echo $qtyIncrements; ?>',10);	
+						var minAllowed = parseInt('<?php echo $minAllowed; ?>',10);	
+						var maxAllowed = parseInt('<?php echo $maxAllowed; ?>',10);	
+						
+					$('.quantity-plus-qv').click(function () {
+						var currentQty = parseInt($('#qty').val());
+								var valueIncr = parseInt(currentQty+qtyIncrements);
+								if(currentQty < maxAllowed){
+									$('#qty').val(valueIncr);
+								}
+					});
+
+					$('.quantity-minus-qv').click(function () {
+						var currentQty = parseInt($('#qty').val());
+							var valueDesc = parseInt(currentQty-qtyIncrements);
+							if(currentQty > minAllowed){
+								$('#qty').val(valueDesc);
+							}
+					});
+
+				});
+			</script>
+        </div>
+        <?php endif; ?>
+        <div class="actions">
+            <button type="submit"
+                    title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>"
+                    class="action primary ajaxproduct"
+                    id="product-addtocart-button">
+					<?php if($add_cart_icon): ?> <span class="icon"><?php echo $add_cart_icon;?></span><?php endif; ?>
+                <span><?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
+            </button>
+            <?php echo $block->getChildHtml('', true) ?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+<?php if ($block->isRedirectToCartEnabled() || $fileopt == "yes") : ?>
+<script type="text/x-magento-init">
+    {
+        ".product_addtocart_forms": {
+            "Magento_Catalog/product/view/validation": {
+                "radioCheckboxClosest": ".nested"
+            }
+        }
+    }
+</script>
+<?php else : ?>
+<script>
+    require([
+        'jquery',
+        'mage/mage',
+        'Magebees_Ajaxaddtocart/product/view/validation',
+        'Magebees_Ajaxaddtocart/js/ajax-to-cart'
+    ], function ($) {
+        'use strict';
+
+		var livetime=<?php echo $livetime ;?>;
+		var show_popup=<?php echo $show_add_to_cart_popup ;?>;
+        $('.product_addtocart_forms').mage('validation', {
+			
+            radioCheckboxClosest: '.nested',
+            submitHandler: function (form) {
+                var widget = $(form).ajaxToCart({
+                    bindSubmit: false
+                });
+				document.getElementById('loadingImage').style['display']='block';
+                widget.ajaxToCart('ajaxSubmitForm', $(form),livetime,show_popup);
+
+                return false;
+            }
+        });
+		$('body').on('click','#shopcontinue',function(){
+					var widget = $(this).ajaxToCart({});					 
+					widget.ajaxToCart('shopContinue');
+					});
+    });
+</script>
+<?php endif; ?>

@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+        <remove src="css/print.css"/>
+    </head>
+	<body>
+	<move element="page.main.title" destination="product.info.main" before="-"/>
+	<move element="product.info.review" destination="product.info.main" after="page.main.title"/>
+	<move element="product.info.overview" destination="product.info.main" after="product.info.price"/>
+	<move element="product.info.type" destination="product.info.social" after="view.addto.compare"/>
+	<move element="product.info.stock.sku" destination="product.info.social" after="view.addto.compare"/>
+	<move element="pocotheme-guaranteed-safe-checkout" destination="product.info.social" after="view.addto.compare"/>
+	<move element="product.social.share" destination="product.info.stock.sku" after="-"/>
+	<move element="pocothemes.onlinecustomer" destination="product.info.main" after="-"/>
+	<move element="pocothemes.soldout" destination="product.info.main" before="page.main.title"/>
+	<move element="catalog.product.related" destination="columns" after="-"/>
+	<move element="product.info.upsell" destination="columns" after="catalog.product.related"/>
+	<move element="catalog.recently.viewed.bottom" destination="columns" after="product.info.upsell"/>
+	<move element="sidebar.productlisting" destination="sidebar.main" after="-"  />
+	<container name="some.container" as="someContainer" label="Some Container" htmlTag="div" htmlClass="some-container">
+	</container>
+	<move element="catalog.product.related" destination="main.content" />
+	<move element="product.info.upsell" destination="main.content" />
+	<move element="catalog.recently.viewed.bottom" destination="main.content" />
+	<!--<move element="product.info.details" destination="content" after="product.info.media"/>-->
+	 <move element="pocothemes.onlinecustomer" destination="product.info.main" before="pocothemes.freeshippingbar"/>
+	<referenceContainer name="after.body.start">
+            <block class="Magento\Catalog\Block\Product\View" name="cart_sticky" template="Magento_Catalog::product/view/cart_sticky.phtml" before="-" ifconfig="pocothemes/pro_view/sticky_cart"/>
+    </referenceContainer>
+	<referenceContainer name="page.top">
+            <block class="Magento\Catalog\Block\Product\View" name="next_prev_products" template="Magento_Catalog::product/view/next_prev_product.phtml" before="-" ifconfig="pocothemes/pro_view/prev_next" />
+        </referenceContainer>
+		
+	<referenceContainer name="sidebar.main">
+	        <block class="Magento\Framework\View\Element\Template" name="catalog.compare.sidebar"
+                   template="Magento_Catalog::product/compare/sidebar.phtml" ifconfig="pocothemes/pro_view/compare_prod">
+                <arguments>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="compareProducts" xsi:type="array">
+                                <item name="component" xsi:type="string">Magento_Catalog/js/view/compare-products</item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments> 
+            </block>
+            <block class="Magento\Reports\Block\Product\Widget\Viewed" name="catalog.recently.viewed.sidebar"
+                   template="Magento_Catalog::product/list/sidebar/recently_viewed_default_list.phtml" ifconfig="pocothemes/pro_view/recent_prod">
+                <arguments>
+                    <argument name="page" xsi:type="string">product</argument>
+                    <argument name="config" xsi:type="helper" helper="Magebees\PocoThemes\Helper\Data::getProductDetailXml">
+                        <param name="field">recent_prod_pos</param>
+                    </argument>
+                </arguments>
+            </block>
+            
+        </referenceContainer>
+	<referenceContainer name="content.aside">
+            <block class="Magento\Reports\Block\Product\Widget\Viewed" name="catalog.recently.viewed.bottom" after="-"
+                   template="Magento_Catalog::product/list/bottom/recently-viewed-grid.phtml" ifconfig="pocothemes/pro_view/recent_prod">
+                <arguments>
+                    <argument name="page" xsi:type="string">product</argument>
+                    <argument name="config" xsi:type="helper" helper="Magebees\PocoThemes\Helper\Data::getProductDetailXml">
+                        <param name="field">recent_prod_pos</param>
+                    </argument>
+                    <argument name="configlayout" xsi:type="helper" helper="Magebees\PocoThemes\Helper\Data::getProductDetailXml">
+                        <param name="field">page_layout</param>
+                    </argument>
+                </arguments>
+                
+            </block>
+           
+            <block class="Magento\Catalog\Block\Product\ProductList\Related" name="catalog.product.related" template="Magento_Catalog::product/list/bottom/items-related-upsell.phtml" ifconfig="pocothemes/pro_view/related_prod">
+                <arguments>
+                    <argument name="type" xsi:type="string">related</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Catalog\Block\Product\ProductList\Upsell" name="product.info.upsell" template="Magento_Catalog::product/list/bottom/items-related-upsell.phtml" ifconfig="pocothemes/pro_view/upsell_prod">
+                <arguments>
+                    <argument name="type" xsi:type="string">upsell</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Catalog\Block\Product\View\Additional" name="product.info.additional" as="product_additional_data"/>
+        </referenceContainer>
+	<referenceBlock name="product.info.sku" template="Magento_Catalog::product/view/attribute.phtml" >
+			<arguments>
+				<argument name="at_label" xsi:type="string">SKU:</argument>
+			</arguments>
+		</referenceBlock>
+		<referenceBlock name="product.info.sku" template="Magento_Catalog::product/view/attribute.phtml" >
+			<arguments>
+				<argument name="at_label" xsi:type="string">SKU:</argument>
+			</arguments>
+		</referenceBlock>
+		<!-- Adjusted 'pocotheme-guaranteed-safe-checkout' placement -->
+        <referenceContainer name="product.info.social">
+            <block class="Magento\Cms\Block\Block" name="pocotheme-guaranteed-safe-checkout" after="view.addto.compare">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">pocotheme-guaranteed-safe-checkout</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+	<referenceContainer name="content">
+		
+			<!-- <block class="Magento\Cms\Block\Block" name="pocotheme-guaranteed-safe-checkout" after="view.addto.compare">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">pocotheme-guaranteed-safe-checkout</argument>
+                </arguments>
+            </block> -->
+            <block class="Magento\Catalog\Block\Product\View" name="product.social.share"
+                   template="Magento_Catalog::product/social-share.phtml" after="product.info.stock.sku" />
+            <block class="Magento\Catalog\Block\Product\View" before="pocotheme-guaranteed-safe-checkout" name="pocothemes.onlinecustomer" template="Magento_Catalog::product/view/onlinecustomer.phtml">
+			</block>
+			 <block class="Magento\Catalog\Block\Product\View" before="pocotheme-guaranteed-safe-checkout" name="pocothemes.soldout" template="Magento_Catalog::product/view/soldout.phtml">
+			</block>
+			
+		</referenceContainer> 
+	<referenceBlock name="product.info.details">
+        <referenceBlock name="product.info.description">
+            <arguments>
+                <argument name="priority" xsi:type="string">1</argument>
+            </arguments>
+        </referenceBlock>
+        <referenceBlock name="product.attributes">
+            <arguments>
+                <argument name="priority" xsi:type="string">3</argument>
+            </arguments>
+        </referenceBlock>
+        <referenceBlock name="reviews.tab">
+            <arguments>
+                <argument name="priority" xsi:type="string">4</argument>
+            </arguments>
+        </referenceBlock>
+        
+    </referenceBlock>
+	<referenceBlock name="magebees.sidebar.imagegallery" remove="true"/>	
+	</body>
+</page>

@@ -1,0 +1,399 @@
+<!-- ko if: getEnabled() == 1 -->
+<form name="order-attachment" id="order-attachment" method="post" enctype="multipart/form-data" data-bind="attr: { action: $t(getOrdercommentbaseurl())}"
+ >
+<div class="block block-custom-info">
+    <!-- ko if: getEnabledFileupload() == 1 || getEnabledOrdercomment() == 1 -->
+         <!-- ko if: getOrdercommentTitle() -->
+              <div class="block-custom-info-title step-title" data-bind="text: getOrdercommentTitle()"></div>
+         <!-- /ko -->
+    <div class="block-order-comments">
+	
+	<!-- ko if: numberofattachments() >= 1 -->
+	<div class="attachSection1 attachCommentBlock" id="1">
+       <!-- ko if: getEnabledFileupload() == 1 -->
+        <div class="block-order-for">
+            <div class="block-inner">
+                <!-- ko if: getOrderfileTexttitle() -->
+                     <span class="order-for-block-title" data-bind="text: getOrderfileTexttitle()"></span>
+                         <!-- ko if: getOrdercommentfile() == 1 -->
+                               <span class="required-icon">*</span>
+                         <!-- /ko -->
+                <!-- /ko -->
+                <div class="block-content fileContent1">
+                 <!-- ko if: getOrdercommentfile() == 1 && getfileuploadvalue() == "" -->
+                    <input type="file" name="order_for" id="order_for_required">
+                      <span class="file-upload-type-allowed" data-bind="text: getOrdercommentsFiletype()"></span>
+                    <div class="mage-error order_for_required_error" id="order_for_required_error" generated="true" ></div>
+                 <!-- /ko -->
+
+                 <!-- ko if: getOrdercommentfileNo() == 0 || getfileuploadvalue() -->
+                    <input type="file" name="order_for[]" id="order_for1" class="order_for">
+                    <span class="file-upload-type-allowed" data-bind="text: getOrdercommentsFiletype()"></span>
+                 <!-- /ko -->
+                    <!-- ko if: getfileuploadStatus() == 1 -->
+                     	<div class="file-uploded">
+						<span class="file-upload-status" data-bind="text: getfileuploadvalueone()"></span>
+                        <!-- ko if: getfileuploadvalue() && getfileuploadvalue() != "" -->
+                           <a href="javascript:;" id="rmfile1" class="order-file-removelink remove-file-icon"> Remove</a>
+                        <!-- /ko -->
+                     	</div>
+					 <!-- /ko -->
+                      <!-- ko if: getFileuploadvalustatus() != "" && getfileuploadStatus() == 0 -->
+                        <span class="file-upload-disallowedtype" data-bind="text: getFileuploadvalustatus()"></span>
+                     <!-- /ko -->
+                </div>
+            </div>
+        </div>
+       <!-- /ko -->
+        <!-- ko if: getEnabledOrdercomment() == 1 -->
+        <div class="block-order-comment">
+            <div class="block-inner">
+                <!-- ko if: getOrdercommentTexttitle() -->
+                     <span class="order-comment-block-title" data-bind="text: getOrdercommentTexttitle()"></span>
+                      <!-- ko if: getOrdercommentfield()== 1 -->
+                               <span class="required-icon">*</span>
+                         <!-- /ko -->
+                 <!-- /ko -->
+
+                <div class="block-content attachComments1">
+                         <!-- ko if: getOrdercommentfield() == 1 && getorderCommentstext() -->
+                          <textarea name="order_comments[]" id="order_comments1" maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+
+                        <!-- ko if: getOrdercommentfield() == 0 && getorderCommentstext() == null -->
+                          <textarea name="order_comments[]" id="order_comments1" class="order_comments" maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+
+                        <!-- ko if: getOrdercommentfield() == 0 && getorderCommentstext() == "" -->
+                          <textarea name="order_comments[]" id="order_comments1" class="order_comments"  maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+
+                        <!-- ko if: getOrdercommentfield() == 0 && getorderCommentstext() -->
+                          <textarea name="order_comments[]" id="order_comments1" class="order_comments"  maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+                             <!-- ko if: getOrdercommentsStatus() == 1 && getorderCommentstext() != "" -->
+                                <p class="block-title" data-bind="html: getorderCommentstextone()"></p>
+                              <!-- /ko -->
+                    <!-- ko if: getOrdercommentsStatus() == 1 && getorderCommentstext() -->
+                        <a href="javascript:;" id="submitfordelete1" class="order-comment-removelink remove-comment-icon submitfordelete"> Remove Comment</a>
+                     <!-- /ko -->
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+		</div>
+        <!-- /ko -->
+		
+		<!-- ko if: numberofattachments() >= 2 -->
+		<div class="attachSection2 attachCommentBlock" id="2">
+		<!-- ko if: getEnabledFileupload() == 1 -->
+        <div class="block-order-for">
+            <div class="block-inner">
+                <!-- ko if: getOrderfileTexttitle() -->
+                     <span class="order-for-block-title" data-bind="text: getOrderfileTexttitle()"></span>
+                         <!-- ko if: getOrdercommentfile() == 1 -->
+                               <span class="required-icon">*</span>
+                         <!-- /ko -->
+                <!-- /ko -->
+                <div class="block-content fileContent2">
+                 <!-- ko if: getOrdercommentfileNo() == 0 || getfileuploadvalue() -->
+                    <input type="file" name="order_for[]" id="order_for2" class="order_for">
+                    <span class="file-upload-type-allowed" data-bind="text: getOrdercommentsFiletype()"></span>
+                 <!-- /ko -->
+                    <!-- ko if: getfileuploadStatus() == 1 -->
+                     	<div class="file-uploded">
+						<span class="file-upload-status" data-bind="text: getfileuploadvaluetwo()"></span>
+                        <!-- ko if: getfileuploadvalue() && getfileuploadvalue() != "" -->
+                           <a href="javascript:;" id="rmfile2" class="order-file-removelink remove-file-icon"> Remove</a>
+                        <!-- /ko -->
+                     	</div>
+					 <!-- /ko -->
+
+                      <!-- ko if: getFileuploadvalustatus() != "" && getfileuploadStatus() == 0 -->
+                        <span class="file-upload-disallowedtype" data-bind="text: getFileuploadvalustatus()"></span>
+                     <!-- /ko -->
+
+                </div>
+            </div>
+        </div>
+       <!-- /ko -->
+        <!-- ko if: getEnabledOrdercomment() == 1 -->
+        <div class="block-order-comment">
+            <div class="block-inner">
+
+                <!-- ko if: getOrdercommentTexttitle() -->
+                     <span class="order-comment-block-title" data-bind="text: getOrdercommentTexttitle()"></span>
+                      <!-- ko if: getOrdercommentfield()== 1 -->
+                               <span class="required-icon">*</span>
+                         <!-- /ko -->
+                 <!-- /ko -->
+
+                <div class="block-content attachComments2">
+                         <!-- ko if: getOrdercommentfield() == 1 && getorderCommentstext() -->
+                          <textarea name="order_comments[]" class="order_comments" id="order_comments2" maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+                        <!-- ko if: getOrdercommentfield() == 0 && getorderCommentstext() == null -->
+                          <textarea name="order_comments[]" class="order_comments" id="order_comments2" maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+                        <!-- ko if: getOrdercommentfield() == 0 && getorderCommentstext() == "" -->
+                          <textarea name="order_comments[]" class="order_comments" id="order_comments2" maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+                        <!-- ko if: getOrdercommentfield() == 0 && getorderCommentstext() -->
+                          <textarea name="order_comments[]" class="order_comments" id="order_comments2" maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+                             <!-- ko if: getOrdercommentsStatus() == 1 && getorderCommentstext() != "" -->
+                                <p class="block-title" data-bind="html: getorderCommentstexttwo()"></p>
+                              <!-- /ko -->
+                    <!-- ko if: getOrdercommentsStatus() == 1 && getorderCommentstext() -->
+                        <a href="javascript:;" id="submitfordelete2" class="order-comment-removelink remove-comment-icon submitfordelete"> Remove Comment</a>
+                     <!-- /ko -->
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+		<span class="attComRmv">Remove</span>
+		</div>
+		<!-- /ko -->
+		
+		
+		<!-- ko if: numberofattachments() >= 3 -->
+		<div class="attachSection3 attachCommentBlock" id="3">
+		<!-- ko if: getEnabledFileupload() == 1 -->
+        <div class="block-order-for">
+            <div class="block-inner">
+                <!-- ko if: getOrderfileTexttitle() -->
+                     <span class="order-for-block-title" data-bind="text: getOrderfileTexttitle()"></span>
+                         <!-- ko if: getOrdercommentfile() == 1 -->
+                               <span class="required-icon">*</span>
+                         <!-- /ko -->
+                <!-- /ko -->
+                <div class="block-content fileContent3">
+                 <!-- ko if: getOrdercommentfileNo() == 0 || getfileuploadvalue() -->
+                    <input type="file" name="order_for[]" id="order_for3" class="order_for">
+                    <span class="file-upload-type-allowed" data-bind="text: getOrdercommentsFiletype()"></span>
+                 <!-- /ko -->
+                    <!-- ko if: getfileuploadStatus() == 1 -->
+                     	<div class="file-uploded">
+						<span class="file-upload-status" data-bind="text: getfileuploadvaluethree()"></span>
+                        <!-- ko if: getfileuploadvalue() && getfileuploadvalue() != "" -->
+                           <a href="javascript:;" id="rmfile3" class="order-file-removelink remove-file-icon"> Remove</a>
+                        <!-- /ko -->
+                     	</div>
+					 <!-- /ko -->
+
+                      <!-- ko if: getFileuploadvalustatus() != "" && getfileuploadStatus() == 0 -->
+                        <span class="file-upload-disallowedtype" data-bind="text: getFileuploadvalustatus()"></span>
+                     <!-- /ko -->
+
+                </div>
+            </div>
+        </div>
+       <!-- /ko -->
+        <!-- ko if: getEnabledOrdercomment() == 1 -->
+        <div class="block-order-comment">
+            <div class="block-inner">
+                <!-- ko if: getOrdercommentTexttitle() -->
+                     <span class="order-comment-block-title" data-bind="text: getOrdercommentTexttitle()"></span>
+                      <!-- ko if: getOrdercommentfield()== 1 -->
+                               <span class="required-icon">*</span>
+                         <!-- /ko -->
+                 <!-- /ko -->
+                <div class="block-content attachComments3">
+                         <!-- ko if: getOrdercommentfield() == 1 && getorderCommentstext() -->
+                          <textarea name="order_comments[]" class="order_comments" id="order_comments3" maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+
+                        <!-- ko if: getOrdercommentfield() == 0 && getorderCommentstext() == null -->
+                          <textarea name="order_comments[]" class="order_comments" id="order_comments3" maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+
+                        <!-- ko if: getOrdercommentfield() == 0 && getorderCommentstext() == "" -->
+                          <textarea name="order_comments[]" class="order_comments" id="order_comments3" maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+
+                        <!-- ko if: getOrdercommentfield() == 0 && getorderCommentstext() -->
+                          <textarea name="order_comments[]" class="order_comments" id="order_comments3" maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+
+                             <!-- ko if: getOrdercommentsStatus() == 1 && getorderCommentstext() != "" -->
+                                <p class="block-title" data-bind="html: getorderCommentstextthree()"></p>
+                              <!-- /ko -->
+
+                    <!-- ko if: getOrdercommentsStatus() == 1 && getorderCommentstext() -->
+                        <a href="javascript:;" id="submitfordelete3" class="order-comment-removelink remove-comment-icon submitfordelete"> Remove Comment</a>
+                     <!-- /ko -->
+
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+		<span class="attComRmv">Remove</span>
+		</div>
+		<!-- /ko -->
+		
+		
+		<!-- ko if: numberofattachments() >= 4 -->
+		<div class="attachSection4 attachCommentBlock" id="4">
+		<!-- ko if: getEnabledFileupload() == 1 -->
+        <div class="block-order-for">
+            <div class="block-inner">
+                <!-- ko if: getOrderfileTexttitle() -->
+                     <span class="order-for-block-title" data-bind="text: getOrderfileTexttitle()"></span>
+                         <!-- ko if: getOrdercommentfile() == 1 -->
+                               <span class="required-icon">*</span>
+                         <!-- /ko -->
+                <!-- /ko -->
+                <div class="block-content fileContent4">
+                 <!-- ko if: getOrdercommentfileNo() == 0 || getfileuploadvalue() -->
+                    <input type="file" name="order_for[]" id="order_for4" class="order_for">
+                    <span class="file-upload-type-allowed" data-bind="text: getOrdercommentsFiletype()"></span>
+                 <!-- /ko -->
+                    <!-- ko if: getfileuploadStatus() == 1 -->
+                     	<div class="file-uploded">
+						<span class="file-upload-status" data-bind="text: getfileuploadvaluefour()"></span>
+                        <!-- ko if: getfileuploadvalue() && getfileuploadvalue() != "" -->
+                           <a href="javascript:;" id="rmfile4" class="order-file-removelink remove-file-icon"> Remove</a>
+                        <!-- /ko -->
+                     	</div>
+					 <!-- /ko -->
+
+                      <!-- ko if: getFileuploadvalustatus() != "" && getfileuploadStatus() == 0 -->
+                        <span class="file-upload-disallowedtype" data-bind="text: getFileuploadvalustatus()"></span>
+                     <!-- /ko -->
+
+                </div>
+            </div>
+        </div>
+       <!-- /ko -->
+        <!-- ko if: getEnabledOrdercomment() == 1 -->
+        <div class="block-order-comment">
+            <div class="block-inner">
+
+                <!-- ko if: getOrdercommentTexttitle() -->
+                     <span class="order-comment-block-title" data-bind="text: getOrdercommentTexttitle()"></span>
+                      <!-- ko if: getOrdercommentfield()== 1 -->
+                               <span class="required-icon">*</span>
+                         <!-- /ko -->
+                 <!-- /ko -->
+
+                <div class="block-content attachComments4">
+                         <!-- ko if: getOrdercommentfield() == 1 && getorderCommentstext() -->
+                          <textarea name="order_comments[]" class="order_comments" id="order_comments4" maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+                        <!-- ko if: getOrdercommentfield() == 0 && getorderCommentstext() == null -->
+                          <textarea name="order_comments[]" class="order_comments" id="order_comments4" maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+                        <!-- ko if: getOrdercommentfield() == 0 && getorderCommentstext() == "" -->
+                          <textarea name="order_comments[]" class="order_comments" id="order_comments4" maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+                        <!-- ko if: getOrdercommentfield() == 0 && getorderCommentstext() -->
+                          <textarea name="order_comments[]" class="order_comments" id="order_comments4" maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+
+                             <!-- ko if: getOrdercommentsStatus() == 1 && getorderCommentstext() != "" -->
+                                <p class="block-title" data-bind="html: getorderCommentstextfour()"></p>
+                              <!-- /ko -->
+
+                    <!-- ko if: getOrdercommentsStatus() == 1 && getorderCommentstext() -->
+                        <a href="javascript:;" id="submitfordelete4" class="order-comment-removelink remove-comment-icon submitfordelete"> Remove Comment</a>
+                     <!-- /ko -->
+
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+		<span class="attComRmv">Remove</span>
+		</div>
+		<!-- /ko -->
+		
+		
+		<!-- ko if: numberofattachments() >= 5 -->
+		<div class="attachSection5 attachCommentBlock" id="5">
+		<!-- ko if: getEnabledFileupload() == 1 -->
+        <div class="block-order-for">
+            <div class="block-inner">
+                <!-- ko if: getOrderfileTexttitle() -->
+                     <span class="order-for-block-title" data-bind="text: getOrderfileTexttitle()"></span>
+                         <!-- ko if: getOrdercommentfile() == 1 -->
+                             <span class="required-icon">*</span>
+                         <!-- /ko -->
+                <!-- /ko -->
+                <div class="block-content fileContent5">
+                 <!-- ko if: getOrdercommentfileNo() == 0 || getfileuploadvalue() -->
+                    <input type="file" name="order_for[]" id="order_for5" class="order_for">
+                    <span class="file-upload-type-allowed" data-bind="text: getOrdercommentsFiletype()"></span>
+                 <!-- /ko -->
+                    <!-- ko if: getfileuploadStatus() == 1 -->
+                     	<div class="file-uploded">
+						<span class="file-upload-status" data-bind="text: getfileuploadvaluefive()"></span>
+                        <!-- ko if: getfileuploadvalue() && getfileuploadvalue() != "" -->
+                           <a href="javascript:;" id="rmfile5" class="order-file-removelink remove-file-icon"> Remove</a>
+                        <!-- /ko -->
+                     	</div>
+					 <!-- /ko -->
+
+                      <!-- ko if: getFileuploadvalustatus() != "" && getfileuploadStatus() == 0 -->
+                        <span class="file-upload-disallowedtype" data-bind="text: getFileuploadvalustatus()"></span>
+                     <!-- /ko -->
+
+                </div>
+            </div>
+        </div>
+       <!-- /ko -->
+        <!-- ko if: getEnabledOrdercomment() == 1 -->
+        <div class="block-order-comment">
+            <div class="block-inner">
+
+                <!-- ko if: getOrdercommentTexttitle() -->
+                     <span class="order-comment-block-title" data-bind="text: getOrdercommentTexttitle()"></span>
+                      <!-- ko if: getOrdercommentfield()== 1 -->
+                               <span class="required-icon">*</span>
+                         <!-- /ko -->
+                 <!-- /ko -->
+
+                <div class="block-content attachComments5">
+				
+                         <!-- ko if: getOrdercommentfield() == 1 && getorderCommentstext() -->
+                          <textarea name="order_comments[]" class="order_comments" id="order_comments5" maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+
+                        <!-- ko if: getOrdercommentfield() == 0 && getorderCommentstext() == null -->
+                          <textarea name="order_comments[]" class="order_comments" id="order_comments5" maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+
+                        <!-- ko if: getOrdercommentfield() == 0 && getorderCommentstext() == "" -->
+                          <textarea name="order_comments[]" class="order_comments" id="order_comments5" maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+
+                        <!-- ko if: getOrdercommentfield() == 0 && getorderCommentstext() -->
+                          <textarea name="order_comments[]" class="order_comments" id="order_comments5" maxlength="200" placeholder="Enter Your Comments (maximum 200 character)"></textarea>
+                        <!-- /ko -->
+
+                             <!-- ko if: getOrdercommentsStatus() == 1 && getorderCommentstext() != "" -->
+                                <p class="block-title" data-bind="html: getorderCommentstextfive()"></p>
+                              <!-- /ko -->
+
+                    <!-- ko if: getOrdercommentsStatus() == 1 && getorderCommentstext() -->
+                        <a href="javascript:;" id="submitfordelete5" class="order-comment-removelink remove-comment-icon submitfordelete"> Remove Comment</a>
+                     <!-- /ko -->
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+		<span class="attComRmv">Remove</span>		
+		</div>
+		<!-- /ko -->
+		
+		<div class="addMorebtn">Add More</div>
+		
+		
+        <!-- ko if: getEnabledFileupload() == 1 || getEnabledOrdercomment() == 1 -->
+        <div class="submit-btn">
+          <button type="submit" name="order-comment" id="order-commentbtn" value="Save" class="order-comment-btn primary" disabled>Save</button>
+        </div>
+		 <!-- /ko -->
+    </div>
+ <!-- /ko -->
+</div>
+</form>
+<!-- /ko -->

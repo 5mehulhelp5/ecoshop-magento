@@ -1,0 +1,26 @@
+{
+        "name": "magebees/module-richsnippets-theme",
+        "description": "A module for google rich snippets.",
+        "type": "magento2-module",
+        "version": "1.0.0",
+        "license": [
+            "OSL-3.0",
+            "AFL-3.0"
+        ],
+       "authors": [
+	{
+      "name": "Magebees",
+      "email": "support@magebees.com",
+      "homepage": "https://www.magebees.com",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Magebees\\RichSnippets\\": ""
+    }
+  }
+}

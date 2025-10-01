@@ -1,0 +1,28 @@
+{
+	"name": "magebees/module-imagegallery-theme",
+	"description": "This Extension is used for display image gallery.",
+	"type": "magento2-module",
+	"version": "1.1.1",
+	"license": [
+		"OSL-3.0",
+		"AFL-3.0"
+	],
+	"authors": [
+		{
+			"name": "MageBees",
+			"email": "support@magebees.com",
+			"homepage": "https://www.magebees.com",
+			"role": "Developer"
+		}
+  	],
+	"autoload": {
+		"files": [
+			"registration.php"
+		],
+		"psr-4": {
+			"Magebees\\Imagegallery\\": ""
+		}
+	}
+
+}
+	

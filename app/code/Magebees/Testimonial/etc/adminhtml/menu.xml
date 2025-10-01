@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+ <menu>
+	<add id="Magebees_Testimonial::Heading" title="MageBees Customer Testimonial" module="Magebees_Testimonial" sortOrder="150" parent="Magento_Customer::customer" resource="Magebees_Testimonial::Heading" />	
+	<add id="Magebees_Testimonial::grid" title="Manage Testimonials"  action="testimonial/manage" module="Magebees_Testimonial" sortOrder="150" parent="Magebees_Testimonial::Heading" resource="Magebees_Testimonial::testimonial"/>	
+ </menu>
+</config>
+

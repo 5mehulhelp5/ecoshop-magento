@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="magebees_ajax_category_products" class="Magebees\AjaxCategoryProducts\Block\Widget\CategoryProductsWidget" is_email_compatible="true" >
+        <label translate="true">Magebees::Ajax Category Products Widget</label>
+        <description translate="true">List of products with load more and category list which can be filter with ajax</description>
+		<parameters>
+			<parameter name="wd_list_position" xsi:type="select" visible="true"
+                       source_model="Magebees\AjaxCategoryProducts\Model\PageLayout" sort_order="9" >
+                <label translate="true">Category List Position</label>
+				<description translate="true"><![CDATA[]]></description>
+       		</parameter>
+			
+			<parameter name="wd_categories" xsi:type="multiselect" visible="true"
+                       source_model="Magebees\AjaxCategoryProducts\Model\Categories" required="true" sort_order="10">				
+                <label translate="true">Categories</label>
+	       	</parameter>
+			
+			<parameter name="wd_default_category" xsi:type="text" visible="true" sort_order="11">
+                <label translate="true">Add Default Category for Filter</label>
+				<description translate="true"><![CDATA[Add category ID for filter products by default category. Find the category id enclosed with square brackets <b>"[ ]"</b> from <b>"Select Categories"</b> list.]]></description>
+     	  	</parameter>
+			
+			<parameter name="wd_show_category_section_title" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="6">
+				<label translate="true">Show Category Section Title</label>
+				<description translate="true"><![CDATA[]]></description>
+			</parameter>
+			
+			<parameter name="wd_category_section_title" xsi:type="text" visible="true" required="true" sort_order="7">
+				<label translate="true">Category Section Title</label>
+				<description translate="true"><![CDATA[]]></description>
+				<depends>
+					<parameter name="wd_show_category_section_title" value="1" />
+				</depends>
+				<value>Shop By</value>
+			</parameter>
+		
+			<parameter name="wd_number_of_products" xsi:type="text" visible="true" required="true" sort_order="12">
+				<label translate="true">Number of products appear on page load</label>
+				<description translate="true"><![CDATA[]]></description>
+				<value>5</value>
+			</parameter>
+			
+			<parameter name="wd_sort_by" xsi:type="select" visible="true" source_model="Magebees\AjaxCategoryProducts\Model\Sortby" required="true" sort_order="12">
+				<label translate="true">Sort By</label>
+				<description translate="true"><![CDATA[]]></description>
+			</parameter>
+			
+			<parameter name="wd_sort_order" xsi:type="select" visible="true" source_model="Magebees\AjaxCategoryProducts\Model\Sortorder" required="true" sort_order="12">
+				<label translate="true">Sort Order</label>
+				<description translate="true"><![CDATA[]]></description>
+			</parameter>
+			
+			<parameter name="wd_loading_text" xsi:type="text" visible="true" required="true" sort_order="13">
+				<label translate="true">Loading Text</label>
+				<description translate="true"><![CDATA[]]></description>
+				<value>Loading..</value>
+			</parameter>
+		
+			<parameter name="wd_done_text" xsi:type="text" visible="true" required="true" sort_order="14">
+				<label translate="true">Done Text</label>
+				<description translate="true"><![CDATA[]]></description>
+				<value>No more pages for load.</value>
+			</parameter>
+			
+			<parameter name="wd_load_more_text" xsi:type="text" visible="true" required="true" sort_order="15">
+				<label translate="true">Load More Text</label>
+				<description translate="true"><![CDATA[]]></description>
+				<value>Load More Items</value>
+			</parameter>
+			<parameter name="template" xsi:type="select" required="true" visible="true" sort_order="16">
+				<label translate="true">Template</label>
+				<options>
+					<option name="default" value="products.phtml" selected="true">
+						<label translate="true">Products List with Load More and Category Template</label>
+					</option>
+				</options>
+			</parameter> 
+		</parameters>
+    </widget>
+</widgets>

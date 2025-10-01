@@ -1,0 +1,989 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+   <widget id="category_thumbnail" class="Magebees\CategoryImage\Block\Widget\CategoryImagewidget" is_email_compatible="true">
+        <label translate="true">Magebees::Category List Thumbnail Widget</label>
+        <description translate="true">List of Categopries with thumnail Image</description>
+		<parameters>
+			<parameter name="wd_enable" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="0">
+				<label translate="true">Enabled</label>
+				<description translate="true">Select Yes for Category Listing.</description>
+			</parameter>
+			<parameter name="wd_load_ajax" xsi:type="select" visible="true"                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="1">                <label translate="true">Load Category List using Ajax</label>                <description translate="true">Select Yes Load Category List Thumbanil using Ajax.</description> 
+			</parameter>
+			<parameter name="template" xsi:type="select" required="true" visible="true" sort_order="2">
+                <label translate="true">Template</label>
+                <options>
+                   <option name="pocothemes_style1" value="Magebees_CategoryImage::style1.phtml">
+                        <label translate="true">PocoThemes Style 1</label>
+                    </option>
+					<option name="pocothemes_style2" value="Magebees_CategoryImage::style2.phtml">
+                        <label translate="true">PocoThemes Style 2</label>
+                    </option>
+					<option name="pocothemes_style3" value="Magebees_CategoryImage::style3.phtml">
+                        <label translate="true">PocoThemes Style 3</label>
+                    </option>
+					<option name="pocothemes_style4" value="Magebees_CategoryImage::style4.phtml">
+                        <label translate="true">PocoThemes Style 4</label>
+                    </option>
+					<option name="pocothemes_style5" value="Magebees_CategoryImage::style5.phtml">
+                        <label translate="true">PocoThemes Style 5</label>
+                    </option>
+					<option name="pocothemes_style6" value="Magebees_CategoryImage::style6.phtml">
+                        <label translate="true">PocoThemes Style 6</label>
+                    </option>
+					<option name="pocothemes_style7" value="Magebees_CategoryImage::style7.phtml">
+                        <label translate="true">PocoThemes Style 7</label>
+                    </option>
+					<option name="pocothemes_style8" value="Magebees_CategoryImage::style8.phtml">
+                        <label translate="true">PocoThemes Style 8</label>
+                    </option>
+					<option name="pocothemes_style9" value="Magebees_CategoryImage::style9.phtml">
+                        <label translate="true">PocoThemes Style 9</label>
+                    </option>
+					<option name="pocothemes_style10" value="Magebees_CategoryImage::style10.phtml">
+                        <label translate="true">PocoThemes Style 10</label>
+                    </option>
+					<option name="pocothemes_style11" value="Magebees_CategoryImage::style11.phtml">
+                        <label translate="true">PocoThemes Style 11</label>
+                    </option>
+					<option name="pocothemes_style12" value="Magebees_CategoryImage::style12.phtml">
+                        <label translate="true">PocoThemes Style 12</label>
+                    </option>
+					<option name="pocothemes_style13" value="Magebees_CategoryImage::style13.phtml">
+                        <label translate="true">PocoThemes Style 13</label>
+                    </option>
+					<option name="pocothemes_style14" value="Magebees_CategoryImage::style14.phtml">
+                        <label translate="true">PocoThemes Style 14</label>
+                    </option>
+					<option name="pocothemes_style15" value="Magebees_CategoryImage::style15.phtml">
+                        <label translate="true">PocoThemes Style 15</label>
+                    </option>
+					<option name="pocothemes_style16" value="Magebees_CategoryImage::style16.phtml">
+                        <label translate="true">PocoThemes Style 16</label>
+                    </option>
+					<option name="pocothemes_style17" value="Magebees_CategoryImage::style17.phtml">
+                        <label translate="true">PocoThemes Style 17</label>
+                    </option>
+					<option name="pocothemes_tabs" value="Magebees_CategoryImage::tabs.phtml">
+                        <label translate="true">PocoThemes Tabs</label>
+                    </option>
+				</options>
+            </parameter>
+			<parameter name="wd_spacing" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="3">
+				<label translate="true">Spacing on Section</label>
+				<description translate="true">Select Yes for manage space on section.</description>
+				
+			</parameter>
+			<parameter name="wd_bottom_spacing" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="4">
+				<label translate="true">Bottom Spacing on Section</label>
+				<description translate="true">Select Yes for manage space after section.</description>
+			
+			</parameter>
+			<parameter name="wd_bgimage" xsi:type="block" visible="true" sort_order="5">
+				<label translate="true">Background Image</label>
+				<block class="Magebees\PocoBase\Block\Adminhtml\Widget\ImageChooser">
+					<data>
+						<item name="button" xsi:type="array">
+							<item name="open" xsi:type="string">Choose Image...</item>
+						</item>
+					</data>
+				</block>
+			</parameter>
+			<parameter name="wd_bgcolor" xsi:type="block" visible="true" sort_order="6">
+				<label translate="true">Background Color</label>
+				<block class="Magebees\PocoBase\Block\Adminhtml\Widget\Color" />
+			</parameter>
+			<parameter name="wd_show_heading" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="7">
+				<label translate="true">Display Heading</label>
+				<description translate="true">Select Yes for display page heading.</description>
+				<depends>
+					<parameter name="wd_enable" value="1" />
+				</depends>
+			</parameter>
+			<parameter name="wd_heading" xsi:type="text" visible="true" required="false" sort_order="9">
+				<label translate="true">Heading</label>
+				<description translate="true">Here we can set heading.</description>
+				<depends>
+					<parameter name="wd_show_heading" value="1" />
+				</depends>
+				<value>Categories</value>
+			</parameter>
+			<parameter name="wd_heading_logo" xsi:type="block" visible="true" sort_order="10">
+				<label translate="true">Upload Heading Logo</label>
+				<description translate="true">This Option Applied For PocoThemes Style 3 ,Style 4,Style 8 Template.</description>
+				<depends>
+					<parameter name="wd_show_heading" value="1" />
+					
+				</depends>
+				<block class="Magebees\PocoBase\Block\Adminhtml\Widget\ImageChooser">
+					<data>
+						<item name="button" xsi:type="array">
+							<item name="open" xsi:type="string">Choose Image...</item>
+						</item>
+					</data>
+				</block>
+				
+			</parameter>
+			<parameter name="wd_short_desc" xsi:type="text" visible="true" required="false" sort_order="11">
+                <label translate="true">Short Description</label>
+                <description translate="true"></description>
+				<depends>
+					<parameter name="wd_show_heading" value="1" />
+				</depends>
+			</parameter>
+			
+			<parameter name="wd_tabs" xsi:type="select" visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="12">
+                <label translate="true">Display Tabs</label>
+				<description translate="true">Select Yes for display in tabs</description>
+			</parameter>
+			<parameter name="wd_tab1" xsi:type="text" visible="true" required="false" sort_order="12">
+                <label translate="true">Tab 1 Title</label>
+                <description translate="true"></description>
+				<depends>
+					<parameter name="wd_tabs" value="1" />
+				</depends>
+			</parameter>
+			<parameter name="wd_categories" xsi:type="multiselect" visible="true"
+						   source_model="Magebees\CategoryImage\Model\Categories" required="true" sort_order="12">   
+				<label translate="true">Categories</label>				
+			</parameter>
+			<parameter name="wd_tab2" xsi:type="text" visible="true" required="false" sort_order="12">
+                <label translate="true">Tab 2 Title</label>
+                <description translate="true"></description>
+				<depends>
+					<parameter name="wd_tabs" value="1" />
+				</depends>
+			</parameter>
+			<parameter name="wd_categories_tab2" xsi:type="multiselect" visible="true"
+						   source_model="Magebees\CategoryImage\Model\Categories" required="true" sort_order="12">   
+				<label translate="true">Categories</label>			
+				<depends>
+					<parameter name="wd_tabs" value="1" />
+				</depends>				
+			</parameter>
+			<parameter name="wd_description" xsi:type="select" visible="false"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="13">
+                <label translate="true">Display Category Short Description</label>
+				<description translate="true">Select Yes for display Short Description.</description>
+			</parameter>
+			<parameter name="wd_no_of_items" xsi:type="text" visible="true" required="true" sort_order="14">
+				<label translate="true">Number of Categories to Display</label>
+				<description translate="true">Show number of categories in main block</description>
+				<value>10</value>
+			</parameter>
+			<parameter name="wd_slider" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="15">
+				<label translate="true">Enable Slider</label>
+			</parameter>
+			<parameter name="wd_items_per_slide" xsi:type="select" visible="true" sort_order="16">
+				<label translate="true">Number of items per slide.</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                    
+				</depends>
+				<options>
+				<option name="2" value="2"><label translate="true">2</label></option>
+				<option name="3" value="3"><label translate="true">3</label></option>
+				<option name="4" value="4"><label translate="true">4</label></option>
+				<option name="5" value="5"><label translate="true">5</label></option>
+				<option name="6" value="6"><label translate="true">6</label></option>
+				<option name="7" value="7"><label translate="true">7</label></option>
+				<option name="8" value="8"><label translate="true">8</label></option>
+				</options>
+			</parameter>
+			<parameter name="wd_autoscroll" xsi:type="select" visible="true" sort_order="17">
+				<label translate="true">Autoplay</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                    
+				</depends>
+				<options>
+				<option name="yes" value="1"><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+
+				
+			</parameter>
+			<parameter name="wd_auto_play_delaytime" xsi:type="text" visible="true" required="true" sort_order="18">
+				<label translate="true">Delay Time</label>
+				<description translate="true">Delay between transitions (in ms)</description>
+				<depends>
+					<parameter name="wd_slider" value="1" />
+					<parameter name="wd_autoscroll" value="1" />                    
+				</depends>
+				<value>3000</value>
+			</parameter>
+			<parameter name="wd_autoplayoff" xsi:type="select" visible="true" 
+						    sort_order="19">
+				<label translate="true">Disable On Mouse Enter</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />
+					<parameter name="wd_autoscroll" value="1" />                    
+				</depends>
+				<options>
+				<option name="yes" value="1"><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+				
+			</parameter>
+			<parameter name="wd_slide_auto_height" xsi:type="select" visible="true"
+						   sort_order="20">
+				<label translate="true">Slide Auto Height </label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                   
+				</depends>
+				<options>
+				<option name="yes" value="1"><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+				
+			</parameter>
+			<parameter name="wd_navarrow" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="21">
+				<label translate="true">Show navigation arrow</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                   
+				</depends>
+			</parameter>
+			<parameter name="wd_pagination" xsi:type="select" visible="true" sort_order="22">
+				<label translate="true">Show Pagination</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                   
+				</depends>
+				<options>
+				<option name="yes" value="1" ><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true"><label translate="true">No</label></option>
+				</options>
+				
+			</parameter>
+			<parameter name="wd_pagination_type" xsi:type="select" visible="true"
+						   source_model="Magebees\PocoThemes\Model\Config\Source\SliderPaginationStyle" sort_order="23">
+				<label translate="true">Pagination Type</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />    
+					<parameter name="wd_pagination" value="1" />                   
+				</depends>
+			</parameter>
+			<parameter name="wd_infinite_loop" xsi:type="select" visible="true" sort_order="24">
+				<label translate="true">Infinite loop</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                   
+				</depends>
+				<options>
+				<option name="yes" value="1" ><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true"><label translate="true">No</label></option>
+				</options>
+				
+			</parameter>
+			<parameter name="wd_scrollbar" xsi:type="select" visible="true" sort_order="25">
+				<label translate="true">Show Scrollbar</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                   
+				</depends>
+				 <options>
+				<option name="yes" value="1" ><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true"><label translate="true">No</label></option>
+				</options>
+				
+			</parameter>
+			
+			<parameter name="wd_grap_cursor" xsi:type="select" visible="true" sort_order="26">
+				<label translate="true">Slide Grab cursor</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                   
+				</depends>
+				<options>
+				<option name="yes" value="1" ><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true"><label translate="true">No</label></option>
+				</options>
+				
+			</parameter>
+			<parameter name="wd_centered" xsi:type="select" visible="true" sort_order="27">
+				<label translate="true">Slide Centered</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />   
+					<parameter name="wd_infinite_loop" value="0" />   
+					
+				</depends>
+				<options>
+				<option name="yes" value="1" ><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true"><label translate="true">No</label></option>
+				</options>
+				
+			</parameter>
+			<parameter name="wd_items_per_row" xsi:type="select" visible="true"
+					   sort_order="28">
+				<label translate="true">Number of items per row in Main Block</label>
+				<description translate="true">Show number of items per row in main block.</description>	
+				<depends><parameter name="wd_slider" value="0" /> </depends>   
+				<options>
+				<option name="2" value="2"><label translate="true">2</label></option>
+				<option name="3" value="3"><label translate="true">3</label></option>
+				<option name="4" value="4"><label translate="true">4</label></option>
+				<option name="5" value="5"><label translate="true">5</label></option>
+				<option name="6" value="6"><label translate="true">6</label></option>
+				</options>
+								
+				         
+			</parameter>		
+			
+			<parameter name="wd_shopnow" xsi:type="select" visible="true" sort_order="29">
+				<label translate="true">Show Shop Now button</label>
+				<options>
+				<option name="yes" value="1" ><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true"><label translate="true">No</label></option>
+				</options>
+			</parameter>
+			<parameter name="wd_shopnow_text" xsi:type="text" visible="true"  sort_order="29">
+				<label translate="true">Shop Now button Text</label>
+				<depends><parameter name="wd_shopnow" value="1" />                   </depends>
+				<value>Shop Now</value>
+			</parameter>
+			
+			<parameter name="wd_show_viewall" xsi:type="select" visible="true"
+						    sort_order="30">
+				<label translate="true">Show View All</label>
+				<description translate="true">Select Yes For Showing View All Button.</description>
+				<depends>
+					<parameter name="wd_show_heading" value="1" />
+				</depends>
+				<options>
+				<option name="yes" value="1" ><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true"><label translate="true">No</label></option>
+				</options>
+				
+			</parameter>
+			<parameter name="wd_viewall_txt" xsi:type="text" visible="true" required="true" sort_order="31">
+                <label translate="true">View All Button Text</label>
+                <description translate="true"></description>
+				<depends>
+					<parameter name="wd_show_heading" value="1" />
+					<parameter name="wd_show_viewall" value="1" />
+				</depends>
+			</parameter>
+			<parameter name="wd_viewall_url" xsi:type="text" visible="true" required="true" sort_order="32">
+                <label translate="true">View All Button Url</label>
+                <description translate="true"></description>
+				<depends>
+					<parameter name="wd_show_heading" value="1" />
+					<parameter name="wd_show_viewall" value="1" />
+				</depends>
+			</parameter>
+		</parameters>
+    </widget>
+   <widget id="newsletterwidget" class="Magebees\PocoBase\Block\Widget\NewsLetter" is_email_compatible="true">
+        <label translate="true">Magebees_PocoBase::NewsLetter Widget</label>
+        <description translate="true">NewsLetter Show</description>
+		<parameters>
+			<parameter name="wd_enable" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="1">
+				<label translate="true">Enabled</label>
+				<description translate="true">Select Yes for NewsLetter Show.</description>
+			</parameter>
+			
+			<parameter name="template" xsi:type="select" required="true" visible="true" sort_order="2">
+                <label translate="true">Template</label>
+                <options> 
+                   <option name="pocothemes_style1" value="Magebees_PocoThemes::widget/newsletter.phtml">
+                        <label translate="true">PocoThemes Style 1</label>
+                    </option>
+					<option name="pocothemes_style2" value="Magebees_PocoThemes::widget/newsletter-style2.phtml">
+                        <label translate="true">PocoThemes Style 2</label>
+                    </option>
+				</options>
+            </parameter>
+			<parameter name="wd_load_ajax" xsi:type="select" visible="true"  source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="3">                <label translate="true">Load NewsLetter using Ajax</label>                <description translate="true">Select Yes Load NewsLetter using Ajax.</description> 
+			</parameter>
+			<parameter name="wd_spacing" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="4">
+				<label translate="true">Spacing on Section</label>
+				<description translate="true">Select Yes for manage space on section.</description>
+				
+			</parameter>
+			<parameter name="wd_bottom_spacing" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="5">
+				<label translate="true">Bottom Spacing on Section</label>
+				<description translate="true">Select Yes for manage space after section.</description>
+			
+			</parameter>
+			<parameter name="wd_bgimage" xsi:type="block" visible="true" sort_order="6">
+				<label translate="true">Background Image</label>
+				<block class="Magebees\PocoBase\Block\Adminhtml\Widget\ImageChooser">
+					<data>
+						<item name="button" xsi:type="array">
+							<item name="open" xsi:type="string">Choose Image...</item>
+						</item>
+					</data>
+				</block>
+			</parameter>
+			<parameter name="wd_bgcolor" xsi:type="block" visible="true" sort_order="7">
+				<label translate="true">Background Color</label>
+				<block class="Magebees\PocoBase\Block\Adminhtml\Widget\Color" />
+			</parameter>
+			<parameter name="wd_show_heading" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="8">
+				<label translate="true">Display Heading</label>
+				<description translate="true">Select Yes for display page heading.</description>
+				<depends>
+					<parameter name="wd_enable" value="1" />
+				</depends>
+			</parameter>
+			
+			<parameter name="wd_newsletter_title" xsi:type="text" visible="true" required="false" sort_order="9">
+				<label translate="true">Heading</label>
+				<description translate="true">Here we can set heading.</description>
+				<depends>
+					<parameter name="wd_show_heading" value="1" />
+				</depends>
+				<value>Enjoy 10% OFF Your First Order</value>
+			</parameter>
+			
+			<parameter name="wd_heading_logo" xsi:type="block" visible="true" sort_order="10">
+				<label translate="true">Upload Heading Logo</label>
+				<depends>
+					<parameter name="wd_show_heading" value="1" />
+				</depends>
+				<block class="Magebees\PocoBase\Block\Adminhtml\Widget\ImageChooser">
+					<data>
+						<item name="button" xsi:type="array">
+							<item name="open" xsi:type="string">Choose Image...</item>
+						</item>
+					</data>
+				</block>
+			</parameter>
+			<parameter name="wd_newsletter_text_placeholder" xsi:type="text" visible="true" required="false" sort_order="11">
+				<label translate="true">News Letter Text Place Holder</label>
+				<description translate="true">Here we can set news letter text  Place holder.</description>
+			</parameter>
+			
+			<parameter name="wd_newsletter_text" xsi:type="text" visible="true" required="false" sort_order="12">
+				<label translate="true">News Letter Text</label>
+				<description translate="true">Here we can set news letter text.</description>
+				<depends>
+					<parameter name="wd_show_heading" value="1" />
+				</depends>
+			</parameter>
+			<parameter name="wd_newsletter_button_text" xsi:type="text" visible="true" required="false" sort_order="13">
+				<label translate="true">News Letter Button Text</label>
+				<description translate="true">Here we can set news letter Button text.</description>
+			</parameter>
+		</parameters>
+</widget>
+   <widget id="magebees_blog_latestpost" class="Magebees\Blog\Block\Widget\LatestPosts" >
+        <parameters>
+		    <parameter name="template" xsi:type="select" required="true" visible="true" sort_order="-1">
+                <label translate="true">Template</label>
+                <options>
+                    <option name="style-1" value="Magebees_Blog::widget/style-1.phtml" selected="true">
+                        <label translate="true">Style 1 Template</label>
+                    </option>
+					<option name="style-2" value="Magebees_Blog::widget/style-2.phtml">
+                        <label translate="true">Style 2 Template</label>
+                    </option>
+					<option name="style-3" value="Magebees_Blog::widget/style-3.phtml">
+                        <label translate="true">Style 3 Template</label>
+                    </option>
+					<option name="style-4" value="Magebees_Blog::widget/style-4.phtml">
+                        <label translate="true">Style 4 Template</label>
+                    </option>
+					<option name="style-5" value="Magebees_Blog::widget/style-5.phtml">
+                        <label translate="true">Style 5 Template</label>
+                    </option>
+					<option name="style-6" value="Magebees_Blog::widget/style-6.phtml">
+                        <label translate="true">Style 6 Template</label>
+                    </option>
+					<option name="style-7" value="Magebees_Blog::widget/style-7.phtml">
+                        <label translate="true">Style 7 Template</label>
+                    </option>
+					<option name="style-8" value="Magebees_Blog::widget/style-8.phtml">
+                        <label translate="true">Style 8 Template</label>
+                    </option>
+                </options>
+            </parameter>
+			<parameter name="wd_load_ajax" xsi:type="select" visible="true"                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="-1">                <label translate="true">Load Blog using Ajax</label>                <description translate="true">Select Yes Load Blog using Ajax.</description> 
+			</parameter>
+			<parameter name="wd_custom_link" xsi:type="select" visible="true" required="true"
+			source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="4">
+				<label translate="true">Show Custom Link</label>
+				<description translate="true">Select Yes for show custom link.</description>
+            </parameter>
+			<parameter name="wd_custom_title" xsi:type="text" visible="true" required="false" sort_order="4">
+                <label translate="true">Custom Title</label>
+                <description translate="true"><![CDATA[Set Custom Title ]]></description>
+				<depends>
+					<parameter name="wd_custom_link" value="1" />
+				</depends>
+            </parameter>
+		<parameter name="wd_custom_link_title" xsi:type="text" visible="true" required="false" sort_order="4">
+                <label translate="true">Custom Link Title</label>
+                <description translate="true"><![CDATA[Set Custom Link Title ]]></description>
+				<depends>
+					<parameter name="wd_custom_link" value="1" />
+				</depends>
+            </parameter>
+			<parameter name="wd_custom_link_url" xsi:type="text" visible="true" required="false" sort_order="4">
+                <label translate="true">Custom Link Url</label>
+                <description translate="true"><![CDATA[Set Custom Link Url ]]></description>
+				<depends>
+					<parameter name="wd_custom_link" value="1" />
+				</depends>
+            </parameter>
+		
+			<parameter name="wd_slider" xsi:type="select" visible="true" sort_order="16">
+				<label translate="true">Enable Slider</label>
+				<options>
+					<option name="yes" value="1"><label translate="true">Yes</label></option>
+					<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+			</parameter>
+			<parameter name="wd_items_per_slide" xsi:type="select" visible="true" sort_order="17">
+				<label translate="true">Number of items per slide.</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                    
+				</depends>
+				<options>
+				<option name="2" value="2"><label translate="true">2</label></option>
+				<option name="3" value="3"><label translate="true">3</label></option>
+				<option name="4" value="4"><label translate="true">4</label></option>
+				<option name="5" value="5"><label translate="true">5</label></option>
+				</options>
+			</parameter>
+			<parameter name="wd_autoscroll" xsi:type="select" visible="true" sort_order="18">
+				<label translate="true">Autoplay</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                    
+				</depends>
+				<options>
+					<option name="yes" value="1"><label translate="true">Yes</label></option>
+					<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+			</parameter>
+			<parameter name="wd_auto_play_delaytime" xsi:type="text" visible="true" required="true" sort_order="19">
+				<label translate="true">Delay Time</label>
+				<description translate="true">Delay between transitions (in ms)</description>
+				<depends>
+					<parameter name="wd_slider" value="1" />
+					<parameter name="wd_autoscroll" value="1" />                    
+				</depends>
+				<value>3000</value>
+			</parameter>
+			<parameter name="wd_autoplayoff" xsi:type="select" visible="true" sort_order="20">
+				<label translate="true">Disable On Mouse Enter</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />
+					<parameter name="wd_autoscroll" value="1" />                    
+				</depends>
+				<options>
+					<option name="yes" value="1"><label translate="true">Yes</label></option>
+					<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+			</parameter>
+			<parameter name="wd_slide_auto_height" xsi:type="select" visible="true" sort_order="21">
+				<label translate="true">Slide Auto Height </label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                   
+				</depends>
+				<options>
+					<option name="yes" value="1"><label translate="true">Yes</label></option>
+					<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+			</parameter>
+			<parameter name="wd_navarrow" xsi:type="select" visible="true" sort_order="22">
+				<label translate="true">Show navigation arrow</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                   
+				</depends>
+				<options>
+					<option name="yes" value="1"><label translate="true">Yes</label></option>
+					<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+			</parameter>
+			<parameter name="wd_pagination" xsi:type="select" visible="true" sort_order="23">
+				<label translate="true">Show Pagination</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                   
+				</depends>
+				<options>
+					<option name="yes" value="1"><label translate="true">Yes</label></option>
+					<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+			</parameter>
+			<parameter name="wd_pagination_type" xsi:type="select" visible="true"
+						   source_model="Magebees\PocoThemes\Model\Config\Source\SliderPaginationStyle" sort_order="24">
+				<label translate="true">Pagination Type</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />    
+					<parameter name="wd_pagination" value="1" />                   
+				</depends>
+			</parameter>
+			<parameter name="wd_infinite_loop" xsi:type="select" visible="true" sort_order="25">
+				<label translate="true">Infinite loop</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                   
+				</depends>
+				<options>
+					<option name="yes" value="1"><label translate="true">Yes</label></option>
+					<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+			</parameter>
+			<parameter name="wd_scrollbar" xsi:type="select" visible="true" sort_order="26">
+				<label translate="true">Show Scrollbar</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                   
+				</depends>
+				<options>
+					<option name="yes" value="1"><label translate="true">Yes</label></option>
+					<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+			</parameter>
+			
+			<parameter name="wd_grap_cursor" xsi:type="select" visible="true" sort_order="27">
+				<label translate="true">Slide Grab cursor</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                   
+				</depends>
+				<options>
+					<option name="yes" value="1"><label translate="true">Yes</label></option>
+					<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+			</parameter>
+			
+			<parameter name="wd_items_per_row" xsi:type="select" visible="true" sort_order="28">
+				<label translate="true">Number of blogs per row in Main Block</label>
+				<description translate="true">Show number of blogs per row in main block.</description>					
+				<depends>                  
+					<parameter name="wd_slider" value="0" />   
+				</depends>  
+				<options>
+				<option name="2" value="2"><label translate="true">2</label></option>
+				<option name="3" value="3"><label translate="true">3</label></option>
+				<option name="4" value="4"><label translate="true">4</label></option>
+				<option name="5" value="5"><label translate="true">5</label></option>
+				</options>				
+			</parameter>		
+        </parameters>
+    </widget>
+   <widget id="customer_testimonials" class="Magebees\Testimonial\Block\Widget\Testimonialwidget">
+        <parameters>
+			<parameter name="wd_short_desc" xsi:type="text" visible="true" required="false">
+                <label translate="true">Short Description</label>
+                <description translate="true"></description>
+			</parameter>
+            <parameter name="wd_viewall" xsi:type="select" visible="true"
+                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="100">
+                <label translate="true">Display View All Button</label>
+                <description translate="true"><![CDATA[]]></description>
+            </parameter>
+            <parameter name="wd_viewall_text" xsi:type="text" visible="true" required="true" sort_order="101">
+                <label translate="true">View All Button Text</label>
+                <description translate="true"><![CDATA[]]></description>
+                <depends>
+                    <parameter name="wd_viewall" value="1" />                    
+                </depends>
+            </parameter>
+			<parameter name="template" xsi:type="select" required="true" visible="true" sort_order="-1">
+                <label translate="true">Template</label>
+				<options>
+                   <option name="pocothemes_style-1" value="Magebees_Testimonial::style-1.phtml">
+                        <label translate="true">PocoThemes Style 1</label>
+                    </option>
+					<option name="pocothemes_style-2" value="Magebees_Testimonial::style-2.phtml">
+                        <label translate="true">PocoThemes Style 2</label>
+                    </option>
+					<option name="pocothemes_style-3" value="Magebees_Testimonial::style-3.phtml">
+                        <label translate="true">PocoThemes Style 3</label>
+                    </option>
+					<option name="pocothemes_style-4" value="Magebees_Testimonial::style-4.phtml">
+                        <label translate="true">PocoThemes Style 4</label>
+                    </option>
+					<option name="pocothemes_style-5" value="Magebees_Testimonial::style-5.phtml">
+                        <label translate="true">PocoThemes Style 5</label>
+                    </option>
+				</options>
+            </parameter>
+        </parameters>
+    </widget>
+	<widget id="magebees_today_deal_products" class="Magebees\TodayDealProducts\Block\Widget\DealProductsWidget" >
+        <parameters>
+            <parameter name="template" xsi:type="select" required="true" visible="true" sort_order="-1">
+                <label translate="true">Template</label>
+				<description translate="true"><![CDATA[For PocoThemes Style 4 Products will not disaplayed.]]></description>
+                <options>
+                    <option name="pocothemes_style1" value="Magebees_TodayDealProducts::style-1.phtml" selected="true">
+                        <label translate="true">PocoThemes Style 1</label>
+                    </option>
+					<option name="pocothemes_style2" value="Magebees_TodayDealProducts::style-2.phtml" selected="true">
+                        <label translate="true">PocoThemes Style 2</label>
+                    </option>
+					<option name="pocothemes_style3" value="Magebees_TodayDealProducts::style-3.phtml" selected="true">
+                        <label translate="true">PocoThemes Style 3</label>
+                    </option>
+					<option name="pocothemes_style4" value="Magebees_TodayDealProducts::style-4.phtml" selected="true">
+                        <label translate="true">PocoThemes Style 4</label>
+                    </option>
+					
+                </options>
+            </parameter> 
+			<parameter name="wd_show_deal_title" xsi:type="select" visible="true"				
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="7">
+				<label translate="true">Display Deal Title</label>
+				<description translate="true">Select Yes for display deal title.</description>
+			</parameter>
+			<parameter name="wd_show_deal_timer" xsi:type="select" visible="true"				
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="8">
+				<label translate="true">Display Deal Timer</label>
+				<description translate="true">Select Yes for display deal timer.</description>
+				
+			</parameter>
+			<parameter name="wd_show_banner" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="9">
+				<label translate="true">Display Banner</label>
+				<description translate="true"><![CDATA[This Option Applied For PocoThemes Style 1 & Style 4 Only. Select Yes for display deal banner.]]></description>
+			</parameter>
+			<parameter name="wd_image_section" xsi:type="block" visible="true" sort_order="10">
+				<label translate="true">Upload Deal Banner</label>
+				<description translate="true"><![CDATA[This Option Applied For PocoThemes Style 1 & Style 4 Only. Select Yes for display Upload deal banner.]]></description>
+				<depends>
+					<parameter name="wd_show_banner" value="1" />
+					
+				</depends>
+				<block class="Magebees\PocoBase\Block\Adminhtml\Widget\ImageChooser">
+					<data>
+						<item name="button" xsi:type="array">
+							<item name="open" xsi:type="string">Choose Image...</item>
+						</item>
+					</data>
+				</block>
+			</parameter>
+						<parameter name="wd_slider" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="11">
+				<label translate="true">Enable Slider</label>
+				<description translate="true"><![CDATA[This Option Applied For PocoThemes Style 2 Only.]]></description>
+				
+			</parameter>
+			<parameter name="wd_items_per_slide" xsi:type="select" visible="true" sort_order="12">
+				<label translate="true">Number of items per slide.</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                    
+				</depends>
+				<options>
+				<option name="2" value="2"><label translate="true">2</label></option>
+				<option name="3" value="3"><label translate="true">3</label></option>
+				<option name="4" value="4"><label translate="true">4</label></option>
+				<option name="5" value="5"><label translate="true">5</label></option>
+				</options>
+			</parameter>
+			<parameter name="wd_autoscroll" xsi:type="select" visible="true" sort_order="13">
+				<label translate="true">Autoplay</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                    
+				</depends>
+				<options>
+				<option name="yes" value="1"><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+
+				
+			</parameter>
+			<parameter name="wd_auto_play_delaytime" xsi:type="text" visible="true" required="true" sort_order="14">
+				<label translate="true">Delay Time</label>
+				<description translate="true">Delay between transitions (in ms)</description>
+				<depends>
+					<parameter name="wd_slider" value="1" />
+					<parameter name="wd_autoscroll" value="1" />                    
+				</depends>
+				<value>3000</value>
+			</parameter>
+			<parameter name="wd_autoplayoff" xsi:type="select" visible="true" 
+						    sort_order="14">
+				<label translate="true">Disable On Mouse Enter</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />
+					<parameter name="wd_autoscroll" value="1" />                    
+				</depends>
+				<options>
+				<option name="yes" value="1"><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+				
+			</parameter>
+			<parameter name="wd_slide_auto_height" xsi:type="select" visible="true"
+						   sort_order="15">
+				<label translate="true">Slide Auto Height </label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                   
+				</depends>
+				<options>
+				<option name="yes" value="1"><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true" ><label translate="true">No</label></option>
+				</options>
+				
+			</parameter>
+			<parameter name="wd_navarrow" xsi:type="select" visible="true"
+						   source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="16">
+				<label translate="true">Show navigation arrow</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                   
+				</depends>
+			</parameter>
+			<parameter name="wd_pagination" xsi:type="select" visible="true" sort_order="17">
+				<label translate="true">Show Pagination</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                   
+				</depends>
+				<options>
+				<option name="yes" value="1" ><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true"><label translate="true">No</label></option>
+				</options>
+				
+			</parameter>
+			<parameter name="wd_pagination_type" xsi:type="select" visible="true"
+						   source_model="Magebees\PocoThemes\Model\Config\Source\SliderPaginationStyle" sort_order="18">
+				<label translate="true">Pagination Type</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />    
+					<parameter name="wd_pagination" value="1" />                   
+				</depends>
+			</parameter>
+			<parameter name="wd_infinite_loop" xsi:type="select" visible="true" sort_order="19">
+				<label translate="true">Infinite loop</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                   
+				</depends>
+				<options>
+				<option name="yes" value="1" ><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true"><label translate="true">No</label></option>
+				</options>
+				
+			</parameter>
+			<parameter name="wd_grap_cursor" xsi:type="select" visible="true" sort_order="20">
+				<label translate="true">Slide Grab cursor</label>
+				<depends>
+					<parameter name="wd_slider" value="1" />                   
+				</depends>
+				<options>
+				<option name="yes" value="1" ><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true"><label translate="true">No</label></option>
+				</options>
+				
+			</parameter>
+			<parameter name="wd_items_per_row" xsi:type="select" visible="true"
+					   sort_order="21">
+				<label translate="true">Number of items per row in Main Block</label>
+				<description translate="true"><![CDATA[This Option Is Not Applied For PocoTheme Style 4 Only. <br/> Show number of items per row in main block.]]></description>								<depends><parameter name="wd_slider" value="0" /> </depends>   
+				<options>
+				<option name="2" value="2"><label translate="true">2</label></option>
+				<option name="3" value="3"><label translate="true">3</label></option>
+				<option name="4" value="4"><label translate="true">4</label></option>
+				<option name="5" value="5"><label translate="true">5</label></option>
+				</options>
+			</parameter>	
+			<parameter name="wd_show_viewall" xsi:type="select" visible="true"
+						    sort_order="30">
+				<label translate="true">Show View All</label>
+				<description translate="true">Select Yes For Showing View All Button.</description>
+				<options>
+				<option name="yes" value="1" ><label translate="true">Yes</label></option>
+				<option name="no" value="0" selected="true"><label translate="true">No</label></option>
+				</options>
+			</parameter>
+			<parameter name="wd_viewall_txt" xsi:type="text" visible="true" required="true" sort_order="31">
+                <label translate="true">View All Button Text</label>
+                <description translate="true"></description>
+				<depends>
+					<parameter name="wd_show_viewall" value="1" />
+				</depends>
+			</parameter>
+			<parameter name="wd_viewall_url" xsi:type="text" visible="true" required="true" sort_order="32">
+                <label translate="true">View All Button Url</label>
+                <description translate="true"></description>
+				<depends>
+					<parameter name="wd_show_viewall" value="1" />
+				</depends>
+			</parameter>
+		</parameters>
+	</widget>
+	 <widget id="fbfanboxwidget" class="Magebees\PocoBase\Block\Widget\Fbfanbox">
+        <label translate="true">Magebees_PocoBase::Fbfanbox Widget</label>
+        <description>Fbfanbox Widget</description>
+        <parameters>
+            <parameter name="template" xsi:type="select" required="true" visible="true" sort_order="50">
+                <label translate="true">Template</label>
+                <options>
+                    <option name="pocothemes_style1" value="Magebees_PocoThemes::widget/fbfanbox.phtml" selected="true">
+                        <label translate="true">Poco PocoThemes Template</label>
+                    </option>
+                </options>
+            </parameter>
+        </parameters>
+    </widget>
+    <widget id="contentwidget" class="Magebees\PocoBase\Block\Widget\Content">
+        <label translate="true">Magebees_PocoBase::Content Widget</label>
+        <description>Content Widget</description>
+        <parameters>
+            <parameter name="wd_content_position" xsi:type="select" visible="true" sort_order="5">
+                <label translate="true">Content Section Position</label>
+                <description translate="true">Select Content Position.</description>
+                <options>
+                    <option name="bottom" value="bottom">
+                        <label translate="true">Bottom</label>
+                    </option>
+                </options>
+            </parameter>
+			<parameter name="wd_load_ajax" xsi:type="select" visible="true"                           source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="-1">                <label translate="true">Load Content using Ajax</label>                <description translate="true">Select Yes Load Content using Ajax.</description> 
+			</parameter>
+            <parameter name="template" xsi:type="select" required="true" visible="true" sort_order="-1">
+                <label translate="true">Template</label>
+                <options>
+                    <option name="pocothemes_style1" value="Magebees_PocoThemes::widget/content-style1.phtml" selected="true">
+                        <label translate="true">PocoThemes Style 1 Template</label>
+                    </option>
+                </options>
+            </parameter>
+        </parameters>
+    </widget>
+    
+    <widget id="layerednavigation_brand_widget" class="Magebees\Layerednavigation\Block\Widget\Brandwidget">
+        <parameters>
+            <parameter name="template" xsi:type="select" required="true" visible="true" sort_order="-1">
+                <label translate="true">Template</label>
+                <options>
+                    <option name="pocothemes_style1" value="widget/brands/style-1.phtml" selected="true">
+                        <label translate="true">PocoThemes Style 1 Template</label>
+                    </option>
+					<option name="pocothemes_style2" value="widget/brands/style-2.phtml">
+                        <label translate="true">PocoThemes Style 2 Template</label>
+                    </option>
+					<option name="pocothemes_style3" value="widget/brands/style-3.phtml">
+                        <label translate="true">PocoThemes Style 3 Template</label>
+                    </option>
+                </options>
+            </parameter>
+        </parameters>
+    </widget>
+    <widget id="parallax_image" class="Magebees\ParallaxImage\Block\Widget\ParallaxImageWidget">
+        <label translate="true">Magebees::Parallax Image Widget</label>
+        <description>Parallax Image Widget</description>
+        <parameters>
+            <parameter name="wd_position" xsi:type="select" visible="true" sort_order="5">
+                <label translate="true">Image Position</label>
+                <description translate="true"><![CDATA[]]></description>
+                <options>
+                    <option name="left" value="left" selected="true">
+                        <label translate="true">Left</label>
+                    </option>
+                    <option name="right" value="right">
+                        <label translate="true">Right</label>
+                    </option>
+                    <option name="center" value="center">
+                        <label translate="true">Center</label>
+                    </option>
+                </options>
+            </parameter>
+        </parameters>
+    </widget>
+
+</widgets>

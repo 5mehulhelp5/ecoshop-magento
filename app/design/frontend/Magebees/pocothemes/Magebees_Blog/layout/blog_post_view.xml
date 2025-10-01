@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd" layout="2columns-left">
+    <body>
+	<move element="page.main.title" destination="image.wrapper" before="-"  />
+	<move element="breadcrumbs" destination="page.main.title" after="page.main.title" />
+	<move element="page.banner" destination="page.main.title" before="-" />
+	<referenceContainer name="page-title-wrap">
+		<container name="image.wrapper" htmlTag="div" htmlClass="container" />
+	</referenceContainer>
+	<move element="page.banner" destination="page-title-wrap" before="-"  />
+	<!--	<move element="page.main.title" destination="page-title-wrap" before="-" />-->
+		<referenceBlock name="sidebar.blog.tags.pocotheme" remove="true"/>
+		<referenceBlock name="poco.custom.sidebar.block" remove="true"/>
+		<referenceBlock name="post_add_this" remove="true"/>
+		<referenceBlock name="sidebar.productlisting" remove="true"/>
+		
+		
+		<referenceContainer name="sidebar.main">
+             <referenceBlock name="catalog.compare.sidebar" remove="true"/>
+		<referenceBlock name="wishlist_sidebar" remove="true" />	
+			<block class="Magebees\Blog\Block\Sidebar\Search" name="sidebar.blog.search" template="Magebees_Blog::sidebar/search.phtml"   ></block>
+			<block class="Magebees\Blog\Block\Sidebar\Category" name="sidebar.blog.category" template="Magebees_Blog::sidebar/category.phtml" >
+            </block>
+			<block class="Magebees\Blog\Block\Sidebar\Recentposts" name="sidebar.blog.recentposts" template="Magebees_Blog::sidebar/recentposts.phtml"  ></block>
+			<block class="Magebees\Blog\Block\Sidebar\Recentcomments" name="sidebar.blog.recentcomments" template="Magebees_Blog::sidebar/recentcomments.phtml"  ></block>
+			<block class="Magebees\Blog\Block\Sidebar\Archive" name="sidebar.blog.archive" template="Magebees_Blog::sidebar/archive.phtml"></block>
+			<block class="Magebees\Blog\Block\Sidebar\TagList" name="sidebar.blog.tags" template="Magebees_Blog::sidebar/tags.phtml"   ></block>
+			  <block class="Magento\Framework\View\Element\Template" name="sidebar.blog.newsletter" template="Magebees_Blog::sidebar/newsletter.phtml" >
+			
+				</block>
+				<block class="Magento\Framework\View\Element\Template" name="imagegallery" ifconfig="imagegallery/sidebar/enabled"
+                   template="Magebees_Imagegallery::sidebar-gallery.phtml" after="-" />
+  
+        </referenceContainer>
+		
+    </body>
+</page>

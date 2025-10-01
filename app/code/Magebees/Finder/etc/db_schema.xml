@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="magebees_finder" resource="default" engine="innodb" comment="Magebees YMM Finders Details">
+    <column xsi:type="int" name="finder_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Finder ID"/>
+    <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Title"/>
+    <column xsi:type="smallint" name="number_of_dropdowns" padding="6" unsigned="false" nullable="false" identity="false" comment="Number_of_dropdowns"/>
+    <column xsi:type="varchar" name="dropdown_style" nullable="false" length="100" comment="Dropdown_style"/>
+    <column xsi:type="smallint" name="no_of_columns" padding="6" unsigned="false" nullable="false" identity="false" comment="No_of_columns"/>
+    <column xsi:type="varchar" name="category_ids" nullable="false" length="255" comment="Category_ids"/>
+    <column xsi:type="boolean" name="status" nullable="true" comment="Status"/>
+    <column xsi:type="datetime" name="created_time" on_update="false" nullable="true" comment="Created_time"/>
+    <column xsi:type="datetime" name="update_time" on_update="false" nullable="true" comment="Update_time"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="finder_id"/>
+    </constraint>
+  </table>
+  
+  <table name="magebees_import_history" resource="default" engine="innodb" comment="Magebees YMM Import History">
+    <column xsi:type="int" name="history_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Finder ID"/>
+    <column xsi:type="varchar" name="filename" nullable="false" length="255" comment="filename"/>
+	<column xsi:type="int" name="finder_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Finder_id"/>
+    <column xsi:type="datetime" name="started_time" on_update="false" nullable="true" comment="Created_time"/>
+    <column xsi:type="datetime" name="finished_time" on_update="false" nullable="true" comment="Finished_time"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="history_id"/>
+    </constraint>
+	<constraint xsi:type="foreign" referenceId="MAGEBEES_IMPORT_HISTORY_FINDER_ID_MAGEBEES_FINDER_FINDER_ID" table="magebees_import_history" column="finder_id" referenceTable="magebees_finder" referenceColumn="finder_id" onDelete="CASCADE"/>
+    <index referenceId="IDX_FINDER_HISTORY_ID_FINDER_ID" indexType="btree">
+      <column name="finder_id"/>
+    </index>
+  </table>
+  
+  <table name="magebees_finder_dropdowns" resource="default" engine="innodb" comment="Finder To Dropdown ids Relations">
+    <column xsi:type="int" name="dropdown_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Dropdown_id"/>
+    <column xsi:type="int" name="finder_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Finder_id"/>
+    <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Name"/>
+    <column xsi:type="varchar" name="sort" nullable="false" length="255" comment="Sort"/>
+	
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="dropdown_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="MAGEBEES_FINDER_DROPDOWNS_FINDER_ID_MAGEBEES_FINDER_FINDER_ID" table="magebees_finder_dropdowns" column="finder_id" referenceTable="magebees_finder" referenceColumn="finder_id" onDelete="CASCADE"/>
+    <index referenceId="IDX_FINDER_DROPDOWN_ID_FINDER_ID" indexType="btree">
+      <column name="finder_id"/>
+    </index>
+  </table>
+  <table name="magebees_finder_universal_products" resource="default" engine="innodb" comment="Finder To Universal Products Relations">
+    <column xsi:type="int" name="universal_product_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Universal_product_id"/>
+    <column xsi:type="int" name="finder_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Finder_id"/>
+    <column xsi:type="varchar" name="sku" nullable="false" length="255" comment="Sku"/>
+    <column xsi:type="int" name="product_id" padding="11" unsigned="false" nullable="false" identity="false" comment="Product_id"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="universal_product_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="FK_71479BAFE241492B517304626B6711A9" table="magebees_finder_universal_products" column="finder_id" referenceTable="magebees_finder" referenceColumn="finder_id" onDelete="CASCADE"/>
+    <index referenceId="IDX_FINDER_UNIVERSAL_PRODUCT_ID_FINDER_ID" indexType="btree">
+      <column name="finder_id"/>
+    </index>
+  </table>
+  <table name="magebees_finder_ymm_value" resource="default" engine="innodb" comment="Dropdown values Relations">
+    <column xsi:type="int" name="ymm_value_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Ymm_value_id"/>
+    <column xsi:type="int" name="dropdown_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Dropdown_id"/>
+    <column xsi:type="int" name="parent_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Parent_id"/>
+    <column xsi:type="varchar" name="value" nullable="false" length="255" comment="Value"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="ymm_value_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="FK_F6027F117DB5633CBCE3F45BCB5337CB" table="magebees_finder_ymm_value" column="dropdown_id" referenceTable="magebees_finder_dropdowns" referenceColumn="dropdown_id" onDelete="CASCADE"/>
+    <index referenceId="IDX_FINDER_YMM_VALUE_DROPDOWN_ID_DROPDOWN_ID" indexType="btree">
+      <column name="dropdown_id"/>
+    </index>
+  </table>
+  <table name="magebees_finder_map_value" resource="default" engine="innodb" comment="Dropdown values to products relations">
+    <column xsi:type="int" name="map_value_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Map_value_id"/>
+    <column xsi:type="int" name="ymm_value_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Ymm_value_id"/>
+    <column xsi:type="mediumtext" name="product_id" nullable="false" comment="Product_id"/>
+    <column xsi:type="mediumtext" name="sku" nullable="false" comment="Sku"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="map_value_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="FK_D23F9FA33BC9D5C8C77E49E505E380BB" table="magebees_finder_map_value" column="ymm_value_id" referenceTable="magebees_finder_ymm_value" referenceColumn="ymm_value_id" onDelete="CASCADE"/>
+    <index referenceId="IDX_FINDER_MAP_VALUE_YMM_VALUE_ID_YMM_VALUE_ID" indexType="btree">
+      <column name="ymm_value_id"/>
+    </index>
+  </table>
+</schema>

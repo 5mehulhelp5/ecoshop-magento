@@ -1,0 +1,43 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+namespace Magebees\PocoBase\Model\Config\Backend\Image;
+
+class Background extends \Magento\Config\Model\Config\Backend\Image
+{
+    const UPLOAD_DIR = 'poco/background';
+
+    /**
+     * Return path to directory for upload file
+     *
+     * @return string
+     * @throw \Magento\Framework\Exception\LocalizedException
+     */
+    protected function _getUploadDir()
+    {
+        return $this->_mediaDirectory->getAbsolutePath($this->_appendScopeInfo(self::UPLOAD_DIR));
+    }
+
+    /**
+     * Makes a decision about whether to add info about the scope.
+     *
+     * @return boolean
+     */
+    protected function _addWhetherScopeInfo()
+    {
+        return true;
+    }
+
+    /**
+     * Getter for allowed extensions of uploaded files.
+     *
+     * @return string[]
+     */
+    protected function _getAllowedExtensions()
+    {
+        return ['jpg', 'jpeg', 'gif', 'png'];
+    }
+}

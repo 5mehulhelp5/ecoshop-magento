@@ -1,0 +1,302 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magebees" translate="label" sortOrder="100">
+            <label>Magebees</label>
+        </tab>
+        <section id="emaileditor" translate="label" type="text" sortOrder="90" showInDefault="1" 
+				 showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Email Template Editor</label>
+            <tab>magebees</tab>
+            <resource>Magebees_EmailEditor::emaileditor_config</resource>
+            <group id="setting" translate="label" type="text" sortOrder="1" showInDefault="1" 
+				   showInWebsite="0" showInStore="0">
+				<label>Settings</label>
+				<field id="enable" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Enabled</label> 
+					<comment>Select Yes for Enable Email Template Editor.</comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>	
+				 <field id="show_img" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Show Product Image in mail Template </label> 
+					<comment>Select Yes for Display product image in sales order/invoice/creditmemo emails template.</comment> 
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
+				 </field>					
+			</group>
+			 <group id="email_header" translate="label" type="text" sortOrder="2" showInDefault="1" 
+				   showInWebsite="0" showInStore="0">
+				<label>Email Header Settings</label>
+					<field id="header_bgcolor" translate="label" type="text" sortOrder="2" showInWebsite="0" showInStore="0" showInDefault="1">
+					<label>Email Header Background Color</label>
+					<frontend_model>Magebees\EmailEditor\Block\Adminhtml\Color</frontend_model> 	    
+				</field>									
+			</group>	
+			<group id="email_footer" translate="label" type="text" sortOrder="3" showInDefault="1" 
+				   showInWebsite="0" showInStore="0">
+				<label>Email Footer Settings</label>
+					<field id="footer_bgcolor" translate="label" type="text" sortOrder="2" showInWebsite="0" showInStore="0" showInDefault="1">
+					<label>Email Footer Background Color</label>
+					<frontend_model>Magebees\EmailEditor\Block\Adminhtml\Color</frontend_model> 	    
+				</field>									
+			</group>	
+			 <group id="light_logo" translate="label" type="text" sortOrder="4" showInDefault="1" 
+				   showInWebsite="0" showInStore="0">
+				<label>Email Header Logo Settings</label>
+					<field id="image" translate="label comment" type="image" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">					
+                    <label>Upload Email Header Logo</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">emaileditor/lightlogo</upload_dir>
+                    <base_url type="media" scope_info="1">emaileditor/lightlogo</base_url>
+					<comment>The image must be in .jpg, .png, or. gif format.</comment> 	
+                </field>
+                 <field id="link" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Email Header Logo Link</label> 	 
+				 </field>
+				 <field id="alt_text" translate="label comment" type="text" sortOrder="6" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Email Header Logo Alt</label> 	 
+				 </field>	
+				 <field id="width" translate="label comment" type="text" sortOrder="8" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Email Header Logo Width</label> 	 
+					<comment>Example: 200px</comment>
+				 </field>	
+				 <field id="height" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Email Header Logo Height</label> 	
+					<comment>Example: 50px</comment>
+				 </field>								
+			</group>
+			<group id="dark_logo" translate="label" type="text" sortOrder="5" showInDefault="1" 
+				   showInWebsite="0" showInStore="0">
+				<label>Additional Logo Settings</label>
+					<field id="image" translate="label comment" type="image" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">					
+                    <label>Upload Additional Logo</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+					<upload_dir config="system/filesystem/media" scope_info="1">emaileditor/darklogo</upload_dir>
+                    <base_url type="media" scope_info="1">emaileditor/darklogo</base_url>
+					<comment>The image must be in .jpg, .png, or. gif format.</comment> 	
+                </field>
+                 <field id="link" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Additional Logo Link</label> 	 
+				 </field>
+				 <field id="alt_text" translate="label comment" type="text" sortOrder="6" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Additional Logo Alt</label> 	 
+				 </field>	
+				 <field id="width" translate="label comment" type="text" sortOrder="8" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Additional Logo Width</label> 	
+					<comment>Example: 200px</comment>					
+				 </field>	
+				 <field id="height" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Additional Logo Height</label> 	
+					<comment>Example: 50px</comment>					
+				 </field>								
+			</group>	
+			<group id="top_menu" translate="label" type="text" sortOrder="6" showInDefault="1" 
+				   showInWebsite="0" showInStore="0">
+				<label>Email Top Menu Settings</label>
+					<field id="text_color" translate="label" type="text" sortOrder="1" showInWebsite="0" showInStore="0" showInDefault="1">
+					<label>Email Top Menu Text Color</label>
+					<frontend_model>Magebees\EmailEditor\Block\Adminhtml\Color</frontend_model> 
+					</field>
+					<field id="bgcolor" translate="label" type="text" sortOrder="3" showInWebsite="0" showInStore="0" showInDefault="1">
+					<label>Email Top Menu Background Color</label>
+					<frontend_model>Magebees\EmailEditor\Block\Adminhtml\Color</frontend_model> 
+					</field>
+					<field id="padding" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Email Top Menu Padding Top/Bottom</label> 
+					<comment>Example: 10px</comment>					
+				 	</field>
+				 	<field id="item_padding" translate="label comment" type="text" sortOrder="7" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Email Top Menu Items Padding</label>
+					<comment>Example: 10px</comment>					
+				 	</field>	
+			</group>
+			<group id="body_content" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="0" showInStore="0">
+				<label>Email Body Options Settings</label>
+					<field id="wrapper_bgcolor" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Email Wrapper Background Color</label>
+					<frontend_model>Magebees\EmailEditor\Block\Adminhtml\Color</frontend_model> 
+					</field>
+					<field id="content_bgcolor" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Email Content Body Background Color</label>
+					<frontend_model>Magebees\EmailEditor\Block\Adminhtml\Color</frontend_model> 
+					</field>
+					<field id="text_color" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Email Body Text Color</label>
+					<frontend_model>Magebees\EmailEditor\Block\Adminhtml\Color</frontend_model> 
+					</field>
+					<field id="link_color" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Email Body Link Color</label>
+					<frontend_model>Magebees\EmailEditor\Block\Adminhtml\Color</frontend_model> 
+					</field>
+					<field id="total_section_color" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Email Body Order Total Section Background Color</label>
+					<frontend_model>Magebees\EmailEditor\Block\Adminhtml\Color</frontend_model> 
+					</field>
+					
+			</group>
+			<group id="h1" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="0" showInStore="0">
+				<label>H1 Tag Settings</label>
+					<field id="text_color" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Text Color</label>
+					<frontend_model>Magebees\EmailEditor\Block\Adminhtml\Color</frontend_model> 	    
+				</field>					
+				<field id="custom_font" translate="label comment" type="select" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Set Font Family</label> 
+					<source_model>Magebees\EmailEditor\Model\Config\CustomFont</source_model>	
+				</field>		
+				 <field id="font_weight" translate="label comment" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Font Weight</label> 
+					<comment>Set Font Weight. Example: 400</comment> 
+				 <validate>validate-number</validate>
+				 </field>
+				 <field id="font_size" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Font Size</label> 
+					<comment>Set Font Size. Example:18px</comment> 				
+				 </field>	
+				  <field id="font_style" translate="label comment" type="select" sortOrder="7" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Font Style</label> 
+					<comment>Set Font Style.</comment> 
+					<source_model>Magebees\EmailEditor\Model\Config\FontStyle</source_model> 
+				 </field>	
+				  <field id="line_height" translate="label comment" type="text" sortOrder="9" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Line Height</label> 
+					<comment>Set Line Height. Example: 1.5</comment>				
+				 </field>	
+				  <field id="letter_space" translate="label comment" type="text" sortOrder="11" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Letter Space</label> 
+					<comment>Set Letter Space. Example: 0.3px</comment> 			
+				 </field>							
+			</group>
+			<group id="h2" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="0" showInStore="0">
+				<label>H2 Tag Settings</label>
+					<field id="text_color" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Text Color</label>
+					<frontend_model>Magebees\EmailEditor\Block\Adminhtml\Color</frontend_model> 
+				</field>				
+				<field id="custom_font" translate="label comment" type="select" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Set Font Family</label> 
+					<source_model>Magebees\EmailEditor\Model\Config\CustomFont</source_model>	
+				</field>		
+				 <field id="font_weight" translate="label comment" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Font Weight</label> 
+					<comment>Set Font Weight. Example: 400</comment> 
+				 <validate>validate-number</validate>
+				 </field>
+				 <field id="font_size" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Font Size</label> 
+					<comment>Set Font Size. Example:18px</comment> 	
+				 </field>	
+				  <field id="font_style" translate="label comment" type="select" sortOrder="7" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Font Style</label> 
+					<comment>Set Font Style.</comment> 
+					<source_model>Magebees\EmailEditor\Model\Config\FontStyle</source_model> 
+				 </field>	
+				  <field id="line_height" translate="label comment" type="text" sortOrder="9" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Line Height</label> 
+					<comment>Set Line Height. Example: 1.5</comment>		
+				 </field>	
+				  <field id="letter_space" translate="label comment" type="text" sortOrder="11" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Letter Space</label> 
+					<comment>Set Letter Space. Example: 0.3px</comment> 	
+				 </field>							
+			</group>
+			<group id="h3" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+				<label>H3 Tag Settings</label>
+					<field id="text_color" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Text Color</label>
+					<frontend_model>Magebees\EmailEditor\Block\Adminhtml\Color</frontend_model> 	    
+				</field>					
+				<field id="custom_font" translate="label comment" type="select" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Set Font Family</label> 
+					<source_model>Magebees\EmailEditor\Model\Config\CustomFont</source_model>	
+				</field>		
+				 <field id="font_weight" translate="label comment" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Font Weight</label> 
+					<comment>Set Font Weight. Example: 400</comment> 
+				 <validate>validate-number</validate>
+				 </field>
+				 <field id="font_size" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Font Size</label> 
+					<comment>Set Font Size. Example:18px</comment> 				
+				 </field>	
+				  <field id="font_style" translate="label comment" type="select" sortOrder="7" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Font Style</label> 
+					<comment>Set Font Style.</comment> 
+					<source_model>Magebees\EmailEditor\Model\Config\FontStyle</source_model> 
+				 </field>	
+				  <field id="line_height" translate="label comment" type="text" sortOrder="9" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Line Height</label> 
+					<comment>Set Line Height. Example: 1.5</comment>		
+				 </field>	
+				  <field id="letter_space" translate="label comment" type="text" sortOrder="11" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Letter Space</label> 
+					<comment>Set Letter Space. Example: 0.3px</comment> 			
+				 </field>							
+			</group>
+			<group id="paragraph" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+				<label>Paragraph Settings</label>
+					<field id="text_color" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Text Color</label>
+					<frontend_model>Magebees\EmailEditor\Block\Adminhtml\Color</frontend_model> 	    
+				</field>					
+				<field id="custom_font" translate="label comment" type="select" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Set Font Family</label> 
+					<source_model>Magebees\EmailEditor\Model\Config\CustomFont</source_model>	
+				</field>		
+				 <field id="font_weight" translate="label comment" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Font Weight</label> 
+					<comment>Set Font Weight. Example: 400</comment> 
+				 <validate>validate-number</validate>
+				 </field>
+				 <field id="font_size" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Font Size</label> 
+					<comment>Set Font Size. Example:18px</comment> 			
+				 </field>	
+				  <field id="font_style" translate="label comment" type="select" sortOrder="7" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Font Style</label> 
+					<comment>Set Font Style.</comment> 
+					<source_model>Magebees\EmailEditor\Model\Config\FontStyle</source_model> 
+				 </field>	
+				  <field id="line_height" translate="label comment" type="text" sortOrder="9" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Line Height</label> 
+					<comment>Set Line Height. Example: 1.5</comment>			
+				 </field>	
+				  <field id="letter_space" translate="label comment" type="text" sortOrder="11" showInDefault="1" showInWebsite="0" showInStore="0"> 
+					<label>Letter Space</label> 
+					<comment>Set Letter Space. Example: 0.3px</comment> 			
+				 </field>							
+			</group>
+			 <group id="button" translate="label" type="text" sortOrder="14" showInDefault="1" showInWebsite="0" showInStore="0">
+				<label>Buttons Settings</label>
+					<field id="text_color" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Buttons Text Color</label>
+					<frontend_model>Magebees\EmailEditor\Block\Adminhtml\Color</frontend_model> 	    
+				</field>	
+				<field id="bgcolor" translate="label" type="text" sortOrder="16" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Buttons Background Color</label>
+					<frontend_model>Magebees\EmailEditor\Block\Adminhtml\Color</frontend_model>
+				</field>
+				<field id="border_color" translate="label" type="text" sortOrder="18" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Buttons Border Color</label>
+					<frontend_model>Magebees\EmailEditor\Block\Adminhtml\Color</frontend_model> 
+				</field>
+				<field id="hover_color" translate="label" type="text" sortOrder="18" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Buttons Hover Color</label>
+					<frontend_model>Magebees\EmailEditor\Block\Adminhtml\Color</frontend_model> 
+				</field>							
+			</group>	
+			 <group id="comment" translate="label" type="text" sortOrder="16" showInDefault="1" showInWebsite="0" showInStore="0">
+				<label>Comment Section Settings</label>
+					<field id="text_color" translate="label" type="text" sortOrder="2" showInWebsite="0" showInStore="0" showInDefault="1">
+					<label>Comment Section Text Color</label>
+					<frontend_model>Magebees\EmailEditor\Block\Adminhtml\Color</frontend_model> 	    
+				</field>	
+				<field id="bgcolor" translate="label" type="text" sortOrder="16" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Comment Section Background Color</label>
+					<frontend_model>Magebees\EmailEditor\Block\Adminhtml\Color</frontend_model>
+				</field>							
+			</group>
+            
+        </section>
+    </system>
+</config>

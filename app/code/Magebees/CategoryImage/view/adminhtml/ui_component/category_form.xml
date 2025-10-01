@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="content">
+        <field name="thumbnail">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="label" xsi:type="string" translate="true">Thumbnail</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="formElement" xsi:type="string">fileUploader</item>
+                    <item name="elementTmpl" xsi:type="string">ui/form/element/uploader/uploader</item>
+                    <item name="previewTmpl" xsi:type="string">Magento_Catalog/image-preview</item>
+                    <item name="required" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                    <item name="uploaderConfig" xsi:type="array">
+                        <item name="url" xsi:type="url" path="categoryimage/category_thumbnail/upload"/>
+                    </item>
+                </item>
+            </argument>
+        </field>
+		<field name="circle_title">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="required" xsi:type="boolean">false</item>
+                <item name="validation" xsi:type="array">
+                    <item name="required-entry" xsi:type="boolean">false</item>
+                </item>
+                <item name="sortOrder" xsi:type="number">42</item>
+                <item name="dataType" xsi:type="string">string</item>
+                <item name="formElement" xsi:type="string">textarea</item>
+                <item name="label" translate="true" xsi:type="string">Circle Title</item>
+            </item>
+        </argument>
+		</field>
+		<field name="circle_title" sortOrder="42" formElement="input">
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Circle Title</label>
+            </settings>
+    </field>
+	<field name="circle_discount" sortOrder="43" formElement="input">
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Category Circle Discount</label>
+            </settings>
+    </field>
+	<field name="discount_code_label" sortOrder="44" formElement="input">
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Discount Code Label</label>
+            </settings>
+    </field>
+	<field name="discount_code" sortOrder="45" formElement="input">
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Discount Code</label>
+            </settings>
+    </field>
+	<field name="category_label_text" sortOrder="46" formElement="input">
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Category Label Text</label>
+            </settings>
+    </field>
+	    <field name="show_product_counter" sortOrder="47">
+
+            <argument name="data" xsi:type="array">
+
+                <item name="config" xsi:type="array">
+
+                    <item name="dataType" xsi:type="string">boolean</item>
+
+                    <item name="formElement" xsi:type="string">checkbox</item>
+
+                    <item name="label" xsi:type="string" translate="true">Show Product Counter</item>
+
+                    <item name="prefer" xsi:type="string">toggle</item>
+
+                    <item name="valueMap" xsi:type="array">
+
+                        <item name="true" xsi:type="string">1</item>
+
+                        <item name="false" xsi:type="string">0</item>
+
+                    </item>
+
+                    <item name="default" xsi:type="number">1</item>
+
+                </item>
+
+            </argument>
+
+        </field>
+	</fieldset>
+</form>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page 
+	xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+	xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<body>
+		<referenceContainer name="before.body.end">
+		 <block class="Magebees\RichSnippets\Block\Breadcrumbs" name="magebees.richsnippets.breadcrumbs"/>
+		 <block class="Magebees\RichSnippets\Block\Searchbox" name="magebees.richsnippets.website"/>
+		 <block class="Magebees\RichSnippets\Block\Organization" name="magebees.richsnippets.organization"/>
+		</referenceContainer>	
+	</body>
+</page>

@@ -1,0 +1,114 @@
+{
+    "magebees_cachewarmer_queue_page": {
+        "column": {
+            "id": true,
+            "url": true,
+            "rate": true,
+            "store": true,
+            "activity_id": true
+        },
+        "index": {
+            "MAGEBEES_CACHEWARMER_QUEUE_PAGE_RATE": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGEBEES_CACHEWARMER_QUEUE_PAGE_STORE_STORE_STORE_ID": true
+        }
+    },
+    "magebees_cachewarmer_log": {
+        "column": {
+            "id": true,
+            "created_at": true,
+            "url": true,
+            "store": true,
+            "currency": true,
+            "customer_group": true,
+            "rate": true,
+            "status": true,
+            "load_time": true,
+            "mobile": true,
+            "persistent_customer_group": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGEBEES_CACHEWARMER_LOG_STORE_STORE_STORE_ID": true,
+            "MAGEBEES_CACHEWARMER_LOG_CUSTOMER_GROUP_CUSTOMER_GROUP_CUSTOMER_GROUP_ID": true
+        }
+    },
+    "magebees_cachewarmer_activity": {
+        "column": {
+            "id": true,
+            "rate": true,
+            "url": true,
+            "store": true,
+            "currency": true,
+            "customer_group": true,
+            "mobile": true,
+            "status": true,
+            "date": false
+        },
+        "index": {
+            "MAGEBEES_CACHEWARMER_ACTIVITY_URL_MOBILE": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAGEBEES_CACHEWARMER_ACTIVITY_URL_MOBILE": true
+        }
+    },
+    "magebees_cachewarmer_pages_to_flush": {
+        "column": {
+            "id": true,
+            "url": true
+        },
+        "index": {
+            "MAGEBEES_CACHEWARMER_PAGES_TO_FLUSH_URL": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "magebees_cachewarmer_reports": {
+        "column": {
+            "report_id": true,
+            "date": true,
+            "status": true,
+            "response": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "magebees_cachewarmer_flushes_log": {
+        "column": {
+            "log_id": true,
+            "source": true,
+            "details": true,
+            "tags": true,
+            "subject": true,
+            "date": true,
+            "backtrace": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "magebees_cachewarmer_job_queue": {
+        "column": {
+            "job_id": true,
+            "job_code": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "magebees_cachewarmer_context_debug": {
+        "column": {
+            "id": true,
+            "url": true,
+            "context_data": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

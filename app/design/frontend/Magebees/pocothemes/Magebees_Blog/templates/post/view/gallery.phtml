@@ -1,0 +1,30 @@
+<?php 
+$galleryImages = $block->getPostGallery();
+if(count($galleryImages) > 0) {
+?>
+<div class="mb-post-gallery clearfix">
+<h2><?php echo __('Post Photo Gallery');?></h2>
+
+    <div class="mb-post-gallery clearfix">
+        <ul class="items">
+            <?php foreach ($galleryImages as $image) { ?>
+                <li class="item">
+                <a class="gallery-image-hld" data-fancybox="gallery" href="<?php echo $block->escapeHtml($image['full_path']) ?>" rel="nofollow">
+                    <img loading="lazy" class="gallery-image" src="<?php echo $block->escapeHtml($image['resized_path']) ?>" alt="" />
+                </a>
+                </li>
+            <?php } ?>
+        </ul>
+    </div>
+    <script>
+    require(['jquery', 'domReady!'], function($){
+        /* Deferer fancybox css loading */
+        $("head").append($("<link rel='stylesheet' href='<?php echo $block->getViewFileUrl("Magebees_Blog::css/jquery.fancybox.min.css") ?>' type='text/css' media='screen' />"));
+        /* Deferer fancybox js loading */
+        require(['Magebees_Blog/js/jquery.fancybox.min'], function(){});
+    });
+</script>
+</div>
+<?php 
+}
+?>

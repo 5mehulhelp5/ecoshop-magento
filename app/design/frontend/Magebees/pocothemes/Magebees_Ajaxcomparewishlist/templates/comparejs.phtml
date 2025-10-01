@@ -1,0 +1,9 @@
+<?php 
+$helper = $this->helper('Magebees\Ajaxcomparewishlist\Helper\Data');
+if(!$helper->isAjaxCompareEnabled()) return;
+?>
+<script type="text/x-magento-init">
+{ 
+"body": {"magebees/ajaxcomparewishlist" : { "popupTTL" : "<?php echo $helper->getPopupTime() ?>","showLoader": "1"}}
+}
+</script>

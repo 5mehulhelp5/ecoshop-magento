@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+	<!-- Start Magento_Email module email template-->
+    <template id="magebees_emaileditor_header_template" label="Header Template" file="header.html" type="html" module="Magebees_EmailEditor" area="frontend"/>	
+    <template id="magebees_emaileditor_footer_template" label="Footer Template" file="footer.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+	<!-- End Magento_Email module email template-->
+
+    <!-- Start Magento_Customer module email template-->
+    <template id="magebees_emaileditor_customer_create_account_email_template" label="New Account" file="account_new.html" type="html" module="Magebees_EmailEditor" area="frontend"/>    
+    <template id="magebees_emaileditor_customer_create_account_email_no_password_template" label="New Account Without Password" file="account_new_no_password.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_customer_create_account_email_confirmation_template" label="New Account Confirmation Key" file="account_new_confirmation.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_customer_create_account_email_confirmed_template" label="New Account Confirmed" file="account_new_confirmed.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_customer_password_forgot_email_template" label="Forgot Password" file="password_reset_confirmation.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_customer_password_remind_email_template" label="Remind Password" file="password_new.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_customer_password_reset_password_template" label="Reset Password" file="password_reset.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_customer_account_information_change_email_template" label="Change Email" file="change_email.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_customer_account_information_change_email_and_password_template" label="Change Email and Password" file="change_email_and_password.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <!-- End Magento_Customer module email template-->
+
+	<!-- Start Amazon_Payment module email template-->
+     <template id="magebees_emaileditor_amazon_payments_auth_soft_decline" label="Soft-declined Authorization" file="soft-declined-auth.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_amazon_payments_auth_hard_decline" label="Hard-declined Authorization" file="hard-declined-auth.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <!-- End Amazon_Payment module email template-->
+
+	<!-- Start Magento_Checkout module email template-->
+     <template id="magebees_emaileditor_checkout_payment_failed_template" label="Payment Failed" file="failed_payment.html" type="html" module="Magebees_EmailEditor" area="adminhtml"/>
+     <!-- End Magento_Checkout module email template-->
+
+	<!-- Start Magento_Contact module email template-->
+     <template id="magebees_emaileditor_contact_email_email_template" label="Contact Form" file="submitted_form.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+     <!-- End Magento_Contact module email template-->
+
+     <!-- Start Magento_Directory module email template-->
+     <template id="magebees_emaileditor_currency_import_error_email_template" label="Currency Update Warnings" file="currency_update_notification.html" type="text" module="Magebees_EmailEditor" area="adminhtml"/>
+     <!-- End Magento_Directory module email template-->
+
+	<!-- Start Magento_Newsletter module email template-->
+     <template id="magebees_emaileditor_newsletter_subscription_confirm_email_template" label="Subscription Confirmation" file="subscr_confirm.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_newsletter_subscription_success_email_template" label="Subscription Success" file="subscr_success.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_newsletter_subscription_un_email_template" label="Unsubscription Success" file="unsub_success.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <!-- End Magento_Newsletter module email template-->
+	<!-- Start Magento_ProductAlert module email template-->
+    <template id="magebees_emaileditor_catalog_productalert_email_stock_template" label="Stock Alert" file="stock_alert.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_catalog_productalert_email_price_template" label="Price Alert" file="price_alert.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_catalog_productalert_cron_error_email_template" label="Cron Error Warning" file="cron_error.html" type="text" module="Magebees_EmailEditor" area="adminhtml"/>
+    <!-- End Magento_ProductAlert module email template-->
+
+	<!-- Start Magento_Sales module email template-->
+    <template id="magebees_emaileditor_sales_email_order_template" label="New Order" file="order_new.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_sales_email_order_guest_template" label="New Order for Guest" file="order_new_guest.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_sales_email_order_comment_template" label="Order Update" file="order_update.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_sales_email_order_comment_guest_template" label="Order Update for Guest" file="order_update_guest.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_sales_email_invoice_template" label="New Invoice" file="invoice_new.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_sales_email_invoice_guest_template" label="New Invoice for Guest" file="invoice_new_guest.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_sales_email_invoice_comment_template" label="Invoice Update" file="invoice_update.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_sales_email_invoice_comment_guest_template" label="Invoice Update for Guest" file="invoice_update_guest.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_sales_email_creditmemo_template" label="New Credit Memo" file="creditmemo_new.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_sales_email_creditmemo_guest_template" label="New Credit Memo for Guest" file="creditmemo_new_guest.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_sales_email_creditmemo_comment_template" label="Credit Memo Update" file="creditmemo_update.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_sales_email_creditmemo_comment_guest_template" label="Credit Memo Update for Guest" file="creditmemo_update_guest.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_sales_email_shipment_template" label="New Shipment" file="shipment_new.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_sales_email_shipment_guest_template" label="New Shipment for Guest" file="shipment_new_guest.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_sales_email_shipment_comment_template" label="Shipment Update" file="shipment_update.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <template id="magebees_emaileditor_sales_email_shipment_comment_guest_template" label="Shipment Update for Guest" file="shipment_update_guest.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+    <!-- End Magento_Sales module email template-->
+
+	<!-- Start Magento_SendFriend module email template-->
+    <template id="magebees_emaileditor_sendfriend_email_template" label="Send Product Link to Friend" file="product_share.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+	<!-- End Magento_SendFriend module email template-->
+
+	<!-- Start Magento_Sitemap module email template-->
+	<template id="magebees_emaileditor_sitemap_generate_error_email_template" label="Sitemap Generation Warnings" file="generate_warnings.html" type="text" module="Magebees_EmailEditor" area="adminhtml"/>
+	<!-- End Magento_Sitemap module email template-->
+
+	<!-- Start Magento_User module email template-->
+	<template id="magebees_emaileditor_admin_emails_forgot_email_template" label="Forgot Admin Password" file="password_reset_confirmation.html" type="text" module="Magebees_EmailEditor" area="adminhtml"/>
+    <template id="magebees_emaileditor_admin_emails_user_notification_template" label="User Notification" file="user_notification.html" type="text" module="Magebees_EmailEditor" area="adminhtml"/>
+    <template id="magebees_emaileditor_admin_emails_new_user_notification_template" label="New User Notification" file="new_user_notification.html" type="text" module="Magebees_EmailEditor" area="adminhtml"/>
+  	<!-- End Magento_User module email template-->
+
+	<!-- Start Magento_Wishlist module email template-->
+  	 <template id="magebees_emaileditor_wishlist_email_email_template" label="Wish List Sharing" file="share_notification.html" type="html" module="Magebees_EmailEditor" area="frontend"/>
+  	 <!-- End Magento_Wishlist module email template-->
+
+
+</config>

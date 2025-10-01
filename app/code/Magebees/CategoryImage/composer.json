@@ -1,0 +1,16 @@
+{
+  "name" : "magebees/module-category-image-theme",
+  "description" : "Magento 2 module to add thumbnail category image",
+  "type" : "magento2-module",
+  "version" : "1.0.2",
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "autoload": {
+    "files": [ "registration.php" ],
+    "psr-4": {
+      "Magebees\\CategoryImage\\": ""
+    }
+  }
+}

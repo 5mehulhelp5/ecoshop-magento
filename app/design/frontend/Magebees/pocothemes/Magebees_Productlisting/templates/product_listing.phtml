@@ -1,0 +1,268 @@
+<?php $this->getListingCollection(); 
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $poco_helper->getStoreId();
+$productlisting_enable = $poco_helper->getConfigValue('general','enabled','productlisting',$storeId);
+if($productlisting_enable):
+if($this->isEnabled()):  // Enable If start; 
+$loaderUrl = $poco_helper->getLoadingIcon();  
+$_productCollection = $block->getProductCollection();
+$imageBlock = $block->getLayout()->createBlock('Magento\Catalog\Block\Product\Image');
+?>
+	<?php //if ($_productCollection->getSize()): // _productCollection If start;?>
+		<?php 
+		$product_list_random_number = $this->random_number;
+		$slider_id = 'productListing-'.$product_list_random_number;
+		$ItemCount = $_productCollection->getSize();
+		$slider = $this->slider_options['enable_slider']?$this->slider_options['enable_slider']:0;
+		//widget options
+		//$bg_color = $this->getData('wd_bgcolor');
+		$bg_color = $this->bgcolor;
+		$bg_image = '';
+		/*if($this->getData('wd_bgimage')){
+			$bg_image_url = $block->getMediaUrl().$this->getData('wd_bgimage');
+			$bg_image .= 'background-image: url('.$bg_image_url.'); background-repeat: no-repeat; background-size: cover; background-position: center center;';
+		}else{
+			$bg_image .= '';
+		} */
+		if($this->bgimage){
+			$bg_image_url = $block->getMediaUrl().$this->bgimage;
+			$bg_image .= 'background-image: url('.$bg_image_url.'); background-repeat: no-repeat; background-size: cover; background-position: center center;';
+		}else{
+			$bg_image .= '';
+		} 
+		?>
+		
+		<?php if(($bg_image)||($bg_color)): // bg_image-bg_color If start; ?>
+		<style type="text/css">
+			<?php echo '#liststyle-'.$product_list_random_number. " { ".$bg_image." background-color: ".$bg_color."; } " ?>
+		</style>
+		<?php endif; // bg_image-bg_color If end;?>
+		<?php 
+		
+		$spacing_class = '';
+		$spacing_class .= $this->sections_spacing?'sections-spacing ':'';
+		$spacing_class .= $this->sections_bottom_spacing?'section-bottom-spacing':'';
+		//widget options
+		
+		//$spacing_class .= $this->getData('wd_spacing')?'sections-spacing ':'';
+		//$spacing_class .= $this->getData('wd_bottom_spacing')?'section-bottom-spacing':'';
+		//widget options
+		$short_desc = array_key_exists('short_desc', $this->display_settings) ? true : false;
+		$autoscroll = array_key_exists('autoplay', $this->slider_options)? ($this->slider_options['autoplay']=='1' ? true:false) : false;
+		$custom_class = array_key_exists('custom_class', $this->display_settings) ? $this->display_settings['custom_class'] : null;
+		$num_of_prod = array_key_exists('num_of_prod', $this->slider_options) ? $this->slider_options['num_of_prod'] : null;
+		$items_per_page = array_key_exists('items_per_page', $this->slider_options) ? $this->slider_options['items_per_page'] : null;
+		$autoload = array_key_exists('autoscroll', $this->slider_options) ? ($this->slider_options['autoscroll']=='1' ? true:false) : false;
+		$navarrow = array_key_exists('nav_arr', $this->slider_options) ? ($this->slider_options['nav_arr']=='1' ? true:false) : false;
+		$pagination = array_key_exists('pagination', $this->slider_options) ? ($this->slider_options['pagination']=='1' ? true:false) : false;
+		$paginationtype = array_key_exists('pagi_type', $this->slider_options) ? $this->slider_options['pagi_type']: 0;
+		$infinite_loop = array_key_exists('loop', $this->slider_options) ? ($this->slider_options['loop']=='1' ? true:false) : false;
+		$scrollbar = array_key_exists('scrollbar', $this->slider_options) ? ($this->slider_options['scrollbar']=='1' ? true:false) : false;
+		$grap_cursor = array_key_exists('grab_cur', $this->slider_options) ? ($this->slider_options['grab_cur']=='1' ? true:false) : false;
+		$grid = array_key_exists('grid', $this->slider_options) ? ($this->slider_options['grid']=='1' ? true:false) : false;
+		$auto_height = array_key_exists('auto_height', $this->slider_options) ? ($this->slider_options['auto_height']=='1' ? true:false) : false;
+		$items = array_key_exists('items_per_slide', $this->slider_options) ? $this->slider_options['items_per_slide'] : 4;
+		$auto_play_dealytime = array_key_exists("delay_time",$this->slider_options) ? $this->slider_options['delay_time']:3000;
+		$autoplayoff = array_key_exists("mouse_enter",$this->slider_options) ? ($this->slider_options['mouse_enter']=='1' ? 'true':'false') : false;
+		$block->pagination_class = null;
+		if(($pagination)&&($ItemCount > $items )):
+			$block->pagination_class = ' show-pagination ';
+		endif; 
+		$view_more = array_key_exists("view_more",$this->slider_options) ? ($this->slider_options['view_more']=='1' ? true:false) : false;
+		$view_more_btn_txt = array_key_exists("view_more_btn_txt",$this->slider_options) ? ($this->slider_options['view_more_btn_txt'] ) : false;
+		$view_more_path = array_key_exists("view_more_path",$this->slider_options) ? ($this->slider_options['view_more_path']) : false;
+		$autoloadscroll = array_key_exists('autoscroll', $this->slider_options) ? ($this->slider_options['autoscroll']=='1' ? true:false) : false;
+		/* POCO THEME CUSTOMIZATION ADD CODE Start */ 
+		include ($block->getTemplateFile('Magento_Catalog::product/product-list-theme-options.phtml'));
+		/* POCO THEME CUSTOMIZATION ADD CODE End */ 
+		?>		
+		<?php $template = $this->general['template']; ?>
+		<?php 
+	
+		$home_style =$poco_helper->getConfigValue('home','home_style','pocothemes',$storeId);?>
+		
+		<div class="productsListing-section <?php echo $spacing_class ?> <?php if($animation): ?> <?php echo $animation_class ?> <?php endif;?>" <?php if($animation): ?>data-wow-delay="0.2s" <?php endif;?> id="liststyle-<?php echo $product_list_random_number; ?>">
+		<div class="list<?php echo $this->_listing_id ?> container <?php echo $custom_class; ?>">
+			<?php if(($this->display_settings['display_heading'])||($this->display_settings['display_desc'])): ?>
+				
+				<?php if($home_style=='poco-themes-style-17'): ?>
+				<div class="section-title style2  ">
+					<?php if(($this->display_settings['display_heading'])||($this->display_settings['display_desc'])): ?>
+					<div class="ttl-wrap">
+					<?php if($this->display_settings['display_heading']): ?>
+						<h2 class="title"><?php echo __($this->display_settings['heading']); ?></h2>
+						
+					<?php endif; ?>
+					<?php if($this->display_settings['display_desc']): ?>
+						<div class="sort-details">
+							<p class="sort-detail"><?php echo __($this->display_settings['short_desc']) ?></p>
+						</div>
+					<?php endif;?>
+					</div>
+					<?php endif;?>
+					<div class="rgt-dtl">
+					<?php if(($this->view_more_position=='top')&&($view_more)): ?>
+						<?php 
+							$configPath = 'catalog/seo/category_url_suffix';
+							$cat_suffix_value =  $this->getConfigValue($configPath);
+							$forward_url = 'prodlist/'.$view_more_path.$cat_suffix_value;
+							$view_more_url = $block->getBaseUrl().$forward_url;
+						?>
+						
+						<div class="view-more">
+							<a href="<?php echo $view_more_url;?>" title="<?php echo __('View All'); ?>" class="action secondary" rel="nofollow">	
+								<?php echo __(html_entity_decode($block->escapeHtml($view_more_btn_txt))); ?>
+								</span>
+							</a>
+						</div>
+						<?php endif; ?>
+						<?php if($slider): ?>		
+							<?php if($navarrow): ?>
+							<!-- Add Arrows -->
+							<div id="<?php echo "swiper-button-prev-".$this->random_number;?>" class="swiper-button-prev"></div>
+							<div id="<?php echo "swiper-button-next-".$this->random_number;?>" class="swiper-button-next"></div>
+						<?php endif; ?>
+						
+					<?php endif; ?>
+						
+					
+					</div>
+					
+					
+				</div>
+				<?php else:?>
+				<div class="section-title">
+					<?php if($this->display_settings['display_heading']): ?>
+						<h2 class="title"><?php echo __($this->display_settings['heading']); ?></h2>
+					<?php endif; ?>
+					<?php if($this->display_settings['display_desc']): ?>
+						<div class="sort-details">
+							<p class="sort-detail"><?php echo __($this->display_settings['short_desc']) ?></p>
+						</div>
+					<?php endif;?>
+					<?php if(($this->view_more_position=='top')&&($view_more)): ?>
+						<?php 
+							$configPath = 'catalog/seo/category_url_suffix';
+							$cat_suffix_value =  $this->getConfigValue($configPath);
+							$forward_url = 'prodlist/'.$view_more_path.$cat_suffix_value;
+							$view_more_url = $block->getBaseUrl().$forward_url;
+						?>
+						<div class="view-more">
+							<a href="<?php echo $view_more_url;?>" 
+							title="<?php echo __('View All'); ?>
+							" class="action secondary">
+								
+								<?php echo __(html_entity_decode($block->escapeHtml($view_more_btn_txt))); ?>
+								</span>
+							</a>
+							
+						</div>
+					<?php endif; ?>
+				</div>
+				<?php endif; ?>
+				
+			<?php endif;?>
+			
+				<div class="prodlist" >
+				<?php $template = $this->general['template']; ?>
+				<?php if($template == 'grid'): // grid If start;?>
+					<?php //include ($block->getTemplateFile('product_grid.phtml')) ?>
+					<?= $block->fetchView($block->getTemplateFile('product_grid.phtml')) ?>
+				<?php elseif($template == 'list'): ?>
+					<?= $block->fetchView($block->getTemplateFile('product_list.phtml')) ?>
+				<?php elseif($template == 'list_style1'): ?>
+					<?= $block->fetchView($block->getTemplateFile('product_list_style1.phtml')) ?>
+				<?php elseif($template == 'sidebar'): ?>
+					<?= $block->fetchView($block->getTemplateFile('product_sidebar.phtml')) ?>
+				<?php endif; // grid If end; ?>
+				<?php if(!$slider): //slider If start; ?>
+					<?php //if((!$view_more)&&(!$autoloadscroll)): //View More btn not If ?>
+					<?php if(!$view_more): //View More btn not If ?>
+						<?php if($this->getData('wd_load_ajax')): ?>
+						<?php if($num_of_prod > $items_per_page): ?>
+						<div class="listing<?php echo $this->_listing_id ?>-products-toolbar toolbar bottom">
+						<?php echo $block->getAjaxLoadPagerHtml(); ?>
+						</div>
+						<?php endif; ?>
+						<?php else: ?>
+						<?php if($num_of_prod > $items_per_page): ?>
+						<div class="listing<?php echo $this->_listing_id ?>-products-toolbar toolbar bottom">
+						<?php echo $block->getPagerHtml(); ?>
+						</div>
+						<?php endif; ?>
+						<?php endif; ?>
+						
+					<?php endif; //view more if end ?>	
+				<?php endif; //slider If end; ?>
+
+				</div>
+				<?php if(($this->view_more_position	!='top')&&($view_more)): ?>
+					<?php 
+					$configPath = 'catalog/seo/category_url_suffix';
+					$cat_suffix_value =  $this->getConfigValue($configPath);
+					$forward_url = 'prodlist/'.$view_more_path.$cat_suffix_value;
+					$view_more_url = $block->getBaseUrl().$forward_url;
+					
+					?>
+					<div class="view-more btm tc <?php echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.8ss" <?php endif;?>>
+						<a href="<?php echo $view_more_url;?>" title="View More" class="action primary" rel="nofollow">
+							<span><?php echo __(html_entity_decode($block->escapeHtml($view_more_btn_txt))); ?>
+						</a>
+					</div>
+				<?php endif; ?>
+					<?php if (!$block->isRedirectToCartEnabled()) : //isRedirectToCartEnabled If start; ?>
+						<script type="text/x-magento-init">
+							{
+							"[data-role=tocart-form], .form.map.checkout": {
+							"catalogAddToCart": {}
+							}
+							}
+						</script>
+					<?php endif; //isRedirectToCartEnabled If end;?>
+			
+			</div>
+		
+		<?php 
+		$infinite_scroll_avail = $block->getConfigValue('ajaxinfinitescroll/setting/enable');
+		$autoload = array_key_exists('autoscroll', $this->slider_options) ? ($this->slider_options['autoscroll']=='1' ? true:false) : false;
+		?>
+		<?php if($infinite_scroll_avail && $autoload): // infinite_scroll_avail If start; ?>
+			<?php 
+			$loading_type = $this->slider_options['loading_type'];
+			$show_page_no = $this->slider_options['show_page_no'];
+			$threshold = $this->slider_options['threshold'];
+			$text_no_more = $this->slider_options['text_no_more'];
+			$label_prev_button = array_key_exists('label_prev_button', $this->slider_options) ? $this->slider_options['label_prev_button'] : " ";
+			$label_next_button = array_key_exists('label_next_button', $this->slider_options) ?$this->slider_options['label_next_button'] : " ";
+			$load_button_style = array_key_exists('load_button_style', $this->slider_options) ?$this->slider_options['load_button_style'] : " ";
+			$image_url=$block->getViewFileUrl('Magebees_AjaxInfiniteScroll::images/ajax_loader.gif');
+			$image_html="<img loading='lazy' src='".$loaderUrl."' width='90' height='90' alt='Loading...'/>";
+			
+			$listing_id = $this->_listing_id;
+			$product_container = ".list".$listing_id.".products.products-".$template;
+			?>
+			<div id="scroll_loading" style="display:none;"><img loading="lazy" src="<?php echo $loaderUrl; ?>" alt="Loading..." width="90" height="90"/></div>
+			<script type="text/x-magento-init">
+			{
+				".<?php echo 'list'.$this->_listing_id ?>.products.products-grid,.<?php echo 'list'.$this->_listing_id ?>.products.products-list": {
+					"magebeesInfiniteScroll": {
+						"loading_type":"<?php echo $loading_type ?>",
+						"product_container":"<?php echo $product_container ?>",			
+						"toolbar_class":".listing<?php echo $this->_listing_id ?>-products-toolbar",			
+						"page_number":"<?php echo $show_page_no ?>",			
+						"load_prev_text":"<?php echo $label_prev_button ?>",
+						"load_next_text":"<?php echo __(preg_replace('@<(\w+)\b.*?>.*?</\1>@si', '', $label_next_button)); /* Remove HTML From String */ ?>",	
+						"load_button_style":"<?php echo $load_button_style ?>",
+						"threshold":"<?php echo $threshold ?>",		
+						"listing_id":"<?php echo $this->_listing_id ?>",		
+						"loading_image_src":"<?php echo $image_html ?>",
+						"text_no_more":"<?php echo $text_no_more ?>"
+					}
+				}
+			}
+			</script>
+		<?php endif; // infinite_scroll_avail If end; ?>
+		</div>
+	<?php //endif; // _productCollection If end; ?>
+<?php endif; // Enable If end; ?>
+<?php endif; ?>

@@ -1,0 +1,314 @@
+<?php $this->getListingCollection(); ?>
+<?php if($this->isEnabled()):  // Enable If start; ?>
+	<?php 
+	$_productCollection = $block->getProductCollection();
+	//$_helper = $this->helper('Magento\Catalog\Helper\Output');
+	$imageBlock = $block->getLayout()->createBlock('Magento\Catalog\Block\Product\Image');
+	?>
+	<?php if ($_productCollection->getSize()): // _productCollection If start;?>
+		<?php 
+		$random_number = $this->random_number;
+		$slider_id = 'productListing-'.$random_number;
+		$ItemCount = $_productCollection->getSize();
+		$slider = $this->slider_options['enable_slider']?$this->slider_options['enable_slider']:0;
+				
+		//widget options
+		$bg_color = $this->getData('wd_bgcolor');
+		$bg_image = '';
+		if($this->getData('wd_bgimage')){
+			$bg_image_url = $block->getMediaUrl().$this->getData('wd_bgimage');
+			$bg_image .= 'background-image: url('.$bg_image_url.'); background-repeat: no-repeat; background-size: cover; background-position: center center;';
+		}else{
+			$bg_image .= '';
+		} 
+		?>
+		<?php if(($bg_image)||($bg_color)): // bg_image-bg_color If start; ?>
+		<style type="text/css">
+			<?php echo '#liststyle-'.$random_number. " { ".$bg_image." background-color: ".$bg_color."; } " ?>
+		</style>
+		<?php endif; // bg_image-bg_color If end;?>
+		<?php 
+		$spacing_class = '';
+		$spacing_class .= $this->getData('wd_spacing')?'sections-spacing ':'';
+		$spacing_class .= $this->getData('wd_bottom_spacing')?'section-bottom-spacing':'';
+		//widget options
+		$short_desc = array_key_exists('short_desc', $this->display_settings) ? true : false;
+		
+		$autoscroll = array_key_exists('autoplay', $this->slider_options)? ($this->slider_options['autoplay']=='1' ? 'true':'false') : false;
+		
+		$navarrow = array_key_exists('nav_arr', $this->slider_options) ? ($this->slider_options['nav_arr']=='1' ? true:false) : false;
+		$pagination = array_key_exists('pagination', $this->slider_options) ? ($this->slider_options['pagination']=='1' ? true:false) : false;
+		$paginationtype = array_key_exists('pagi_type', $this->slider_options) ? $this->slider_options['pagi_type']: 0;
+		$infinite_loop = array_key_exists('loop', $this->slider_options) ? ($this->slider_options['loop']=='1' ? 'true':'false') : false;
+		$scrollbar = array_key_exists('scrollbar', $this->slider_options) ? ($this->slider_options['scrollbar']=='1' ? true:false) : false;
+		$grap_cursor = array_key_exists('grab_cur', $this->slider_options) ? ($this->slider_options['grab_cur']=='1' ? 'true':'false') : false;
+		$auto_height = array_key_exists('auto_height', $this->slider_options) ? ($this->slider_options['auto_height']=='1' ? 'true':'false') : false;
+		$items = array_key_exists('items_per_slide', $this->slider_options) ? $this->slider_options['items_per_slide'] : 4;
+		$auto_play_dealytime = array_key_exists("delay_time",$this->slider_options) ? $this->slider_options['delay_time']:3000;
+		$autoplayoff = array_key_exists("mouse_enter",$this->slider_options) ? ($this->slider_options['mouse_enter']=='1' ? 'true':'false') : false;
+		$this->pagination_class = null;
+		if(($pagination)&&($ItemCount > $items )):
+			$this->pagination_class = ' show-pagination ';
+		endif; 
+		
+		$autoload = array_key_exists('autoscroll', $this->slider_options) ? ($this->slider_options['autoscroll']=='1' ? true:false) : false;
+		
+		if(!$autoload){
+			
+			$view_more = array_key_exists("view_more",$this->slider_options) ? ($this->slider_options['view_more']=='1' ? true:false) : false;
+			$view_more_btn_txt = array_key_exists("view_more_btn_txt",$this->slider_options) ? ($this->slider_options['view_more_btn_txt'] ) : false;
+			$view_more_path = array_key_exists("view_more_path",$this->slider_options) ? ($this->slider_options['view_more_path']) : false;
+			
+		}
+		?>
+		
+		<div class="list<?php echo $this->_listing_id ?> container <?php echo $this->display_settings['custom_class']; ?>">
+			<div class="productsListing-section <?php echo $spacing_class ?>" id="liststyle-<?php echo $random_number; ?>">
+				<div class="section-title">
+					<?php if($this->display_settings['display_heading']): // display_heading If start;  ?>
+						<h2 class="title"><?php echo __($this->display_settings['heading']); ?></h2>
+					<?php endif; // display_heading If end; ?>
+					<?php if($this->display_settings['display_desc']): // display_desc If start; ?>
+						<p class="sort-detail"><?php echo __($this->display_settings['short_desc']) ?></p>
+					<?php endif; // display_desc If end;?>
+				</div>
+				<div class="prodlist" >
+				<?php $template = $this->general['template']; ?>
+				<?php if($template == 'grid'): // grid If start;?>
+					<?php //include ($block->getTemplateFile('product_grid.phtml')) ?>
+					<?= $block->fetchView($block->getTemplateFile('product_grid.phtml')) ?>
+				<?php elseif($template == 'list'): ?>
+					<?= $block->fetchView($block->getTemplateFile('product_list.phtml')) ?>
+				<?php elseif($template == 'sidebar'): ?>
+					<?= $block->fetchView($block->getTemplateFile('product_sidebar.phtml')) ?>
+				<?php endif; // grid If end; ?>
+				<?php if(!$slider): //slider If start; ?>
+						<div class="listing<?php echo $this->_listing_id ?>-products-toolbar toolbar bottom"><?php echo $block->getPagerHtml(); ?></div>
+				<?php endif; //slider If end; ?>
+				</div>
+				
+					<?php if (!$block->isRedirectToCartEnabled()) : //isRedirectToCartEnabled If start; ?>
+						<script type="text/x-magento-init">
+							{
+							"[data-role=tocart-form], .form.map.checkout": {
+							"catalogAddToCart": {}
+							}
+							}
+						</script>
+					<?php endif; //isRedirectToCartEnabled If end;?>
+					<?php if(($slider)&&($template!="sidebar")): //template If start; ?>
+					<script>
+					requirejs(['jquery',"magebees.swiper"], function ($,Swiper) {
+					"use strict";
+					var slider_id="<?php echo $slider_id;?>";
+					var pagination = "<?php echo "#swiper-pagination-".$random_number;?>";
+					var scrollbar = "<?php echo "#swiper-scrollbar-".$random_number;?>";
+					var btn_next = "<?php echo "#swiper-button-next-".$random_number;?>";
+					var btn_prev = "<?php echo "#swiper-button-prev-".$random_number;?>";
+					var <?php echo "swiper_".$random_number;?> = new Swiper("#"+slider_id, {
+					
+						autoHeight: <?php echo $auto_height ?>, 
+						slidesPerView: 1,
+						spaceBetween: 10,
+						loop: <?php echo $infinite_loop ?>,
+						grabCursor: <?php echo $grap_cursor; ?>,
+						a11y: false,
+						//centeredSlides: <?php //echo $centered; ?>,
+						<?php if($autoscroll):?>
+							autoplay: {
+								delay: <?php echo $auto_play_dealytime ?>,
+								disableOnInteraction: false,
+								pauseOnMouseEnter:<?php echo $autoplayoff ?>
+							},
+						<?php endif;?>
+						<?php if($scrollbar): ?>
+							scrollbar: {
+								el: scrollbar,
+								hide: false,
+							},	
+						<?php endif; ?>
+						<?php if($paginationtype=='default'): ?>
+							pagination: {
+								el: pagination,
+								clickable: true,
+							},
+						<?php elseif($paginationtype=='dynamic'): ?>
+							pagination: {
+								el: pagination,
+								clickable: true,
+								dynamicBullets: true,
+							},
+						<?php elseif($paginationtype=='progress'): ?>
+							pagination: {
+								el: pagination,
+								clickable: true,
+								type: 'progressbar',
+							},
+						<?php elseif($paginationtype=='fraction'): ?>
+							pagination: {
+								el: pagination,
+								type: 'fraction',
+								
+							},
+						<?php elseif($paginationtype=='custom'): ?>
+							pagination: {
+								el: pagination,
+								clickable: true,
+								renderBullet: function (index, className) {
+									return '<span class="' + className + '">' + (index + 1) + '</span>';
+								},
+							},
+						<?php endif;?>
+						<?php if($navarrow): ?>
+							navigation: {
+								nextEl: btn_next,
+								prevEl: btn_prev,
+							},	
+						<?php endif; ?>
+							breakpoints: {
+								0: {
+									slidesPerView: 1,
+									spaceBetween: 20,
+								},
+								480: {
+									slidesPerView: 2,
+									spaceBetween: 20,
+                            	},
+								639: {
+									slidesPerView: 2,
+									spaceBetween: 20,
+								},
+								768: {
+									slidesPerView: 3,
+									spaceBetween: 30,
+								},
+								1200: {
+									slidesPerView: <?php echo $items ?>,
+									spaceBetween: 30,
+								},
+							}
+						});
+					});
+
+					</script>
+					<?php elseif(($slider)&&($template=="sidebar")): //slider-template If start;  ?>
+					<script>
+					requirejs(['jquery',"magebees.swiper"], function ($,Swiper) {
+					"use strict";
+					var slider_id="<?php echo $slider_id;?>";
+					var pagination = "<?php echo "#swiper-pagination-".$random_number;?>";
+					var btn_next = "<?php echo "#swiper-button-next-".$random_number;?>";
+					var btn_prev = "<?php echo "#swiper-button-prev-".$random_number;?>";
+					var <?php echo "swiper_".$random_number;?> = new Swiper("#"+slider_id, {
+					
+						autoHeight: <?php echo $auto_height ?>, 
+						slidesPerView: 1,
+						spaceBetween: 10,
+						loop: <?php echo $infinite_loop ?>,
+						a11y: false,
+						<?php if($paginationtype=='default'): ?>
+							pagination: {
+								el: pagination,
+								clickable: true,
+							},
+						<?php elseif($paginationtype=='dynamic'): ?>
+							pagination: {
+								el: pagination,
+								clickable: true,
+								dynamicBullets: true,
+							},
+						<?php elseif($paginationtype=='progress'): ?>
+							pagination: {
+								el: pagination,
+								clickable: true,
+								type: 'progressbar',
+							},
+						<?php elseif($paginationtype=='fraction'): ?>
+							pagination: {
+								el: pagination,
+								type: 'fraction',
+								
+							},
+						<?php elseif($paginationtype=='custom'): ?>
+							pagination: {
+								el: pagination,
+								clickable: true,
+								renderBullet: function (index, className) {
+									return '<span class="' + className + '">' + (index + 1) + '</span>';
+								},
+							},
+						<?php endif;?>
+						<?php if($navarrow): ?>
+							navigation: {
+								nextEl: btn_next,
+								prevEl: btn_prev,
+							},	
+						<?php endif;  ?>
+						});
+					});
+
+					</script>
+				<?php endif; //slider-template If end; ?>
+				
+				<?php if(!$autoload): //autoload If start;  ?>
+				<?php if($view_more): //view_more If start;  ?>
+					<?php 
+					$configPath = 'catalog/seo/category_url_suffix';
+					$cat_suffix_value =  $this->getConfigValue($configPath);
+					$forward_url = 'prodlist/'.$view_more_path.$cat_suffix_value;
+					$view_more_url = $block->getBaseUrl().$forward_url;
+					?>
+						
+						
+						<div class="view-more">
+					
+					<a href="<?php echo $view_more_url;?>" title="<?php echo __(html_entity_decode($block->escapeHtml($view_more_btn_txt))); ?> " class="readMore action primary"><?php echo __(html_entity_decode($block->escapeHtml($view_more_btn_txt))); ?> </a>
+					
+					</div>
+					
+					<?php endif; //view_more If end; ?>
+				<?php endif; //autoload If end; ?>
+			</div>
+		</div>
+		<?php 
+		$infinite_scroll_avail = $block->getConfigValue('ajaxinfinitescroll/setting/enable');
+		$autoload = array_key_exists('autoscroll', $this->slider_options) ? ($this->slider_options['autoscroll']=='1' ? true:false) : false;
+		?>
+		<?php if($infinite_scroll_avail && $autoload): // infinite_scroll_avail If start; ?>
+			<?php 
+			$loading_type = $this->slider_options['loading_type'];
+			$show_page_no = $this->slider_options['show_page_no'];
+			$threshold = $this->slider_options['threshold'];
+			$text_no_more = $this->slider_options['text_no_more'];
+			$label_prev_button = array_key_exists('label_prev_button', $this->slider_options) ? $this->slider_options['label_prev_button'] : " ";
+			$label_next_button = array_key_exists('label_next_button', $this->slider_options) ?$this->slider_options['label_next_button'] : " ";
+			$load_button_style = array_key_exists('load_button_style', $this->slider_options) ?$this->slider_options['load_button_style'] : " ";
+			$image_url=$block->getViewFileUrl('Magebees_AjaxInfiniteScroll::images/ajax_loader.gif');
+			$image_html='<img src='.$image_url.' alt=Loading.../>';
+			$listing_id = $this->_listing_id;
+			$product_container = ".list".$listing_id.".products.products-".$template;
+			?>
+			<div id="scroll_loading" style="display:none;"><img src="<?php echo $image_url; ?>" alt="Loading..." /></div>
+			<script type="text/x-magento-init">
+			{
+				".<?php echo 'list'.$this->_listing_id ?>.products.products-grid,.<?php echo 'list'.$this->_listing_id ?>.products.products-list": {
+					"magebeesInfiniteScroll": {
+						"loading_type":"<?php echo $loading_type ?>",
+						"product_container":"<?php echo $product_container ?>",			
+						"toolbar_class":".listing<?php echo $this->_listing_id ?>-products-toolbar",			
+						"page_number":"<?php echo $show_page_no ?>",			
+						"load_prev_text":"<?php echo $label_prev_button ?>",
+						"load_next_text":"<?php echo $label_next_button ?>",	
+						"load_button_style":"<?php echo $load_button_style ?>",
+						"threshold":"<?php echo $threshold ?>",		
+						"listing_id":"<?php echo $this->_listing_id ?>",		
+						"loading_image_src":"<?php echo $image_html ?>",
+						"text_no_more":"<?php echo $text_no_more ?>"
+					}
+				}
+			}
+			</script>
+		<?php endif; // infinite_scroll_avail If end; ?>
+		
+	<?php endif; // _productCollection If end; ?>
+<?php endif; // Enable If end; ?>

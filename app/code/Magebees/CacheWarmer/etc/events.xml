@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="adminhtml_cache_refresh_type">
+        <observer name="magebees_cachewarmer_flush1" instance="Magebees\CacheWarmer\Observer\FlushCache" />
+    </event>
+    <event name="model_save_after">
+        <observer name="magebees-cachewarmer-crawler" instance="Magebees\CacheWarmer\Observer\Admin\ModelSaveAfter" />
+    </event>
+</config>

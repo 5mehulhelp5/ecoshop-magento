@@ -1,0 +1,58 @@
+<?php	$_config = $this->getConfig();
+		$_optimizeconfig = $this->getOptimizeConfig();
+		$enable_disable = $_config['module_enable_disable'];	
+		$groupId = $this->getGroupId();
+		if($groupId):
+		$menu_status = $this->getMenuStatus($groupId);	
+		if(($enable_disable == "1") && ($menu_status == "1"))	{		
+			$menu_type = $this->getMenutype($groupId);
+				if($menu_type!="list-item"){
+					$dynamic_css_path = $this->getCsspath($menu_type,$groupId);	
+					?>		
+					<link rel="stylesheet" type="text/css" href="<?php echo $dynamic_css_path;?>" />	
+					<?php		
+					}
+					$groupId = $this->getGroupId();
+					$developer_mode_enable_disable = $_optimizeconfig['developer_mode_enable_disable'];	
+					$helper= $this->helper('Magebees\Navigationmenu\Helper\Data');
+					
+					$dir_for_dynamic_file = 'pub/media/magebees/navigationmenu';						
+					$temp_dir = $helper->getStaticTemplateDirectoryPath($dir_for_dynamic_file);
+					$customerStatus = $this->getCurrentCustomerDetails();
+					$customerGroupId = $customerStatus['customerGroupId'];
+					$customerStatus = $customerStatus['customerStatus'];
+					$storedetails = $this->getCurrentStoreDetails();
+					
+					$storeId = $storedetails['storeId'];
+					$storeCode = $storedetails['storeCode'];
+					$website_id = $storedetails['website_id'];
+		
+					if($developer_mode_enable_disable == "1") 
+					{
+						$menu_html = $this->generateStaticHtml($groupId,$website_id,$storeId,$storeCode,$customerStatus,$customerGroupId);
+					}
+					else
+					{
+					$static_File = $temp_dir."navigationmenu-w-".$website_id."s-".$storeCode."-g-".$groupId."-customer-".$customerGroupId.".phtml";	
+					
+					if (!file_exists($static_File)) {	
+						$menu_html = $this->generateStaticHtml($groupId,$website_id,$storeId,$storeCode,$customerStatus,$customerGroupId);
+							$fh = fopen($static_File, 'w'); // or die("error");
+							$search = [
+							'/\>[^\S ]+/s',  // strip whitespaces after tags, except space
+							'/[^\S ]+\</s',  // strip whitespaces before tags, except space
+							'/(\s)+/s'       // shorten multiple whitespace sequences
+							];
+							$replace = [ '>', '<','\\1'];
+							$menu_compressedhtml = preg_replace($search, $replace, $menu_html);
+							fwrite($fh, $menu_compressedhtml);
+						} else {
+							$menu_file = fopen($static_File, 'r'); // or die("error");
+							$menu_html = fgets($menu_file);
+							fclose($menu_file);
+						}
+					}
+					echo $menu_html;
+	}
+	endif;
+?>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <finder>
+			<general>
+				<enabled>1</enabled>
+				<autosearch>1</autosearch>
+				<find_btn_text>Find</find_btn_text>
+				<reset_btn_text>Reset</reset_btn_text>
+				<categorypage_enabled>1</categorypage_enabled>
+				<finderpage_title>Search results for:</finderpage_title>
+				<universal_enable>0</universal_enable>
+				<higherversion>1</higherversion>
+				<lowerversion>0</lowerversion>
+			</general>
+		</finder>    
+    </default>
+</config>

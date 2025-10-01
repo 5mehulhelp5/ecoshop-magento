@@ -1,0 +1,87 @@
+<?php
+/* @var block \Magebees\Finder\Block\Finder */
+if ($block->getEnabled()) :
+    $_helper = $this->helper('Magebees\Finder\Helper\Data');
+    $finderId = $block->getData('finder_id');//from predefind code
+    $search = 0;
+    $path = $this->getRequest()->getRequestString();
+    $search = strpos($path, 'finder');
+    if (!$finderId) {
+        $finderId = $_helper->getFinderId($path);
+    }
+    
+    $this->setFinderId($finderId);
+    $finders = $block->getFinderById($finderId);
+
+    $urlstring = $finders->getYmmValueFromPath($path);
+
+    $current  = $finders->getSavedValue('current');
+    if ($urlstring!=$current) {
+        $dropdowns = $finders->getDropdownsByCurrent($urlstring);
+        $finders->saveDropDownValues($dropdowns);
+    }
+    $finderDropdowns = $block->getDropdownsCollectionByFinderId($finderId);
+    $dropdowncounts=$finderDropdowns->count();
+    $dropdown_id = $finderDropdowns->getFirstItem()->getData('dropdown_id');
+
+    if ($finders->getStatus() && count($finderDropdowns)!="") { ?>
+        <div class="finderProducts <?php echo $finders->getDropdownStyle() ?>">
+			
+            <form action="<?php echo $this->getSearchResultUrl(); ?>" id="finderform_<?php echo $finderId ?>" name="finderform"  class="finderform" method="post">
+                    <input type="hidden" name="finder_id" value="<?php echo $finderId ?>">
+                    <h3 class="finder_header"><?php echo __($finders->getTitle()); ?></h3>
+                    <div id="<?php echo "finderDropdowns_".$finderId ?>" class="finderDropdowns">
+                        <ul>
+                            <?php $i=1;?>
+                            <?php foreach ($finderDropdowns as $dropdown) : ?>
+                                <li id="drop_<?php echo $finderId ?>_<?php echo $i?>" class="drop_<?php echo $i; ?> column<?php echo $finders->getNoOfColumns() ?>">
+                                    <!-- <label><?php echo __($dropdown->getName().": "); ?></label> -->
+                                    <select name="finder[<?php echo $dropdown->getId() ?>]" id="finder_<?php echo $finderId ?>_<?php echo $dropdown->getId() ?>" drop-down-counts="<?php echo $dropdowncounts ?>" drop-down-id="<?php echo $dropdown->getId() ?>" drop-down-name="<?php echo $dropdown->getName() ?>">
+                                        <?php foreach ($block->getDropdownValues($dropdown) as $val) : ?>
+                                            <option value="<?php echo $val['value'] ?>" <?php if ($val['selected']) :
+?>selected="selected"<?php endif; ?>>
+                                                <?php echo $val['label'] ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+									<?php $drpdownids[] = $dropdown->getId(); ?>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <button id="find_<?php echo $finderId ?>" type="submit" title="Find" value="1" name="find" class="action subscribe primary" <?php if (!$block->isButtonEnabled()) :
+?>disabled=""<?php
+endif; ?>  ><span><?php echo __($block->getFindBtnText()) ?></span></button>
+                <button id="reset_<?php echo $finderId ?>" drop-down-ids="<?php echo implode(',',$drpdownids); ?>" drop-down-counts="<?php echo $dropdowncounts ?>" name="reset" value="1" title="Reset" class="button" <?php if ($search) :
+?> type="submit" <?php
+else :
+?> type="button" <?php
+endif; ?> ><span><span><?php echo __($block->getResetBtnText()) ?></span></span></button>
+            </form>
+        </div>
+    <?php
+    }
+    ?>
+	
+	 
+<script type="text/javascript">
+    requirejs(['jquery','cwsfinder','cwschosen'], function(jQuery){
+		var enableDrpdwnSearch = <?php echo $block->getEnableDrpdwnSearch() ?>;
+		if(enableDrpdwnSearch){
+			var count = <?php echo $dropdowncounts ?>;
+			var dropdownids = "<?php echo implode(',',$drpdownids); ?>";
+			var ddidsarr = dropdownids.split(",");
+			for (var j=0; j<count; j++) {
+				if(jQuery("#finder_<?php echo $finderId ?>_"+ddidsarr[j]).length){
+					jQuery("#finder_<?php echo $finderId ?>_"+ddidsarr[j]).chosen();	   
+				}
+			}
+		}
+        var finderMage = {'finderId':'<?php echo $finderId ?>','optionurl':'<?php echo $block->getOptionValueUrl() ?>','searchurl':'<?php echo $block->getSearchResultUrl() ?>','dropdowncounts':<?php echo $dropdowncounts ?>,'drpdownids':'<?php echo implode(',',$drpdownids); ?>','autosearch':<?php echo $block->getAutosearch() ?>,'enableDrpdwnSearch':enableDrpdwnSearch};
+        var dropdown_div_id = '<?php echo "#finderDropdowns_".$finderId ?>';
+        jQuery(dropdown_div_id).cwsfinder(finderMage);
+    });
+
+	 
+	
+</script>
+<?php endif; ?>

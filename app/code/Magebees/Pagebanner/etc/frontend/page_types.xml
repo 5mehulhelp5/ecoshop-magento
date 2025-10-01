@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page_types xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_types.xsd">
+    <type id="layerednavigation_brand_index" label="Layer Navigation Brand Page"/>
+	<type id="blog_index_index" label="Blog"/>
+	<type id="blog_category_view" label="Blog Category (Any)"/>
+	<type id="blog_tag_view" label="Blog Tag (Any)"/>
+	<type id="blog_post_view" label="Blog Post (Any)"/>
+	<type id="blog_archive_index" label="Blog Archive (Any)"/>
+	<type id="blog_search_index" label="Blog Search Result (Any)"/>
+	<type id="cms_noroute_index" label="CMS No Route Index (Any)"/>
+	<type id="prodlist_index_result" label="Product Listing Page"/>
+	<type id="vault_cards_listaction" label="Stored Payment Methods"/>
+</page_types>

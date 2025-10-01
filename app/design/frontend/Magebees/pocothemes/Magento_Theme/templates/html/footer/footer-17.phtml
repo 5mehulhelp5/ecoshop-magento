@@ -1,0 +1,120 @@
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+	$storeId = $poco_helper->getStoreId();
+	$animation = $poco_helper->getThemeLayout('animation',$storeId)? true:false; 
+	$animation_class = $animation?"wow animate__fadeIn":" ";
+	$footerConfig =$poco_helper->getConfigGroup('footer',$storeId);
+	$contactusConfig =$poco_helper->getConfigGroup('contactus',$storeId);
+	$cartStyle = $poco_helper->getConfigValue('general','style','shoppingcart',$storeId);
+	$show_newsletter = array_key_exists('show_newsletter', $footerConfig) ? $footerConfig['show_newsletter'] : null;
+	$footer_column_1 = array_key_exists('footer_column_1', $footerConfig) ? $footerConfig['footer_column_1'] : null;
+	$footer_column_2 = array_key_exists('footer_column_2', $footerConfig) ? $footerConfig['footer_column_2'] : null;
+	$footer_column_3 = array_key_exists('footer_column_3', $footerConfig) ? $footerConfig['footer_column_3'] : null;
+	$footer_content = array_key_exists('footer_content', $footerConfig) ? $footerConfig['footer_content'] : null;
+	$footer_newsletter_content = array_key_exists('footer_newsletter_content', $footerConfig) ? $footerConfig['footer_newsletter_content'] : null;
+	$social_media_enable = array_key_exists('social_media_enable', $footerConfig) ? $footerConfig['social_media_enable'] : null;
+	$payment_method_enable = array_key_exists('payment_method_enable', $footerConfig) ? $footerConfig['payment_method_enable'] : null;
+	$payment_method_block = array_key_exists('payment_method_block', $footerConfig) ? $footerConfig['payment_method_block'] : null;
+	$store_address = array_key_exists('store_address', $contactusConfig) ? $contactusConfig['store_address'] : null;
+	$store_email = array_key_exists('store_email', $contactusConfig) ? $contactusConfig['store_email'] : null;
+	$contact = array_key_exists('contact', $contactusConfig) ? $contactusConfig['contact'] : null;
+	$copyright = array_key_exists('copyright', $footerConfig) ? $footerConfig['copyright'] : null;
+	$copyright_text = array_key_exists('copyright_text', $footerConfig) ? $footerConfig['copyright_text'] : null;
+?>
+
+<div class="footer footer-17 <?php if($cartStyle==2):echo ' flyout_on '; endif; echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.1s" <?php endif;?>>
+	
+	<?php if(($show_newsletter)&&($footer_newsletter_content)): $footer_newslettercontent_block = $poco_helper->getBlockContentByIdentifier($footer_newsletter_content); if($footer_newslettercontent_block): ?>
+		<div class="container">
+			<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($footer_newsletter_content)->toHtml(); ?>
+		</div>
+	<?php endif;?>
+	<?php endif;?>
+
+	<div class="container">
+		<?php //Footer links ?>
+		<div class="footer-top d-flex align-item-start">
+			<div class="footer-col ftr-abt-col <?php echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.2s" <?php endif;?>>
+				<div class="footer-logo mb-2"><?php echo $block->getChildHtml('footer_logo'); ?></div>
+				<?php if($footer_content): 
+				$footer_content_block = $poco_helper->getBlockContentByIdentifier($footer_content); if($footer_content_block): ?> 
+					<div class="block html-block"><?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($footer_content)->toHtml(); ?></div>
+				<?php endif; ?>
+				<?php endif; ?>
+				<!-- Social Icon Footer -->
+				<?php if($social_media_enable): ?>
+					<div class="footer-social">
+						<?php echo $block->getLayout()->createBlock('Magento\Framework\View\Element\Template')->setTemplate('Magento_Theme::html/social.phtml')->toHtml(); ?>
+					</div>
+				<?php endif; ?>
+				<!-- End Social Icon Footer -->
+			</div>
+			
+				
+			<?php if($footer_column_1): ?>
+				<div class="footer-col footer-links <?php echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.4s" <?php endif;?>>
+					<?php echo $this->getLayout()->createBlock("Magebees\Navigationmenu\Block\Menucreator")->setUniqueCode($footer_column_1)->setTemplate("Magebees_Navigationmenu::menucreator.phtml")->toHtml(); ?>
+				</div>
+			<?php endif; ?>
+				
+			<?php if($footer_column_2): ?>
+				<div class="footer-col footer-links <?php echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.6s" <?php endif;?>>	
+					<?php echo $this->getLayout()->createBlock("Magebees\Navigationmenu\Block\Menucreator")->setUniqueCode($footer_column_2)->setTemplate("Magebees_Navigationmenu::menucreator.phtml")->toHtml(); ?>
+				</div>
+			<?php endif; ?>
+			<?php if($footer_column_3): ?>
+				<div class="footer-col footer-links <?php echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.8s" <?php endif;?>>
+					<?php echo $this->getLayout()->createBlock("Magebees\Navigationmenu\Block\Menucreator")->setUniqueCode($footer_column_3)->setTemplate("Magebees_Navigationmenu::menucreator.phtml")->toHtml(); ?>
+				</div>
+			<?php endif; ?>
+			<div class="footer-col ftr_contact_info <?php echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.8s" <?php endif;?>>
+				<div class="h3 ftr_title"><?php echo __("Store information") ;?></div>
+				<?php 
+				if($store_email):?>
+					<div class="email-address">
+						<a href="emailto:<?php echo $store_email; ?>">
+							<span class="icn"><svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></span>
+							<?php echo $store_email; ?>
+						</a>
+					</div>
+				<?php endif;?>
+				<?php if($contact):?>
+					<div class="phone-no">
+						<a href="tel:<?php echo $contact; ?>">
+							<span class="icn"><svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></span>
+							<?php echo $contact; ?>
+						</a>
+					</div>
+				<?php endif;?>
+				<?php if($store_address):?>
+					<div class="address">
+						<span class="icn"><svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></span>
+						<?php echo $store_address; ?>
+					</div>
+				<?php endif;?>
+				
+			</div>
+		</div>
+
+		<div class="footer-bottom <?php echo $animation_class ?>" <?php if($animation): ?>data-wow-delay="0.8s" <?php endif;?>>
+			<div class="d-flex jcb <?php echo $animation_class ?>">
+				<?php if($copyright): ?>
+					<div class="copytext"><?php echo $copyright_text; ?></div>
+				<?php else:?>
+					<div class="copytext">
+						<?php /* @escapeNotVerified */ echo $block->getCopyright() ?>
+					</div>
+				<?php endif; ?>
+					<?php if(($payment_method_enable)&&($payment_method_block)): $payment_method_content_block = $poco_helper->getBlockContentByIdentifier($payment_method_block); if($payment_method_content_block): ?>
+					<div class="payment-option">
+						<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($payment_method_block)->toHtml(); ?>
+					</div>
+					<?php endif; ?>
+				<?php endif; ?>	
+			</div>
+			<!-- Store Switcher Code -->
+			<?php echo $block->getChildHtml('store_switcher'); ?>
+				<!-- End Store Switcher Code -->
+		</div>
+	</div>
+</div>
+

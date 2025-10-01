@@ -1,0 +1,19 @@
+<?php 
+if($block->enablePostLinks()):
+$post = $block->getPost();
+$postId = $post->getPostId();
+$postCollection = $block->getPostCollection();
+$nextPost = $block->getNextpost($postId,$postCollection);
+if($nextPost):
+$next_link = $block->getPostLink($nextPost);?>
+<div class="mb-next"><a class="link" href="<?php echo $next_link;?>" title="<?php echo $nextPost->getTitle();?>"><?php echo __('Next Post');?> </a> </div>
+<?php endif;
+$prevPost = $block->getPrevpost($postId,$postCollection);
+if($prevPost):
+$prev_link = $block->getPostLink($prevPost);
+?>
+<div class="mb-prev"><a class="link" href="<?php echo $prev_link;?>" title="<?php echo $prevPost->getTitle();?>"><?php echo __('Prev Post');?> </a> </div>
+<?php
+endif; 
+endif;
+?>

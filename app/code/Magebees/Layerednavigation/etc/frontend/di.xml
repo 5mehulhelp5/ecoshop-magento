@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+   
+     <type name="Magento\Elasticsearch\SearchAdapter\Query\Builder\Sort">
+        <arguments>
+            <argument name="skippedFields" xsi:type="array">
+                <item name="null" xsi:type="string"></item>
+            </argument>
+        </arguments>
+    </type>	
+
+   <type name="Magento\Framework\App\RouterList">
+        <arguments>
+            <argument name="routerList" xsi:type="array">
+                <item name="layernav_magebees" xsi:type="array">
+                    <item name="class" xsi:type="string">Magebees\Layerednavigation\Controller\Router</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">45</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+	<virtualType name="Magento\CatalogSearch\Model\ResourceModel\Fulltext\CollectionFactory" 		type="Magento\Catalog\Model\ResourceModel\Product\CollectionFactory">
+        <arguments>
+            <argument name="instanceName" xsi:type="string">Magebees\Layerednavigation\Model\ResourceModel\Fulltext\Collection</argument>
+        </arguments>
+    </virtualType> 
+	<!-- Add for set correct product count on search page and set quick_search_container-->
+	<virtualType name="Magento\CatalogSearch\Model\ResourceModel\Fulltext\SearchCollection" type="Magebees\Layerednavigation\Model\ResourceModel\Fulltext\Collection">
+        <arguments>
+            <argument name="searchRequestName" xsi:type="string">quick_search_container</argument>
+        </arguments>
+    </virtualType>
+	<!-- End for set correct product count on search page and set quick_search_container-->
+	
+<!--<preference for="Magento\CatalogSearch\Model\ResourceModel\Fulltext\Collection" type="Magebees\Layerednavigation\Model\ResourceModel\Fulltext\Collection" />-->
+	
+   <type name="Magento\Framework\View\Result\Page">
+        <plugin name="render_magbees_laynav_ajax_request" type="Magebees\Layerednavigation\Model\Plugin\Page"/>
+    </type>  
+	<!-- Add for solve issue for display out of stock product with apply filter -->
+	<preference for="Magento\CatalogInventory\Model\Plugin\Layer" type="Magebees\Layerednavigation\Model\Plugin\Layer" />
+	
+	<preference for="Magento\CatalogInventory\Model\ResourceModel\Stock\Status" type="Magebees\Layerednavigation\Model\ResourceModel\Stock\Status" />
+    
+	<!-- End for solve issue for display out of stock product with apply filter -->
+
+  	<type name="Magento\Catalog\Model\Layer\Filter\ItemFactory">
+        <arguments>
+            <argument name="instanceName" xsi:type="string">Magebees\Layerednavigation\Model\Layer\Filter\Item</argument>
+        </arguments>
+    </type>	
+	
+ 	<preference for="Magento\Elasticsearch\SearchAdapter\Filter\Builder\Term" type="Magebees\Layerednavigation\Model\Elasticsearch\SearchAdapter\Filter\Builder\TermFilter" />
+ 	<preference for="Magento\CatalogSearch\Model\Layer\Filter\Category" type="Magebees\Layerednavigation\Model\Layer\Filter\Category" />
+ 
+	 <preference for="Magento\CatalogSearch\Model\Layer\Filter\Attribute" type="Magebees\Layerednavigation\Model\Layer\Filter\Attribute" />
+	<preference for="Magento\Catalog\Model\Layer\Filter\Attribute" type="Magebees\Layerednavigation\Model\Layer\Filter\CatalogAttribute" />
+ 
+ 
+ 	 <preference for="Magento\Swatches\Block\LayeredNavigation\RenderLayered" type="Magebees\Layerednavigation\Block\Navigation\RenderLayered" />
+ 
+ 
+ 	<preference for="Magento\CatalogSearch\Model\Layer\Filter\Price" type="Magebees\Layerednavigation\Model\Layer\Filter\Price" />
+	
+	 	<preference for="Magento\Catalog\Model\Layer\Filter\Price" type="Magebees\Layerednavigation\Model\Layer\Filter\CatalogPrice" />
+	
+	<preference for="Magento\LayeredNavigation\Block\Navigation\State" type="Magebees\Layerednavigation\Block\Navigation\State"/>
+		
+	<type name="Magento\Catalog\Model\Layer\FilterList">
+        <plugin name="magebees_filterlist" type="Magebees\Layerednavigation\Model\Layer\FilterList"/>
+	</type>
+	
+	<!-- Added by Parag -->
+	
+	<type name="Magento\Catalog\Controller\Category\View">
+		<plugin name="custom_category_view_plugin" type="Magebees\Layerednavigation\Plugin\Catalog\Controller\Category\View" />
+	</type>
+	
+</config>

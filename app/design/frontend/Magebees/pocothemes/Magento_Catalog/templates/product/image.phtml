@@ -1,0 +1,51 @@
+<?php 
+$_product = $block->getProduct();
+if ($_product):
+    // Initialize required helpers and variables
+    $_imageHelper = $this->helper('Magento\Catalog\Helper\Image');
+    $imageDisplayArea = $block->getDisplayArea();
+    $aspectRatio = $block->getAspectRatio();
+    $imageWidth = $block->getImageWidth();
+    $imageHeight = $block->getImageHeight();
+    $disableLazyLoad = $block->getDisableLazyload();
+    $slider = $block->getSlider();
+
+    // Configure the product image
+    $productImage = $_imageHelper->init($_product, $imageDisplayArea);
+    if ($aspectRatio) {
+        $productImage = $productImage->constrainOnly(false)
+                                     ->keepAspectRatio(true)
+                                     ->keepFrame(false)
+                                     ->resize($imageWidth);
+    } else {
+        $productImage = $productImage->constrainOnly(true)
+                                     ->keepAspectRatio(false)
+                                     ->keepFrame(true)
+                                     ->resize($imageWidth, $imageHeight);
+    }
+
+    $productImageUrl = $productImage->getUrl();
+
+    // Calculate the aspect ratio for styling
+    $ratio = ($imageWidth && $imageHeight) ? $imageHeight / $imageWidth : 1;
+
+    // Render product label
+    echo $this->helper('Magebees\Productlabel\Helper\Data')->getLabel($_product);
+?>
+    <!-- Render the product image -->
+    <span class="product-image-container" style="width:<?= $imageWidth ?>px;">
+        <span class="product-image-wrapper" style="padding-bottom: <?= ($ratio * 100) ?>%;">
+            <img 
+                class="product-image-photo <?= ($slider && !$disableLazyLoad) ? 'swiper-lazy' : '' ?>" 
+                <?= !$disableLazyLoad ? 'loading="lazy"' : '' ?> 
+                src="<?= $escaper->escapeUrl(urldecode($productImageUrl)) ?>" 
+                width="<?= $imageWidth ?>" 
+                height="<?= $imageHeight ?>" 
+                alt="<?= $escaper->escapeHtml($productImage->getLabel()) ?>" 
+            />
+            <?php if ($slider && !$disableLazyLoad): ?>
+                <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+            <?php endif; ?>
+        </span>
+    </span>
+<?php endif; ?>

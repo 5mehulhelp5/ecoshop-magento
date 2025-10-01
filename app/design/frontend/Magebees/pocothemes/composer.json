@@ -1,0 +1,49 @@
+{
+     "name": "magebees/theme-poco-multipurpose-responsive-store",
+    "description": "Poco Themes Responsive Magento 2 Themes",
+    "require": {
+        "magebees/module-advertisementblock-theme": "1.*.*",
+        "magebees/module-ajaxaddtocart-theme": "1.*.*",
+        "magebees/module-ajaxcategoryproducts-theme": "1.*.*",
+		"magebees/module-ajaxcomparewishlist-theme": "1.*.*",
+        "magebees/module-ajaxinfinitescroll-theme": "1.*.*",
+        "magebees/module-ajaxquickview-theme": "1.*.*",
+        "magebees/module-ajaxsearch-theme": "1.*.*",
+        "magebees/module-blog-theme": "1.*.*",
+        "magebees/module-buynow-theme": "1.*.*",
+		"magebees/module-cachewarmer-theme": "1.*.*",
+        "magebees/module-category-image-theme": "1.*.*",
+		"magebees/module-customcartstyle-theme": "1.*.*",
+		"magebees/module-emaileditor-theme": "1.*.*",
+        "magebees/module-finder-theme": "1.*.*",
+		"magebees/module-imageflipper-theme": "1.*.*",
+		"magebees/module-imagegallery-theme": "1.*.*",
+		"magebees/module-layerednavigation-theme": "1.*.*",
+		"magebees/module-mpm-theme": "1.*.*",
+		"magebees/module-navigationmenupro-theme": "1.*.*",
+        "magebees/module-onepagecheckout-theme": "1.*.*",
+        "magebees/module-pagebanner-theme": "1.*.*",
+		"magebees/module-parallax-image-theme": "1.*.*",
+		"magebees/module-pocobase-theme": "1.*.*",
+        "magebees/module-pocothemes-theme": "1.*.*",
+        "magebees/module-productlabel-theme": "1.*.*",
+		"magebees/module-productlisting-theme": "1.*.*",
+		"magebees/module-promotionsnotification-theme": "1.*.*",
+        "magebees/module-responsivebannerslider-theme": "2.*.*",
+        "magebees/module-richsnippets-theme": "1.*.*",
+		"magebees/module-socialsharing-theme": "1.*.*",
+		"magebees/module-testimonial-theme": "1.*.*",
+        "magebees/module-todaydealproducts-theme": "1.*.*"
+	},
+    "type": "magento2-theme",
+    "version": "1.1.0",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ]
+    }
+}

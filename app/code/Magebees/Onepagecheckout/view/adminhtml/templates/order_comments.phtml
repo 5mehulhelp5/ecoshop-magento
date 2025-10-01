@@ -1,0 +1,104 @@
+<?php 
+$orderId = $this->getRequest()->getParam('order_id');//$block->getOrderData($orderId);
+$Enabled = $this->helper('Magebees\Onepagecheckout\Helper\Data')->isEnabled();
+$CommentEnabled = $this->helper('Magebees\Onepagecheckout\Helper\Data')->getOrdercomment();
+$FileAttachmentEnabled =  $this->helper('Magebees\Onepagecheckout\Helper\Data')->getOrderfileupload();
+$mbhelper = $this->helper('Magebees\Onepagecheckout\Helper\Data');
+if($Enabled == 1){
+?>
+<?php //if($CommentEnabled == 1 && $block->getOrderComments() != NULL){ ?>
+<?php
+$OrderAttachments = explode(",",(string)$block->getOrderFor($orderId)); 
+$comments = explode("|",trim((string)$block->getOrderComments($orderId)));
+$OrderAttachmentNew = array();
+$commentsNew = array();$flag = false;
+foreach($OrderAttachments as $OrderAttachment){
+	if($OrderAttachment != ""){
+		$OrderAttachmentNew[] = $OrderAttachment;		$flag = true;
+	}else{
+		$OrderAttachmentNew[] = "NA";
+	}
+}
+foreach($comments as $comment){
+	if($comment != ""){
+		$commentsNew[] = $comment;		$flag = true;
+	}else{
+		$commentsNew[] = "NA";
+	}
+}
+
+if($block->getOrderComments($orderId) != ""){
+	$CombineData = array_combine($OrderAttachmentNew,$commentsNew);
+}else{
+	$CombineData = $OrderAttachmentNew;
+}
+?>
+<?php //} ?>
+
+<?php
+$storeManager = $mbhelper->getObjectManager()->get('Magento\Store\Model\StoreManagerInterface');
+$currentStore = $storeManager->getStore();
+$mediaUrl = $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+?>
+<?php if($flag == true){ ?>
+<section class="admin__page-section order-addresses">
+    <div class="admin__page-section-title">
+        <span class="title"><?php echo __('Order Attachment and Comments');?></span>
+    </div>
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-comments">
+            <div class="admin__page-section-item-content">
+                <?php //echo $block->getOrderComments();?>
+				<table class="data-table admin__table-primary edit-order-table">
+				<thead>
+				<tr>
+					<th><?php echo __('Order Attachment');?></th>
+					<th><?php echo __('Order Comments');?></th>
+				</tr>
+				</thead>
+				<tbody class="even">
+				<?php foreach($CombineData as $key => $data){ ?>
+					<?php if($key != "NA" && $key != ""){ ?>
+					<tr>
+						<td>
+						<a href="<?php echo $mediaUrl.'Magebees/Onepagecheckout/'.$key;?>" download><?php echo $key; ?></a></td>
+						<td>
+							<?php 
+								if (!is_numeric($data)) {
+									echo $data;
+								}
+							?>
+						</td>
+					</tr>
+					<?php } ?>
+				<?php } ?>
+				</tbody>
+				</table>
+            </div>
+        </div>
+    </div>
+</section><?php } ?>
+
+<?php 
+if($FileAttachmentEnabled == 1 && $block->getOrderFor($orderId) != NULL){ ?>
+<!--<section class="admin__page-section order-addresses">
+    <div class="admin__page-section-title">
+        <span class="title"><?php echo __('Order File Attachment');?></span>
+    </div>
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-for">
+            <div class="admin__page-section-item-content">
+                <?php
+                $storeManager = $mbhelper->getObjectManager()->get('Magento\Store\Model\StoreManagerInterface');
+                $currentStore = $storeManager->getStore();
+                $mediaUrl = $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+                ?>
+                <?php echo __('Download File : ');?>
+                <a href="<?php echo $mediaUrl.'Magebees/Onepagecheckout/'.$block->getOrderFor($orderId);?>" download><?php echo $block->getOrderFor($orderId);?> </a>
+            </div>
+        </div>
+    </div>
+</section>-->
+
+<?php }
+} ?>

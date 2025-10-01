@@ -1,0 +1,37 @@
+<?php 
+$helper = $this->helper('\Magebees\Layerednavigation\Helper\Data');
+$varnish_enable = $helper->isLayerVarnishEnabled();
+$image_url = $block->getViewFileUrl('Magebees_Layerednavigation::images/ajax_loader.gif'); 
+$enableAjax = $helper->getAjaxConfig();
+?>
+<div id="loadingLayer"><div><img src="<?php echo $image_url; ?>" alt="Loading..." /></div></div>		
+<input type="hidden" name="enable_varnish" id="enable_varnish" value="<?php echo $varnish_enable; ?>">
+
+<?php if($enableAjax == 0){ ?>
+<script type="text/javascript">
+require([
+    'jquery',
+	"Magebees_Layerednavigation/js/magebees-layer"
+], function($,layeredNav)
+{	
+	function loadContent(event) 
+	{
+		var layerednav = new layeredNav();
+		layerednav.dropChange();
+		layerednav.initAjaxLayerNavigation();
+		layerednav.initFilterNavigation();
+		layerednav.gridSwitchList();
+		layerednav.gridSorterOptions();
+		layerednav.gridSorterAction();
+		layerednav.gridLimiterAction();			
+	}
+	if (document.readyState !== 'loading') {
+		loadContent();
+	} else {
+		document.addEventListener('DOMContentLoaded', function () {
+			loadContent();
+		});
+	}
+});
+</script>
+<?php } ?>

@@ -1,0 +1,198 @@
+<?php 
+$popuptype = $this->getPopuptype();
+
+if($popuptype == 0){ ?>
+<style>
+<?php if($this->getSuccessbgcolor()!= ''): ?>.message-success.success.message{background-color: <?php echo $this->getSuccessbgcolor();  ?>;}<?php endif; ?><?php if($this->getSuccessforecolor()!= ''): ?>
+	.message-success.success.message{color: <?php echo $this->getSuccessforecolor();?>;}
+<?php endif; ?><?php if($this->getErrorbgcolor()!= ''): ?>
+	.message-error.error.message{background-color: <?php echo $this->getErrorbgcolor();  ?>;}
+<?php endif; ?><?php if($this->getErrorforecolor()!= ''): ?>
+	.message-error.error.message{color: <?php echo $this->getErrorforecolor();  ?>;}
+<?php endif; ?><?php if($this->getNoticebgcolor()!= ''): ?>
+	.message-notice.notice.message{background-color: <?php echo $this->getNoticebgcolor();  ?>;}
+<?php endif; ?><?php if($this->getNoticeforecolor()!= ''): ?>
+	.message-notice.notice.message{color: <?php echo $this->getNoticeforecolor(); ?>;}
+<?php endif; ?><?php if($this->getWarningbgcolor()!= ''): ?>
+	.message-warning.warning.message{background-color: <?php echo $this->getWarningbgcolor(); ?>;}
+<?php endif; ?><?php if($this->getWarningforecolor()!= ''): ?>
+	.message-warning.warning.message{color:<?php echo $this->getWarningforecolor(); ?>;}
+<?php endif; ?><?php if($this->getMsgwidth()!= ''): ?>
+	.page.messages{width: <?php echo $this->getMsgwidth()."%";  ?> !important;}
+<?php endif; ?><?php if($this->getSuccessfontsize()!= ''){ ?>
+	.message-success.success.message{font-size: <?php echo $this->getSuccessfontsize();  ?>px;}
+<?php }else{ ?>	.message-success.success.message{font-size: 14px;}
+<?php } ?>
+<?php if($this->getErrorfontsize()!= ''){ ?>
+	.message-error.error.message{font-size: <?php echo $this->getErrorfontsize();  ?>px;}
+<?php }else{ ?>
+	.message-error.error.message{font-size: 14px;}
+<?php } ?>
+<?php if($this->getNoticefontsize()!= ''){ ?>
+	.message-notice.notice.message{font-size: <?php echo $this->getNoticefontsize();  ?>px;}
+<?php }else{ ?>
+	.message-notice.notice.message{font-size: 14px;}
+<?php } ?>
+<?php if($this->getWarningfontsize()!= ''){ ?>
+	.message-warning.warning.message{font-size: <?php echo $this->getWarningfontsize();  ?>px;}
+<?php }else{ ?>
+	.message-warning.warning.message{font-size: 14px;}
+<?php } ?>
+<?php if($this->getSuccesspadding()!= ''){ ?>
+	.message-success.success.message{padding:<?php echo $this->getSuccesspadding(); ?>;}
+<?php } ?>
+<?php if($this->getErrorpadding()!= ''){ ?>
+	.message-error.error.message{padding:<?php echo $this->getErrorpadding(); ?>;}
+<?php } ?>
+<?php if($this->getNoticepadding()!= ''){ ?>
+	.message-notice.notice.message{padding:<?php echo $this->getNoticepadding(); ?>;}
+<?php } ?>
+<?php if($this->getWarningpadding()!= ''){ ?>
+	.message-warning.warning.message{padding:<?php echo $this->getWarningpadding(); ?>;}
+<?php } ?>
+<?php if($this->getSuccesspadding()!= ''){ ?>
+	.message-success.success.message{margin:<?php echo $this->getSuccesspadding(); ?>;}
+<?php } ?>
+<?php if($this->getErrorpadding()!= ''){ ?>
+	.message-error.error.message{margin:<?php echo $this->getErrorpadding(); ?>;}
+<?php } ?>
+<?php if($this->getNoticepadding()!= ''){ ?>
+	.message-notice.notice.message{margin:<?php echo $this->getNoticepadding(); ?>;}
+<?php } ?>
+<?php if($this->getWarningpadding()!= ''){ ?>
+	.message-warning.warning.message{margin:<?php echo $this->getWarningpadding(); ?>;}
+<?php } ?>
+</style>
+<?php $mbpos = $block->getPosition(); ?>
+<script type="text/javascript">
+	require(['jquery'],function($){
+		jQuery(document).ready(function() {
+			<?php if($mbpos == 0){ ?>
+				jQuery(".page.messages").addClass("Top");
+			<?php } ?>
+			<?php if($mbpos == 1){ ?>
+				jQuery(".page.messages").addClass("TopLeft");
+			<?php } ?>
+			<?php if($mbpos == 2){ ?>
+				jQuery(".page.messages").addClass("TopRight");
+			<?php } ?>
+			<?php if($mbpos == 3){ ?>
+				jQuery(".page.messages").addClass("Bottom");
+			<?php } ?>
+			<?php if($mbpos == 4){ ?>
+				jQuery(".page.messages").addClass("BottomLeft");
+			<?php } ?>
+			<?php if($mbpos == 5){ ?>
+				jQuery(".page.messages").addClass("BottomRight");
+			<?php } ?>
+			<?php if($mbpos == 6){ ?>
+				jQuery(".page.messages").addClass("Middle");
+			<?php } ?>
+			<?php if($mbpos == 7){ ?>
+				jQuery(".page.messages").addClass("MiddleLeft");
+			<?php } ?>
+			<?php if($mbpos == 8){ ?>
+				jQuery(".page.messages").addClass("MiddleRight");
+			<?php } ?>
+			<?php if($this->getCloseoptions()==1){ ?>	
+				jQuery(".page.messages").addClass('close_on_click');	
+				jQuery(".page.messages").css('cursor','pointer');
+			<?php }	?>
+			jQuery(".close_on_click").on("click", function(){
+				mbhideIt();
+			});
+			function mbhideIt(){
+				jQuery(".page.messages .messages .message").fadeOut("fast", function(){ jQuery(this).remove(); })
+			}
+		});
+	});
+</script>
+<?php }else{ ?>
+<style>
+#mbmpm-modal .message-success.success.message{background:none;font-size:14px;}
+#mbmpm-modal .message-error.error.message{background:none;font-size:14px;}
+#mbmpm-modal .message-notice.notice.message{background:none;font-size:14px;}
+#mbmpm-modal .message-warning.warning.message{background:none;font-size:14px;}
+.modal-footer button{float:left;}
+</style>
+<?php } ?>
+<?php if($popuptype == 1){ ?>
+<div id="mbmpm-modal"></div>
+<script>
+    require(['jquery','Magento_Ui/js/modal/modal'],
+        function($,modal) {
+			jQuery(document).ready(checkModel);
+			var modelTitle = "";
+			function checkModel () {
+				if($('.page.messages .messages .message').is(':visible')){
+				if($(".page.messages .messages .message").hasClass("success")){
+					modelTitle = "Success";
+				}
+				if($(".page.messages .messages .message").hasClass("error")){
+					modelTitle = "Error";
+				}
+				if($(".page.messages .messages .message").hasClass("notice")){
+					modelTitle = "Notice";
+				}
+				if($(".page.messages .messages .message").hasClass("warning")){
+					modelTitle = "Warning";
+				}
+				var options = {
+					type: 'popup',
+					responsive: true,
+					innerScroll: true,
+					title: modelTitle,
+					buttons: [{
+						text: $.mage.__('OK'),
+						class: '',
+						click: function () {
+							this.closeModal();
+							setTimeout(checkModel, 2000);
+							return;
+						}
+					}]
+				};
+				$('#mbmpm-modal').html(jQuery(".page.messages .messages").html());
+				var popup = modal(options, $('#mbmpm-modal'));
+				jQuery(".page.messages .messages .message").remove();
+				$('#mbmpm-modal').modal('openModal');
+			  } else {
+				setTimeout(checkModel, 100);
+			  }
+			}
+			$(document).on('click','.modal-popup .modal-inner-wrap .action-close',function(){
+				  jQuery(".page.messages .messages .message").fadeOut("fast", function(){ jQuery(this).remove(); })
+				setTimeout(checkModel, 2000);
+				return;
+			});
+        }
+    );
+</script>
+<?php } ?>
+<?php if($this->getCloseoptions()==0){ ?>
+<script>
+<?php
+if($this->getMbautotime() != ""){
+	$mbautotime = $this->getMbautotime();
+}else{
+	$mbautotime = 5000;
+}
+?>
+require(['jquery'],function($){
+	jQuery(document).ready(checkContainer);
+	function checkContainer () {
+	  if($('.page.messages .messages .message').is(':visible')){
+		hideme();
+	  } else {
+		setTimeout(checkContainer, 100);
+	  }
+	}
+	function hideme(){
+		setTimeout(function(){
+			jQuery(".page.messages .messages .message").fadeOut("fast", function(){ jQuery(this).remove(); })
+			checkContainer();
+		}, <?php echo $mbautotime; ?>);
+	}
+});
+</script>
+<?php } ?>

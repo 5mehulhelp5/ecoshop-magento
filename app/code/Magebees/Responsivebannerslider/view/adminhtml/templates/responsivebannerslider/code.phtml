@@ -1,0 +1,70 @@
+<?php	$GroupData = $this->getCurrentGroup(); ?>
+<?php if(count($GroupData)>1) { ?>
+<br><br>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h3 class="icon-head head-edit-form fieldset-legend"><?php echo 'Information'; ?></h3>
+    </div>
+	<fieldset id="xml-info">
+		<?php $GroupInfo= $GroupData['slidergroup_id']; ?>
+		
+		<p>For more flexibility on where to load this slider group you can use a template tag or Layout XML code to add this slider group to a CMS page or static block. The following template tag or XML code can be used to display the <strong><?php echo $GroupData['title']; ?></strong> slider group in your webshop.</p>
+		
+		<p>Instead of selecting a page or category to display the <strong><?php echo $GroupData['title']; ?></strong> slider group you can copy either the template tag or the XML code below and paste it into the content editor of a CMS page or static block (for template tag) or either a Layout XML file or a Custom Layout Update XML field of a CMS page or category (Layout XML code). You can change the reference name parameter to position the group where you want it to show in the CMS page or category.</p>
+	</fieldset>
+</div>
+<br><br>
+<div class="entry-edit">
+	<div class="entry-edit-head">
+		<h3 class="icon-head head-edit-form fieldset-legend"><?php echo 'Template Tag'; ?></h3>
+	</div>
+		
+			
+		
+<textarea id="flexslider-template-tag" rows="3" cols="100" onclick="this.focus();this.select()" readonly="readonly">
+	
+	{{block class="Magebees\Responsivebannerslider\Block\View" template="slider.phtml" code="<?php echo $GroupInfo; ?>"}}
+</textarea>
+
+</div>
+<br><br>
+<div class="entry-edit">
+	<div class="entry-edit-head">
+		<h3 class="icon-head head-edit-form fieldset-legend"><?php echo 'XML Code'; ?></h3>
+	</div>
+		
+		
+		
+<textarea id="flexslider-code" rows="7" cols="100" onclick="this.focus();this.select()" readonly="readonly">
+	<referenceContainer name="content">
+		<block class="Magebees\Responsivebannerslider\Block\View" name="responsivebannerslider_view<?php echo $GroupInfo; ?>" ifconfig="responsivebannerslider/setting/enabled" template="slider.phtml">
+			<arguments>
+        		<argument name="code" xsi:type="string"><?php echo $GroupInfo; ?></argument>
+    		</arguments>
+		</block>
+	</referenceContainer>
+	
+	</textarea>
+</div>
+
+<br><br>
+<div class="entry-edit">
+	<div class="entry-edit-head">
+		<h3 class="icon-head head-edit-form fieldset-legend"><?php echo 'Call Via Frontend Template File'; ?></h3>
+	</div>
+	
+		
+		
+<textarea id="flexslider-template-tag" rows="3" cols="100" onclick="this.focus();this.select()" readonly="readonly">
+
+	<?php echo '<?php echo  $this->getLayout()->createBlock("Magebees\Responsivebannerslider\Block\View")->setCode('. $GroupInfo.')->setTemplate("slider.phtml")->toHtml() ?>'; ?>
+	
+	
+	</textarea>
+</div>
+
+<?php }else{ ?>
+
+ No Records Found
+
+<?php }?>

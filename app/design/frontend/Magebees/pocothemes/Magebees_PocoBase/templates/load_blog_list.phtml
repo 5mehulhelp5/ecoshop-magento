@@ -1,0 +1,20 @@
+<?php 
+$randon_number = rand();	
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$blogWidgetData = $this->getData();
+if(count($blogWidgetData)>0): 
+$blogWidgetEmptyOptions = array('template'=>null,'wd_spacing'=>null,'wd_bottom_spacing'=>null,'wd_show_heading'=>null,'wd_heading'=>null,'wd_show_description'=>null,'wd_description'=>null,'wd_post_show_feature_image'=>null,'feature_image_height'=>null,'feature_image_width'=>null,'resize_type'=>null,'wd_post_type'=>null,'wd_post_limit'=>null,'wd_slider'=>null,'wd_items_per_slide'=>null,'wd_autoscroll'=>null,'wd_auto_play_delaytime'=>null,'wd_autoplayoff'=>null,'wd_slide_auto_height'=>null,'wd_navarrow'=>null,'wd_pagination'=>null,'wd_infinite_loop'=>null,'wd_scrollbar'=>null,'wd_grap_cursor'=>null,'wd_sort_by'=>null,'wd_category'=>null,'wd_comment_count'=>null,'wd_tags'=>null,'wd_author'=>null,'wd_add_this'=>null,'wd_post_readmore'=>null,'wd_post_show_view_all'=>null,'store_id'=>null,'wd_bgimage'=>null,'wd_bgcolor'=>null,'wd_items_per_row'=>null,'wd_post_content'=>null,'wd_post_view_all_text'=>null,'wd_post_show_view_all_url'=>null,'wd_post_ids'=>null);
+
+$ajaxLoadingData = array();
+$ajaxLoadingData['randon_number'] = $randon_number;
+$ajaxLoadingData['url'] = $block->getUrl('poco/index/blog');
+$ajaxLoadingData['res_div'] = '#bloglist'.$randon_number;
+$ajaxLoadingData['loading_div'] = '#loadingImage'.$randon_number;
+$ajaxLoadingData['loaderUrl'] = $poco_helper->getLoadingIcon(); 
+$blogWidget['ajaxloading'] = (array_merge($blogWidgetEmptyOptions,$blogWidgetData,$ajaxLoadingData));
+
+?>
+<div id="bloglist<?php echo $randon_number; ?>" class="ajx_loader" data-mage-init='<?php echo $poco_helper->getJsonEncode($blogWidget);?>'>
+<div id="loadingImage<?php echo $randon_number; ?>" style="display:none;"></div>
+</div>
+ <?php endif; ?>

@@ -1,0 +1,18 @@
+label[for="page_content_background"],
+label[for="page_banner_content_tcolor"],
+label[for="page_navigation_acolor"],
+label[for="page_pagination_color"],
+label[for="page_pagination_bocolor"],
+label[for="page_pagination_active"],
+label[for="page_pagination_bar"] { display: none !important; }
+
+label.label[for="page_content_background"],
+label.label[for="page_banner_content_tcolor"],
+label.label[for="page_navigation_acolor"],
+label.label[for="page_pagination_color"],
+label.label[for="page_pagination_bocolor"],
+label.label[for="page_pagination_active"],
+label.label[for="page_pagination_bar"] { display: inline-block !important; }
+
+
+

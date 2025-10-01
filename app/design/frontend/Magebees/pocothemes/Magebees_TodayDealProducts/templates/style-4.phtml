@@ -1,0 +1,93 @@
+<?php
+/**
+ * Template for displaying today deal products*
+ * @var $block \Magebees\TodayDealProducts\Block\DealProducts
+ */
+use Magento\Framework\App\Action\Action;
+
+$exist = ($block->getProductCollection() && $block->getProductCollection()->getSize() && (bool)$block->getConfigValues('enabled'));
+
+if ((bool)$block->getConfigValues('enabled')) {
+    $title = __($block->getDealData('title'));
+    $deal_description = __($block->getDealData('description'));
+    
+	$timer = $block->getCountTimer();
+	$_helper = $this->helper('Magento\Catalog\Helper\Output');
+    $unique_slider_key = $block->getUniqueSliderKey();
+	
+	/* POCO THEME CUSTOMIZATION ADD CODE Start */ 
+	include ($block->getTemplateFile('Magento_Catalog::product/product-list-theme-options.phtml'));
+	/* POCO THEME CUSTOMIZATION ADD CODE End */ 
+	$bg_color = $this->getWdBgcolor();
+	if($this->getWdBgimage()){
+		$bg_image_url = $poco_helper->getMediaUrl().$this->getWdBgimage();
+		$bg_image = 'background-image: url('.$bg_image_url.'); background-repeat: no-repeat; background-size: cover;';
+	}else{
+		$bg_image = '';
+	} 
+	
+	$spacing_class = '';
+	$spacing_class .= $this->getWdSpacing()?' sections-spacing ':'';
+	$spacing_class .= $this->getWdBottomSpacing() ? ' section-bottom-spacing ' : '';
+	
+	
+	$slider_id = "magebees-todaydeal-slider-style-4-".$random_number;
+	$autoplay=$this->getAutoScroll() ? true:false; 
+	$rtl = $poco_helper->getThemeLayout('rtl',$poco_helper->getStoreId())? true:false; 
+	$animation = $poco_helper->getThemeLayout('animation',$poco_helper->getStoreId())? true:false; 
+	$animation_class = $animation?"wow animate__fadeIn":" ";
+	$show_deal_title = $this->getWdShowDealTitle();
+	$show_deal_timer = $this->getWdShowDealTimer();
+	$show_banner = $this->getData('wd_show_banner')?$this->getData('wd_show_banner'):0;
+	$deal_banner = $this->getData('wd_image_section')?$this->getData('wd_image_section'):null;
+	$pubPath = $poco_helper->getPubAbsolutePath();
+	if($deal_banner){
+		$deal_banner_url = $poco_helper->getMediaUrl().$deal_banner;
+		$deal_banner_path = $pubPath.'media/'.$deal_banner;
+	}else{
+		$deal_banner_url = '';
+		$deal_banner_path = '';
+	}
+	if($show_banner){
+	$show_banner_class = 'show_banner';	
+	}else{
+	$show_banner_class = null;
+	}
+
+?>
+<?php if(($bg_image)||($bg_color)): ?>
+<style type="text/css">
+	<?php echo '#mage-deal-'.$random_number. " { ".$bg_image."; background-color: ".$bg_color."; } " ?>
+</style>
+<?php endif; ?>
+    <div id="<?php echo "mage-deal-".$random_number; ?>" class="mage-products mage-deal-banner d_fl alc <?php echo $spacing_class ?> <?php echo $animation_class ?>" <?php if($animation): ?> data-wow-delay="0.2s" <?php endif;?>>
+		<div class="container">
+			<div class="d_fl alc jcb">
+				<div class="dtl <?php echo $animation_class ?>" <?php if($animation): ?> data-wow-delay="0.4s" <?php endif;?>>
+					<?php if($deal_banner): ?>
+						<?php list($deal_banner_width, $deal_banner_height) = getimagesize($deal_banner_path);?>
+						<div class="img_bnr"><img loading="lazy" src="<?php echo $deal_banner_url;?>" alt="<?php echo $title; ?>" title="<?php echo $title; ?>" width="<?php echo $deal_banner_width; ?>" height="<?php echo $deal_banner_height; ?>" /></div>
+					<?php endif; ?>
+					<?php if(($title)&&($show_deal_title)):?>
+						<div class="title"><?php echo __(html_entity_decode($title)); ?></div>
+					<?php endif; ?>
+					<?php if($block->getDealData('description')): ?>
+						<div class="deal-description"><?php echo $block->escapeHtml($deal_description); ?></div>
+					<?php endif; ?>
+				</div>
+				<div class="tmr psr <?php echo $animation_class ?>" <?php if($animation): ?> data-wow-delay="0.6s" <?php endif;?>>
+					<?php if($show_deal_timer):  ?>
+						<?php echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setData('count_time', $timer)->setTemplate("Magebees_TodayDealProducts::timer.phtml")->toHtml();?>
+					<?php endif; ?>
+				</div>
+				<?php if($block->getWdShowViewall()): $view_all_text = $block->getWdViewallTxt()?$block->getWdViewallTxt():'View All Collection'; $deal_url = $block->getWdViewallUrl(); ?>
+					<div class="view-more <?php echo $animation_class ?>" <?php if($animation): ?> data-wow-delay="0.8s" <?php endif;?>>
+						<a href="<?php echo $this->getUrl($deal_url, ['_secure' => true]);?>" title="<?php echo __(html_entity_decode($block->escapeHtml($view_all_text))); ?> " class="btn-small readMore action primary"><?php echo __(html_entity_decode($block->escapeHtml($view_all_text))); ?> <svg xmlns="https://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-icon"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg></a>
+					</div>
+				<?php endif; ?>
+			</div>
+		</div>
+    </div>
+<?php 
+}
+?>

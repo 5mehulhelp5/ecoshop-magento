@@ -1,0 +1,67 @@
+<?php
+$addImage = $this->getUrl( '*/*/AddMultipleImage' );
+$deleteImage = $this->getUrl( '*/*/DeleteImage' );
+$form_key = $block->getFormKey();
+?>
+  <div class="admin__field field field-gallery">
+   <div class="admin__field-control control">
+    <button type="button" class="scalable action-show-hide" id="uploadAttachment"><span><span><span><?php echo $block->escapeHtml('Upload');?> </span></span></span></button>
+    <input type="file" id="attachment" name="attachment[]" style="display: none;" multiple="multiple"/>
+   </div>
+  </div>
+<div id="attachmentFiles"></div>
+<script>
+    require(['jquery'], function ($) {
+        $(document).ready(function ($) {
+            
+            $(document).on('click', '#attachmentFiles .action-remove', function(){
+               if (window.confirm("Are you sure you want to delete?")) {
+                   var attachmentPath = $(this).attr("data-image");
+                   var divID = $(this).parents(".base-image").attr("id");
+                   var imageID = $(this).parents(".base-image").find(".hiddneattachID").val();
+                   
+                   jQuery.ajax({
+                        url: "<?php echo $deleteImage; ?>",
+                        type: "POST",
+                        data: {filename: attachmentPath, form_key: window.FORM_KEY, imageID:imageID},
+                        showLoader: true,
+                        success: function (response) {
+                            if(response.success == true){
+                                $(".base-image#"+divID).remove();
+                            }
+                            //alert(response.message);
+                        },
+                       error: function (response) {
+                            alert(response.message);
+                       }
+                    });
+               } 
+            });
+            
+            $('#uploadAttachment').click(function(){ $('#attachment').trigger('click'); });
+            
+            $("#attachment").change(function(){
+                var data = $("#edit_form").get(0);
+                
+                jQuery.ajax({
+                     url: "<?php echo $addImage; ?>",
+                     type: "POST",
+                     data: new FormData(data),
+                     processData: false,
+                     contentType: false,
+                     showLoader: true,
+                     success: function (response) {
+                        	console.log(response.data.uploadedFiles);
+						 $("#page_media_gallery").val(response.data.uploadedFiles);
+                         $("#attachmentFiles").append(response.data.html);
+                         $('#edit_form')[0].reset();
+                     },
+                    error: function (response) {
+                         alert(response.message);
+                         $('#edit_form')[0].reset();
+                    }
+                 });
+            });
+        });
+    });
+</script>

@@ -1,0 +1,285 @@
+define([
+    'jquery',
+    'underscore',
+    'Magento_Ui/js/form/form',
+    'ko',
+    'Magento_Customer/js/model/customer',
+    'Magento_Customer/js/model/address-list',
+    'Magento_Checkout/js/model/address-converter',
+    'Magento_Checkout/js/model/quote',
+    'Magento_Checkout/js/action/create-shipping-address',
+    'Magento_Checkout/js/action/select-shipping-address',
+    'Magento_Checkout/js/model/shipping-rates-validator',
+    'Magento_Checkout/js/model/shipping-address/form-popup-state',
+    'Magento_Checkout/js/model/shipping-service',
+    'Magento_Checkout/js/action/select-shipping-method',
+    'Magento_Checkout/js/model/shipping-rate-registry',
+    'Magento_Checkout/js/action/set-shipping-information',
+    'Magento_Checkout/js/model/step-navigator',
+    'Magento_Ui/js/modal/modal',
+    'Magento_Checkout/js/model/checkout-data-resolver',
+    'Magento_Checkout/js/checkout-data',
+    'uiRegistry',
+    'mage/translate',
+    'Magebees_Onepagecheckout/js/model/google-auto-address',
+    'Magebees_Onepagecheckout/js/action/check-vat-number',
+    'Magento_Checkout/js/model/shipping-rate-service'
+], function (
+    $,
+    _,
+    Component,
+    ko,
+    customer,
+    addressList,
+    addressConverter,
+    quote,
+    createShippingAddress,
+    selectShippingAddress,
+    shippingRatesValidator,
+    formPopUpState,
+    shippingService,
+    selectShippingMethodAction,
+    rateRegistry,
+    setShippingInformationAction,
+    stepNavigator,
+    modal,
+    checkoutDataResolver,
+    checkoutData,
+    registry,
+    $t,
+    GoogleAutocompleteAddress,
+    checkvatnumber
+) {
+    'use strict';
+
+    var popUp = null;
+
+    return Component.extend({
+        defaults: {
+            template: 'Magebees_Onepagecheckout/shipping',
+            shippingFormTemplate: 'Magebees_Onepagecheckout/shipping-address/form',
+            shippingMethodListTemplate: 'Magebees_Onepagecheckout/shipping-address/shipping-method-list',
+            shippingMethodItemTemplate: 'Magebees_Onepagecheckout/shipping-address/shipping-method-item'
+        },
+        visible: ko.observable(!quote.isVirtual()),
+        errorValidationMessage: ko.observable(false),
+        isCustomerLoggedIn: customer.isLoggedIn,
+        isFormPopUpVisible: formPopUpState.isVisible,
+        isFormInline: addressList().length === 0,
+        isNewAddressAdded: ko.observable(false),
+        saveInAddressBook: 1,
+        quoteIsVirtual: quote.isVirtual(),
+
+        initialize: function () {
+            if(window.checkoutConfig.enable_vat_validator)
+            {
+                setTimeout(function(){
+                    $('#co-shipping-form input[name=vat_id]').change(function() {
+                        var vatnum = $('#co-shipping-form input[name=vat_id]').val();
+                        checkvatnumber(vatnum);
+                    });
+                    $("#co-shipping-form input[name=vat_id]").after('<p id="vatErr" class="error-msg1"></p>');
+                },5000);
+            }
+            var self = this,
+                hasNewAddress,
+                fieldsetName = 'checkout.steps.shipping-step.shippingAddress.shipping-address-fieldset';
+            this._super();
+            $('body').addClass('magebees-onepage-checkout').addClass(window.checkoutConfig.onestepcheckoutLayout);
+            if (quote.isVirtual()) {
+                $('body').addClass('magebees-onepage-checkout').addClass('magebees-Onepagecheckout-virtual');
+            }
+            checkoutDataResolver.resolveShippingAddress();
+            hasNewAddress = addressList.some(function (address) {
+                return address.getType() == 'new-customer-address';
+            });
+            this.isNewAddressAdded(hasNewAddress);
+            this.isFormPopUpVisible.subscribe(function (value) {
+                if (value) {
+                    self.getPopUp().openModal();
+                }
+            });
+            quote.shippingMethod.subscribe(function () {
+                self.errorValidationMessage(false);
+            });
+            registry.async('checkoutProvider')(function (checkoutProvider) {
+                var shippingAddressData = checkoutData.getShippingAddressFromData();
+                if (shippingAddressData) {
+                    checkoutProvider.set(
+                        'shippingAddress',
+                        $.extend(true, {}, checkoutProvider.get('shippingAddress'), shippingAddressData)
+                    );
+                }
+                checkoutProvider.on('shippingAddress', function (shippingAddrsData) {
+                    checkoutData.setShippingAddressFromData(shippingAddrsData);
+                });
+                shippingRatesValidator.initFields(fieldsetName);
+                self.source = checkoutProvider; //Added Line 19-02-2018
+            });
+            $('body').on("click", '#place-order-trigger', function (event) {
+                self.triggerShippingDataValidateEvent();
+            });
+
+            return this;
+        },
+        navigate: function (step) {
+
+        },
+        getPopUp: function () {
+            var self = this,
+                buttons;
+            if (!popUp) {
+                buttons = this.popUpForm.options.buttons;
+                this.popUpForm.options.buttons = [
+                    {
+                        text: buttons.save.text ? buttons.save.text : $t('Save Address'),
+                        class: buttons.save.class ? buttons.save.class : 'action primary action-save-address',
+                        click: self.saveNewAddress.bind(self)
+                    },
+                    {
+                        text: buttons.cancel.text ? buttons.cancel.text : $t('Cancel'),
+                        class: buttons.cancel.class ? buttons.cancel.class : 'action secondary action-hide-popup',
+                        click: this.onClosePopUp.bind(this)
+                    }
+                ];
+                this.popUpForm.options.closed = function () {
+                    self.isFormPopUpVisible(false);
+                };
+                this.popUpForm.options.modalCloseBtnHandler = this.onClosePopUp.bind(this);
+                this.popUpForm.options.keyEventHandlers = {
+                    escapeKey: this.onClosePopUp.bind(this)
+                };
+                this.popUpForm.options.opened = function () {
+                    self.temporaryAddress = $.extend(true, {}, checkoutData.getShippingAddressFromData());
+                };
+                popUp = modal(this.popUpForm.options, $(this.popUpForm.element));
+            }
+            return popUp;
+        },
+        onClosePopUp: function () {
+            checkoutData.setShippingAddressFromData($.extend(true, {}, this.temporaryAddress));
+            this.getPopUp().closeModal();
+        },
+        showFormPopUp: function () {
+            this.isFormPopUpVisible(true);            
+        },
+        saveNewAddress: function () {
+            var addressData,
+                newShippingAddress;
+            this.source.set('params.invalid', false);
+            this.triggerShippingDataValidateEvent();
+            if (!this.source.get('params.invalid')) {
+                addressData = this.source.get('shippingAddress');
+                addressData['save_in_address_book'] = this.saveInAddressBook ? 1 : 0;
+                newShippingAddress = createShippingAddress(addressData);
+                selectShippingAddress(newShippingAddress);
+                checkoutData.setSelectedShippingAddress(newShippingAddress.getKey());
+                checkoutData.setNewCustomerShippingAddress($.extend(true, {}, addressData));
+                this.getPopUp().closeModal();
+                this.isNewAddressAdded(true);
+            }
+        },
+        rates: shippingService.getShippingRates(),
+        isLoading: shippingService.isLoading,
+        isSelected: ko.computed(function () {
+            return quote.shippingMethod() ?
+                quote.shippingMethod()['carrier_code'] + '_' + quote.shippingMethod()['method_code'] :
+                null;
+        }),
+        selectShippingMethod: function (shippingMethod) {
+            var fName = $('#co-shipping-form [name="firstname"]').val();
+            var lName = $('#co-shipping-form [name="lastname"]').val();            
+            if(fName != "" && lName != ""){
+                selectShippingMethodAction(shippingMethod);    
+            }
+            selectShippingMethodAction(shippingMethod);
+            checkoutData.setSelectedShippingRate(shippingMethod['carrier_code'] + '_' + shippingMethod['method_code']);
+            $('#co-shipping-method-form').submit();
+            $('#co-shipping-method-form').submit();
+            return true;
+        },
+        setShippingInformation: function () {
+            if (this.validateShippingInformation()) {
+                setShippingInformationAction().done(
+                    function () {
+                        stepNavigator.next();
+                    }
+                );
+            }
+        },
+        validateShippingInformation: function () {
+            var shippingAddress,
+                addressData,
+                loginFormSelector = 'form[data-role=email-with-possible-login]',
+                emailValidationResult = customer.isLoggedIn(),
+                field;
+
+            if (!quote.shippingMethod()) {
+                this.errorValidationMessage($t('Please specify a shipping method.'));
+
+                return false;
+            }
+            if (this.isFormInline) {
+                this.source.set('params.invalid', false);
+                if (emailValidationResult &&
+                    this.source.get('params.invalid') ||
+                    !quote.shippingMethod()['method_code'] ||
+                    !quote.shippingMethod()['carrier_code']
+                ) {
+                    this.focusInvalid();
+
+                    return false;
+                }
+
+                shippingAddress = quote.shippingAddress();
+                addressData = addressConverter.formAddressDataToQuoteAddress(
+                    this.source.get('shippingAddress')
+                );
+                for (field in addressData) {
+                    if (addressData.hasOwnProperty(field) &&
+                        shippingAddress.hasOwnProperty(field) &&
+                        typeof addressData[field] != 'function' &&
+                        _.isEqual(shippingAddress[field], addressData[field])
+                    ) {
+                        shippingAddress[field] = addressData[field];
+                    } else if (typeof addressData[field] != 'function' &&
+                        !_.isEqual(shippingAddress[field], addressData[field])) {
+                        shippingAddress = addressData;
+                        break;
+                    }
+                }
+
+                if (customer.isLoggedIn()) {
+                    shippingAddress['save_in_address_book'] = 1;
+                }
+                selectShippingAddress(shippingAddress);
+            }
+            return true;
+        },
+        triggerShippingDataValidateEvent: function () {
+            this.source.trigger('shippingAddress.data.validate');
+
+            if (this.source.get('shippingAddress.custom_attributes')) {
+                this.source.trigger('shippingAddress.custom_attributes.data.validate');
+            }
+        },
+        initGoogleAutoAddress: function(){
+            if(window.checkoutConfig.suggest_address == true && window.checkoutConfig.google_api_key ){
+                setTimeout(function(){
+                    GoogleAutocompleteAddress.init('co-shipping-form','shipping');
+                },5000);
+            }
+        },
+        setDefaultValues: function(){
+            if (!quote.isVirtual()) {
+                setTimeout(function(){
+                    if(window.checkoutConfig.country_id != ""){
+                        if($('#co-shipping-form select[name=country_id]').val() == ""){
+                            $('#co-shipping-form select[name=country_id]').val(window.checkoutConfig.country_id).trigger('change');
+                        }
+                    }
+                }, 5000);
+            }
+        }
+    });
+});

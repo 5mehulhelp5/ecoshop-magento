@@ -1,0 +1,54 @@
+<?php
+$config=$block->getConfig();
+$enable=$config['enable'];
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$current_action = $poco_helper->getCurrentAction();
+$enable_on_listing = false;
+if(($current_action=='catalog_category_view') || 
+	($current_action=='catalogsearch_result_index') ||
+	($current_action=='catalogsearch_advanced_result'))
+	{
+		$enable_on_listing = true;
+	}
+if(!$enable)
+{
+	return;
+}
+if($enable_on_listing):
+$loaderUrl = $poco_helper->getLoadingIcon(); 
+$image_html='<img src='.$loaderUrl.' alt=Loading.../>';
+
+?> 	
+<div id="scroll_loading" style="display:none;"><img loading="lazy" src="<?php echo $loaderUrl; ?>" alt="Loading..." width="90" height="90"/></div>
+<?php 
+if($config['enabled_top'])
+{
+	if(isset($config['top_icon']))
+	{
+$top_image=$config['top_icon'];
+$top_icon_url=$block->getImageUrl($top_image);?>		
+			
+<a href="#" class="back-to-top back-to-top-img"><img src="<?php echo $top_icon_url; ?>" width="50px" height="50px"/></a>
+<?php	}
+	else
+	{?>
+		<a href="#" class="back-to-top"><?php echo __('Back to Top') ?></a>
+	<?php }
+}
+?>
+<script type="text/x-magento-init">
+    {
+        "<?php /* @escapeNotVerified */ echo $config['product_container']; ?>": {
+            "magebeesInfiniteScroll": {"loading_type":<?php /* @escapeNotVerified */ echo $config['loading_type']; ?>,
+		"product_container":"<?php /* @escapeNotVerified */ echo $config['product_container']; ?>",			
+		"page_number":"<?php /* @escapeNotVerified */ echo $config['show_page_no']; ?>",			
+		"load_next_text":"<?php /* @escapeNotVerified */ echo $config['label_next_button']; ?>",
+		"load_prev_text":"<?php /* @escapeNotVerified */ echo $config['label_prev_button']; ?>",	
+		"load_button_style":"<?php /* @escapeNotVerified */ echo $config['button_style']; ?>",
+		"threshold":"<?php /* @escapeNotVerified */ echo $config['threshold']; ?>",		
+		"loading_image_src":"<?php echo $image_html;?>",
+		"text_no_more":"<?php /* @escapeNotVerified */ echo $config['text_no_more']; ?>"}
+        }
+    }
+</script>
+<?php endif;?>

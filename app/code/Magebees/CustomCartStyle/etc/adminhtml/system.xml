@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2018 Magebees, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>		
+	<tab id="magebees" translate="label" sortOrder="100"> 
+	<label>Magebees</label> 
+	</tab>
+        <section id="shoppingcart" translate="label" sortOrder="85" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Custom Cart Style</label>
+            <tab>magebees</tab>
+            <resource>Magebees_CustomCartStyle::settings</resource>
+            <group id="general" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="enable" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If you set "No", the theme will use default ajax add to cart features of Magento.</comment>
+                </field>
+                <field id="style" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Ajax cart style</label>
+                    <source_model>Magebees\CustomCartStyle\Model\Config\Source\CartAddedStyle</source_model>
+                    <comment>The used procedure after product added to cart.</comment>
+                </field>
+				<field id="auto_close_popup" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Auto close popup</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+                    	<field id="style">1</field>
+                	</depends>
+				</field>
+                <field id="showing_time" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Showing Time (seconds)</label>
+                    <comment>If set "Yes" for "Auto close popup", the informed popup will be closed automatically after the period defined in this field.</comment>
+					<depends>
+						<field id="style">1</field>
+                    	<field id="auto_close_popup">1</field>
+                	</depends>
+				</field>
+				<field id="flycart_time" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Fly Cart Time (mili seconds)</label>
+                    <comment>If Ajax cart style "fly to footer cart" then this option is applied for fly image time.</comment>                
+					<depends>
+                    	<field id="style">2</field>
+                	</depends>
+				</field>
+				<field id="auto_close_flycart" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Auto close Flycart</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+                    	<field id="style">2</field>
+                	</depends>
+				</field>
+				<field id="flycart_showing_time" translate="label comment" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Showing Time (seconds)</label>
+                    <comment>If set "Yes" for "Auto close Flycart", the footer cart will be closed automatically after the period defined in this field.</comment>
+					<depends>
+						<field id="style">2</field>
+                    	<field id="auto_close_flycart">1</field>
+                	</depends>
+				</field>
+			</group>
+		</section>
+    </system>
+</config>

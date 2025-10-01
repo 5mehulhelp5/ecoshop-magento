@@ -1,0 +1,38 @@
+<?php
+$_helper = $this->helper('Magebees\Pagebanner\Helper\Data');
+$pageBannerHtml = '';
+
+if(($_helper->isEnablePageBanner())&&(!$_helper->isHomePage())){
+	$pageBanner = $_helper->getPageBanner();
+	
+	if($pageBanner->getBannerId()){
+	$image = $pageBanner->getBannerImage();
+	$_width = $pageBanner->getBannerImageWidth();
+	$_height = $pageBanner->getBannerImageHeight();
+	// Set static default values if width and height are not set in the database
+	if (!$_width) {
+		$_width = 1920; // Default width (in pixels)
+	}
+	
+	if (!$_height) {
+		$_height = 414; // Default height (in pixels)
+	}
+	$bannerImage = $_helper->getBannerImagePath($image);
+	//$bannerImagePath = $_helper->getBannerImageAbsolutePath($image);
+	
+	
+	
+	
+	
+	
+	$pageBannerHtml = '<img src="'.$bannerImage.'" width="'.$_width.'" height="'.$_height.'" alt="'.$pageBanner->getTitle().'" title="'.$pageBanner->getTitle().'" class="image">';
+	
+	//$pageBannerHtml = '<img src="'.$bannerImage.'" alt="'.$pageBanner->getTitle().'" title="'.$pageBanner->getTitle().'" class="image">';
+	}
+}
+
+if($pageBannerHtml):
+	echo $pageBannerHtml;
+endif;
+
+?>

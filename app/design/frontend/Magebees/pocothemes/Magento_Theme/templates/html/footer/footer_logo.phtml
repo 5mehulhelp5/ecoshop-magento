@@ -1,0 +1,38 @@
+<?php $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $poco_helper->getStoreId();
+$footerConfig =$poco_helper->getConfigGroup('footer',$storeId); 
+$logo_image = array_key_exists('logo_image', $footerConfig) ? $footerConfig['logo_image'] : null;
+$logo_image_width = array_key_exists('logo_image_width', $footerConfig) ? $footerConfig['logo_image_width'] : null;
+$logo_image_height = array_key_exists('logo_image_height', $footerConfig) ? $footerConfig['logo_image_height'] : null;
+	
+?>
+<?php $storeName = $block->getThemeName() ? $block->getThemeName() : $block->getLogoAlt();?>
+<?php if ($block->isHomePage()):?>
+    <a class="logo" href="<?= $block->getUrl('') ?>" title="<?= /* @escapeNotVerified */ $storeName ?>">
+<?php else: ?>
+    <a class="logo" href="<?= $block->getUrl('') ?>" title="<?= /* @escapeNotVerified */ $storeName ?>">
+<?php endif ?>
+
+<?php if($logo_image): ?>
+    <?php $src = $poco_helper->getMediaUrl().'poco/logo/'.$logo_image; ?>
+<?php else: ?>
+    <?php $src = $block->getLogoSrc() ?>
+<?php endif; ?>
+<?php if($logo_image_width): ?>
+<?php $block->setLogoWidth($logo_image_width); ?>
+<?php endif; ?>
+<?php if($logo_image_height): ?>
+<?php $block->setLogoHeight($logo_image_height); ?>
+<?php endif; ?>
+        <img src="<?= /* @escapeNotVerified */ $src ?>"
+			loading="lazy"
+             title="<?= /* @escapeNotVerified */ $block->getLogoAlt() ?>"
+             alt="<?= /* @escapeNotVerified */ $block->getLogoAlt() ?>"
+             <?= $block->getLogoWidth() ? 'width="' . $block->getLogoWidth() . '"' : '' ?>
+             <?= $block->getLogoHeight() ? 'height="' . $block->getLogoHeight() . '"' : '' ?>
+        />
+<?php if ($block->isHomePage()):?>
+    </a>
+<?php else:?>
+    </a>
+<?php endif?>

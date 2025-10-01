@@ -1,0 +1,80 @@
+/*============================================================================
+ Copyright © 2020 Messages Popup Modal (MPM) Extension. All rights reserved.
+ MageBees.com | Capacity Web Solutions Pvt. Ltd.
+/*============================================================================*/
+
+*,::before,::after{ -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; }
+
+/* Messages Popup Modal */
+.page.messages  { position:fixed; left:0; top:0; margin:0 auto; padding:0; text-align:left; width:100%; z-index:9999; }
+.page.messages .message{ position:inherit; font-size:14px; margin:0; padding:25px 40px 25px 25px; -ms-flex-align:center; align-items:center; display:-webkit-box; display:-moz-box; display:-webkit-flex; display:-ms-flexbox; display:flex; border-radius:0; background:#e5efe5; z-index:999; -webkit-box-shadow:0px 0px 3px 0px rgba(32,33,36,0.28); box-shadow:0px 0px 3px 0px rgba(32,33,36,0.28); }
+.page.messages .messages .message:before{ content:''; position:fixed; top:0; bottom:0; left:0; right:0; background-color:rgba(0,0,0,0.5); z-index:-1; }
+.page.messages div[data-bind="scope: 'messages'"] { position:relative; }
+.page.messages div[data-bind="html: message.text"] { position:relative; padding-left:35px; }
+
+/* Close Button Popup */
+.page.messages .messages .message:after { content:'\e616'; font-family:'luma-icons'; position:absolute; top:21px; right:10px; display:block; padding:2px; text-align:center; font-size:18px; font-weight:400; text-transform:uppercase; width:40px; height:auto; color:#000; background-color:transparent; cursor:pointer; }
+.page.messages .message-success.message:after{ color:#006400; }
+.page.messages .message-error.message:after{ color:#b30000; }
+.page.messages .message-notice.message:after{ color:#c07600; }
+.page.messages .message-warning.message:after{ color:#6f4400; }
+
+/* Top Messages Popup */
+.page.messages.Top { top:0; right:0; padding:0; text-align:center; width:100% !important; }
+.page.messages.Top .message{ -ms-flex-pack:center; justify-content:center; }
+/* Top Left Messages Popup */
+.page.messages.TopLeft { top:0; left:0; right:auto; }
+/* Top Right Messages Popup */
+.page.messages.TopRight { top:0; left:auto; right:0; }
+
+/* Bottom Messages Popup */
+.page.messages.Bottom { top:auto; bottom:0; right:0; padding:0; text-align:center; width:100% !important; }
+.page.messages.Bottom .message{ -ms-flex-pack:center; justify-content:center; }
+/* Bottom Left Messages Popup */
+.page.messages.BottomLeft { top:auto; bottom:0; }
+/* Bottom Right Messages Popup */
+.page.messages.BottomRight { top:auto; bottom:0; left:auto; right:0; }
+
+/* Middle Messages Popup */
+.page.messages.Middle { left:0; right:0; top:50%; margin-top:-30px; padding: 0 10px; }
+/* Middle Left Messages Popup */
+.page.messages.MiddleLeft { left:0; right:auto; top:50%; }
+/* Middle Right Messages Popup */
+.page.messages.MiddleRight { left:auto; right:0; top:50%; }
+
+/* Messages Alert Icon */
+.page.messages .message.success > :first-child:before,
+.page.messages .message.error > :first-child:before,
+.page.messages .message.notice > :first-child:before,
+.page.messages .message.warning > :first-child:before { content:'\e60e'; color:#006400; font-family:'luma-icons'; float:left; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; font-size:24px; line-height:24px; margin:0; vertical-align:middle; display:inline-block; font-weight:normal; overflow:hidden; speak:none; left:0; top:0; width:32px; position:inherit; text-align:left; }
+.page.messages .message.error > :first-child:before { content:'\e61f'; color:#b30000; }
+.page.messages .message.notice > :first-child:before { content:'\e602'; color:#c07600; }
+.page.messages .message.warning > :first-child:before{ content:'\e602'; color:#6f4400; }
+
+/* Messages Shopping Cart Link */
+.page.messages .message a { color:#006bb4; font-weight:bold; border:none; outline:none; }
+.page.messages .message a:hover { text-decoration:underline; }
+.page.messages .message-success.message a{ color:#0b2e13; }
+.page.messages .message-error.message a{ color:#491217; }
+.page.messages .message-notice.message a{ color:#533f03; }
+.page.messages .message-warning.message a{ color:#533f03; }
+
+
+/*============================================================================
+  Responsive CSS
+/*============================================================================*/
+
+@media only screen and (max-width:767px) {
+	div.page.messages { width:100% !important; padding:0 10px; }
+	.page.messages .message{ padding:16px 32px 16px 16px; font-size:14px !important; }
+	
+	.page.messages .message.success > :first-child:before, 
+	.page.messages .message.error > :first-child:before, 
+	.page.messages .message.notice > :first-child:before, 
+	.page.messages .message.warning > :first-child:before { top:0; font-size:22px; line-height:22px; }
+	.page.messages div[data-bind="html: message.text"]{ padding-left:30px; }
+	.page.messages .messages .message:after { top:13px; right:0; font-size:15px; }
+
+}
+
+

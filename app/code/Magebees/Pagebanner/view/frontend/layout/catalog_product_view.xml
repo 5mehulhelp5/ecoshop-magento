@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+	<referenceContainer name="page.top">
+			<container name="page-title-wrap" label="Page Title Wrap" as="page-title-wrap" htmlTag="div" htmlClass="page-title-wrap" />
+	</referenceContainer>
+	
+	<!--<move element="page.main.title" destination="page-title-wrap" before="-" />-->
+	
+	
+	<move element="page.banner" destination="page.main.title" before="-"  />
+	
+	<referenceContainer name="page-title-wrap">
+            <block class="Magento\Framework\View\Element\Template" name="page.banner" template="Magebees_Pagebanner::html/banner.phtml" after="page.main.title" ifconfig="pagebanner/general/enabled" >
+			</block>
+    </referenceContainer>
+	<move element="page.banner" destination="page-title-wrap" before="-"  />
+	<move element="breadcrumbs" destination="page-title-wrap" before="page.banner" />
+		
+		
+	<!--<referenceBlock name="page.main.title">
+            <action method="setTemplate" ifconfig="pagebanner/general/enabled">
+                <argument name="template" xsi:type="string">Magebees_Pagebanner::html/title.phtml</argument>
+            </action>
+        </referenceBlock>-->
+		
+		
+		
+    </body>
+</page>

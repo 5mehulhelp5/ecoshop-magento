@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<body>
+		<attribute name="class" value="page-with-filter"/>
+		<attribute name="class" value="page-products"/>
+		<attribute name="class" value="catalog-category-view"/>
+		<referenceContainer name="content">
+			<block class="Magebees\Finder\Block\Finder" name="finder" template="Magebees_Finder::finder.phtml" ifconfig="finder/general/enabled"/>
+			<block class="Magebees\Finder\Block\FinderProduct" name="finder-productlist" template="Magebees_Finder::product.phtml" ifconfig="finder/general/enabled">
+				<!-- <block class="Magento\Catalog\Block\Product\ProductList\Toolbar" name="product_list_toolbar" template="Magento_Catalog::product/list/toolbar.phtml">
+                	<block class="Magento\Theme\Block\Html\Pager" name="product_list_toolbar_pager"/>
+               	</block>
+                <action method="setToolbarBlockName">
+                	<argument name="name" xsi:type="string">product_list_toolbar</argument>
+                </action> -->
+			</block>
+		</referenceContainer>
+
+	   <referenceBlock name="magebeesLayNav" remove="true"/>
+    </body>
+</page>

@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="magebees_menucreatorgroup" resource="default" engine="innodb" comment="magebees_menucreatorgroup">
+    <column xsi:type="int" name="group_id" padding="10" unsigned="true" nullable="false" identity="true" comment="group_id"/>
+    <column xsi:type="varchar" name="title" nullable="false" length="255" comment="title"/>
+    <column xsi:type="smallint" name="showhidetitle" padding="6" unsigned="false" nullable="false" identity="false" default="1" comment="showhidetitle"/>
+    <column xsi:type="text" name="description" nullable="false" comment="description"/>
+    <column xsi:type="smallint" name="status" padding="6" unsigned="false" nullable="false" identity="false" default="1" comment="status"/>
+    <column xsi:type="varchar" name="menutype" nullable="false" length="255" comment="menutype"/>
+    <column xsi:type="varchar" name="alignment" nullable="false" length="255" default="left" comment="alignment"/>
+    <column xsi:type="varchar" name="level" nullable="false" length="255" comment="level"/>
+    <column xsi:type="varchar" name="position" nullable="true" length="255" default="1" comment="position"/>
+    <column xsi:type="datetime" name="created_time" on_update="false" nullable="true" comment="created_time"/>
+    <column xsi:type="datetime" name="update_time" on_update="false" nullable="true" comment="update_time"/>
+    <column xsi:type="smallint" name="show_hide_title" padding="6" unsigned="false" nullable="false" identity="false" default="1" comment="show_hide_title"/>
+    <column xsi:type="smallint" name="image_height" padding="6" unsigned="false" nullable="false" identity="false" default="25" comment="image_height"/>
+    <column xsi:type="smallint" name="image_width" padding="6" unsigned="false" nullable="false" identity="false" default="25" comment="image_width"/>
+    <column xsi:type="varchar" name="direction" nullable="true" length="10" comment="direction"/>
+    <column xsi:type="text" name="rootoptions" nullable="true" comment="rootoptions"/>
+    <column xsi:type="text" name="megaoptions" nullable="true" comment="megaoptions"/>
+    <column xsi:type="text" name="suboptions" nullable="true" comment="suboptions"/>
+    <column xsi:type="text" name="flyoptions" nullable="true" comment="flyoptions"/>
+    <column xsi:type="varchar" name="unique_code" nullable="true" length="255" comment="Unique_code"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="group_id"/>
+    </constraint>
+  </table>
+  <table name="magebees_menucreator" resource="default" engine="innodb" comment="magebees_menucreator">
+    <column xsi:type="int" name="menu_id" padding="10" unsigned="true" nullable="false" identity="true" comment="menu_id"/>
+    <column xsi:type="int" name="group_id" padding="10" unsigned="true" nullable="false" identity="false" comment="group_id"/>
+    <column xsi:type="varchar" name="title" nullable="false" length="255" comment="title"/>
+    <column xsi:type="text" name="description" nullable="false" comment="description"/>
+    <column xsi:type="text" name="image" nullable="false" comment="image"/>
+    <column xsi:type="text" name="type" nullable="false" comment="type"/>
+    <column xsi:type="varchar" name="category_id" nullable="false" length="6" comment="category_id"/>
+    <column xsi:type="varchar" name="cmspage_identifier" nullable="false" length="255" comment="cmspage_identifier"/>
+    <column xsi:type="varchar" name="staticblock_identifier" nullable="false" length="255" comment="staticblock_identifier"/>
+    <column xsi:type="varchar" name="product_id" nullable="false" length="6" comment="product_id"/>
+    <column xsi:type="varchar" name="parent_id" nullable="false" length="6" comment="parent_id"/>
+    <column xsi:type="varchar" name="url_value" nullable="false" length="255" comment="url_value"/>
+    <column xsi:type="varchar" name="usedlink_identifier" nullable="false" length="255" comment="usedlink_identifier"/>
+    <column xsi:type="smallint" name="image_status" padding="6" unsigned="false" nullable="false" identity="false" default="1" comment="image_status"/>
+    <column xsi:type="varchar" name="show_category_image" nullable="true" length="255" comment="show_category_image"/>
+    <column xsi:type="smallint" name="show_custom_category_image" padding="6" unsigned="false" nullable="true" identity="false" comment="show_custom_category_image"/>
+    <column xsi:type="smallint" name="position" padding="6" unsigned="false" nullable="false" identity="false" comment="position"/>
+    <column xsi:type="text" name="class_subfix" nullable="false" comment="class_subfix"/>
+    <column xsi:type="varchar" name="permission" nullable="false" length="255" comment="permission"/>
+    <column xsi:type="smallint" name="status" padding="6" unsigned="false" nullable="false" identity="false" default="1" comment="status"/>
+    <column xsi:type="datetime" name="created_time" on_update="false" nullable="true" comment="created_time"/>
+    <column xsi:type="datetime" name="update_time" on_update="false" nullable="true" comment="update_time"/>
+    <column xsi:type="smallint" name="target" padding="6" unsigned="false" nullable="true" identity="false" default="1" comment="target"/>
+    <column xsi:type="varchar" name="storeids" nullable="true" length="250" comment="storeids"/>
+    <column xsi:type="smallint" name="autosub" padding="6" unsigned="false" nullable="true" identity="false" comment="autosub"/>
+    <column xsi:type="varchar" name="use_category_title" nullable="true" length="5" default="2" comment="use_category_title"/>
+    <column xsi:type="varchar" name="autosubimage" nullable="true" length="5" default="0" comment="autosubimage"/>
+    <column xsi:type="varchar" name="text_align" nullable="true" length="255" default="left" comment="text_align"/>
+    <column xsi:type="varchar" name="image_type" nullable="true" length="255" default="none" comment="image_type"/>
+    <column xsi:type="varchar" name="subcolumnlayout" nullable="true" length="255" comment="subcolumnlayout"/>
+    <column xsi:type="varchar" name="title_show_hide" nullable="true" length="255" comment="title_show_hide"/>
+    <column xsi:type="varchar" name="useexternalurl" nullable="true" length="255" comment="useexternalurl"/>
+    <column xsi:type="varchar" name="setrel" nullable="true" length="255" comment="setrel"/>
+    <column xsi:type="smallint" name="label_show_hide" padding="6" unsigned="false" nullable="true" identity="false" comment="label_show_hide"/>
+    <column xsi:type="varchar" name="label_title" nullable="true" length="255" comment="label_title"/>
+    <column xsi:type="smallint" name="label_height" padding="6" unsigned="false" nullable="true" identity="false" comment="label_height"/>
+    <column xsi:type="smallint" name="label_width" padding="6" unsigned="false" nullable="true" identity="false" comment="label_width"/>
+    <column xsi:type="varchar" name="label_bg_color" nullable="true" length="255" comment="label_bg_color"/>
+    <column xsi:type="varchar" name="label_color" nullable="true" length="255" comment="label_color"/>	<column xsi:type="varchar" name="img_alt" nullable="true" length="255" comment="img_alt"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="menu_id"/>
+    </constraint>
+  </table>
+</schema>

@@ -1,0 +1,404 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Product media data template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Gallery
+ */
+?>
+<?php 
+$_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $poco_helper->getStoreId();
+
+$productDetailsConfig = $poco_helper->getConfigGroup('pro_view',$storeId);
+
+$zoom_enable = array_key_exists('use_zoom_image', $productDetailsConfig) ? $productDetailsConfig['use_zoom_image'] : false;
+$thumbs_style = array_key_exists('thumbs_style', $productDetailsConfig) ? $productDetailsConfig['thumbs_style'] : false;
+$show_nav_arrows = array_key_exists('show_nav_arrows', $productDetailsConfig) ? $productDetailsConfig['show_nav_arrows'] : false;
+$fullscreen = array_key_exists('fullscreen', $productDetailsConfig) ? $productDetailsConfig['fullscreen'] : false;
+$thumbs_width = array_key_exists('thumbs_width', $productDetailsConfig) ? $productDetailsConfig['thumbs_width'] : 90;
+$thumbs_height = array_key_exists('thumbs_height', $productDetailsConfig) ? $productDetailsConfig['thumbs_height'] : 90;
+$thumbs_nav = array_key_exists('thumbs_nav_arrows', $productDetailsConfig) ? $productDetailsConfig['thumbs_nav_arrows'] : 90;
+$page_layout = array_key_exists('page_layout', $productDetailsConfig) ? $productDetailsConfig['page_layout'] : null;
+$rtl = $poco_helper->getThemeLayout('rtl',$storeId);
+if($rtl):
+$direction = 'rtl';
+else:
+$direction = 'ltr ';
+endif;
+
+if($page_layout=='1column'){
+$zoom_left_position = '675';
+$zoom_height_position = '650';
+$zoom_width_position = '650';
+}else if(($page_layout=='2columns-left')||($page_layout=='2columns-right')){
+$zoom_left_position = '470';
+$zoom_height_position = '520';
+$zoom_width_position = '520';	
+}else{
+	$zoom_left_position = '470';
+$zoom_height_position = '520';
+$zoom_width_position = '520';	
+}
+					
+?>
+<?php if(!$zoom_enable):?>
+<style>
+.fotorama__fullscreen .fotorama__zoom-out,
+.fotorama__fullscreen .fotorama__zoom-in { display: none !important; }
+</style>
+<?php endif; ?>
+<style>
+.page-layout-1column .vertical-thumb-slider .fotorama__stage { width: calc(100% - 162px) !important; }
+.vertical-thumb-slider .fotorama__stage { width: calc(100% - 162px) !important; }
+@media (max-width: 1200px) {
+    .page-layout-1column .vertical-thumb-slider .fotorama__stage { width: calc(100% - 162px) !important; }
+}
+@media (max-width: 768px) {
+    .vertical-thumb-slider .fotorama__stage, .page-layout-1column .vertical-thumb-slider .fotorama__stage { width: 100% !important; }
+}
+</style>
+
+<?php if($thumbs_style == "grid"): ?>
+    <?php 
+    $product = $block->getProduct();
+    $images = $product->getMediaGalleryImages();
+	
+    $imageHelper = $this->helper('Magento\Catalog\Helper\Image');
+    ?>
+    <div class="product-gallery">
+        <div class="action-skip-wrapper"><a class="action skip gallery-next-area" href="#gallery-next-area"><span><?php echo __('Skip to the end of the images gallery'); ?></span></a></div>
+        <div class="action-skip-wrapper"><a class="action skip gallery-prev-area" href="#gallery-prev-area"><span><?php echo __('Skip to the beginning of the images gallery'); ?></span></a></div>
+        <a id="gallery-next-area" tabindex="-1"></a>
+        <?php echo $this->helper('Magebees\Productlabel\Helper\Data')->getLabel($product,'product'); ?>
+        <div class="gallery-list">
+            <?php if (!$product->getImage() || $product->getImage() == 'no_selection'): ?>
+                <?php $image = $imageHelper->getDefaultPlaceholderUrl('image'); ?>
+                
+                <div class="product item-image imgzoom" data-zoom="<?php echo $image; ?>">
+                    <a class="lb" href="<?php echo $image; ?>"> <img class="img-fluid" src="<?php echo $image; ?>" alt="main product photo"> </a>
+                </div>
+            <?php else: ?>
+                <?php foreach ($images as $image): 
+				// Media directory base path
+				$mediaDirPath = BP . '/pub/media/catalog/product/';
+				$filePath = $image->getPath();
+				//$imageFileName = ltrim(str_replace('/media/catalog/category/', '', $_category->getImage()), '/');
+
+				//$filePath = $mediaDirPath . $imageFileName; // Construct the full file path
+
+				// Check if the file exists and fetch dimensions
+				$dimensions = file_exists($filePath) ? getimagesize($filePath) : null;
+				$width = $dimensions[0] ?? null;
+				$height = $dimensions[1] ?? null;
+				?>
+                    <?php $images = $imageHelper->init($product, 'product_page_image_medium')
+                        ->constrainOnly(true)->keepAspectRatio(true)->keepFrame(false)
+                        ->setImageFile($image->getPath())
+                        ->getUrl();    
+                    ?>
+                    
+					<div class="product item-image imgzoom" data-zoom="<?php echo $image->getUrl(); ?>">
+						<a class="lb" href="<?php echo $image->getUrl(); ?>"> 
+							<img class="img-fluid" src="<?php echo $image->getUrl(); ?>" alt="main product photo" 
+								<?php echo ($width && $height) ? 'width="' . $width . '" height="' . $height . '"' : ''; ?>>
+						</a>
+					</div>
+                        
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+    </div>
+    <script>
+    require(['jquery', 'magnificPopup'], function($) {
+        $('.product.media').magnificPopup( {
+            delegate:'.imgzoom .lb', type:'image', tLoading:'Loading image #%curr%...', mainClass:'mfp-img-gallery', fixedContentPos:true, gallery: {
+                enabled: true, navigateByImgClick: true, preload: [0, 1]
+            }
+            , iframe: {
+                markup: '<div class="mfp-iframe-scaler"><div class="mfp-close"></div><iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe><div class="mfp-title"></div><div class="mfp-counter"></div></div></div>'
+            }
+            , image: {
+                tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+            }
+            , callbacks: {
+                elementParse:function(item) {
+					if(item.el[0].attributes.class.value=='lb video-link') {
+                        item.type='iframe';
+                    }
+                    else {
+                        item.type='image';
+                    }
+                }
+            }
+        }
+        );
+    }
+
+    );
+    </script>
+<?php else: ?>
+<?php
+$images = $block->getGalleryImages()->getItems();
+$mainImage = current(array_filter($images, function ($img) use ($block) {
+    return $block->isMainImage($img);
+}));
+
+if (!empty($images) && empty($mainImage)) {
+    $mainImage = $block->getGalleryImages()->getFirstItem();
+}
+
+$helper = $block->getData('imageHelper');
+$mainImageData = $mainImage ?
+    $mainImage->getData('medium_image_url') :
+    $helper->getDefaultPlaceholderUrl('image');
+
+?>
+
+<div class="gallery-placeholder _block-content-loading" data-gallery-role="gallery-placeholder">
+    <img
+        alt="main product photo"
+        class="gallery-placeholder__image"
+        src="<?= /* @noEscape */ $mainImageData ?>"
+    />
+</div>
+
+<script>
+
+    var config = {
+
+            "width": <?php /* @escapeNotVerified */ echo $block->getImageAttribute('product_page_image_medium', 'width'); ?>,
+
+            "thumbheight": <?php /* @escapeNotVerified */ echo $thumbs_height ?: $thumbs_width; ?>,
+
+            "navtype": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/navtype"); ?>",
+
+            "height": <?php /* @escapeNotVerified */ echo $block->getImageAttribute('product_page_image_medium', 'height'); ?>,
+
+            "thumbstyle": "<?php /* @escapeNotVerified */ echo $thumbs_style; ?>"
+
+        },
+
+        thumbBarHeight = 0,
+
+        loader = document.querySelectorAll('[data-gallery-role="gallery-placeholder"] [data-role="loader"]')[0];
+
+
+
+    if (config.navtype === 'horizontal') {
+
+        thumbBarHeight = config.thumbheight;
+
+    }
+
+	
+
+	// Add class if vertical slider
+
+	if(config.thumbstyle === 'vertical'){
+
+		var links = document.querySelectorAll('.gallery-placeholder');
+
+		[].forEach.call(links, function(item) {
+
+		  item.classList.add('vertical-thumb-slider');
+
+		});
+
+	}
+
+	if (loader === undefined || loader === null) {
+     // do something 
+    }else{
+        loader.style.paddingBottom = ( config.height / config.width * 80) + "%";    
+    }
+
+</script>
+
+<script type="text/x-magento-init">
+
+    {
+
+        "[data-gallery-role=gallery-placeholder]": {
+
+            "mage/gallery/gallery": {
+
+                
+				<?php if($zoom_enable) : ?>
+                "mixins":["magnifier/magnify"],
+				"magnifierOpts": {
+					"enabled": true,
+					"fullscreenzoom":"20",
+					"top":"0",
+					"left":"<?php echo $zoom_left_position; ?>",
+					"height":"<?php echo $zoom_height_position; ?>",
+					"eventType":"hover",
+					"width": "<?php echo $zoom_width_position; ?>",
+					"mode": "outside"
+
+				},
+				<?php endif; ?>
+
+                "data": <?php /* @escapeNotVerified */ echo $block->getGalleryImagesJson(); ?>,
+
+                "options": {
+
+                    <?php if($thumbs_style == 'horizontal' || $thumbs_style == 'vertical'):?>
+
+						"nav": "thumbs",
+
+						"navdir": "<?php echo $thumbs_style; ?>",
+
+					<?php else:?> 
+
+						"nav": "dots",
+
+					<?php endif; ?>
+
+					"direction": "<?php echo $direction; ?>",
+
+                    <?php if (($block->getVar("gallery/loop"))): ?>
+
+                        "loop": <?php /* @escapeNotVerified */ echo $block->getVar("gallery/loop"); ?>,
+
+                    <?php endif; ?>
+
+                   
+
+				   <?php if (($block->getVar("gallery/keyboard"))): ?>
+
+                        "keyboard": <?php /* @escapeNotVerified */ echo $block->getVar("gallery/keyboard"); ?>,
+
+                    <?php endif; ?>
+
+                   
+
+				   <?php if($show_nav_arrows):?>
+
+						"arrows": true,
+
+					<?php else: ?>
+
+						"arrows": false,
+
+					<?php endif; ?>
+
+                   
+
+				   <?php if($fullscreen): ?>
+
+						"allowfullscreen": true,
+
+					<?php else: ?>
+
+						"allowfullscreen": false,
+
+					<?php endif; ?>
+
+                    
+
+					<?php if (($block->getVar("gallery/caption"))): ?>
+
+                        "showCaption": <?php /* @escapeNotVerified */ echo $block->getVar("gallery/caption"); ?>,
+
+                    <?php endif; ?>
+
+                   
+
+				   	"width": "<?php /* @escapeNotVerified */ echo $block->getImageAttribute('product_page_image_medium', 'width'); ?>",
+
+                    "thumbwidth": "<?php /* @escapeNotVerified */ echo $thumbs_width; ?>",
+
+                    <?php if ($thumbs_height || $thumbs_width): ?>
+
+                        "thumbheight": <?php /* @escapeNotVerified */ echo $thumbs_height?: $thumbs_width; ?>,
+
+                    <?php endif; ?>
+
+                    <?php if ($block->getImageAttribute('product_page_image_medium', 'height') || $block->getImageAttribute('product_page_image_medium', 'width')): ?>
+
+                        "height": <?php /* @escapeNotVerified */ echo $block->getImageAttribute('product_page_image_medium', 'height')
+
+                        ?: $block->getImageAttribute('product_page_image_medium', 'width'); ?>,
+
+                    <?php endif; ?>
+
+                    <?php if ($block->getVar("gallery/transition/duration")): ?>
+
+                        "transitionduration": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/transition/duration"); ?>,
+
+                    <?php endif; ?>
+
+                    "transition": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/transition/effect"); ?>",
+
+                    <?php if($thumbs_nav): ?>
+
+						"navarrows": true,
+
+					<?php else: ?>
+
+						"navarrows": false,
+
+					<?php endif; ?>
+
+                    "navtype": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/navtype"); ?>"
+
+                 },
+
+                "fullscreen": {
+
+                    "nav": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/nav"); ?>",
+
+                    <?php if ($block->getVar("gallery/fullscreen/loop")): ?>
+
+                        "loop": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/loop"); ?>,
+
+                    <?php endif; ?>
+
+                    "navdir": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/navdir"); ?>",
+
+                    <?php if ($block->getVar("gallery/transition/navarrows")): ?>
+
+                        "navarrows": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/navarrows"); ?>,
+
+                    <?php endif; ?>
+
+                    "navtype": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/navtype"); ?>",
+
+                    <?php if ($block->getVar("gallery/fullscreen/arrows")): ?>
+
+                        "arrows": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/arrows"); ?>,
+
+                    <?php endif; ?>
+
+                    <?php if ($block->getVar("gallery/fullscreen/caption")): ?>
+
+                        "showCaption": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/caption"); ?>,
+
+                    <?php endif; ?>
+
+                    <?php if ($block->getVar("gallery/fullscreen/transition/duration")): ?>
+
+                        "transitionduration": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/transition/duration"); ?>,
+
+                    <?php endif; ?>
+
+                    "transition": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/transition/effect"); ?>"
+
+                },
+
+                "breakpoints": <?php /* @escapeNotVerified */ echo $block->getBreakpoints(); ?>
+
+            }
+
+        }
+
+    }
+
+</script>
+<?php endif; ?>

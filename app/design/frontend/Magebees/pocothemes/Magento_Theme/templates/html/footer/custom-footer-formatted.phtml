@@ -1,0 +1,50 @@
+<?php
+$pocoHelper = $this->helper('Magebees\PocoThemes\Helper\Data');
+$storeId = $pocoHelper->getStoreId();
+
+// Get theme layout configuration
+$animation = $pocoHelper->getThemeLayout('animation', $storeId) ? true : false;
+$animationClass = $animation ? "wow animate__fadeIn" : "";
+
+// Get footer configuration
+$footerConfig = $pocoHelper->getConfigGroup('footer', $storeId);
+$cartStyle = $pocoHelper->getConfigValue('general', 'style', 'shoppingcart', $storeId);
+
+// Set custom footer style
+$customFooterStyle = $footerConfig['custom_footer_style'] ?? null;
+$customFooterStyleClass = [
+    'custom-footer-1' => 'cstm_ftr_1',
+    'custom-footer-2' => 'cstm_ftr_2',
+    'custom-footer-3' => 'cstm_ftr_3',
+    'custom-footer-4' => 'cstm_ftr_4',
+    'custom-footer-5' => 'cstm_ftr_5',
+    'custom-footer-6' => 'cstm_ftr_6',
+    'custom-footer-7' => 'cstm_ftr_7',
+    'custom-footer-8' => 'cstm_ftr_8',
+    'custom-footer-9' => 'cstm_ftr_9',
+    'custom-footer-10' => 'cstm_ftr_10',
+    'custom-footer-11' => 'cstm_ftr_11',
+    'custom-footer-12' => 'cstm_ftr_12',
+    'custom-footer-13' => 'cstm_ftr_13',
+    'custom-footer-14' => 'cstm_ftr_14',
+    'custom-footer-15' => 'cstm_ftr_15',
+    'custom-footer-16' => 'cstm_ftr_16',
+    'custom-footer-17' => 'cstm_ftr_17',
+];
+?>
+
+<?php if ($customFooterStyle): ?>
+    <div class="custm_ftr 
+        <?php if ($cartStyle == 2): echo 'flyout_on'; endif; ?> 
+        <?php echo $animationClass; ?> 
+        <?php if (isset($customFooterStyleClass[$customFooterStyle])): echo $customFooterStyleClass[$customFooterStyle]; endif; ?>" 
+        <?php if ($animation): ?> data-wow-delay="0.1s" <?php endif; ?>>
+        
+        <?php 
+        $footerHtml = $pocoHelper->getBlockContentByIdentifier($customFooterStyle);
+        if ($footerHtml):
+            echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($customFooterStyle)->toHtml();
+        endif;
+        ?>
+    </div>
+<?php endif; ?>

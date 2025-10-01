@@ -1,0 +1,10 @@
+<?php
+
+	$helper = $this->helper('Magebees\Ajaxsearch\Helper\Data');
+	$mage_version = $helper->getMagentoVersion();
+	$colorpicker_js = $block->getViewFileUrl('jquery/colorpicker/js/colorpicker.js');
+if(version_compare($mage_version, '2.1.0', '<'))
+{?>
+	<script  type="text/javascript"  src="<?php echo $colorpicker_js;?>"></script>
+<?php } ?>
+

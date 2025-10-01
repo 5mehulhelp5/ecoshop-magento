@@ -1,0 +1,8 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">	
+    <body>	
+		<move element="testimonial.link" destination="header.links" before="-"/>	
+	<referenceBlock name="top.links">
+			<block class="Magebees\Testimonial\Block\TestimonialLink" name="testimonial.link" template="Magebees_Testimonial::testimonial_link.phtml" ifconfig="testimonial/setting/enable"/>		
+		</referenceBlock>			
+    </body>
+</page>

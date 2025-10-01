@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="magebees_today_deal_products" class="Magebees\TodayDealProducts\Block\Widget\DealProductsWidget" is_email_compatible="true" >
+        <label translate="true">MageBees::Today Deal Products Widget</label>
+        <description translate="true">List of products or slider of products with countdown timer</description>
+		<parameters>
+			<parameter name="wd_deal" xsi:type="select" visible="true"
+					   source_model="Magebees\TodayDealProducts\Model\Config\Source\Deal" required="true">				   
+				<label translate="true">Select Deal</label>
+			</parameter>
+				
+			<parameter name="template" xsi:type="select" required="true" visible="true">
+                <label translate="true">Template</label>
+                <options>
+                    <option name="default" value="today_deal_products.phtml" selected="true">
+                        <label translate="true">Products List with countdown timer Template</label>
+                    </option>
+					<option name="slider" value="today_deal_products_slider.phtml" selected="true">
+                        <label translate="true">Products List with slider and countdown timer Template</label>
+                    </option>
+					<option name="list_default"
+                            value="today_deal_products_sidebar.phtml">
+                        <label translate="true">Products List with slider for sidebars Template</label>
+                    </option>
+                </options>
+			</parameter> 
+		</parameters>
+		<containers>
+            <container name="sidebar.main">
+                <template name="default" value="list_default" />
+            </container>
+            <container name="content">
+                <template name="today_deal_products" value="default" />
+				<template name="today_deal_products_slider" value="slider" />
+			</container>
+            <container name="sidebar.additional">
+                <template name="default" value="list_default" />
+            </container>
+        </containers>
+		
+    </widget>
+</widgets>

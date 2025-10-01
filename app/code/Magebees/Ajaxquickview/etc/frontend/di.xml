@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">   
+ 
+	<!--Start for add quick view button in product list page after ajax-->
+     <!--<type name="Magento\Catalog\Block\Product\ListProduct">
+        <plugin name="magebees-quickview-block-product-list"
+                type="Magebees\Ajaxquickview\Plugin\BlockProductList"
+                sortOrder="10"/>
+    </type>-->
+	<!--End for add quick view button in  product list page after ajax-->
+	
+	<!--Add Compatibility with AjaxCategoryProducts extension-->
+	 <type name="Magebees\AjaxCategoryProducts\Block\CategoryProducts">
+        <plugin name="magebees-quickview-ajaxcategoryproducts-list"
+                type="Magebees\Ajaxquickview\Plugin\AjaxCategoryProductsList"
+                sortOrder="10"/>
+    </type>	
+	<!--End Compatibility with AjaxCategoryProducts extension-->
+	
+	<!--Add Compatibility with AbstractProduct class extended-->
+	 <type name="Magento\Catalog\Block\Product\AbstractProduct">
+        <plugin name="magento-abstaract-products-list"
+                type="Magebees\Ajaxquickview\Plugin\AbstractProductList"
+                sortOrder="10"/>
+    </type>
+
+    <type name="Magento\Framework\View\Element\Message\MessageConfigurationsPool">
+        <arguments>
+            <argument name="configurationsMap" xsi:type="array">
+                <item name="addProductSuccessMessage" xsi:type="array">
+                    <item name="renderer" xsi:type="const">\Magento\Framework\View\Element\Message\Renderer\BlockRenderer::CODE</item>
+                    <item name="data" xsi:type="array">
+                        <item name="template" xsi:type="string">Magebees_Ajaxquickview::messages/addProductSuccessMessage.phtml</item>
+                    </item>
+                </item>
+                <item name="removeWishlistItemSuccessMessage" xsi:type="array">
+                    <item name="renderer" xsi:type="const">\Magento\Framework\View\Element\Message\Renderer\BlockRenderer::CODE</item>
+                    <item name="data" xsi:type="array">
+                        <item name="template" xsi:type="string">Magento_Wishlist::messages/removeWishlistItemSuccessMessage.phtml</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>	
+	<!--End Compatibility with AbstractProduct class extended-->
+	
+	<!--Start for add quick view button in search page after ajax-->
+	<virtualType name="Magento\CatalogSearch\Block\SearchResult\ListProduct" type="Magento\Catalog\Block\Product\ListProduct">
+        <plugin name="magebees-quickview-block-search-list"
+                type="Magebees\Ajaxquickview\Plugin\BlockProductList"
+                sortOrder="10"/>
+    </virtualType> 	
+	<!--End for add quick view button in search page after ajax-->
+</config>

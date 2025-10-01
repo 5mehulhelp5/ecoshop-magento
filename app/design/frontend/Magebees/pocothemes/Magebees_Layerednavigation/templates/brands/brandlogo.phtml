@@ -1,0 +1,40 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+use Magento\Framework\App\Action\Action;
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @var $block \Magento\Catalog\Block\Product\ListProduct
+ */
+?>
+<?php
+
+$branddata = $block->getBrandInfo()->getData();
+
+if(count($branddata) > 0) {
+$helper = $this->helper('Magebees\Layerednavigation\Helper\Data'); ?>
+<div class ="brandinfo">	
+<?php 
+	foreach($branddata as $brand)	{ 
+		if(isset($brand) && $brand['filename'] != null)	{
+			$img = $helper->getThumbnailsImage($brand['filename']);		
+		} 	
+        	$brand_desc = $brand['brand_description'];
+	}
+	if(isset($img)) {
+		 echo '<img class="brandimg" src="'.$img.'" width="250px" height="250px"/>';
+	} 
+	if(isset($brand_desc)){
+		echo '<div class="branddes">'.$brand_desc.'</div>';
+	}  
+?>
+</div>
+<?php } ?>

@@ -1,0 +1,13 @@
+<?php if( $this->configuration->isEnableBlogModule()):
+$categoriesCount = $block->getBlogCategories();
+if($categoriesCount>0): ?>
+<div class="mb-block widget block mb-block-categories" data-bind="scope: 'categories'">
+<div class="mb-blog-categories"> 
+	<div class="block-title">
+	    <strong><?php echo $block->escapeHtml($block->getwdCatTitle()); ?></strong>
+	</div>
+	<?php echo $block->getBlogCategoriesTree();?>
+</div>
+</div>
+<?php endif;?>
+<?php endif;?>

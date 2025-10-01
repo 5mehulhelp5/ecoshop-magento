@@ -1,0 +1,13 @@
+<?php
+    $dialog_config=$block->getDialogConfig();
+if (isset($dialog_config['loadingimage'])) {
+    $image=$dialog_config['loadingimage'];
+    $image_url=$block->getImageUrl($image);
+        
+} else {
+    $image_url=$block->getViewFileUrl('Magebees_Ajaxaddtocart::images/ajax_loader.gif');
+}
+?>
+<div id="loadingImage" style="display:none;"><div><img src="<?= $image_url; ?>" alt="Loading..." /></div></div>
+
+            

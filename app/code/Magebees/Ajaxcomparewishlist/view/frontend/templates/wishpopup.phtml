@@ -1,0 +1,26 @@
+<?php 
+$helper = $this->helper('Magebees\Ajaxcomparewishlist\Helper\Data');
+if(!$helper->isAjaxWishEnabled()) return;
+$_product = $block->getProduct();
+$imageDisplayArea = 'category_page_grid';
+$productImage = $block->getImage($_product, $imageDisplayArea);
+$message = $helper->getWishMsg();
+?>
+<div class="mbpopupbox">
+    <div class="mbproimg">
+        <a href="<?php echo $escaper->escapeUrl($_product->getProductUrl()) ?>" tabindex="-1"> <?php echo $productImage->toHtml() ?> </a>
+        <h2 class="mbproname"><?php echo $_product->getName() ?></h2>
+    </div>
+    <h3 class="mbsuccessmsg"><?php echo $message ? $message : __('You added this product to the wishlist list') ?></h3>
+    <div class="mbcomwishbtns">
+        <button type="button" id="mbwishviewbtn" class="action wishlist primary" title="<?php echo __('View Wishlist') ?>" onClick="window.location='<?php echo $block->getUrl('wishlist'); ?>'">
+            <span><?php echo __('View Wishlist') ?></span>
+        </button>
+		<button type="button" id="mbwishbtnclose" class="action primary" title="<?php echo __('Close') ?>">
+            <span><?php echo __('Close ') ?></span>
+            <?php if ($popupTime = $helper->getPopupWishTime()) {?>
+                (<span class="mbwishautoclosetime"><?php echo $popupTime ?></span>)
+            <?php }?>
+        </button>
+    </div>
+</div>

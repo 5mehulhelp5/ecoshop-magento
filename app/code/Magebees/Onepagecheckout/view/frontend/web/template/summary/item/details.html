@@ -1,0 +1,45 @@
+<tr class="oscproductRow">
+	<td class="oscProductImage">
+			<div data-change-type="delete" class="oscDelete" data-bind="click: function(){deleteItem($parent)}"></div>
+			<!-- ko foreach: getRegion('before_details') -->
+			<!-- ko template: getTemplate() --><!-- /ko -->
+			<!-- /ko -->
+	</td>
+    <td class="oscProductName">
+        <h4 class="product-name"  data-bind="text: $parent.name"></h4>
+        <!-- ko if: (JSON.parse($parent.options).length > 0)-->
+        <dl class="item-options">
+            <!--ko foreach: JSON.parse($parent.options)-->
+            <dt class="label" data-bind="text: label"></dt>
+            <!-- ko if: ($data.full_view)-->
+            <dd class="values" data-bind="html: full_view"></dd>
+            <!-- /ko -->
+            <!-- ko ifnot: ($data.full_view)-->
+            <dd class="values" data-bind="html: value"></dd>
+            <!-- /ko -->
+            <!-- /ko -->
+        </dl>
+        <!-- /ko -->
+    </td>
+	<td class="a-center qty-box">
+		<div class="qty-wrap mbopcqty" data-item-id="">
+            <button class="button btnDec" data-change-type="minus" title="Decrease" value="update_qty" name="update_cart_action" type="submit" data-bind="click: function(){decQty($parent)}">-</button>		
+            <!--<input class="input-text qty reviewQty" data-bind="value: $parent.qty, event :{change: function(){updateNewQty($parent)}}" id="qty_input" />-->
+			<input class="input-text qty reviewQty" data-bind="value: $parent.qty,event :{input: function(){showhidebtn($parent)}},attr:{id: $parent.item_id}" type="number" size="4" />
+            <button class="button btnInc" title="Increase" value="update_qty" name="update_cart_action" type="submit" data-change-type="add" data-bind="click: function(){incQty($parent)}">+</button>
+        </div>
+		<div class="mbupdateBtn" style="display: none;">
+			<button class="mbupdateitem" title="Update" data-bind="value: $parent.qty, event :{click: function(){updateNewQty($parent)}}">
+				<span data-bind="i18n: 'Update'"></span>
+			</button>
+		</div>
+    </td>
+	<!--<td class="a-center priceBox">
+	<span class="" data-bind="text: $parent.price" id="price_input"></span>
+	</td>-->
+    <td class="a-right last">
+        <!-- ko foreach: getRegion('after_details') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!-- /ko -->
+    </td>
+</tr>

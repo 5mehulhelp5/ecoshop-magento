@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<type name="Magento\Config\Model\Config">
+        <plugin name="admin_system_config_save_plugin" type="Magebees\Onepagecheckout\Plugin\ConfigPlugin" sortOrder="1"/>
+    </type>
+    <type name="Magento\Checkout\Model\PaymentInformationManagement">
+        <plugin name="save-comments" type="Magebees\Onepagecheckout\Model\Comment\Checkout\PaymentInformationManagementPlugin" sortOrder="10"/>
+    </type>
+    <type name="Magento\Checkout\Model\GuestPaymentInformationManagement">
+        <plugin name="save-comments" type="Magebees\Onepagecheckout\Model\Comment\Checkout\GuestPaymentInformationManagementPlugin" sortOrder="10"/>
+    </type>
+    <type name="Magento\Braintree\Gateway\Request\ChannelDataBuilder">
+        <plugin name="magebees_Onepagecheckout_channel_builder_for_braintree" type="Magebees\Onepagecheckout\Plugin\Braintree\ChannelDataBuilder" sortOrder="1"/>
+    </type>
+	<type name="Magento\Checkout\Controller\Cart\Add">
+		<plugin name="addtocartcomplete" type="Magebees\Onepagecheckout\Plugin\Checkout\Controller\Cart\Add" sortOrder="1" />
+	</type>
+	 <type name="Magento\Checkout\Model\ShippingInformationManagement">
+        <plugin name="magebees_save_delivery_date_in_quote" type="Magebees\Onepagecheckout\Plugin\Checkout\Model\ShippingInformationManagement" sortOrder="1"/>
+    </type>
+    <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid" type="Magento\Sales\Model\ResourceModel\Grid">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="delivery_date" xsi:type="string">sales_order.delivery_date</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <preference for="Magento\Paypal\Model\Config" type="Magebees\Onepagecheckout\Model\Payments\Paypal\Config" />
+	<preference for="Magento\Checkout\Block\Checkout\AttributeMerger" type="Magebees\Onepagecheckout\Block\Checkout\AttributeMerger" />
+	<preference for="Magento\Customer\Controller\Account\LoginPost" type="Magebees\Onepagecheckout\Controller\Account\LoginPost" />
+	<preference for="Magento\Customer\Controller\Account\Login" type="Magebees\Onepagecheckout\Controller\Account\Login" />
+	<virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid" type="Magento\Sales\Model\ResourceModel\Grid">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="order_comments" xsi:type="string">sales_order.order_comments</item>
+            </argument>
+        </arguments>
+    </virtualType>
+        <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid" type="Magento\Sales\Model\ResourceModel\Grid">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="order_for" xsi:type="string">sales_order.order_for</item>
+            </argument>
+        </arguments>
+    </virtualType>
+	
+	<preference for="Magento\InventoryInStorePickupQuote\Model\Quote\ValidationRule\InStorePickupQuoteValidationRule" type="Magebees\Onepagecheckout\Model\Magento\InventoryInStorePickupQuote\Quote\ValidationRule\InStorePickupQuoteValidationRule" />
+	
+</config>

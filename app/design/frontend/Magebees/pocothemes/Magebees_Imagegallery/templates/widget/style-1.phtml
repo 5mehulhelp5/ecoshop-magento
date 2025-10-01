@@ -1,0 +1,206 @@
+<?php
+$_helper = $this->helper('Magebees\Imagegallery\Helper\Data');
+if($_helper->isEnableImagegallery()):
+$poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data'); 
+$pubPath = $poco_helper->getPubAbsolutePath();
+$show_heading = $this->getData('wd_show_heading')?$this->getData('wd_show_heading'):0;
+$heading = $this->getData('wd_heading')?$this->getData('wd_heading'):null;
+$show_heading = $this->getData('wd_show_heading')?$this->getData('wd_show_heading'):0;
+$show_description = $this->getData('wd_show_description')?$this->getData('wd_show_description'):null;
+
+$short_desc = $this->getData('wd_description')?$this->getData('wd_description'):null;
+$description_position = $this->getData('wd_description_position')?$this->getData('wd_description_position'):'above_heading';
+
+$no_of_image = $this->getData('no_of_image')?$this->getData('no_of_image'):10;
+$image_height = $this->getData('image_height')?$this->getData('image_height'):200;
+$image_width = $this->getData('image_width')?$this->getData('image_width'):200;
+
+$slider = $this->getData('wd_slider')?$this->getData('wd_slider'):0;
+
+$autoscroll = $this->getData('wd_autoscroll')=='1' ? true:false;
+$navarrow = $this->getData('wd_navarrow')=='1' ? true:false;
+$pagination = $this->getData('wd_pagination')=='1' ? true:false;
+
+
+$paginationtype = $this->getData('wd_pagination_type');
+$infinite_loop = $this->getData('wd_infinite_loop')=='1' ? true:false;
+$scrollbar = $this->getData('wd_scrollbar')=='1' ? true:false;
+$grap_cursor = $this->getData('wd_grap_cursor')=='1' ? true:false;
+$auto_height = $this->getData('wd_slide_auto_height')=='1' ? true:false;
+$centered = $this->getData('wd_centered')=='1' ? true:false;
+$items = $this->getData('wd_items_per_slide');
+$auto_play_dealytime = $this->getData('wd_auto_play_delaytime') ? $this->getData('wd_auto_play_delaytime'):3000;
+$autoplayoff = $this->getData('wd_autoplayoff')=='1' ? true:false;
+$items_per_row = $this->getData('wd_items_per_row')?$this->getData('wd_items_per_row'):5;
+
+$slider_class = $slider?" swiper ":" ";
+$item_class =   $slider?"galleryimage-item swiper-slide":"galleryimage-item";
+$random_number = rand();
+$slider_id = "magebees-gallery-image-slider-".$random_number;
+$galleryImages = $_helper->getGalleyImageCollection($no_of_image);
+
+$rtl = $poco_helper->getThemeLayout('rtl',$poco_helper->getStoreId())? true:false; 
+$animation = $poco_helper->getThemeLayout('animation',$poco_helper->getStoreId())? true:false; 
+$animation_class = $animation?"wow animate__fadeIn":" ";
+$spacing_class = '';
+$spacing_class .= $this->getData('wd_spacing')?'sections-spacing ':'';
+$spacing_class .= $this->getData('wd_bottom_spacing')?'section-bottom-spacing':'';
+$bgimage = $this->getData('wd_bgimage')?$this->getData('wd_bgimage'):null;
+$bg_color = $this->getData('wd_bgcolor');
+
+if($bgimage){
+		$bg_image_url = $poco_helper->getMediaUrl().$bgimage;
+		$bg_image = 'background-image: url('.$bg_image_url.'); background-repeat: no-repeat; background-size: cover;';
+	}else{
+		$bg_image = '';
+	}
+	$swiper_data_init = array();
+			$swiper_data_init['slider_id'] = $slider_id;
+			$swiper_data_init['autoHeight'] = $auto_height;
+			$swiper_data_init['slidesPerView'] = 1;
+			$swiper_data_init['spaceBetween'] = 10;
+			$swiper_data_init['lazy']['loadPrevNext'] = true;
+			$swiper_data_init['lazy']['loadPrevNextAmount'] = $no_of_image;
+			$swiper_data_init['a11y'] = false;
+			$swiper_data_init['speed'] = 600;
+			$swiper_data_init['loop'] = $infinite_loop;
+			$swiper_data_init['grabCursor'] = $grap_cursor;
+			$swiper_data_init['centeredSlides'] = $centered;
+		 if($autoscroll):
+			$swiper_data_init['autoplay']['delay'] = $auto_play_dealytime;
+			$swiper_data_init['autoplay']['disableOnInteraction'] = false;
+			$swiper_data_init['autoplay']['pauseOnMouseEnter'] = $autoplayoff;
+		endif;
+		if($scrollbar):
+		$swiper_data_init['scrollbar']['el'] = "#swiper-scrollbar-".$random_number;
+		$swiper_data_init['scrollbar']['hide'] = false;
+		endif;
+		if($paginationtype=='default'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		elseif($paginationtype=='dynamic'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		elseif($paginationtype=='progress'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		elseif($paginationtype=='fraction'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		elseif($paginationtype=='custom'):
+		$swiper_data_init['pagination_id'] = "#swiper-pagination-".$random_number;
+		$swiper_data_init['pagination_type'] = $paginationtype;
+		endif;
+		if($navarrow):
+		$swiper_data_init['navigation']['nextEl'] = "#swiper-button-next-".$random_number;
+		$swiper_data_init['navigation']['prevEl'] = "#swiper-button-prev-".$random_number;
+		endif;	
+		
+		$swiper_data_init['breakpoints']['0']['slidesPerView'] = 2;
+		$swiper_data_init['breakpoints']['0']['spaceBetween'] = 0;
+		$swiper_data_init['breakpoints']['480']['slidesPerView'] = 2;
+		$swiper_data_init['breakpoints']['480']['spaceBetween'] = 0;
+		$swiper_data_init['breakpoints']['639']['slidesPerView'] = 3;
+		$swiper_data_init['breakpoints']['639']['spaceBetween'] = 0;
+		$swiper_data_init['breakpoints']['768']['slidesPerView'] = 3;
+		$swiper_data_init['breakpoints']['768']['spaceBetween'] = 0;
+		$swiper_data_init['breakpoints']['1200']['slidesPerView'] = $items;
+		$swiper_data_init['breakpoints']['1200']['spaceBetween'] = 0;
+		$swiper_data_init['breakpoints']['1440']['slidesPerView'] = $items;
+		$swiper_data_init['breakpoints']['1440']['spaceBetween'] = 0;
+		$swiper_data_init['breakpoints']['1920']['slidesPerView'] = $items;
+		$swiper_data_init['breakpoints']['1920']['spaceBetween'] = 0;
+		
+?>
+<?php if($galleryImages->getSize()):?>
+<?php if(($bg_image)||($bg_color)): ?>
+<style type="text/css">
+	<?php echo '#gallery-images-'.$random_number. " { ".$bg_image."; background-color: ".$bg_color."; } " ?>
+</style>
+ <?php endif;?>
+ 
+<div id="<?php echo "gallery-images-".$random_number; ?>" class="glry_img_widget <?php echo $spacing_class ?>">
+	<div class="container">
+	<?php if(($show_heading)||($show_description)): /* Show heading Conditions*/ ?>
+		<div class="section-title <?php echo $animation_class ?>" <?php if($animation): ?> data-wow-delay="0.2s" <?php endif;?>>
+			<?php if(($show_description)&&($short_desc)&&($description_position=='above_heading')):?>
+			<div class="sort-details">
+					<p class="sort-detail"><?php echo __(html_entity_decode($short_desc)); ?>
+					</p>
+			</div>
+			<?php endif; ?>
+			<?php if(($show_heading)&&($heading)):?>
+				<h2 class="title"><?php echo __(html_entity_decode($heading)); ?> </h2>
+			<?php endif; ?>
+			<?php if(($show_description)&&($short_desc)&&($description_position=='below_heading')):?>
+			<div class="sort-details">
+					<p class="sort-detail"><?php echo __(html_entity_decode($short_desc)); ?>
+					</p>
+			</div>
+			<?php endif; ?>
+			
+		</div>
+	<?php endif; ?>
+	
+	<div id="<?php echo $slider_id; ?>" <?php if($slider): ?> data-swiper='<?php echo json_encode($swiper_data_init);?>' <?php endif;?> class="<?php if($slider): echo 'swiper-container'; endif; ?> <?php echo $animation_class ?> glry_img_grid gallery-image-list-<?php echo $items_per_row; echo $slider_class; if($pagination): echo ' show-pagination '; endif; ?> <?php if($scrollbar): ?>show-scrollbar<?php endif;?>" <?php if($animation): ?> data-wow-delay="0.4s" <?php endif;?>>
+		<?php if($slider): ?>
+			<div class="swiper-wrapper <?php if($grap_cursor): ?>grab-cursor<?php endif;?>" <?php if($rtl): ?> dir="rtl" <?php endif;?>>
+		<?php endif;?>
+			<?php foreach($galleryImages as $image): ?>
+				<div class="<?php echo $item_class ?>">
+					<div class="gallery-thumbnail">
+						<?php 
+						$width = null;$height = null;
+						
+						$_imgUrl = $_helper->getImageUrl($image['image']);
+						$_imgPath = $pubPath.'media/imagegallery'.$image['image'];
+						list($width, $height) = getimagesize($_imgPath);
+						?>
+						<?php $isexternal = $_helper->getImageUrl($image['isexternal']); 
+						if($isexternal): 
+							$_galleryUrl = $image['url'];
+						else: 
+							$_galleryUrl = $_helper->getUrl($image['url']);
+						endif;
+						?>
+						<a href="<?php echo $_galleryUrl;?>" <?php if($isexternal):?> target="_blank;" <?php endif; ?> class="zoom-scal item">
+							<img class="swiper-lazy" loading="lazy" src="<?php echo $_imgUrl; ?>" alt="<?php echo $image['title'];?>" title="<?php echo $image['title'];?>" width="<?php echo $width;?>" height="<?php echo $height;?>" />
+							<?php if($slider): ?>
+								<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+							<?php endif; ?>
+							<span class="icon">
+								<svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon-instagram" viewBox="0 0 16 16">
+								  <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+							</svg></span>
+						</a>
+					</div>
+				</div>
+			<?php endforeach; ?>
+			<?php if($slider): ?>		
+			 </div>
+			 <?php if($pagination): ?>
+			<!-- Add Pagination -->
+			<div id="<?php echo "swiper-pagination-".$random_number;?>" class="swiper-pagination"></div>
+			<?php endif; ?>
+			<!-- Add Scrollbar -->
+			<?php if($scrollbar): ?>
+			<div id="<?php echo "swiper-scrollbar-".$random_number;?>" class="swiper-scrollbar"></div>	
+			<?php endif; ?>
+			<!--End div swiper-->
+			<?php if($navarrow): ?>
+				<!-- Add Arrows -->
+				<div id="<?php echo "swiper-button-next-".$random_number;?>" class="swiper-button-next"></div>
+				<div id="<?php echo "swiper-button-prev-".$random_number;?>" class="swiper-button-prev"></div>
+			<?php endif; ?>
+			<?php endif; ?>
+		</div>
+		<?php if(($show_description)&&($short_desc)&&($description_position=='below_image')):?>
+			<div class="sort-details">
+					<p class="sort-detail"><?php echo __(html_entity_decode($short_desc)); ?>
+					</p>
+			</div>
+			<?php endif; ?>
+	</div>
+</div>
+<?php endif; ?>
+<?php endif; ?>

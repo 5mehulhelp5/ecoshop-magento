@@ -1,0 +1,114 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Product view template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View
+ */
+?>
+<?php $_helper = $this->helper('Magento\Catalog\Helper\Output'); ?>
+<?php $_product = $block->getProduct(); ?>
+
+<form action="<?php /* @escapeNotVerified */ echo $block->getSubmitUrl($_product) ?>" method="post"
+	  id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>  class="product_addtocart_forms">
+	<input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $_product->getId() ?>" />
+	<input type="hidden" name="selected_configurable_option" value="" />
+	<input type="hidden" name="related_product" id="related-products-field" value="" />
+	<?php echo $block->getBlockHtml('formkey')?>
+	<div class="product-add-form" id="product-swatch-<?= $block->escapeHtml($_product->getId()) ?>">
+		
+		<?php echo $block->getChildHtml('form_top'); ?>
+		<?php if (!$block->hasOptions()):?>
+			<?php echo $block->getChildHtml('product_info_form_content'); ?>
+		<?php else:?>
+			<?php if ($_product->isSaleable() && $block->getOptionsContainer() == 'container1'):?>
+				<?php echo $block->getChildChildHtml('options_container') ?>
+				<?php echo $block->getChildChildHtml('block_products') ?>
+			<?php endif;?>
+		<?php endif; ?>
+
+		<?php if ($_product->isSaleable() && $block->hasOptions() && $block->getOptionsContainer() == 'container2'):?>
+			<?php echo $block->getChildChildHtml('options_container') ?>
+		<?php endif;?>
+		<?php echo $block->getChildHtml('form_bottom'); ?>
+	</div>		
+	
+	<?php echo $block->getChildChildHtml('block_products') ?>		
+	
+</form>
+
+
+
+<?php if($_product->getTypeId() == "bundle") { ?>
+	<script>
+		require([
+		'jquery',
+		'priceBox'
+	], function($){
+		$('#popup_content').trigger('contentUpdated');		
+		var dataPriceBoxSelector = '[data-role=priceBox]',
+			dataProductIdSelector = '[data-product-id=<?= $block->escapeHtml($_product->getId()) ?>]',
+			priceBoxes = $(dataPriceBoxSelector + dataProductIdSelector);
+
+		priceBoxes = priceBoxes.filter(function(index, elem){
+			return !$(elem).find('.price-from').length;
+		});
+
+		priceBoxes.priceBox({'priceConfig': <?= /* @escapeNotVerified */ $block->getJsonConfig() ?>});
+	});
+	</script>
+
+	<?php }elseif($_product->getTypeId() == "configurable") { ?>
+		<script>
+ 
+			   require([
+					'jquery',
+					'ajaxPriceConfig',
+					'ajaxPriceBox'
+				], function($){
+
+					$('#popup_content').trigger('contentUpdated');		
+					var priceBoxes =$("#popup_content div[data-product-id=<?php echo $_product->getId() ?>]");		
+					priceBoxes = priceBoxes.filter(function(index, elem){
+						return !$(elem).find('.price-from').length;
+					});
+
+
+					if ($("#product-swatch-<?= $block->escapeHtml($_product->getId()) ?> .magebees_swatch-opt").length ) {  
+
+						priceBoxes.ajaxPriceBox({'priceConfig': <?php echo $block->getJsonConfig() ?>});
+					}else{
+
+						priceBoxes.ajaxPriceConfig({'priceConfig': <?php echo $block->getJsonConfig() ?>});
+					}
+
+				}); 
+		</script>
+	
+	<?php }else{ ?>
+
+	<script>
+
+	   require([
+			'jquery',
+			'ajaxPriceBox'
+		], function($){
+
+			$('#popup_content').trigger('contentUpdated');		
+			var priceBoxes =$("#popup_content div[data-product-id=<?php echo $_product->getId() ?>]");		
+			priceBoxes = priceBoxes.filter(function(index, elem){
+				return !$(elem).find('.price-from').length;
+			});
+			priceBoxes.ajaxPriceBox({'priceConfig': <?php echo $block->getJsonConfig() ?>});
+
+		}); 
+	</script>
+
+<?php } ?>
+

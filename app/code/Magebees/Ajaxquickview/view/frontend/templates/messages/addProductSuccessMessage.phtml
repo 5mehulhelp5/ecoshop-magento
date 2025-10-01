@@ -1,0 +1,15 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Framework\View\Element\Template $block */
+?>
+<?
+$url=$block->getData('referer');
+if (strpos($url,"/ajaxquickview/")!==false) {
+	$url=substr($url, 0, strpos($url, "?_="));
+}
+?>
+<?= $block->escapeHtml(__('%1 has been added to your Wish List.', $block->getData('product_name'))) ?> <?= $block->escapeHtml(__('Click <a href="%1">here</a> to continue shopping.', $url), ['a']);
