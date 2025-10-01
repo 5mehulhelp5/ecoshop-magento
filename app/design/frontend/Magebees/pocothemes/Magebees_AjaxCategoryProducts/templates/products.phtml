@@ -3,27 +3,27 @@ use Magento\Framework\App\Action\Action;
 
 	$enable = $block->isEnabled();
 	if($enable):
-	
+
 	$list_class = "";
 	if($block->getListPosition()=="left"){
 		$list_class = "left-sidebar";
 	}
-	
+
 	$list_class_top = "";
 	if($block->getListPosition()=="top"){
 		$list_class_top = "full";
 	}
-	
+
 	$_productCollection = $block->getLoadedProductCollection();
 	$productsCount = count($_productCollection->getData());
 	$slider=false;
 	$_helper = $this->helper('Magento\Catalog\Helper\Output');
 	$imageBlock = $block->getLayout()->createBlock('Magento\Catalog\Block\Product\Image');
 	$number_of_products = $this->getData('wd_number_of_products');
-	
-	 /* POCO THEME CUSTOMIZATION ADD CODE Start */ 
+
+	 /* POCO THEME CUSTOMIZATION ADD CODE Start */
 	include ($block->getTemplateFile('Magento_Catalog::product/product-list-theme-options.phtml'));
-	/* POCO THEME CUSTOMIZATION ADD CODE End */ 
+	/* POCO THEME CUSTOMIZATION ADD CODE End */
 	$bg_color = $this->getData('wd_bgcolor');
 	$bg_image = '';
     if($this->getData('wd_bgimage')){
@@ -32,7 +32,7 @@ use Magento\Framework\App\Action\Action;
 	}else{
 		$bg_image .= '';
 	}
-    
+
     $spacing_class = '';
 	$spacing_class .= $this->getData('wd_spacing')?'sections-spacing ':'';
 	$spacing_class .= $this->getData('wd_bottom_spacing')?'section-bottom-spacing':'';
@@ -70,14 +70,16 @@ use Magento\Framework\App\Action\Action;
 				</ol>
 			</div>
     	</div>
-    
+
     <script type="text/javascript">
         requirejs(['jquery','ajaxloadcategory'], function($){
             var params = {'default_cat_id':'<?php echo $block->getDefaultCategoryId() ?>'};
-            $('#cat-filter-<?php echo $block->getDefaultCategoryId() ?>').ajaxloadcategory(params);
-        });	
+            if ($('#cat-filter-<?php echo $block->getDefaultCategoryId() ?>').length) {
+                $('#cat-filter-<?php echo $block->getDefaultCategoryId() ?>').ajaxloadcategory(params);
+            }
+        });
     </script>
-    
+
     <div id="category-product-id-<?php echo $block->getDefaultCategoryId() ?>" class="category-product-filter <?php echo $animation_class ?>" <?php if($animation): ?> data-wow-delay="0.4s" <?php endif;?>>
             <?php
            	    $viewMode = 'grid';
@@ -88,12 +90,12 @@ use Magento\Framework\App\Action\Action;
              * Position for actions regarding image size changing in vde if needed
              */
             ?>
-            
+
             <div class="ajaxcategory-products products wrapper <?php echo $viewMode; ?> products-<?php echo $viewMode; ?>">
                 <?php $iterator = 1; ?>
                 <div class="fx_grid products list items product-items <?php echo $btn_hover_effects_class; ?>">
                     <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
-                    <?php 
+                    <?php
 						/* Set Condition for Sample Data Start */
 						if(!$productsCount): $slider = false; echo $this->getLayout() ->createBlock('Magento\Framework\View\Element\Template') ->setProductCount($productsCount) ->setSlider($slider) ->setImageWidth($image_width) ->setImageHeight($image_height) ->setTemplate('Magebees_Productlisting::dummy-products-grid.phtml') ->toHtml(); endif;
 							/* Set Condition for Sample Data End */
@@ -103,7 +105,7 @@ use Magento\Framework\App\Action\Action;
                         <div class="product-item-info" data-container="product-grid">
                         	<div class="pro-hover">
 								<div class="product-item-photo">
-									<a href="<?php echo $_product->getProductUrl() ?>" tabindex="-1">		
+									<a href="<?php echo $_product->getProductUrl() ?>" tabindex="-1">
 										<?php echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template") ->setProduct($_product) ->setAspectRatio($aspect_ratio) ->setImageWidth($image_width) ->setImageHeight($image_height) ->setDisplayArea($imageDisplayArea) ->setTemplate("Magento_Catalog::product/image.phtml") ->toHtml();?>
 									</a>
 									<?php if(($show_deal_timer)&&(($hover_effects == 'button-hover-style7')||($hover_effects == 'button-hover-style11'))): ?>
@@ -144,13 +146,13 @@ use Magento\Framework\App\Action\Action;
 										<?php echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template") ->setProduct($_product) ->setProductSkuLabel($product_sku_label) ->setProductSkuSeparator($product_sku_separator) ->setTemplate("Magento_Catalog::product/product-sku.phtml") ->toHtml();?>
 									<?php endif; ?>
 
-                            		<?php if(($hover_effects != 'button-hover-style10')&&($show_product_price)): ?>                           
+                            		<?php if(($hover_effects != 'button-hover-style10')&&($show_product_price)): ?>
                             			<?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
                             		<?php endif; ?>
 
 							 		<?php if($buyNowEnabled): echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template") ->setProduct($_product) ->setButtonTitle($buyNowbuttonTitle) ->setBuyNowListProduct($buyNowListProduct) ->setTemplate("Magento_Catalog::product/buy-now.phtml") ->toHtml(); endif; ?>
-								
-									<?php echo $block->getProductDetailsHtml($_product); ?>			
+
+									<?php echo $block->getProductDetailsHtml($_product); ?>
 									<?php if($_product->getTypeId() == \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE){ $swatchBlock = $this->getLayout()->createBlock("Magento\Swatches\Block\Product\Renderer\Listing\Configurable")->setTemplate("Magebees_Swatches::product/listing/renderer.phtml"); ?>
 										<!--Show Configurable Product Swatches -->
 										<div class="swatches-listing">
@@ -199,19 +201,19 @@ use Magento\Framework\App\Action\Action;
                         		<?php endif; ?>
 							</div>
                         </div>
-                        
+
 						</div>
                     <?php endforeach; ?>
                 </div>
             </div>
 			<?php //echo $block->getPagerHtml(); ?>
-			
+
 			<?php if($this->getSortBy() != 'random'): ?>
 				<?php if ($block->getPagerHtml()): ?>
 					<div id="category-products-pager-<?php echo $block->getDefaultCategoryId() ?>" class="toolbar toolbar-products"><?php echo $block->getPagerHtml(); ?></div>
 				<?php endif ?>
 			<?php endif ?>
-            
+
 			<?php if (!$block->isRedirectToCartEnabled()) : ?>
                 <script type="text/x-magento-init">
                     {
@@ -236,7 +238,7 @@ use Magento\Framework\App\Action\Action;
             requirejs(['jquery','ajaxloadnext'], function($){
                 var params = {'default_cat_id':'<?php echo $block->getDefaultCategoryId() ?>','donetext':'<p class="done-msg"><?php echo $block->getDoneText() ?></p>'};
                 $('#category-product-id-<?php echo $block->getDefaultCategoryId() ?>').ajaxloadnext(params);
-            });	
+            });
         </script>
 		<?php endif; ?>
     </div>

@@ -19,10 +19,10 @@ if($enable):
 	$slider=true;
 	$_helper = $this->helper('Magento\Catalog\Helper\Output');
 	$imageBlock = $block->getLayout()->createBlock('Magento\Catalog\Block\Product\Image');
-    /* POCO THEME CUSTOMIZATION ADD CODE Start */ 
+    /* POCO THEME CUSTOMIZATION ADD CODE Start */
 	include ($block->getTemplateFile('Magento_Catalog::product/product-list-theme-options.phtml'));
-	/* POCO THEME CUSTOMIZATION ADD CODE End */ 
-	
+	/* POCO THEME CUSTOMIZATION ADD CODE End */
+
 	$bg_color = $this->getData('wd_bgcolor');
 	$bg_image = '';
     if($this->getData('wd_bgimage')){
@@ -30,14 +30,14 @@ if($enable):
     	$bg_image .= 'background-image: url('.$bg_image_url.'); background-repeat: no-repeat; background-size: cover;';
 	}else{
 		$bg_image .= '';
-	}  
+	}
 	$wd_list_position = $this->getData('wd_list_position') ? $this->getData('wd_list_position') : 'top';
 	if($wd_list_position=='top'){
-	$no_of_items = $this->getData('wd_number_of_items_per_slide') ? $this->getData('wd_number_of_items_per_slide') : 4;	
+	$no_of_items = $this->getData('wd_number_of_items_per_slide') ? $this->getData('wd_number_of_items_per_slide') : 4;
 	}else{
 		$no_of_items = 3;
 	}
-	
+
 	$items_per_row = 'productGridItems-'.$no_of_items;
     $spacing_class = '';
 	$spacing_class .= $this->getData('wd_spacing')?'sections-spacing ':'';
@@ -52,7 +52,7 @@ if($enable):
 	$autoplay = $this->getData('wd_autoplay') ? true:false;
 	$autoplayTimeout = $this->getData('wd_autoplayTimeout') ? $this->getData('wd_autoplayTimeout') : 5000;
 	$unique_slider_key =  uniqid();
-	
+
 	$ajaxcategory_slider_id = "magebees-ajaxcategory-slider-".$unique_slider_key;
 	$swiper_data_init = array();
 			$swiper_data_init['slider_id'] = $ajaxcategory_slider_id;
@@ -98,13 +98,13 @@ if($enable):
 		$swiper_data_init['breakpoints']['768']['spaceBetween'] = 30;
 		$swiper_data_init['breakpoints']['1200']['slidesPerView'] = $no_of_items;
 		$swiper_data_init['breakpoints']['1200']['spaceBetween'] = 30;
-?>				
+?>
 <?php if(($bg_image)||($bg_color)): ?>
 <style type="text/css">
 	<?php echo '#product-tabs-slider-'.$random_number. " { ".$bg_image."; background-color: ".$bg_color."; } " ?>
 </style>
  <?php endif;?>
- 
+
 <div id="<?php echo "product-tabs-slider-".$random_number; ?>" class="mage-ajaxpro-page product-tabs-slider <?php echo $list_class ?> <?php echo $list_class_top ?> <?php echo $spacing_class ?>">
 	<div class="container">
 		<div class="sidebar-shopby <?php echo $animation_class ?>" <?php if($animation): ?> data-wow-delay="0.2s" <?php endif;?>>
@@ -133,11 +133,13 @@ if($enable):
 		<script>
 			requirejs(['jquery','ajaxloadcategory'], function($){
 				var params = {'default_cat_id':'<?php echo $block->getDefaultCategoryId() ?>'};
-				$('#cat-filter-<?php echo $block->getDefaultCategoryId() ?>').ajaxloadcategory(params);
-			});	
+                if ($('#cat-filter-<?php echo $block->getDefaultCategoryId() ?>').length) {
+                    $('#cat-filter-<?php echo $block->getDefaultCategoryId() ?>').ajaxloadcategory(params);
+                }
+			});
 		</script>
 
-		<div id="category-product-id-<?php echo $block->getDefaultCategoryId() ?>" class="category-product-filter <?php echo $animation_class ?>" <?php if($animation): ?> data-wow-delay="0.4s" <?php endif;?>>			
+		<div id="category-product-id-<?php echo $block->getDefaultCategoryId() ?>" class="category-product-filter <?php echo $animation_class ?>" <?php if($animation): ?> data-wow-delay="0.4s" <?php endif;?>>
 				<?php
 					$viewMode = 'grid';
 					$imageDisplayArea = 'category_page_grid';
@@ -145,7 +147,7 @@ if($enable):
 					$showDescription = false;
 					$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
 				?>
-				<div class="ajaxcategory-products-slider products wrapper <?php echo $viewMode; ?> products-<?php echo $viewMode; ?>">	
+				<div class="ajaxcategory-products-slider products wrapper <?php echo $viewMode; ?> products-<?php echo $viewMode; ?>">
 					<div class="products list items product-items  <?php echo $items_per_row ?> <?php echo $btn_hover_effects_class; ?>">
 						<div class="psr">
 							<div id="<?php echo $ajaxcategory_slider_id; ?>" data-swiper='<?php echo json_encode($swiper_data_init);?>' class="<?php echo $slider_class; ?> ajax-category-product-items <?php if($showdots): ?>show-paginationecho <?php echo $swiper_btn_hover_effects_class; ?><?php endif;?>" <?php if($rtl): ?> dir="rtl" <?php endif;?>>
@@ -154,7 +156,7 @@ if($enable):
 										if(!$productsCount): $slider = true; echo $this->getLayout() ->createBlock('Magento\Framework\View\Element\Template') ->setProductCount($productsCount) ->setSlider($slider) ->setImageWidth($image_width) ->setImageHeight($image_height) ->setTemplate('Magebees_Productlisting::dummy-products-grid.phtml') ->toHtml(); endif;
 										/* Set Condition for Sample Data End */
 									?>
-						
+
 									<?php foreach ($_productCollection as $_product): ?>
 									<div class="item product product-item swiper-slide">
 										<div class="product-item-info" data-container="product-grid">
@@ -168,7 +170,7 @@ if($enable):
 																	<?php echo $this->getLayout()->createBlock('Magebees\TodayDealProducts\Block\DealTimerListingProducts')->setProduct($_product) ->setTemplate('Magebees_TodayDealProducts::category_page_timer.phtml')->toHtml(); ?>
 													<!--End Deal Timer On Hover Style7 Or 11 -->
 													<?php endif; ?>
-													
+
 												</div>
 
 												<?php if(($hover_effects != 'button-hover-style7')&&($hover_effects != 'button-hover-style11')): ?>
@@ -178,12 +180,12 @@ if($enable):
 													<!--End Product Hover Style-->
 												<?php endif; ?>
 											</div>
-	
+
 											<div class="product details product-item-details">
                                 				<div class="detail-left">
 													<?php if($show_product_category): echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template") ->setProduct($_product) ->setStoreId($storeId) ->setTemplate ("Magento_Catalog::product/category-link.phtml") ->toHtml(); endif; ?>
 
-													<?php if($show_product_brand_name): ?>            
+													<?php if($show_product_brand_name): ?>
 														<?php echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template") ->setProduct($_product) ->setStoreId($storeId) ->setBrandCode($brand_attribute_code) ->setBrandUrlKey($brand_url_key) ->setBaseUrl($webUrl) ->setTemplate ("Magento_Catalog::product/brand-link.phtml") ->toHtml(); ?>
 													<?php endif; ?>
 
@@ -201,8 +203,8 @@ if($enable):
 													<?php if($show_product_sku): ?>
 														<?php echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template") ->setProduct($_product) ->setProductSkuLabel($product_sku_label) ->setProductSkuSeparator($product_sku_separator) ->setTemplate("Magento_Catalog::product/product-sku.phtml") ->toHtml();?>
 													<?php endif; ?>
-										
-													<?php if(($hover_effects != 'button-hover-style10')&&($show_product_price)): ?>                              
+
+													<?php if(($hover_effects != 'button-hover-style10')&&($show_product_price)): ?>
 														<?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
 													<?php endif; ?>
 
@@ -219,7 +221,7 @@ if($enable):
                                             		<!--End Configurable Product Swatches -->
                                         		</div>
 
-												
+
 												<?php if((($hover_effects == 'button-hover-style10')||($hover_effects == 'button-hover-style12'))&&($allow_add_to_cart)): ?>
 												<!-- Button Hover Style 10 Or 12 Start -->
 												<div class="d-flex alc  <?php echo $bottom_btn_hover_effects_class; ?> hvr_dtl">
@@ -248,10 +250,10 @@ if($enable):
 																	<?php endif; ?>
 															<?php endif; ?>
 														</div>
-													</div>	
+													</div>
 													<!-- Button Hover Style 10 Or 12 End -->
 												<?php endif; ?>
-																									
+
 												<?php if(($hover_effects == 'button-hover-style7')||($hover_effects == 'button-hover-style11')): ?>
                             						<!--Buttons Hover Styles 7 OR 11 -->
 													<?php echo $this->getLayout()->createBlock('Magebees\PocoThemes\Block\AddToButtons') ->setProduct($_product) ->setDisplayTimer($show_deal_timer) ->setShowCart($show_cart) ->setShowWishlist($show_wishlist) ->setShowCompare($show_compare) ->setShowAjaxQuickView($ajaxquickview_enable) ->setCurrentAction($currentAction) ->
@@ -260,7 +262,7 @@ if($enable):
 												<?php endif; ?>
 										</div>
 									</div>
-								</div>	
+								</div>
 							<?php endforeach; ?>
 						</div>
 					<!--End div swiper-wrapper-->
@@ -290,7 +292,7 @@ if($enable):
 					</script>
 				<?php endif; ?>
 	</div>
-	
+
 	</div>
 </div>
 <?php endif; ?>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7e62af73e2c25270905bc71f7aaf917c",
+    "content-hash": "258cb507fbf5741724862ef2f4b5a516",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -18551,6 +18551,155 @@
             "time": "2025-06-20T07:55:02+00:00"
         },
         {
+            "name": "mageplaza/magento-2-ukrainian-language-pack",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mageplaza/magento-2-ukrainian-language-pack.git",
+                "reference": "820426421c315bdce891981439ada4978af0105b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mageplaza/magento-2-ukrainian-language-pack/zipball/820426421c315bdce891981439ada4978af0105b",
+                "reference": "820426421c315bdce891981439ada4978af0105b",
+                "shasum": ""
+            },
+            "require": {
+                "mageplaza/module-core": "^1.3.13"
+            },
+            "default-branch": true,
+            "type": "magento2-language",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mageplaza team",
+                    "email": "hi@mageplaza.com",
+                    "homepage": "https://www.mageplaza.com",
+                    "role": "Leader"
+                }
+            ],
+            "description": "Ukrainian language package for Magento 2",
+            "homepage": "https://www.mageplaza.com",
+            "support": {
+                "issues": "https://github.com/mageplaza/magento-2-ukrainian-language-pack/issues",
+                "source": "https://github.com/mageplaza/magento-2-ukrainian-language-pack/tree/master"
+            },
+            "time": "2022-02-22T09:05:23+00:00"
+        },
+        {
+            "name": "mageplaza/module-core",
+            "version": "1.5.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mageplaza/module-core.git",
+                "reference": "44b2ced6cc24b0043b5b87a330152d38be5e79ba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mageplaza/module-core/zipball/44b2ced6cc24b0043b5b87a330152d38be5e79ba",
+                "reference": "44b2ced6cc24b0043b5b87a330152d38be5e79ba",
+                "shasum": ""
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Mageplaza\\Core\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Mageplaza",
+                    "email": "support@mageplaza.com",
+                    "homepage": "https://www.mageplaza.com",
+                    "role": "Technical Support"
+                }
+            ],
+            "description": "Mageplaza Core for Magento 2",
+            "support": {
+                "source": "https://github.com/mageplaza/module-core/tree/v1.5.14"
+            },
+            "time": "2025-07-02T10:33:12+00:00"
+        },
+        {
+            "name": "mageplaza/module-smtp",
+            "version": "4.7.18",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mageplaza/magento-2-smtp.git",
+                "reference": "8f128f7136c2d670bd18f354717cb505c6952547"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mageplaza/magento-2-smtp/zipball/8f128f7136c2d670bd18f354717cb505c6952547",
+                "reference": "8f128f7136c2d670bd18f354717cb505c6952547",
+                "shasum": ""
+            },
+            "require": {
+                "mageplaza/module-core": "^1.5.13"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Mageplaza\\Smtp\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Mageplaza",
+                    "email": "support@mageplaza.com",
+                    "homepage": "https://www.mageplaza.com",
+                    "role": "Technical Support"
+                }
+            ],
+            "description": "SMTP Extension for Magento 2 helps the owner of store simply install SMTP (Simple Mail Transfer Protocol) server which transmits the messages into codes or numbers",
+            "keywords": [
+                "Facebook ADS",
+                "Marketing Automation",
+                "Messenger",
+                "email",
+                "email marketing",
+                "email settings",
+                "facebook",
+                "gmail smtp",
+                "google ads",
+                "magento 2",
+                "magento 2 smtp",
+                "magento smtp",
+                "mageplaza",
+                "sms",
+                "sms marketing",
+                "smtp",
+                "web push notification",
+                "whatsapp"
+            ],
+            "support": {
+                "source": "https://github.com/mageplaza/magento-2-smtp/tree/v4.7.18"
+            },
+            "time": "2025-08-19T10:20:45+00:00"
+        },
+        {
             "name": "marc-mabe/php-enum",
             "version": "v4.7.2",
             "source": {
@@ -29500,6 +29649,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "mageplaza/magento-2-ukrainian-language-pack": 20,
         "pdepend/pdepend": 20,
         "phpmd/phpmd": 20
     },

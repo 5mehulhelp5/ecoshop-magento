@@ -21,6 +21,8 @@
         "magento/composer-dependency-version-audit-plugin": "~0.1",
         "magento/composer-root-update-plugin": "^2.0.4",
         "magento/product-community-edition": "2.4.8-p2",
+        "mageplaza/magento-2-ukrainian-language-pack": "dev-master",
+        "mageplaza/module-smtp": "^4.7",
         "swissup/breeze": "^2.25"
     },
     "autoload": {

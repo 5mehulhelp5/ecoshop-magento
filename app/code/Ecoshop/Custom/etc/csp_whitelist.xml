@@ -3,37 +3,37 @@
     <policies>
         <policy id="script-src">
             <values>
-                <value id="ecoshop_local" type="host">ecoshop.local</value>
+                <value id="ecoshop_local" type="host">ecoshop.site</value>
             </values>
         </policy>
         <policy id="style-src">
             <values>
-                <value id="ecoshop_local" type="host">ecoshop.local</value>
+                <value id="ecoshop_local" type="host">ecoshop.site</value>
             </values>
         </policy>
         <policy id="img-src">
             <values>
-                <value id="ecoshop_local" type="host">ecoshop.local</value>
+                <value id="ecoshop_local" type="host">ecoshop.site</value>
             </values>
         </policy>
         <policy id="connect-src">
             <values>
-                <value id="ecoshop_local" type="host">ecoshop.local</value>
+                <value id="ecoshop_local" type="host">ecoshop.site</value>
             </values>
         </policy>
         <policy id="font-src">
             <values>
-                <value id="ecoshop_local" type="host">ecoshop.local</value>
+                <value id="ecoshop_local" type="host">ecoshop.site</value>
             </values>
         </policy>
         <policy id="frame-src">
             <values>
-                <value id="ecoshop_local" type="host">ecoshop.local</value>
+                <value id="ecoshop_local" type="host">ecoshop.site</value>
             </values>
         </policy>
         <policy id="form-action">
             <values>
-                <value id="ecoshop_local" type="host">ecoshop.local</value>
+                <value id="ecoshop_local" type="host">ecoshop.site</value>
             </values>
         </policy>
     </policies>

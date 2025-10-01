@@ -15,17 +15,17 @@ use Magento\Framework\App\Action\Action;
 <?php
 	$enable = $block->isEnabled();
 	if($enable):
-	
+
 	$list_class = "";
 	if($block->getListPosition()=="left"){
 		$list_class = "left-sidebar";
 	}
-	
+
 	$list_class_top = "";
 	if($block->getListPosition()=="top"){
 		$list_class_top = "full";
 	}
-	
+
 	$_productCollection = $block->getLoadedProductCollection();
 	$_helper = $this->helper('Magento\Catalog\Helper\Output');
 	$imageBlock = $block->getLayout()->createBlock('Magento\Catalog\Block\Product\Image');
@@ -37,9 +37,9 @@ use Magento\Framework\App\Action\Action;
     <div class="sidebar-shopby">
         <?php if($block->getShowCategorySectionTitle()):?>
 		<div class="block-title">
-           
+
                 <strong role="heading" aria-level="2"><?php echo $block->getCategorySectionTitle() ?></strong>
-            
+
         </div>
 		<?php endif; ?>
         <div class="block-content">
@@ -55,14 +55,16 @@ use Magento\Framework\App\Action\Action;
             </ol>
         </div>
     </div>
-    
+
     <script type="text/javascript">
         requirejs(['jquery','ajaxloadcategory'], function($){
             var params = {'default_cat_id':'<?php echo $block->getDefaultCategoryId() ?>'};
-            $('#cat-filter-<?php echo $block->getDefaultCategoryId() ?>').ajaxloadcategory(params);
-        });	
+            if ($('#cat-filter-<?php echo $block->getDefaultCategoryId() ?>').length) {
+                $('#cat-filter-<?php echo $block->getDefaultCategoryId() ?>').ajaxloadcategory(params);
+            }
+        });
     </script>
-    
+
     <div id="category-product-id-<?php echo $block->getDefaultCategoryId() ?>" class="category-product-filter column main">
         <?php if (!count($_productCollection)): ?>
             <div class="message info empty"><div><?php echo __('We can\'t find products matching the selection.') ?></div></div>
@@ -72,8 +74,8 @@ use Magento\Framework\App\Action\Action;
                 $image = 'category_page_grid';
                 $showDescription = false;
                 $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
-           
-    
+
+
             /**
              * Position for actions regarding image size changing in vde if needed
              */
@@ -84,7 +86,7 @@ use Magento\Framework\App\Action\Action;
                         . 'top:' . $block->getVar("{$image}:height") . 'px;"';
             }
             ?>
-            
+
             <div class="products wrapper <?php echo $viewMode; ?> products-<?php echo $viewMode; ?>">
                 <?php $iterator = 1; ?>
                 <ol class="products list items product-items">
@@ -108,7 +110,7 @@ use Magento\Framework\App\Action\Action;
                                     </span>
                                 </span>
                             </a>
-    
+
                             <div class="product details product-item-details">
                                 <div style="padding: 0 2px;"><?php echo $block->getProductDetailsHtml($_product); ?></div>
                                 <?php
@@ -122,7 +124,7 @@ use Magento\Framework\App\Action\Action;
                                 </strong>
                                 <?php echo $block->getReviewsSummaryHtml($_product, $templateType); ?>
                                 <?php echo $block->getProductPrice($_product) ?>
-    
+
                                 <div class="product-item-inner">
                                     <div class="product actions product-item-actions"<?php echo ($pos && strpos($pos, $viewMode . '-actions')) ? $position : ''; ?>>
                                         <div class="actions-primary"<?php echo ($pos && strpos($pos, $viewMode . '-primary')) ? $position : ''; ?>>
@@ -177,12 +179,12 @@ use Magento\Framework\App\Action\Action;
                         <?php echo($iterator == count($_productCollection) + 1) ? '</li>' : '' ?>
                     <?php endforeach; ?>
                 </ol>
-            </div>		
+            </div>
 			<?php if($this->getSortBy() != 'random'): ?>
 				<?php if ($block->getPagerHtml()): ?>
 					<div id="category-products-pager-<?php echo $block->getDefaultCategoryId() ?>" class="toolbar toolbar-products"><?php echo $block->getPagerHtml(); ?></div>
 				<?php endif ?>            <?php endif ?>
-            
+
 			<?php if (!$block->isRedirectToCartEnabled()) : ?>
                 <script type="text/x-magento-init">
                     {
@@ -206,7 +208,7 @@ use Magento\Framework\App\Action\Action;
             requirejs(['jquery','ajaxloadnext'], function($){
                 var params = {'default_cat_id':'<?php echo $block->getDefaultCategoryId() ?>','donetext':'<p class="done-msg"><?php echo $block->getDoneText() ?></p>'};
                 $('#category-product-id-<?php echo $block->getDefaultCategoryId() ?>').ajaxloadnext(params);
-            });	
+            });
         </script>		<?php endif; ?>
     </div>
 

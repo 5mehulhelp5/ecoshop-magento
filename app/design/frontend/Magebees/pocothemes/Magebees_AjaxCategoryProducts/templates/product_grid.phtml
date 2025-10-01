@@ -16,9 +16,9 @@ use Magento\Framework\App\Action\Action;
 	$_helper = $this->helper('Magento\Catalog\Helper\Output');
 	$imageBlock = $block->getLayout()->createBlock('Magento\Catalog\Block\Product\Image');
 	$number_of_products = $this->getData('wd_number_of_products');
-	 /* POCO THEME CUSTOMIZATION ADD CODE Start */ 
+	 /* POCO THEME CUSTOMIZATION ADD CODE Start */
 	include ($block->getTemplateFile('Magento_Catalog::product/product-list-theme-options.phtml'));
-	/* POCO THEME CUSTOMIZATION ADD CODE End */ 
+	/* POCO THEME CUSTOMIZATION ADD CODE End */
 	$bg_color = $this->getData('wd_bgcolor');
 	$bg_image = '';
     if($this->getData('wd_bgimage')){
@@ -37,7 +37,7 @@ use Magento\Framework\App\Action\Action;
 	<?php echo '#product-tabs-grid-'.$randon_number. " { ".$bg_image."; background-color: ".$bg_color."; } " ?>
 </style>
  <?php endif;?>
- 
+
 
 <div id="<?php echo "product-tabs-grid-".$randon_number; ?>" class="mage-ajaxpro-page product-tabs-grid <?php echo $list_class ?> <?php echo $list_class_top ?> <?php echo $spacing_class ?>">
 	<div class="container">
@@ -70,8 +70,10 @@ use Magento\Framework\App\Action\Action;
 		<script type="text/javascript">
 			requirejs(['jquery','ajaxloadcategory'], function($){
 				var params = {'default_cat_id':'<?php echo $block->getDefaultCategoryId() ?>'};
-				$('#cat-filter-<?php echo $block->getDefaultCategoryId() ?>').ajaxloadcategory(params);
-			});	
+                if ($('#cat-filter-<?php echo $block->getDefaultCategoryId() ?>').length) {
+                    $('#cat-filter-<?php echo $block->getDefaultCategoryId() ?>').ajaxloadcategory(params);
+                }
+			});
 		</script>
 
 		<div id="category-product-id-<?php echo $block->getDefaultCategoryId() ?>" class="category-product-filter <?php echo $animation_class ?>" <?php if($animation): ?> data-wow-delay="0.4s" <?php endif;?>>
@@ -86,7 +88,7 @@ use Magento\Framework\App\Action\Action;
 					<?php $iterator = 1; ?>
 					<div class="fx_grid products list items product-items <?php echo $btn_hover_effects_class; ?>">
 						<?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
-						<?php 
+						<?php
 							/* Set Condition for Sample Data Start */
 							if(!$productsCount): $slider = false; echo $this->getLayout() ->createBlock('Magento\Framework\View\Element\Template') ->setProductCount(8) ->setSlider($slider) ->setImageWidth($image_width) ->setImageHeight($image_height) ->setTemplate('Magebees_Productlisting::dummy-products-grid.phtml') ->toHtml(); endif;
 							/* Set Condition for Sample Data End */
@@ -96,10 +98,10 @@ use Magento\Framework\App\Action\Action;
 							<div class="product-item-info" data-container="product-grid">
 								<div class="pro-hover">
 									<div class="product-item-photo">
-										<a href="<?php echo $_product->getProductUrl() ?>" tabindex="-1">	
+										<a href="<?php echo $_product->getProductUrl() ?>" tabindex="-1">
 											<?php echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template") ->setProduct($_product) ->setAspectRatio($aspect_ratio) ->setImageWidth($image_width) ->setImageHeight($image_height) ->setDisplayArea($imageDisplayArea) ->setTemplate("Magento_Catalog::product/image.phtml") ->toHtml();?>
 										</a>
-										
+
 										<?php if(($show_deal_timer)&&(($hover_effects == 'button-hover-style7')||($hover_effects == 'button-hover-style11'))): ?>
 										<!--Deal Timer On Hover Style7 Or 11 -->
 										<?php echo $this->getLayout()->createBlock('Magebees\TodayDealProducts\Block\DealTimerListingProducts')->setProduct($_product) ->setTemplate('Magebees_TodayDealProducts::category_page_timer.phtml')->toHtml(); ?>
@@ -132,13 +134,13 @@ use Magento\Framework\App\Action\Action;
 										<?php if($show_product_sku): ?>
 											<?php echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template") ->setProduct($_product) ->setProductSkuLabel($product_sku_label) ->setProductSkuSeparator($product_sku_separator) ->setTemplate("Magento_Catalog::product/product-sku.phtml") ->toHtml();?>
 										<?php endif; ?>
-										<?php if(($hover_effects != 'button-hover-style10')&&($show_product_price)): ?>                           
+										<?php if(($hover_effects != 'button-hover-style10')&&($show_product_price)): ?>
 											<?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
 										<?php endif; ?>
 
 										<?php if($buyNowEnabled): echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template") ->setProduct($_product) ->setButtonTitle($buyNowbuttonTitle) ->setBuyNowListProduct($buyNowListProduct) ->setTemplate("Magento_Catalog::product/buy-now.phtml") ->toHtml(); endif;?>
-									
-										<?php echo $block->getProductDetailsHtml($_product); ?>			
+
+										<?php echo $block->getProductDetailsHtml($_product); ?>
 
 										<?php if($_product->getTypeId() == \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE){
 											$swatchBlock = $this->getLayout()->createBlock("Magento\Swatches\Block\Product\Renderer\Listing\Configurable")->setTemplate("Magebees_Swatches::product/listing/renderer.phtml");
@@ -153,7 +155,7 @@ use Magento\Framework\App\Action\Action;
 									<?php if((($hover_effects == 'button-hover-style10')||($hover_effects == 'button-hover-style12'))&&($allow_add_to_cart)): ?>
 									<!-- Button Hover Style 10 Or 12 Start -->
 									<div class="d-flex alc  <?php echo $bottom_btn_hover_effects_class; ?> hvr_dtl">
-									<?php if(($hover_effects == 'button-hover-style10')&&($show_product_price)): ?> 
+									<?php if(($hover_effects == 'button-hover-style10')&&($show_product_price)): ?>
 												<?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
 											<?php endif; ?>
 											<div class="actions-primary">
