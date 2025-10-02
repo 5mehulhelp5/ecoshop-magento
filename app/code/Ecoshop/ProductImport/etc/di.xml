@@ -5,6 +5,7 @@
             <argument name="commands" xsi:type="array">
                 <item name="ecoshop_download_html" xsi:type="object">Ecoshop\ProductImport\Console\Command\DownloadHtml</item>
                 <item name="ecoshop_import_products" xsi:type="object">Ecoshop\ProductImport\Console\Command\ImportProducts</item>
+                <item name="ecoshop_update_descriptions" xsi:type="object">Ecoshop\ProductImport\Console\Command\UpdateProductDescriptions</item>
             </argument>
         </arguments>
     </type>

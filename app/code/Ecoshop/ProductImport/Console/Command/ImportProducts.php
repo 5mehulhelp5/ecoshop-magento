@@ -247,7 +247,7 @@ class ImportProducts extends Command
 
                 // Extract full description (HTML content)
                 if (!empty($productData['text'])) {
-                    $data['description'] = strip_tags(html_entity_decode($productData['text']));
+                    $data['description'] = html_entity_decode($productData['text']);
                 }
 
                 // Extract images from gallery
