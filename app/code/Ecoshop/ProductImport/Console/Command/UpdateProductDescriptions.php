@@ -14,6 +14,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Magento\Framework\Filesystem\DirectoryList;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\App\State;
+use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
+use Magento\Framework\App\ResourceConnection;
+use Magento\Store\Model\Store;
 
 class UpdateProductDescriptions extends Command
 {
@@ -24,16 +27,19 @@ class UpdateProductDescriptions extends Command
     private DirectoryList $directoryList;
     private ProductRepositoryInterface $productRepository;
     private State $state;
+    private CollectionFactory $productCollectionFactory;
 
     public function __construct(
         DirectoryList $directoryList,
         ProductRepositoryInterface $productRepository,
         State $state,
+        CollectionFactory $productCollectionFactory,
         ?string $name = null
     ) {
         $this->directoryList = $directoryList;
         $this->productRepository = $productRepository;
         $this->state = $state;
+        $this->productCollectionFactory = $productCollectionFactory;
         parent::__construct($name);
     }
 
@@ -116,17 +122,18 @@ class UpdateProductDescriptions extends Command
                 $html = file_get_contents($htmlFile);
                 $productData = $this->parseProductData($html, $output);
 
-                if (empty($productData['sku']) || empty($productData['description'])) {
-                    $output->writeln("<comment>Could not parse SKU or description from {$filename}</comment>");
+                if (empty($productData['description'])) {
+                    $output->writeln("<comment>Could not parse description from {$filename}</comment>");
                     $skipped++;
                     continue;
                 }
 
-                $output->writeln("  SKU: " . $productData['sku']);
+                $output->writeln("  SKU: " . ($productData['sku'] ?? 'N/A'));
+                $output->writeln("  Name: " . ($productData['name'] ?? 'N/A'));
                 $output->writeln("  Description length: " . strlen($productData['description']));
 
                 if (!$dryRun) {
-                    $this->updateProductDescription($productData['sku'], $productData['description'], $output);
+                    $this->updateProductDescription($productData, $output);
                     $updated++;
                 } else {
                     $output->writeln("<comment>[DRY RUN] Would update product</comment>");
@@ -179,10 +186,22 @@ class UpdateProductDescriptions extends Command
         }
 
         if (isset($productData) && is_array($productData)) {
-            // Extract description
+            // Extract description - clean HTML and wrap in Page Builder format
             if (!empty($productData['text'])) {
-                $data['description'] = html_entity_decode($productData['text']);
+                $htmlContent = html_entity_decode($productData['text']);
+
+                // Remove disallowed attributes (data-customstyle, data-list, etc.)
+                $htmlContent = preg_replace('/\s+data-customstyle="[^"]*"/', '', $htmlContent);
+                $htmlContent = preg_replace('/\s+data-list="[^"]*"/', '', $htmlContent);
+
+                // Page Builder HTML block format
+                $data['description'] = '<div data-content-type="html" data-appearance="default" data-element="main">'
+                    . $htmlContent
+                    . '</div>';
             }
+
+            // Extract name
+            $data['name'] = $productData['title'] ?? '';
 
             // Extract SKU
             $sku = $productData['sku'] ?? '';
@@ -192,17 +211,46 @@ class UpdateProductDescriptions extends Command
         return $data;
     }
 
-    private function updateProductDescription(string $sku, string $description, OutputInterface $output): void
+    private function updateProductDescription(array $productData, OutputInterface $output): void
     {
-        try {
-            $product = $this->productRepository->get($sku);
-            $product->setDescription($description);
-            $this->productRepository->save($product);
-            $output->writeln("<info>Updated product: {$product->getName()} (SKU: {$sku})</info>");
-        } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
-            $output->writeln("<error>Product with SKU {$sku} not found</error>");
-            throw $e;
+        $description = $productData['description'];
+        $sku = $productData['sku'] ?? '';
+        $name = $productData['name'] ?? '';
+
+        $product = null;
+
+        // Try to find by SKU first (from global scope)
+        if (!empty($sku)) {
+            try {
+                $product = $this->productRepository->get($sku, false, Store::DEFAULT_STORE_ID);
+                $output->writeln("<comment>Found by SKU: {$sku}</comment>");
+            } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
+                $output->writeln("<comment>Product with SKU {$sku} not found, trying by name...</comment>");
+            }
         }
+
+        // Fallback: search by exact name if SKU search failed
+        if (!$product && !empty($name)) {
+            $collection = $this->productCollectionFactory->create();
+            $collection->addAttributeToFilter('name', $name);
+            $collection->setPageSize(1);
+            $collection->setStoreId(Store::DEFAULT_STORE_ID);
+
+            if ($collection->getSize() > 0) {
+                $product = $collection->getFirstItem();
+                $output->writeln("<comment>Found by name: {$name}</comment>");
+            }
+        }
+
+        if (!$product) {
+            throw new \Exception("Product not found by SKU ({$sku}) or name ({$name})");
+        }
+
+        // Update description in global scope (store_id = 0)
+        $product->setStoreId(Store::DEFAULT_STORE_ID);
+        $product->setDescription($description);
+        $this->productRepository->save($product);
+        $output->writeln("<info>Updated product: {$product->getName()} (SKU: {$product->getSku()}) in GLOBAL scope</info>");
     }
 
     private function extractBalancedBraces(string $html, int $startPos): ?string

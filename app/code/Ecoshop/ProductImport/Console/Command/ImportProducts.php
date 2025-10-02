@@ -245,9 +245,10 @@ class ImportProducts extends Command
                 $data['short_description'] = $productData['descr'] ?? '';
                 $data['price'] = $productData['price'] ?? '';
 
-                // Extract full description (HTML content)
+                // Extract full description (HTML content) - wrap in Page Builder format
                 if (!empty($productData['text'])) {
-                    $data['description'] = html_entity_decode($productData['text']);
+                    $htmlContent = html_entity_decode($productData['text']);
+                    $data['description'] = '<div data-content-type="html" data-appearance="default" data-element="main">' . $htmlContent . '</div>';
                 }
 
                 // Extract images from gallery
