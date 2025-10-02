@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="carriers">
+            <group id="novaposhta" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Новая почта</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Включить</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="city_sender" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="0">
+                    <label>Город отправителя</label>
+                    <source_model>Yu\NovaPoshta\Model\Source\City</source_model>
+                    <comment>Выберите свой город, откуда будет отправляться товар.</comment>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Заголовок</label>
+                    <comment>Например: Доставка "Новой почтой".</comment>
+                </field>
+                <field id="name_ww" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Название метода (Склад-Склад)</label>
+                    <comment>Например: Самовывоз из Новой Почты.</comment>
+                </field>
+                <field id="name_wd" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Название метода (Склад-Двери)</label>
+                    <comment>Например: Доставка курьером до дверей.</comment>
+                </field>
+                <field id="api_key" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Api Key</label>
+                    <comment><![CDATA[Необходимо получить ключ API на сайте Новой Почты в личном кабинете. Как получить API ключ можно посмотреть здесь: <a href="https://www.youtube.com/watch?v=Gjc6vXUY1as" target="_blank">https://www.youtube.com/watch?v=Gjc6vXUY1as</a>.]]></comment>
+                </field>
+                <field id="allowed_methods" translate="label" type="multiselect" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Варианты доставки</label>
+                    <source_model>Yu\NovaPoshta\Model\Source\Method</source_model>
+                    <can_be_empty>1</can_be_empty>
+                    <comment>Удерживая нажатой клавишу Ctrl выберите варинты доставки.</comment>
+                </field>
+                <field id="price_fix_warehouse" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Фиксированная цена до склада</label>
+                    <comment>Здесь можно указать фиксированную стоимость доставки до склада. Если указать 0, то доставка будет бесплатной.</comment>
+                </field>
+                <field id="price_fix_door" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Фиксированная цена до дверей</label>
+                    <comment>Здесь можно указать фиксированную стоимость доставки до дверей Если указать 0, то доставка будет бесплатной.</comment>
+                </field>
+                <field id="amount_free_warehouse" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Сумма заказа для бесплатной доставки до склада</label>
+                    <comment>Здесь можно указать общую сумму заказа в корзине для которой будет бесплатная доставка до склада.</comment>
+                </field>
+                <field id="amount_free_door" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Сумма заказа для бесплатной доставки до дверей</label>
+                    <comment>Здесь можно указать общую сумму заказа в корзине для которой будет бесплатная доставка до дверей</comment>
+                </field>
+                <field id="lang" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Язык</label>
+                    <source_model>Yu\NovaPoshta\Model\Source\Lang</source_model>
+                    <comment>Для каждой витрины магазина можно указать язык, русский или украинский.</comment>
+                </field>
+                <field id="city_fast" translate="label" type="multiselect" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="0">
+                    <label>Быстрый выбор города</label>
+                    <source_model>Yu\NovaPoshta\Model\Source\City</source_model>
+                    <can_be_empty>1</can_be_empty>
+                    <comment>Города которые будут отображаться под выпадающим списком, и пользователь сможет выбрать их одним кликом.</comment>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Сортировка</label>
+                </field>
+                
+            </group>
+        </section>
+    </system>
+</config>
