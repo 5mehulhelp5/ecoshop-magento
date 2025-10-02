@@ -23,7 +23,8 @@
         "magento/product-community-edition": "2.4.8-p2",
         "mageplaza/magento-2-ukrainian-language-pack": "dev-master",
         "mageplaza/module-smtp": "^4.7",
-        "swissup/breeze": "^2.25"
+        "swissup/breeze": "^2.25",
+        "wouyang/module-disable-csp": "^1.0"
     },
     "autoload": {
         "exclude-from-classmap": [
