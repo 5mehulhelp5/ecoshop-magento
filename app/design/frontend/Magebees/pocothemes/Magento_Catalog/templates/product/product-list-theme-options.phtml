@@ -1,6 +1,6 @@
-<?php 
+<?php
 $poco_helper = $this->helper('Magebees\PocoThemes\Helper\Data');
-$storeId = $poco_helper->getStoreId();	
+$storeId = $poco_helper->getStoreId();
 $themeLayoutConfig = $poco_helper->getConfigGroup('theme_layout',$storeId);
 $productListConfig = $poco_helper->getConfigGroup('pro_list',$storeId);
 
@@ -20,8 +20,6 @@ $compare_icon = array_key_exists('compare', $font_icons) ? $font_icons['compare'
 $add_cart_icon = array_key_exists('add_cart', $font_icons) ? $font_icons['add_cart'] : false;
 $quick_view_icon = array_key_exists('quick_view', $font_icons) ? $font_icons['quick_view'] : false;
 
- 
- 
 $currentAction = $poco_helper->getCurrentAction();
 
 $showAddtoCart = false;
@@ -61,7 +59,7 @@ $hover_btn_style_array['button-hover-style10'] = ' hover-style10 ';
 $hover_btn_style_array['button-hover-style11'] = ' hover-style11 ';
 $hover_btn_style_array['button-hover-style12'] = ' hover-style12 ';
 $hover_btn_style_array['button-hover-style13'] = ' hover-style13 ';
-$add_to_cart_btn_title = 'Cart';
+$add_to_cart_btn_title = 'Add To Cart';
 
 $swiper_btn_hover_effects_class = null;
 $bottom_btn_hover_effects_class = null;
@@ -70,11 +68,11 @@ if($hover_effects == 'button-hover-style7') {
 }
 if($hover_effects == 'button-hover-style10') {
 	$showAddtoCart = true;
-	if($show_cart): 
+	if($show_cart):
 		$show_cart = false;
 	endif;
 	$swiper_btn_hover_effects_class = null;
-	
+
 	if(isset($hover_btn_style_array[$hover_effects])){
 	$swiper_btn_hover_effects_class = $hover_btn_style_array[$hover_effects];
 	}
@@ -83,12 +81,12 @@ if($hover_effects == 'button-hover-style10') {
 }
 if($hover_effects == 'button-hover-style12') {
 	$showAddtoCart = true;
-	
-	if($show_cart): 
+
+	if($show_cart):
 		$show_cart = false;
 	endif;
 	$swiper_btn_hover_effects_class = null;
-	
+
 	if(isset($hover_btn_style_array[$hover_effects])){
 	$swiper_btn_hover_effects_class = $hover_btn_style_array[$hover_effects];
 	}
@@ -109,12 +107,12 @@ if(isset($hover_btn_style_array[$hover_effects])){
 }
 if($hover_effects == 'button-hover-style13') {
 	$showAddtoCart = true;
-	
-	if($show_cart): 
+
+	if($show_cart):
 	//	$show_cart = false;
 	endif;
 	$swiper_btn_hover_effects_class = null;
-	
+
 	if(isset($hover_btn_style_array[$hover_effects])){
 	$swiper_btn_hover_effects_class = $hover_btn_style_array[$hover_effects];
 	}
@@ -125,7 +123,7 @@ if($hover_effects == 'button-hover-style13') {
 //$dealTimerListingProducts = $block->getLayout()->createBlock('Magebees\TodayDealProducts\Block\DealTimerListingProducts');
 //$dealTimerListingProducts->getDealProductsCollection();
 $buyNowListProduct = $block->getLayout()->createBlock('Magebees\Buynow\Block\Product\ListProduct');
-$buyNowhelper = $this->helper("Magebees\Buynow\Helper\Data"); 
+$buyNowhelper = $this->helper("Magebees\Buynow\Helper\Data");
 $buyNowEnabled = $buyNowhelper->getConfig('buynow/general/enable_list');
 $buyNowbuttonTitle = $buyNowhelper->getButtonTitle();
 
@@ -133,7 +131,7 @@ $richsnippetsEnabled = $poco_helper->getConfigValue('setting','enabled','richsni
 $categoryEnabled = $poco_helper->getConfigValue('category','enabled','richsnippets',$storeId);
 if(($richsnippetsEnabled)&&($richsnippetsEnabled))
 {
-$productRichSnippetsBlock = $block->getLayout()->createBlock('Magebees\RichSnippets\Block\Product');	
+$productRichSnippetsBlock = $block->getLayout()->createBlock('Magebees\RichSnippets\Block\Product');
 $productContent = $productRichSnippetsBlock->canShowContent();
 $customProperties=$productRichSnippetsBlock->getCustomProperties();
 $currencyCode = $productRichSnippetsBlock->getCurrencyCode();
@@ -156,7 +154,7 @@ $show_product_sku = array_key_exists('show_product_sku', $productListConfig) ? $
 $product_sku_label = array_key_exists('sku_label', $productListConfig) ? $productListConfig['sku_label'] : null;
 $product_sku_separator = array_key_exists('sku_separator', $productListConfig) ? $productListConfig['sku_separator'] : null;
 $layerhelper = $this->helper('Magebees\Layerednavigation\Helper\Data');
-$brandConfig=$layerhelper->getBrandConfigData(); 
+$brandConfig=$layerhelper->getBrandConfigData();
 $brand_url_key=$brandConfig['brand_url_key'];
 $webUrl=$poco_helper->getWebUrl();
 
